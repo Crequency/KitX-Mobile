@@ -30,7 +30,7 @@ migrate_working_dir/
 .packages
 .pub-cache/
 .pub/
-/build/
+kitx_mobile/build/
 
 # Web related
 lib/generated_plugin_registrant.dart
@@ -42,6 +42,6 @@ app.*.symbols
 app.*.map.json
 
 # Android Studio will place build artifacts here
-/android/app/debug
-/android/app/profile
-/android/app/release
+kitx_mobile/android/app/debug
+kitx_mobile/android/app/profile
+kitx_mobile/android/app/release

@@ -1,4 +1,4 @@
-# kitx_mobile
+# KitX Mobile
 
 Mobile Client for KitX
 
