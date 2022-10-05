@@ -96,7 +96,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 // color: Colors.blue,
                 image: DecorationImage(
                   alignment: Alignment.topCenter,
-                  image: AssetImage('Assets/KitX-Background.png'),
+                  image: AssetImage('Assets/KitX-Icon-Background.png'),
                   fit: BoxFit.cover,
                 ),
               ),
