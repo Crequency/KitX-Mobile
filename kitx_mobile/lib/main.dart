@@ -85,60 +85,59 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         // Here we take the value from the MyHomePage object that was created by
         // the App.build method, and use it to set our appbar title.
-        title: Text(AppLocalizations.of(context)!.homePage_title),
+        title: Text(AppLocalizations.of(context).homePage_title),
       ),
       drawer: Drawer(
         child: ListView(
-          // padding: EdgeInsets.zero,
-          children: const <Widget>[
-            DrawerHeader(
-              decoration: BoxDecoration(
-                // color: Colors.blue,
-                image: DecorationImage(
-                  alignment: Alignment.topCenter,
-                  image: AssetImage('Assets/KitX-Background.png'),
-                  fit: BoxFit.cover,
-                ),
-              ),
-              child: Text(
-                'KitX Mobile',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 24,
-                ),
+        // padding: EdgeInsets.zero,
+        children: const <Widget>[
+          DrawerHeader(
+            decoration: BoxDecoration(
+              // color: Colors.blue,
+              image: DecorationImage(
+                alignment: Alignment.topCenter,
+                image: AssetImage('Assets/KitX-Background.png'),
+                fit: BoxFit.cover,
               ),
             ),
-            ListTile(
-              leading: Icon(Icons.home),
-              title: Text('主页'),
+            child: Text(
+              'KitX Mobile',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 24,
+              ),
             ),
-            ListTile(
-              leading: Icon(Icons.layers),
-              title: Text('库'),
-            ),
-            ListTile(
-              leading: Icon(Icons.folder),
-              title: Text('仓库'),
-            ),
-            ListTile(
-              leading: Icon(Icons.devices),
-              title: Text('设备管理'),
-            ),
-            ListTile(
-              leading: Icon(Icons.sell),
-              title: Text('市场'),
-            ),
-            ListTile(
-              leading: Icon(Icons.alternate_email),
-              title: Text('账户'),
-            ),
-            ListTile(
-              leading: Icon(Icons.settings),
-              title: Text('设置'),
-            ),
-          ],
-        )
-      ),
+          ),
+          ListTile(
+            leading: Icon(Icons.home),
+            title: Text('主页'),
+          ),
+          ListTile(
+            leading: Icon(Icons.layers),
+            title: Text('库'),
+          ),
+          ListTile(
+            leading: Icon(Icons.folder),
+            title: Text('仓库'),
+          ),
+          ListTile(
+            leading: Icon(Icons.devices),
+            title: Text('设备管理'),
+          ),
+          ListTile(
+            leading: Icon(Icons.sell),
+            title: Text('市场'),
+          ),
+          ListTile(
+            leading: Icon(Icons.alternate_email),
+            title: Text('账户'),
+          ),
+          ListTile(
+            leading: Icon(Icons.settings),
+            title: Text('设置'),
+          ),
+        ],
+      )),
       body: Center(
         // Center is a layout widget. It takes a single child and positions it
         // in the middle of the parent.
@@ -160,10 +159,10 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
-              AppLocalizations.of(context)!.homePage_text,
+              AppLocalizations.of(context).homePage_text,
             ),
             Text(
-              AppLocalizations.of(context)!.helloWorld,
+              AppLocalizations.of(context).helloWorld,
             ),
             Text(
               '$_counter',
