@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 void main() {
   runApp(const MyApp());
@@ -24,6 +26,16 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
+      localizationsDelegates: const [
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: const [
+        Locale('en', 'US'), // 美国英语
+        Locale('zh', 'CN'), // 中文简体
+      ],
       home: const MyHomePage(title: 'KitX Mobile Home Page'),
     );
   }
@@ -73,7 +85,59 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         // Here we take the value from the MyHomePage object that was created by
         // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
+        title: Text(AppLocalizations.of(context)!.homePage_title),
+      ),
+      drawer: Drawer(
+        child: ListView(
+          // padding: EdgeInsets.zero,
+          children: const <Widget>[
+            DrawerHeader(
+              decoration: BoxDecoration(
+                // color: Colors.blue,
+                image: DecorationImage(
+                  alignment: Alignment.topCenter,
+                  image: AssetImage('Assets/KitX-Background.png'),
+                  fit: BoxFit.cover,
+                ),
+              ),
+              child: Text(
+                'KitX Mobile',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 24,
+                ),
+              ),
+            ),
+            ListTile(
+              leading: Icon(Icons.home),
+              title: Text('主页'),
+            ),
+            ListTile(
+              leading: Icon(Icons.layers),
+              title: Text('库'),
+            ),
+            ListTile(
+              leading: Icon(Icons.folder),
+              title: Text('仓库'),
+            ),
+            ListTile(
+              leading: Icon(Icons.devices),
+              title: Text('设备管理'),
+            ),
+            ListTile(
+              leading: Icon(Icons.sell),
+              title: Text('市场'),
+            ),
+            ListTile(
+              leading: Icon(Icons.alternate_email),
+              title: Text('账户'),
+            ),
+            ListTile(
+              leading: Icon(Icons.settings),
+              title: Text('设置'),
+            ),
+          ],
+        )
       ),
       body: Center(
         // Center is a layout widget. It takes a single child and positions it
@@ -95,8 +159,11 @@ class _MyHomePageState extends State<MyHomePage> {
           // horizontal).
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
+            Text(
+              AppLocalizations.of(context)!.homePage_text,
+            ),
+            Text(
+              AppLocalizations.of(context)!.helloWorld,
             ),
             Text(
               '$_counter',
