@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.crequency.kitx.kitx_mobile">
    <application
-        android:label="kitx_mobile"
+        android:label="KitX"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
