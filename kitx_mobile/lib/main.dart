@@ -113,12 +113,28 @@ class _MyHomePageState extends State<MyHomePage> {
               title: Text('主页'),
             ),
             ListTile(
-              leading: Icon(Icons.account_circle),
-              title: Text('Profile'),
+              leading: Icon(Icons.layers),
+              title: Text('库'),
+            ),
+            ListTile(
+              leading: Icon(Icons.folder),
+              title: Text('仓库'),
+            ),
+            ListTile(
+              leading: Icon(Icons.devices),
+              title: Text('设备管理'),
+            ),
+            ListTile(
+              leading: Icon(Icons.sell),
+              title: Text('市场'),
+            ),
+            ListTile(
+              leading: Icon(Icons.alternate_email),
+              title: Text('账户'),
             ),
             ListTile(
               leading: Icon(Icons.settings),
-              title: Text('Settings'),
+              title: Text('设置'),
             ),
           ],
         )
