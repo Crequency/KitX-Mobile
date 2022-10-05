@@ -1,0 +1,9 @@
+{
+    "homePage_title": "KitX 移动端",
+    "homePage_text": "你点了这个按钮多少次？",
+    "helloWorld": "你好，世界！",
+    "@helloWorld": {
+      "description": "The conventional newborn programmer greeting"
+    },
+    "drawer_home": "主页"
+}
