@@ -1,0 +1,13 @@
+{
+  "drawer": {
+    "home": "Home",
+    "devices": "Devices",
+    "account": "Account",
+    "setting": "Setting"
+  },
+  "homePage": {
+    "title": "KitX Mobile",
+    "text": "You have clicked the button this many times:",
+    "hello": "Hello World!"
+  }
+}

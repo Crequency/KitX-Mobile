@@ -1,8 +1,0 @@
-{
-    "homePage_title": "KitX",
-    "homePage_text": "You have clicked the button this many times:",
-    "helloWorld": "Hello World!",
-    "@helloWorld": {
-      "description": "The conventional newborn programmer greeting"
-    }
-}

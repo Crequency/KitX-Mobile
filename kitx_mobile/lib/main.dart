@@ -1,6 +1,9 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+// import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
+import 'package:wifi_iot/wifi_iot.dart';
 
 void main() {
   runApp(const MyApp());
@@ -26,15 +29,25 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      localizationsDelegates: const [
-        AppLocalizations.delegate,
+      localizationsDelegates: [
+        FlutterI18nDelegate(
+          translationLoader: FileTranslationLoader(
+            basePath: "assets/i18n",
+            // fallbackFile: "en_US",
+            useCountryCode: true,
+            // forcedLocale: Locale("zh", "CN"),
+          ),
+          missingTranslationHandler: (key, locale) {
+            print("--- Missing Key: $key, languageCode: ${locale?.languageCode}, countryCode: ${locale?.countryCode}");
+          },
+        ),
         GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate
       ],
+      builder: FlutterI18n.rootAppBuilder(), //If you want to support RT
       supportedLocales: const [
-        Locale('en', 'US'), // 美国英语
-        Locale('zh', 'CN'), // 中文简体
+        Locale("en", "US"), // 美国英语
+        Locale("zh", "CN"), // 中文简体
       ],
       home: const MyHomePage(title: 'KitX Mobile'),
     );
@@ -75,6 +88,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    imageCache.clear();
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
     //
@@ -85,23 +99,23 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         // Here we take the value from the MyHomePage object that was created by
         // the App.build method, and use it to set our appbar title.
-        title: Text(AppLocalizations.of(context).homePage_title),
+        title: Text(FlutterI18n.translate(context, "homePage.title")),
       ),
       drawer: Drawer(
         child: ListView(
         // padding: EdgeInsets.zero,
-        children: const <Widget>[
+        children: <Widget>[
           DrawerHeader(
             decoration: BoxDecoration(
               // color: Colors.blue,
               image: DecorationImage(
                 alignment: Alignment.topCenter,
-                image: AssetImage('Assets/KitX-Icon-Background.png'),
+                image: AssetImage("assets/KitX-Background.png"),
                 fit: BoxFit.cover,
               ),
             ),
             child: Text(
-              'KitX Mobile',
+              FlutterI18n.translate(context, "homePage.title"),
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 24,
@@ -110,31 +124,19 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
           ListTile(
             leading: Icon(Icons.home),
-            title: Text('主页'),
-          ),
-          ListTile(
-            leading: Icon(Icons.layers),
-            title: Text('库'),
-          ),
-          ListTile(
-            leading: Icon(Icons.folder),
-            title: Text('仓库'),
+            title: Text(FlutterI18n.translate(context, "drawer.home")),
           ),
           ListTile(
             leading: Icon(Icons.devices),
-            title: Text('设备管理'),
-          ),
-          ListTile(
-            leading: Icon(Icons.sell),
-            title: Text('市场'),
+            title: Text(FlutterI18n.translate(context, "drawer.devices")),
           ),
           ListTile(
             leading: Icon(Icons.alternate_email),
-            title: Text('账户'),
+            title: Text(FlutterI18n.translate(context, "drawer.account")),
           ),
           ListTile(
             leading: Icon(Icons.settings),
-            title: Text('设置'),
+            title: Text(FlutterI18n.translate(context, "drawer.setting")),
           ),
         ],
       )),
@@ -159,10 +161,10 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
-              AppLocalizations.of(context).homePage_text,
+              FlutterI18n.translate(context, "homePage.hello"),
             ),
             Text(
-              AppLocalizations.of(context).helloWorld,
+              FlutterI18n.translate(context, "homePage.text"),
             ),
             Text(
               '$_counter',
