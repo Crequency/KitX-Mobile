@@ -6,6 +6,9 @@
     "account": "Account",
     "setting": "Setting"
   },
+  "indexPage": {
+    "title": "KitX"
+  },
   "homePage": {
     "title": "KitX Mobile",
     "text": "You have clicked the button this many times:",
