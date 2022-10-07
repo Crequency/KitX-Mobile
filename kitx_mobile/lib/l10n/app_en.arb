@@ -1,5 +1,9 @@
 {
     "homePage_title": "KitX",
+    "homePage_dashboard_title": "DashBoard",
+    "homePage_devices_title": "Devices",
+    "homePage_email_title": "Email",
+    "homePage_settings_title": "Settings",
     "homePage_text": "You have clicked the button this many times:",
     "helloWorld": "Hello World!",
     "@helloWorld": {

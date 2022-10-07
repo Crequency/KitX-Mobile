@@ -1,5 +1,9 @@
 {
     "homePage_title": "KitX",
+    "homePage_dashboard_title": "仪表板",
+    "homePage_devices_title": "设备管理",
+    "homePage_email_title": "账号",
+    "homePage_settings_title": "设置",
     "homePage_text": "你点了这个按钮多少次？",
     "helloWorld": "你好，世界！",
     "@helloWorld": {

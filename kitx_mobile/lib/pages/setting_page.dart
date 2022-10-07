@@ -1,21 +1,18 @@
 import 'package:flutter/material.dart';
 
-class SettingPage extends StatefulWidget {
-  @override
-  _SettingPageState createState() => new _SettingPageState();
-}
+class SettingPage extends StatelessWidget {
+  const SettingPage({super.key});
 
-class _SettingPageState extends State<SettingPage> {
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-      appBar: new AppBar(
-        title: new Text("Setting"),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Setting"),
       ),
-      body: new Center(
-        child: new Text(
+      body: const Center(
+        child: Text(
           'SettingPage',
-          style: new TextStyle(fontSize: 35.0),
+          style: TextStyle(fontSize: 35.0),
         ),
       ),
     );

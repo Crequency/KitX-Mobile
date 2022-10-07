@@ -1,21 +1,18 @@
 import 'package:flutter/material.dart';
 
-class AccountPage extends StatefulWidget {
-  @override
-  _AccountPageState createState() => new _AccountPageState();
-}
+class AccountPage extends StatelessWidget {
+  const AccountPage({super.key});
 
-class _AccountPageState extends State<AccountPage> {
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-      appBar: new AppBar(
-        title: new Text("Account"),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Account"),
       ),
-      body: new Center(
-        child: new Text(
+      body: const Center(
+        child: Text(
           'AccountPage',
-          style: new TextStyle(fontSize: 35.0),
+          style: TextStyle(fontSize: 35.0),
         ),
       ),
     );

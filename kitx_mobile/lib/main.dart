@@ -25,9 +25,9 @@ class MyApp extends StatelessWidget {
       ],
       supportedLocales: const [
         Locale('en', 'US'), // 美国英语
-        Locale('zh', 'CN'), // 中文简体
+        Locale('zh', 'CN'), //const const  中文简体
       ],
-      home: new HomePage(title: 'KitX Mobile'),
+      home: const HomePage(title: 'KitX Mobile'),
     );
   }
 }

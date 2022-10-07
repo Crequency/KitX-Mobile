@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import './setting_page.dart';
-import './dashbord_page.dart';
-import './devices_page.dart';
-import './account_page.dart';
+import 'setting_page.dart';
+import 'dashboard_page.dart';
+import 'devices_page.dart';
+import 'account_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key, required this.title}) : super(key: key);
@@ -34,7 +33,7 @@ class _HomePageState extends State<HomePage> {
           child: ListView(
         // padding: EdgeInsets.zero,
         children: <Widget>[
-          DrawerHeader(
+          const DrawerHeader(
             decoration: BoxDecoration(
               // color: Colors.blue,
               image: DecorationImage(
@@ -52,49 +51,49 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
           ListTile(
-            leading: Icon(Icons.dashboard),
-            title: Text('仪表板'),
+            leading: const Icon(Icons.dashboard),
+            title: Text(AppLocalizations.of(context).homePage_dashboard_title),
             onTap: () {
               Navigator.of(context).pop();
               Navigator.of(context)
                   .push(MaterialPageRoute(builder: (BuildContext context) {
-                return DashBordPage();
+                return const DashBoardPage();
               }));
             },
           ),
-          Divider(),
+          const Divider(),
           ListTile(
-            leading: Icon(Icons.devices),
-            title: Text('设备管理'),
+            leading: const Icon(Icons.devices),
+            title: Text(AppLocalizations.of(context).homePage_devices_title),
             onTap: () {
               Navigator.of(context).pop();
               Navigator.of(context)
                   .push(MaterialPageRoute(builder: (BuildContext context) {
-                return DevicesPage();
+                return const DevicesPage();
               }));
             },
           ),
-          Divider(),
+          const Divider(),
           ListTile(
-            leading: Icon(Icons.alternate_email),
-            title: Text('账户'),
+            leading: const Icon(Icons.alternate_email),
+            title: Text(AppLocalizations.of(context).homePage_email_title),
             onTap: () {
               Navigator.of(context).pop();
               Navigator.of(context)
                   .push(MaterialPageRoute(builder: (BuildContext context) {
-                return AccountPage();
+                return const AccountPage();
               }));
             },
           ),
-          Divider(),
+          const Divider(),
           ListTile(
-            leading: Icon(Icons.settings),
-            title: Text('设置'),
+            leading: const Icon(Icons.settings),
+            title: Text(AppLocalizations.of(context).homePage_settings_title),
             onTap: () {
               Navigator.of(context).pop();
               Navigator.of(context)
                   .push(MaterialPageRoute(builder: (BuildContext context) {
-                return SettingPage();
+                return const SettingPage();
               }));
             },
           ),
