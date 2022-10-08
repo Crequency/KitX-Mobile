@@ -2,12 +2,12 @@ import 'dart:io';
 import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/services.dart';
+// import 'package:flutter/services.dart';
 import 'package:flutter/foundation.dart';
-// import 'package:intl/intl.dart';
+import 'package:flutter_logs/flutter_logs.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:network_info_plus/network_info_plus.dart';
-import 'package:date_format/date_format.dart';
+// import 'package:date_format/date_format.dart';
 // import 'package:get_mac/get_mac.dart';
 import '../rules/DeviceInfoStruct.dart';
 
@@ -61,15 +61,15 @@ class WebServer {
 
           Timer.periodic(const Duration(seconds: 2), (time) {
             deviceInfo.sendTime = DateTime.now().toIso8601String()+"+08:00";
-            print(deviceInfo.toJson().toString());
+            // print(jsonEncode(deviceInfo.toJson()));
+            FlutterLogs.logInfo("network", "WebServer", "Send a udp: ${jsonEncode(deviceInfo.toJson())}");
             socket.send(utf8.encode(jsonEncode(deviceInfo.toJson())), InternetAddress(_udpBroadcastAddress), _udpPortReceive);
           });
           print('UDP Echo ready to receive');
         }).catchError((e, stack) {print(e);print(stack);});
       }
     } catch(e, stack) {
-      print(e);
-      print(stack);
+      FlutterLogs.logErrorTrace("network", "WebServer", "Catch a error", e);
     }
   }
 }
