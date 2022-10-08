@@ -5,8 +5,14 @@ import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:flutter_i18n/loaders/decoders/json_decode_strategy.dart';
 import 'package:get/get.dart';
 import 'pages/homePage.dart';
+import 'pages/devicePage.dart';
+import 'pages/testPage.dart';
+import 'services/webServer.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  WebServer server = new WebServer(24040, 23404);
+  server.initServer();
   runApp(const MyApp());
 }
 
@@ -42,6 +48,16 @@ class MyApp extends StatelessWidget {
       supportedLocales: const [
         Locale("en", "US"), // 美国英语
         Locale("zh", "CN"), // 中文简体
+      ],
+      getPages: [
+        GetPage(
+          name: "/",
+          page: () => HomePage(),
+        ),
+        GetPage(
+          name: "/DevicePage/",
+          page: () => DevicePage(),
+        ),
       ],
       home: const MyHomePage(title: 'KitX Mobile'),
     );
@@ -111,6 +127,7 @@ class _MyHomePageState extends State<MyHomePage> {
             title: Text(FlutterI18n.translate(context, "drawer.devices")),
             onTap: () {
               Get.back();
+              Get.to(() => DevicePage());
             },
           ),
           ListTile(
@@ -118,6 +135,14 @@ class _MyHomePageState extends State<MyHomePage> {
             title: Text(FlutterI18n.translate(context, "drawer.account")),
             onTap: () {
               Get.back();
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.bug_report),
+            title: Text("TestPage"),
+            onTap: () {
+              Get.back();
+              Get.to(() => TestPage());
             },
           ),
           ListTile(
