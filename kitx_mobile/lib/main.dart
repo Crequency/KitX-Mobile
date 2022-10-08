@@ -37,8 +37,7 @@ class MyApp extends StatelessWidget {
             decodeStrategies: [JsonDecodeStrategy()],
           ),
           missingTranslationHandler: (key, locale) {
-            print(
-                "--- Missing Key: $key, languageCode: ${locale?.languageCode}, countryCode: ${locale?.countryCode}");
+            print("--- Missing Key: $key, languageCode: ${locale?.languageCode}, countryCode: ${locale?.countryCode}");
           },
         ),
         GlobalMaterialLocalizations.delegate,
@@ -50,14 +49,8 @@ class MyApp extends StatelessWidget {
         Locale("zh", "CN"), // 中文简体
       ],
       getPages: [
-        GetPage(
-          name: "/",
-          page: () => HomePage(),
-        ),
-        GetPage(
-          name: "/DevicePage/",
-          page: () => DevicePage(),
-        ),
+        GetPage(name: "/", page: () => HomePage(),),
+        GetPage(name: "/DevicePage/", page: () => DevicePage(),),
       ],
       home: const MyHomePage(title: 'KitX Mobile'),
     );
@@ -95,65 +88,65 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       drawer: Drawer(
           child: ListView(
-        // padding: EdgeInsets.zero,
-        children: <Widget>[
-          DrawerHeader(
-            decoration: BoxDecoration(
-              // color: Colors.blue,
-              image: DecorationImage(
-                alignment: Alignment.topCenter,
-                image: AssetImage("assets/KitX-Background.png"),
-                fit: BoxFit.cover,
+            // padding: EdgeInsets.zero,
+            children: <Widget>[
+              DrawerHeader(
+                decoration: BoxDecoration(
+                  // color: Colors.blue,
+                  image: DecorationImage(
+                    alignment: Alignment.topCenter,
+                    image: AssetImage("assets/KitX-Background.png"),
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                child: Text(
+                  FlutterI18n.translate(context, "drawer.title"),
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 24,
+                  ),
+                ),
               ),
-            ),
-            child: Text(
-              FlutterI18n.translate(context, "drawer.title"),
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 24,
+              ListTile(
+                leading: Icon(Icons.home),
+                title: Text(FlutterI18n.translate(context, "drawer.home")),
+                onTap: () {
+                  Get.back();
+                  Get.to(() => HomePage());
+                },
               ),
-            ),
-          ),
-          ListTile(
-            leading: Icon(Icons.home),
-            title: Text(FlutterI18n.translate(context, "drawer.home")),
-            onTap: () {
-              Get.back();
-              Get.to(() => HomePage());
-            },
-          ),
-          ListTile(
-            leading: Icon(Icons.devices),
-            title: Text(FlutterI18n.translate(context, "drawer.devices")),
-            onTap: () {
-              Get.back();
-              Get.to(() => DevicePage());
-            },
-          ),
-          ListTile(
-            leading: Icon(Icons.alternate_email),
-            title: Text(FlutterI18n.translate(context, "drawer.account")),
-            onTap: () {
-              Get.back();
-            },
-          ),
-          ListTile(
-            leading: Icon(Icons.bug_report),
-            title: Text("TestPage"),
-            onTap: () {
-              Get.back();
-              Get.to(() => TestPage());
-            },
-          ),
-          ListTile(
-            leading: Icon(Icons.settings),
-            title: Text(FlutterI18n.translate(context, "drawer.setting")),
-            onTap: () {
-              Get.back();
-            },
-          ),
-        ],
-      )),
+              ListTile(
+                leading: Icon(Icons.devices),
+                title: Text(FlutterI18n.translate(context, "drawer.devices")),
+                onTap: () {
+                  Get.back();
+                  Get.to(() => DevicePage());
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.alternate_email),
+                title: Text(FlutterI18n.translate(context, "drawer.account")),
+                onTap: () {
+                  Get.back();
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.bug_report),
+                title: Text("TestPage"),
+                onTap: () {
+                  Get.back();
+                  Get.to(() => TestPage());
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.settings),
+                title: Text(FlutterI18n.translate(context, "drawer.setting")),
+                onTap: () {
+                  Get.back();
+                },
+              ),
+            ],
+          )),
       // body: PageView(
       //   controller: _controller,
       //   children: <Widget>[
