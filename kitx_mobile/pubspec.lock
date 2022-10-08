@@ -43,6 +43,13 @@ packages:
       url: "https://mirrors.tuna.tsinghua.edu.cn/dart-pub/"
     source: hosted
     version: "1.16.0"
+  date_format:
+    dependency: "direct main"
+    description:
+      name: date_format
+      url: "https://mirrors.tuna.tsinghua.edu.cn/dart-pub/"
+    source: hosted
+    version: "2.0.7"
   dbus:
     dependency: transitive
     description:
@@ -147,6 +154,13 @@ packages:
       url: "https://mirrors.tuna.tsinghua.edu.cn/dart-pub/"
     source: hosted
     version: "4.6.5"
+  get_mac:
+    dependency: "direct main"
+    description:
+      name: get_mac
+      url: "https://mirrors.tuna.tsinghua.edu.cn/dart-pub/"
+    source: hosted
+    version: "0.0.1"
   http:
     dependency: transitive
     description:
