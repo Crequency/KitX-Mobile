@@ -1,6 +1,7 @@
 {
   "drawer": {
-    "home": "主页",
+    "title": "KitX",
+    "home": "KitX 首页",
     "devices": "设备管理",
     "account": "账户",
     "setting": "设置"

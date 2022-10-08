@@ -100,7 +100,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                 ),
                 child: Text(
-                  FlutterI18n.translate(context, "homePage.title"),
+                  FlutterI18n.translate(context, "drawer.title"),
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 24,
