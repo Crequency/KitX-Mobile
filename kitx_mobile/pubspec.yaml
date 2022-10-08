@@ -22,6 +22,7 @@ dependencies:
   device_info_plus: ^5.0.1
   get_mac: ^0.0.1
   date_format: ^2.0.7
+  flutter_logs: ^2.1.7
 #  intl: ^0.17.0
 
 dev_dependencies:
