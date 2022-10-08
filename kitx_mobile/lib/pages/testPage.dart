@@ -1,0 +1,62 @@
+import 'package:flutter/material.dart';
+import 'testPages/DeviceTestPage.dart';
+import 'testPages/networkInfoTest.dart';
+
+class TestPage extends StatefulWidget {
+  const TestPage({Key? key}) : super(key: key);
+
+  @override
+  State<TestPage> createState() => _TestPageState();
+}
+
+class _TestPageState extends State<TestPage> {
+  int _counter = 0;
+
+  void _incrementCounter() {
+    setState(() {
+      _counter++;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    imageCache.clear();
+    return DefaultTabController(
+      initialIndex: 0,
+      length: 3,
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('Test Page'),
+          bottom: TabBar(
+            tabs: <Widget>[
+              Tab(
+                text: "Device Info",
+                icon: Icon(Icons.devices),
+              ),
+              Tab(
+                text: "NetworkInfo",
+                icon: Icon(Icons.wifi),
+              ),
+              Tab(
+                icon: Icon(Icons.brightness_5_sharp),
+              ),
+            ],
+          ),
+        ),
+        body: const TabBarView(
+          children: <Widget>[
+            Center(
+              child: DeviceTestPage(),
+            ),
+            Center(
+              child: networkInfoTestPage(),
+            ),
+            Center(
+              child: Text("It's sunny here"),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
