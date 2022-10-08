@@ -37,7 +37,8 @@ class MyApp extends StatelessWidget {
             decodeStrategies: [JsonDecodeStrategy()],
           ),
           missingTranslationHandler: (key, locale) {
-            print("--- Missing Key: $key, languageCode: ${locale?.languageCode}, countryCode: ${locale?.countryCode}");
+            print(
+                "--- Missing Key: $key, languageCode: ${locale?.languageCode}, countryCode: ${locale?.countryCode}");
           },
         ),
         GlobalMaterialLocalizations.delegate,
@@ -49,8 +50,14 @@ class MyApp extends StatelessWidget {
         Locale("zh", "CN"), // 中文简体
       ],
       getPages: [
-        GetPage(name: "/", page: () => HomePage(),),
-        GetPage(name: "/DevicePage/", page: () => DevicePage(),),
+        GetPage(
+          name: "/",
+          page: () => HomePage(),
+        ),
+        GetPage(
+          name: "/DevicePage/",
+          page: () => DevicePage(),
+        ),
       ],
       home: const MyHomePage(title: 'KitX Mobile'),
     );

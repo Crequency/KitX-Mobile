@@ -2,6 +2,7 @@
   "drawer": {
     "title": "KitX",
     "home": "Home",
+    "dashboard": "DashBoard",
     "devices": "Devices",
     "account": "Account",
     "setting": "Setting"
