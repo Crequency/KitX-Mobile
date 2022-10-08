@@ -19,6 +19,6 @@ samples, guidance on mobile development, and a full API reference.
 
 > 请先检查您的 Flutter 版本为 3.0.5 且 `flutter doctor` 通过
 
-> 在更改 assets 文件夹内容以后，必须运行 `KitX-Mobile/cmds.bat` 以保证assets读取不出错
+> 在更改 assets 文件夹内容以后，必须运行 `KitX-Mobile/cmds.bat` 以保证 assets 读取不出错
 
 > 在遇到任何问题时也可以运行 `KitX-Mobile/cmds.bat` 尝试解决
