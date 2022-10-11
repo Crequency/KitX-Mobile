@@ -8,7 +8,7 @@ import 'package:get/get.dart';
 import 'pages/homePage.dart';
 import 'pages/devicePage.dart';
 import 'pages/testPage.dart';
-import 'services/webServer.dart';
+import 'services/web_server.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
