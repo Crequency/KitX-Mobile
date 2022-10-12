@@ -43,7 +43,7 @@ class _TestPageState extends State<TestPage> {
             ],
           ),
         ),
-        body: const TabBarView(
+        body: TabBarView(
           children: <Widget>[
             Center(
               child: DeviceTestPage(),

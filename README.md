@@ -17,8 +17,15 @@ samples, guidance on mobile development, and a full API reference.
 
 ## 提示:
 
-> 请先检查您的 Flutter 版本为 3.0.5 且 `flutter doctor` 通过
+> ~~请先检查您的 Flutter 版本为 3.3.3 且~~（非必须步骤，但可能出问题） `flutter doctor -v` 通过
 
-> 在更改 assets 文件夹内容以后，必须运行 `KitX-Mobile/cmds.bat` 以保证 assets 读取不出错
+> 使用 Windows 开发时，可以参考以下命令配置临时 flutter 镜像（仅在当前窗口有效）：
+> ```
+> set PUB_HOSTED_URL=https://mirrors.tuna.tsinghua.edu.cn/dart-pub
+> set FLUTTER_STORAGE_BASE_URL=https://mirrors.tuna.tsinghua.edu.cn/flutter
+> ```
+> 若要配置永久镜像，请修改系统环境变量
 
-> 在遇到任何问题时也可以运行 `KitX-Mobile/cmds.bat` 尝试解决
+> 在更改 assets 文件夹内容以后，必须运行 `kitx_mobile/cmds.bat` 以保证 assets 读取不出错
+
+> 在遇到任何问题时也可以运行 `kitx_mobile/cmds.bat` 尝试解决
