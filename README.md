@@ -26,6 +26,6 @@ samples, guidance on mobile development, and a full API reference.
 > ```
 > 若要配置永久镜像，请修改系统环境变量
 
-> 在更改 assets 文件夹内容以后，必须运行 `KitX-Mobile/cmds.bat` 以保证 assets 读取不出错
+> 在更改 assets 文件夹内容以后，必须运行 `kitx_mobile/cmds.bat` 以保证 assets 读取不出错
 
-> 在遇到任何问题时也可以运行 `KitX-Mobile/cmds.bat` 尝试解决
+> 在遇到任何问题时也可以运行 `kitx_mobile/cmds.bat` 尝试解决
