@@ -22,7 +22,7 @@ void main() {
 }
 
 class WebServer {
-  late final String _udpBroadcastAddress;
+  late String _udpBroadcastAddress;
   final int _udpPortReceive;
   final int _udpPortSend;
   late RawDatagramSocket socket;
@@ -39,6 +39,9 @@ class WebServer {
         await _networkInfo.getWifiIP().then((value) {_ipv4 = value.toString();});
         await _networkInfo.getWifiIPv6().then((value) {_ipv6 = value.toString();});
         await _networkInfo.getWifiBroadcast().then((value) {_udpBroadcastAddress = value.toString();});
+        if (_udpBroadcastAddress.startsWith("/")) {
+          _udpBroadcastAddress = _udpBroadcastAddress.substring(1);
+        }
         FlutterLogs.logError("network", "WebServer", "Get network information. Ipv4: $_ipv4 Ipv6: $_ipv6 Broadcast: $_udpBroadcastAddress");
         if ((_ipv4 == "null") || (_ipv6 == "null") || (_udpBroadcastAddress == "null")) { // null.toString() =>"null"
           FlutterLogs.logError("errors", "WebServer", "Can not get network information. Ipv4: $_ipv4 Ipv6: $_ipv6 Broadcast: $_udpBroadcastAddress");
