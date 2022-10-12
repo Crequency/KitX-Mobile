@@ -18,7 +18,7 @@ dependencies:
 #  intl: ^0.17.0
   flutter_i18n: ^0.32.4
   get: ^4.6.5
-  network_info_plus: ^2.3.0
+  network_info_plus: ^1.3.0
   device_info_plus: ^5.0.1
   get_mac: ^0.0.1
   date_format: ^2.0.7
