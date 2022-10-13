@@ -9,7 +9,7 @@ class DevicePage extends StatefulWidget {
 }
 
 class _DevicePage extends State<DevicePage> {
-  void _onPressed() {}
+  // void _onPressed() {}
 
   @override
   Widget build(BuildContext context) {

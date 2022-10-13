@@ -1,4 +1,4 @@
-import 'dart:io';
+// import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
@@ -91,17 +91,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  final PageController _controller = PageController(
-    initialPage: 0,
-  );
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
