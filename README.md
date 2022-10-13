@@ -26,6 +26,8 @@ samples, guidance on mobile development, and a full API reference.
 > ```
 > 若要配置永久镜像，请修改系统环境变量
 
+> 在编译时，如出现输出乱码，请修改系统环境变量 `GRADLE_OPTS` 为 `-Dfile.encoding=UTF-8` 即可解决
+
 > 在更改 assets 文件夹内容以后，必须运行 `kitx_mobile/cmds.bat` 以保证 assets 读取不出错
 
 > 在遇到任何问题时也可以运行 `kitx_mobile/cmds.bat` 尝试解决
