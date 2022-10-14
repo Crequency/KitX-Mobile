@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'testPages/DeviceTestPage.dart';
-import 'testPages/networkInfoTest.dart';
+import 'test_pages/device_test_page.dart';
+import 'test_pages/network_info_test.dart';
 
 class TestPage extends StatefulWidget {
   const TestPage({Key? key}) : super(key: key);
