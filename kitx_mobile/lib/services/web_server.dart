@@ -1,16 +1,24 @@
 import 'dart:io';
 import 'dart:async';
 import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
+
 import 'package:flutter_logs/flutter_logs.dart';
+
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:network_info_plus/network_info_plus.dart';
-import 'package:mac_address/mac_address.dart';
-import '../rules/device_info_struct.dart';
 
-// 本文件可单独运行
-// 右键 -> 运行'webServer.dart'
+import 'package:mac_address/mac_address.dart';
+
+import '../utils/datetime_format.dart';
+import '../rules/device_info_struct.dart';
+import '../utils/global.dart' as global;
+
+
+/// 本文件可单独运行
+/// 右键 -> 运行'webServer.dart'
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -67,8 +75,8 @@ class WebServer {
         await RawDatagramSocket.bind(InternetAddress.anyIPv4, _udpPortSend)
             .then((RawDatagramSocket socket) {
               socket.broadcastEnabled = true;
-              Timer.periodic(const Duration(seconds: 2), (time) {
-                deviceInfo.sendTime = DateTime.now().toIso8601String()+"+08:00";
+              Timer.periodic(const Duration(seconds: 2), (_) {
+                deviceInfo.sendTime = datetimeToIso8601(DateTime.now());
                 String _data = jsonEncode(deviceInfo.toJson());
                 FlutterLogs.logInfo("network", "WebServer", "UDP send: $_data");
                 socket.send(utf8.encode(_data), InternetAddress(_udpBroadcastAddress), _udpPortReceive);
@@ -84,7 +92,7 @@ class WebServer {
                 String _data = utf8.decode(d.data);
                 FlutterLogs.logInfo("network", "WebServer", "UDP receive: $_data");
                 DeviceInfo _deviceInfo = DeviceInfo.fromJson(jsonDecode(_data));
-
+                global.devices.addDevice(_deviceInfo);
               });
         }).catchError((e, stack) {FlutterLogs.logError("errors", "WebServer", "Catch a error: $e $stack");});
       }

@@ -1,14 +1,19 @@
 // import 'dart:io';
+
 import 'package:flutter/material.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:flutter_i18n/flutter_i18n.dart';
-import 'package:flutter_i18n/loaders/decoders/json_decode_strategy.dart';
 import 'package:flutter_logs/flutter_logs.dart';
+
 import 'package:get/get.dart';
-import 'pages/homePage.dart';
-import 'pages/devicePage.dart';
-import 'pages/testPage.dart';
+
+import 'pages/home_page.dart';
+import 'pages/device_page.dart';
+import 'pages/test_page.dart';
+
 import 'services/web_server.dart';
+
+import 'utils/translation.dart';
+import 'utils/global.dart' as global;
+
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -30,6 +35,7 @@ Future<void> main() async {
     debugFileOperations: true,
     isDebuggable: true,
   );
+  global.devices.init();
   runApp(const MyApp());
 }
 
@@ -43,29 +49,13 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      localizationsDelegates: [
-        FlutterI18nDelegate(
-          translationLoader: FileTranslationLoader(
-            // fallbackFile: "en_US",
-            basePath: "assets/i18n",
-            useCountryCode: true,
-            useScriptCode: false,
-            // forcedLocale: Locale("zh", "CN"),
-            decodeStrategies: [JsonDecodeStrategy()],
-          ),
-          missingTranslationHandler: (key, locale) {
-            print(
-                "--- Missing Key: $key, languageCode: ${locale?.languageCode}, countryCode: ${locale?.countryCode}");
-          },
-        ),
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate
-      ],
-      builder: FlutterI18n.rootAppBuilder(),
-      supportedLocales: const [
-        Locale("en", "US"), // 美国英语
-        Locale("zh", "CN"), // 中文简体
-      ],
+      translations: Translation(),
+      locale: Locale('zh', 'CN'),
+      fallbackLocale: Locale('en', 'US'),
+      // supportedLocales: const [
+      //   Locale("en", "US"),
+      //   Locale("zh", "CN"),
+      // ],
       getPages: [
         GetPage(
           name: "/",
@@ -97,7 +87,7 @@ class _MyHomePageState extends State<MyHomePage> {
     imageCache.clear();
     return Scaffold(
       appBar: AppBar(
-        title: Text(FlutterI18n.translate(context, "indexPage.title")),
+        title: Text("IndexPage_Title".tr),
       ),
       drawer: Drawer(
           child: ListView(
@@ -113,7 +103,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ),
             child: Text(
-              FlutterI18n.translate(context, "drawer.title"),
+              "Drawer_Title".tr,
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 24,
@@ -122,7 +112,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
           ListTile(
             leading: Icon(Icons.home),
-            title: Text(FlutterI18n.translate(context, "drawer.home")),
+            title: Text("Drawer_Home".tr),
             onTap: () {
               Get.back();
               Get.to(() => HomePage());
@@ -130,7 +120,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
           ListTile(
             leading: Icon(Icons.devices),
-            title: Text(FlutterI18n.translate(context, "drawer.devices")),
+            title: Text("Drawer_Devices".tr),
             onTap: () {
               Get.back();
               Get.to(() => DevicePage());
@@ -138,7 +128,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
           ListTile(
             leading: Icon(Icons.alternate_email),
-            title: Text(FlutterI18n.translate(context, "drawer.account")),
+            title: Text("Drawer_Account".tr),
             onTap: () {
               Get.back();
             },
@@ -153,7 +143,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
           ListTile(
             leading: Icon(Icons.settings),
-            title: Text(FlutterI18n.translate(context, "drawer.setting")),
+            title: Text("Drawer_Setting".tr),
             onTap: () {
               Get.back();
             },

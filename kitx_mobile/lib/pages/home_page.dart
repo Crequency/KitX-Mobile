@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_i18n/flutter_i18n.dart';
+
+import 'package:get/get.dart';
 
 
 class HomePage extends StatefulWidget {
@@ -23,17 +24,17 @@ class _HomePageState extends State<HomePage> {
     imageCache.clear();
     return Scaffold(
       appBar: AppBar(
-        title: Text(FlutterI18n.translate(context, "homePage.title")),
+        title: Text("HomePage_Title".tr),
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
-              FlutterI18n.translate(context, "homePage.hello"),
+              "HomePage_Hello".tr,
             ),
             Text(
-              FlutterI18n.translate(context, "homePage.text"),
+              "HomePage_Text".tr,
             ),
             Text(
               '$_counter',
