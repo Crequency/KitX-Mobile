@@ -7,7 +7,7 @@ import 'package:flutter_logs/flutter_logs.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:network_info_plus/network_info_plus.dart';
 import 'package:mac_address/mac_address.dart';
-import '../rules/DeviceInfoStruct.dart';
+import '../rules/device_info_struct.dart';
 
 // 本文件可单独运行
 // 右键 -> 运行'webServer.dart'
@@ -64,18 +64,28 @@ class WebServer {
         );
         print(jsonEncode(deviceInfo.toJson()));
         print(_udpBroadcastAddress);
+        await RawDatagramSocket.bind(InternetAddress.anyIPv4, _udpPortSend)
+            .then((RawDatagramSocket socket) {
+              socket.broadcastEnabled = true;
+              Timer.periodic(const Duration(seconds: 2), (time) {
+                deviceInfo.sendTime = DateTime.now().toIso8601String()+"+08:00";
+                String _data = jsonEncode(deviceInfo.toJson());
+                FlutterLogs.logInfo("network", "WebServer", "UDP send: $_data");
+                socket.send(utf8.encode(_data), InternetAddress(_udpBroadcastAddress), _udpPortReceive);
+              });
+              print('UDP Echo ready to receive');
+        }).catchError((e, stack) {FlutterLogs.logError("errors", "WebServer", "Catch a error: $e $stack");});
         await RawDatagramSocket.bind(InternetAddress.anyIPv4, _udpPortReceive)
             .then((RawDatagramSocket socket) {
-          socket.broadcastEnabled = true;
-          // socket.joinMulticast(InternetAddress(_udpBroadcastAddress));
+              socket.broadcastEnabled = true;
+              socket.listen((RawSocketEvent event) {
+                Datagram? d = socket.receive();
+                if (d == null) return;
+                String _data = utf8.decode(d.data);
+                FlutterLogs.logInfo("network", "WebServer", "UDP receive: $_data");
+                DeviceInfo _deviceInfo = DeviceInfo.fromJson(jsonDecode(_data));
 
-          Timer.periodic(const Duration(seconds: 2), (time) {
-            deviceInfo.sendTime = DateTime.now().toIso8601String()+"+08:00";
-            // print(jsonEncode(deviceInfo.toJson()));
-            FlutterLogs.logInfo("network", "WebServer", "Send a udp: ${jsonEncode(deviceInfo.toJson())}");
-            socket.send(utf8.encode(jsonEncode(deviceInfo.toJson())), InternetAddress(_udpBroadcastAddress), _udpPortReceive);
-          });
-          print('UDP Echo ready to receive');
+              });
         }).catchError((e, stack) {FlutterLogs.logError("errors", "WebServer", "Catch a error: $e $stack");});
       }
     } catch(e, stack) {
