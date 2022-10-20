@@ -16,6 +16,11 @@ allprojects {
         google()
         mavenCentral()
     }
+    gradle.projectsEvaluated {
+    tasks.withType(JavaCompile) {
+        options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
+    }
+}
 }
 
 rootProject.buildDir = '../build'
@@ -28,4 +33,8 @@ subprojects {
 
 task clean(type: Delete) {
     delete rootProject.buildDir
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = "UTF-8"
 }

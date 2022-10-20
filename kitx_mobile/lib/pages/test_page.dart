@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'testPages/DeviceTestPage.dart';
-import 'testPages/networkInfoTest.dart';
+import 'test_pages/device_test_page.dart';
+import 'test_pages/network_info_test.dart';
 
 class TestPage extends StatefulWidget {
   const TestPage({Key? key}) : super(key: key);
@@ -10,13 +10,13 @@ class TestPage extends StatefulWidget {
 }
 
 class _TestPageState extends State<TestPage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
+  // int _counter = 0;
+  //
+  // void _incrementCounter() {
+  //   setState(() {
+  //     _counter++;
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
