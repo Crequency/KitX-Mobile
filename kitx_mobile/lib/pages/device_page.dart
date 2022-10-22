@@ -67,10 +67,10 @@ Widget createDeviceCard(DeviceInfo info) {
       _icon = Icon(CommunityMaterialIcons.apple);
       break;
     case 8:
-      _icon = Icon(CommunityMaterialIcons.microsoft_windows);
+      _icon = Icon(CommunityMaterialIcons.apple);
       break;
     case 9:
-      _icon = Icon(Icons.help);
+      _icon = Icon(CommunityMaterialIcons.microsoft_windows);
       break;
     default:
       _icon = Icon(Icons.help);

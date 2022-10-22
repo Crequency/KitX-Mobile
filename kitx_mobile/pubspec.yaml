@@ -25,10 +25,7 @@ dependencies:
   sms_receiver: ^0.4.1 # 短信接收
   permission_handler: ^8.1.4+2 #权限管理
   mac_address: ^1.0.0 # 获取 MAC
-  material_design_icons_flutter: ^5.0.6996 # Material Design Icons
   community_material_icon: ^5.9.55 # Material Design Icons 社区贡献
-#  provider: ^6.0.3
-#  intl: ^0.17.0
 
 dev_dependencies:
   flutter_test:
@@ -39,8 +36,6 @@ flutter:
 
   assets:
     - assets/
-#    - assets/
-#    - assets/i18n/
 
   # fonts:
   #   - family: Schyler

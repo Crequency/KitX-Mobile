@@ -17,7 +17,7 @@ import 'utils/global.dart' as global;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  WebServer server = WebServer(24040, 23404);
+  WebServer server = WebServer(24040, 23404, "224.0.0.0");
   server.initServer();
   await FlutterLogs.initLogs(
     logLevelsEnabled: [
