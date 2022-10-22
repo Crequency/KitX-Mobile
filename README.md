@@ -17,6 +17,8 @@ samples, guidance on mobile development, and a full API reference.
 
 ## 提示:
 
+> ❗ 请使用实体机调试，任何模拟器都可能出现不可预料的问题 ❗
+
 > ~~请先检查您的 Flutter 版本为 3.3.3 且~~（非必须步骤，但可能出问题） `flutter doctor -v` 通过
 
 > 使用 Windows 开发时，可以参考以下命令配置临时 flutter 镜像（仅在当前窗口有效）：

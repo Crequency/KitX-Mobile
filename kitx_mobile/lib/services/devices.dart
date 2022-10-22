@@ -13,7 +13,7 @@ class Devices {
 
   Devices();
 
-  void addDevice(DeviceInfo info) {
+  Future<void> addDevice(DeviceInfo info) async {
     if (deviceInfoList.length == 0) {
       deviceInfoList.add(info);
     } else {
@@ -21,6 +21,8 @@ class Devices {
       bool _tag = true;
       _tempList.forEach((each) {
         if (each.iPv4 == info.iPv4 || each.deviceMacAddress == info.deviceMacAddress) {
+          deviceInfoList[deviceInfoList.indexOf(each)].sendTime = each.sendTime;
+          deviceInfoList.refresh();
           _tag = false;
         }
       });
@@ -32,7 +34,7 @@ class Devices {
   }
 
   Future<void> init() async {
-    Timer.periodic(Duration(seconds: 10), (_) {
+    Timer.periodic(Duration(seconds: 5), (_) {
       List<DeviceInfo> _tempList = deviceInfoList.toList();
       _tempList.forEach((each) {
         DateTime now = DateTime.now();

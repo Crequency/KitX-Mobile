@@ -6,11 +6,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 
 import 'package:flutter_logs/flutter_logs.dart';
-
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:network_info_plus/network_info_plus.dart';
-
 import 'package:mac_address/mac_address.dart';
+
 
 import '../utils/datetime_format.dart';
 import '../rules/device_info_struct.dart';
@@ -18,23 +17,23 @@ import '../utils/global.dart' as global;
 
 
 /// 本文件可单独运行
-/// 右键 -> 运行'webServer.dart'
+/// 右键 -> 运行 'webServer.dart'
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  WebServer server = new WebServer(24040, 23404);
+  WebServer server = new WebServer(24040, 23404, "224.0.0.0");
   server.initServer();
 }
 
 class WebServer {
-  late String _udpBroadcastAddress;
+  String _udpBroadcastAddress;
   final int _udpPortReceive;
   final int _udpPortSend;
   late RawDatagramSocket socket;
   static final DeviceInfoPlugin deviceInfoPlugin = DeviceInfoPlugin();
   static final NetworkInfo _networkInfo = NetworkInfo();
 
-  WebServer(this._udpPortReceive, this._udpPortSend);
+  WebServer(this._udpPortReceive, this._udpPortSend, this._udpBroadcastAddress);
 
   Future<void> initServer() async {
     try {
@@ -43,15 +42,12 @@ class WebServer {
         // print(await _networkInfo.getWifiIP());
         await _networkInfo.getWifiIP().then((value) {_ipv4 = value.toString();});
         await _networkInfo.getWifiIPv6().then((value) {_ipv6 = value.toString();});
-        await _networkInfo.getWifiBroadcast().then((value) {_udpBroadcastAddress = value.toString();});
+        // await _networkInfo.getWifiBroadcast().then((value) {_udpBroadcastAddress = value.toString();});
         await GetMac.macAddress.then((value) {_mac = value.toString();});
-        if (_udpBroadcastAddress.startsWith("/")) {
-          _udpBroadcastAddress = _udpBroadcastAddress.substring(1);
-        }
         if (_mac == "null") {
           _mac = "";
         }
-        FlutterLogs.logError("network", "WebServer", "Get network information. Ipv4: $_ipv4 Ipv6: $_ipv6 Broadcast: $_udpBroadcastAddress Mac: $_mac");
+        FlutterLogs.logInfo("network", "WebServer", "Get network information. Ipv4: $_ipv4 Ipv6: $_ipv6 Broadcast: $_udpBroadcastAddress Mac: $_mac");
         if ((_ipv4 == "null") || (_ipv6 == "null") || (_udpBroadcastAddress == "null")) { // null.toString() =>"null"
           FlutterLogs.logError("errors", "WebServer", "Can not get network information. Ipv4: $_ipv4 Ipv6: $_ipv6 Broadcast: $_udpBroadcastAddress Mac: $_mac");
           return ;
@@ -70,11 +66,11 @@ class WebServer {
           isMainDevice: false,
           deviceOSType: 0,
         );
-        print(jsonEncode(deviceInfo.toJson()));
-        print(_udpBroadcastAddress);
+        FlutterLogs.logInfo("network", "WebServer", "Get device info: ${jsonEncode(deviceInfo.toJson())}");
         await RawDatagramSocket.bind(InternetAddress.anyIPv4, _udpPortSend)
             .then((RawDatagramSocket socket) {
               socket.broadcastEnabled = true;
+              socket.joinMulticast(InternetAddress(_udpBroadcastAddress));
               Timer.periodic(const Duration(seconds: 2), (_) {
                 deviceInfo.sendTime = datetimeToIso8601(DateTime.now());
                 String _data = jsonEncode(deviceInfo.toJson());
@@ -82,10 +78,12 @@ class WebServer {
                 socket.send(utf8.encode(_data), InternetAddress(_udpBroadcastAddress), _udpPortReceive);
               });
               print('UDP Echo ready to receive');
-        }).catchError((e, stack) {FlutterLogs.logError("errors", "WebServer", "Catch a error: $e $stack");});
-        await RawDatagramSocket.bind(InternetAddress.anyIPv4, _udpPortReceive)
+        }).catchError((e, stack) {FlutterLogs.logError("errors", "WebServer", "Catch a error: ${e.toString()} $stack");});
+
+        await RawDatagramSocket.bind(InternetAddress.anyIPv4, _udpPortReceive, ttl: 2)
             .then((RawDatagramSocket socket) {
-              socket.broadcastEnabled = true;
+              // socket.broadcastEnabled = true;
+              socket.joinMulticast(InternetAddress(_udpBroadcastAddress));
               socket.listen((RawSocketEvent event) {
                 Datagram? d = socket.receive();
                 if (d == null) return;
@@ -96,7 +94,7 @@ class WebServer {
               });
         }).catchError((e, stack) {FlutterLogs.logError("errors", "WebServer", "Catch a error: $e $stack");});
       }
-    } catch(e, stack) {
+    } catch (e, stack) {
       FlutterLogs.logError("errors", "WebServer", "Catch a error: $e On: $stack");
     }
   }
