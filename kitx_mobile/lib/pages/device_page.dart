@@ -35,7 +35,6 @@ class _DevicePage extends State<DevicePage> {
               return createDeviceCard(global.devices.deviceInfoList[index]);
             },
           )),
-      // ),
     );
   }
 }

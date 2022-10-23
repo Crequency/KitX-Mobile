@@ -21,7 +21,7 @@ class Devices {
       bool _tag = true;
       _tempList.forEach((each) {
         if (each.iPv4 == info.iPv4 || each.deviceMacAddress == info.deviceMacAddress) {
-          deviceInfoList[deviceInfoList.indexOf(each)].sendTime = each.sendTime;
+          deviceInfoList[deviceInfoList.indexOf(each)].sendTime = info.sendTime;
           deviceInfoList.refresh();
           _tag = false;
         }
