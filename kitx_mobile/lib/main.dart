@@ -14,7 +14,6 @@ import 'services/web_server.dart';
 import 'utils/translation.dart';
 import 'utils/global.dart' as global;
 
-
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   WebServer server = WebServer(24040, 23404, "224.0.0.0");
@@ -28,7 +27,11 @@ Future<void> main() async {
     ],
     timeStampFormat: TimeStampFormat.TIME_FORMAT_FULL_2,
     directoryStructure: DirectoryStructure.FOR_DATE,
-    logTypesEnabled: ["network", "info", "errors",],
+    logTypesEnabled: [
+      "network",
+      "info",
+      "errors",
+    ],
     logFileExtension: LogFileExtension.LOG,
     logsWriteDirectoryName: "Logs",
     logsExportDirectoryName: "Logs/Exported",
@@ -81,7 +84,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
   @override
   Widget build(BuildContext context) {
     imageCache.clear();

@@ -7,6 +7,7 @@ import 'package:flutter/foundation.dart';
 
 import 'package:flutter_logs/flutter_logs.dart';
 import 'package:device_info_plus/device_info_plus.dart';
+import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 import 'package:network_info_plus/network_info_plus.dart';
 import 'package:mac_address/mac_address.dart';
 
@@ -30,18 +31,20 @@ class WebServer {
   final int _udpPortReceive;
   final int _udpPortSend;
   late RawDatagramSocket socket;
-  static final DeviceInfoPlugin deviceInfoPlugin = DeviceInfoPlugin();
+  static final DeviceInfoPlugin _deviceInfoPlugin = DeviceInfoPlugin();
   static final NetworkInfo _networkInfo = NetworkInfo();
+  static final FlutterBluePlus _flutterBlue = FlutterBluePlus.instance;
 
   WebServer(this._udpPortReceive, this._udpPortSend, this._udpBroadcastAddress);
 
   Future<void> initServer() async {
     try {
       if (kIsWeb == false && Platform.isAndroid) {
-        late String _ipv4, _ipv6, _mac;
+        late String _ipv4, _ipv6, _mac, _name;
         // print(await _networkInfo.getWifiIP());
         await _networkInfo.getWifiIP().then((value) {_ipv4 = value.toString();});
         await _networkInfo.getWifiIPv6().then((value) {_ipv6 = value.toString();});
+        await _flutterBlue.name.then((value) {_name = value.toString();});
         // await _networkInfo.getWifiBroadcast().then((value) {_udpBroadcastAddress = value.toString();});
         await GetMac.macAddress.then((value) {_mac = value.toString();});
         if (_mac == "null") {
@@ -53,10 +56,10 @@ class WebServer {
           return ;
         }
         // var _ipv6 = _networkInfo.getWifi_ipv6();
-        AndroidDeviceInfo deviceData = await deviceInfoPlugin.androidInfo;
+        AndroidDeviceInfo deviceData = await _deviceInfoPlugin.androidInfo;
         DeviceInfo deviceInfo = await DeviceInfo(
-          deviceName: deviceData.model.toString(),
-          deviceOSVersion: "Android ${deviceData.version.release} SDK ${deviceData.version.sdkInt}",
+          deviceName: _name,
+          deviceOSVersion: "${deviceData.model.toString()} (Android ${deviceData.version.release} SDK ${deviceData.version.sdkInt})",
           iPv4: _ipv4,
           iPv6: _ipv6,
           deviceMacAddress: _mac,

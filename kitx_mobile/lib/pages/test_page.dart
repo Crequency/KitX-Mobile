@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'test_pages/device_test_page.dart';
+
+import 'test_pages/device_test.dart';
 import 'test_pages/network_info_test.dart';
 
 class TestPage extends StatefulWidget {
@@ -20,7 +21,7 @@ class _TestPageState extends State<TestPage> {
 
   @override
   Widget build(BuildContext context) {
-    imageCache.clear();
+    // imageCache.clear();
     return DefaultTabController(
       initialIndex: 0,
       length: 3,

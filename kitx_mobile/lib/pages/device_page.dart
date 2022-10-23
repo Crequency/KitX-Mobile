@@ -17,7 +17,6 @@ class DevicePage extends StatefulWidget {
 }
 
 class _DevicePage extends State<DevicePage> {
-
   // void _onPressed() {}
   // Widget _cardBuilder(BuildContext context, int index) {
   //   return createDeviceCard(global)
@@ -31,114 +30,135 @@ class _DevicePage extends State<DevicePage> {
         title: Text("DevicePage_Title".tr),
       ),
       body: Obx(() => ListView.builder(
-        itemCount: global.devices.length,
-        itemBuilder: (_, int index) {return createDeviceCard(global.devices.deviceInfoList[index]);},
-      )),
+            itemCount: global.devices.length,
+            itemBuilder: (_, int index) {
+              return createDeviceCard(global.devices.deviceInfoList[index]);
+            },
+          )),
       // ),
     );
   }
 }
 
 Widget createDeviceCard(DeviceInfo info) {
-  Icon _icon = Icon(Icons.help);
+  IconData _iconStyle;
   switch (info.deviceOSType) {
     case 0:
-      _icon = Icon(Icons.android);
+      _iconStyle = Icons.android;
       break;
     case 1:
-      _icon = Icon(CommunityMaterialIcons.microsoft_edge);
+      _iconStyle = CommunityMaterialIcons.microsoft_edge;
       break;
     case 2:
-      _icon = Icon(CommunityMaterialIcons.freebsd);
+      _iconStyle = CommunityMaterialIcons.freebsd;
       break;
     case 3:
-      _icon = Icon(CommunityMaterialIcons.apple_ios);
+      _iconStyle = CommunityMaterialIcons.apple_ios;
       break;
     case 4:
-      _icon = Icon(CommunityMaterialIcons.linux);
+      _iconStyle = CommunityMaterialIcons.linux;
       break;
     case 5:
-      _icon = Icon(CommunityMaterialIcons.apple_finder);
+      _iconStyle = CommunityMaterialIcons.apple_finder;
       break;
     case 6:
-      _icon = Icon(CommunityMaterialIcons.apple);
+      _iconStyle = CommunityMaterialIcons.apple;
       break;
     case 7:
-      _icon = Icon(CommunityMaterialIcons.apple);
+      _iconStyle = CommunityMaterialIcons.apple;
       break;
     case 8:
-      _icon = Icon(CommunityMaterialIcons.apple);
+      _iconStyle = CommunityMaterialIcons.apple;
       break;
     case 9:
-      _icon = Icon(CommunityMaterialIcons.microsoft_windows);
+      _iconStyle = CommunityMaterialIcons.microsoft_windows;
       break;
     default:
-      _icon = Icon(Icons.help);
+      _iconStyle = Icons.help;
   }
-  return Padding(
-    padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
-    child: Row(
-        // mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: <Widget>[
-          Card(
-            child: Container(
-              margin: EdgeInsets.all(10),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                // mainAxisSize: MainAxisSize.max,
-                // children: <Widget>[
-                //   Column(
-                children: <Widget>[
-                  Row(
-                    // crossAxisAlignment: CrossAxisAlignment.center,
-                    // mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      _icon,
-                      Column(
-                        children: <Widget>[
-                          Text(info.deviceName),
-                          Text(info.deviceOSVersion),
-                        ],
+  Icon _icon = Icon(
+    _iconStyle,
+    size: 36,
+  );
+  return FractionallySizedBox(
+    widthFactor: 0.9,
+    child: Padding(
+        padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
+        child: Card(
+          child: Container(
+            margin: EdgeInsets.all(10),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              // mainAxisSize: MainAxisSize.max,
+              children: <Widget>[
+                Row(
+                  children: <Widget>[
+                    Container(
+                      margin: EdgeInsets.fromLTRB(5, 2, 0, 2),
+                      child: _icon,
+                    ),
+                    Expanded(
+                      child: Container(
+                        margin: EdgeInsets.fromLTRB(10, 3, 0, 3),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            SingleChildScrollView(
+                              scrollDirection: Axis.horizontal,
+                              child: Text(info.deviceName),
+                            ),
+                            SingleChildScrollView(
+                              scrollDirection: Axis.horizontal,
+                              child: Text(info.deviceOSVersion),
+                            ),
+                          ],
+                        ),
                       ),
-                    ],
-                  ),
-                  // crossAxisAlignment: CrossAxisAlignment.center,
-                  // children: [
-                  Text(
-                    datetimeToShortString(DateTime.parse(info.sendTime)),
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 14,
                     ),
+                  ],
+                ),
+                // crossAxisAlignment: CrossAxisAlignment.center,
+                // children: [
+                Text(
+                  datetimeToShortString(DateTime.parse(info.sendTime)),
+                  // textAlign: TextAlign.start,
+                  style: TextStyle(
+                    fontSize: 14,
                   ),
-                  Text(
-                    "DevicePage_PluginsCountText".tr + info.pluginsCount.toString(),
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 14,
+                ),
+                Text(
+                  "DevicePage_PluginsCountText".tr +
+                      info.pluginsCount.toString(),
+                  // textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 14,
+                  ),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      info.iPv4,
+                      // textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 10,
+                      ),
                     ),
-                  ),
-                  Text(
-                    info.iPv4,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 10,
+                    Text(
+                      info.iPv6,
+                      // textAlign: TextAlign.right,
+                      style: TextStyle(
+                        fontSize: 10,
+                      ),
                     ),
-                  ),
-                  Text(
-                    info.iPv6,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 10,
-                    ),
-                  ),
-                ],
-              ),
+                  ],
+                ),
+              ],
             ),
-          )
-        ]),
+          ),
+        )
+        // ]),
+        ),
   );
 }
