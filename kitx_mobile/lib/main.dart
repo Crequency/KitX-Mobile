@@ -69,15 +69,13 @@ class MyApp extends StatelessWidget {
           page: () => DevicePage(),
         ),
       ],
-      home: const MyHomePage(title: 'KitX Mobile'),
+      home: const MyHomePage(),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
-
-  final String title;
+  const MyHomePage({Key? key}) : super(key: key);
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -93,7 +91,6 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       drawer: Drawer(
           child: ListView(
-        // padding: EdgeInsets.zero,
         children: <Widget>[
           DrawerHeader(
             decoration: BoxDecoration(
@@ -152,12 +149,6 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ],
       )),
-      // body: PageView(
-      //   controller: _controller,
-      //   children: <Widget>[
-      //     HomePage(),
-      //   ],
-      // ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
