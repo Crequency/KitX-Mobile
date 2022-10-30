@@ -1,4 +1,5 @@
 // import 'dart:io';
+import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_logs/flutter_logs.dart';
@@ -53,7 +54,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       translations: Translation(),
-      locale: Locale('zh', 'CN'),
+      locale: ui.window.locale,
       fallbackLocale: Locale('en', 'US'),
       // supportedLocales: const [
       //   Locale("en", "US"),
