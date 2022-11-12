@@ -8,6 +8,8 @@ class DeviceInfo {
   late int pluginsCount;
   late String sendTime;
   late bool isMainDevice=false;
+  late String serverAddress;
+  late String serverBuildTime;
   late int deviceOSType;
 
   DeviceInfo(
@@ -20,6 +22,8 @@ class DeviceInfo {
         required this.pluginsCount,
         required this.sendTime,
         required this.isMainDevice,
+        required this.serverAddress,
+        required this.serverBuildTime,
         required this.deviceOSType});
 
   DeviceInfo.fromJson(Map<String, dynamic> json) {
@@ -32,6 +36,8 @@ class DeviceInfo {
     pluginsCount = json['PluginsCount'];
     sendTime = json['SendTime'];
     isMainDevice = json['IsMainDevice'];
+    serverAddress = json['ServerAddress'];
+    serverBuildTime = json['ServerBuildTime'];
     deviceOSType = json['DeviceOSType'];
   }
 
@@ -46,6 +52,8 @@ class DeviceInfo {
     data['PluginsCount'] = this.pluginsCount;
     data['SendTime'] = this.sendTime;
     data['IsMainDevice'] = this.isMainDevice;
+    data['ServerAddress'] = this.serverAddress;
+    data['ServerBuildTime'] = this.serverBuildTime;
     data['DeviceOSType'] = this.deviceOSType;
     return data;
   }
