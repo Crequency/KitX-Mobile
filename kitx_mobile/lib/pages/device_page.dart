@@ -75,6 +75,9 @@ Widget createDeviceCard(DeviceInfo info) {
     case 10:
       _iconStyle = CommunityMaterialIcons.microsoft_windows;
       break;
+    case 11:
+      _iconStyle = CommunityMaterialIcons.chip;
+      break;
     default:
       _iconStyle = Icons.help;
   }
