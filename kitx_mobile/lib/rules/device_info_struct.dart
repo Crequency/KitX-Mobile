@@ -4,10 +4,12 @@ class DeviceInfo {
   late String iPv4;
   late String iPv6;
   late String deviceMacAddress;
-  late int servingPort;
+  late int pluginServerPort;
   late int pluginsCount;
   late String sendTime;
   late bool isMainDevice=false;
+  late int deviceServerPort;
+  late String deviceServerBuildTime;
   late int deviceOSType;
 
   DeviceInfo(
@@ -16,10 +18,12 @@ class DeviceInfo {
         required this.iPv4,
         required this.iPv6,
         required this.deviceMacAddress,
-        required this.servingPort,
+        required this.pluginServerPort,
         required this.pluginsCount,
         required this.sendTime,
         required this.isMainDevice,
+        required this.deviceServerPort,
+        required this.deviceServerBuildTime,
         required this.deviceOSType});
 
   DeviceInfo.fromJson(Map<String, dynamic> json) {
@@ -28,10 +32,12 @@ class DeviceInfo {
     iPv4 = json['IPv4'];
     iPv6 = json['IPv6'];
     deviceMacAddress = json['DeviceMacAddress'];
-    servingPort = json['ServingPort'];
+    pluginServerPort = json['PluginServerPort'];
     pluginsCount = json['PluginsCount'];
     sendTime = json['SendTime'];
     isMainDevice = json['IsMainDevice'];
+    deviceServerPort = json['DeviceServerPort'];
+    deviceServerBuildTime = json['DeviceServerBuildTime'];
     deviceOSType = json['DeviceOSType'];
   }
 
@@ -42,10 +48,12 @@ class DeviceInfo {
     data['IPv4'] = this.iPv4;
     data['IPv6'] = this.iPv6;
     data['DeviceMacAddress'] = this.deviceMacAddress;
-    data['ServingPort'] = this.servingPort;
+    data['PluginServerPort'] = this.pluginServerPort;
     data['PluginsCount'] = this.pluginsCount;
     data['SendTime'] = this.sendTime;
     data['IsMainDevice'] = this.isMainDevice;
+    data['DeviceServerPort'] = this.deviceServerPort;
+    data['DeviceServerBuildTime'] = this.deviceServerBuildTime;
     data['DeviceOSType'] = this.deviceOSType;
     return data;
   }

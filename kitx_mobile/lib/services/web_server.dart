@@ -63,11 +63,13 @@ class WebServer {
           iPv4: _ipv4,
           iPv6: _ipv6,
           deviceMacAddress: _mac,
-          servingPort: 0,
+          pluginServerPort: 0,
           pluginsCount: 0,
-          sendTime: "",
+          sendTime: datetimeToIso8601(DateTime.now()),
           isMainDevice: false,
-          deviceOSType: 0,
+          deviceServerPort: 0,
+          deviceServerBuildTime: datetimeToIso8601(DateTime.now()),
+          deviceOSType: 1,
         );
         FlutterLogs.logInfo("network", "WebServer", "Get device info: ${jsonEncode(deviceInfo.toJson())}");
         await RawDatagramSocket.bind(InternetAddress.anyIPv4, _udpPortSend)
@@ -76,6 +78,7 @@ class WebServer {
               socket.joinMulticast(InternetAddress(_udpBroadcastAddress));
               Timer.periodic(const Duration(seconds: 2), (_) {
                 deviceInfo.sendTime = datetimeToIso8601(DateTime.now());
+                deviceInfo.deviceServerBuildTime = datetimeToIso8601(DateTime.now());
                 String _data = jsonEncode(deviceInfo.toJson());
                 FlutterLogs.logInfo("network", "WebServer", "UDP send: $_data");
                 socket.send(utf8.encode(_data), InternetAddress(_udpBroadcastAddress), _udpPortReceive);

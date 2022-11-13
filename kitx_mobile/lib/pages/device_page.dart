@@ -43,25 +43,25 @@ Widget createDeviceCard(DeviceInfo info) {
   IconData _iconStyle;
   switch (info.deviceOSType) {
     case 0:
-      _iconStyle = Icons.android;
+      _iconStyle = Icons.help;
       break;
     case 1:
-      _iconStyle = CommunityMaterialIcons.microsoft_edge;
+      _iconStyle = Icons.android;
       break;
     case 2:
-      _iconStyle = CommunityMaterialIcons.freebsd;
+      _iconStyle = CommunityMaterialIcons.microsoft_edge;
       break;
     case 3:
-      _iconStyle = CommunityMaterialIcons.apple_ios;
+      _iconStyle = CommunityMaterialIcons.freebsd;
       break;
     case 4:
-      _iconStyle = CommunityMaterialIcons.linux;
+      _iconStyle = CommunityMaterialIcons.apple_ios;
       break;
     case 5:
-      _iconStyle = CommunityMaterialIcons.apple_finder;
+      _iconStyle = CommunityMaterialIcons.linux;
       break;
     case 6:
-      _iconStyle = CommunityMaterialIcons.apple;
+      _iconStyle = CommunityMaterialIcons.apple_finder;
       break;
     case 7:
       _iconStyle = CommunityMaterialIcons.apple;
@@ -70,7 +70,13 @@ Widget createDeviceCard(DeviceInfo info) {
       _iconStyle = CommunityMaterialIcons.apple;
       break;
     case 9:
+      _iconStyle = CommunityMaterialIcons.apple;
+      break;
+    case 10:
       _iconStyle = CommunityMaterialIcons.microsoft_windows;
+      break;
+    case 11:
+      _iconStyle = CommunityMaterialIcons.chip;
       break;
     default:
       _iconStyle = Icons.help;
