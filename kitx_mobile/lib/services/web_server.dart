@@ -69,7 +69,7 @@ class WebServer {
           isMainDevice: false,
           serverAddress: "",
           serverBuildTime: datetimeToIso8601(DateTime.now()),
-          deviceOSType: 0,
+          deviceOSType: 1,
         );
         FlutterLogs.logInfo("network", "WebServer", "Get device info: ${jsonEncode(deviceInfo.toJson())}");
         await RawDatagramSocket.bind(InternetAddress.anyIPv4, _udpPortSend)
