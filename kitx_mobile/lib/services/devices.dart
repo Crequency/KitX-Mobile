@@ -3,6 +3,7 @@ import 'dart:async';
 // import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../utils/config.dart';
 import '../rules/device_info_struct.dart';
 
 
@@ -34,12 +35,12 @@ class Devices {
   }
 
   Future<void> init() async {
-    Timer.periodic(Duration(seconds: 5), (_) {
+    Timer.periodic(Duration(seconds: Config.WebServer_DeviceInfoCheckTTLSeconds), (_) {
       List<DeviceInfo> _tempList = deviceInfoList.toList();
       _tempList.forEach((each) {
         DateTime now = DateTime.now();
         DateTime time = DateTime.parse(each.sendTime);
-        if (now.difference(time).inSeconds > 10) {
+        if (now.difference(time).inSeconds > Config.WebServer_DeviceInfoTTLSeconds) {
           deviceInfoList.remove(each);
           deviceInfoList.refresh();
         }

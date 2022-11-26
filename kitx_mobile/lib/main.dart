@@ -1,9 +1,10 @@
 // import 'dart:io';
 import 'dart:ui' as ui;
 
-import 'package:flutter/material.dart';
-import 'package:flutter_logs/flutter_logs.dart';
+import 'package:flutter/material.dart' hide Intent;
 
+import 'package:flutter_logs/flutter_logs.dart';
+// import 'package:receive_intent/receive_intent.dart';
 import 'package:get/get.dart';
 
 import 'pages/home_page.dart';
@@ -13,31 +14,23 @@ import 'pages/test_page.dart';
 import 'services/web_server.dart';
 
 import 'utils/translation.dart';
+import 'utils/config.dart';
 import 'utils/global.dart' as global;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  WebServer server = WebServer(24040, 23404, "224.0.0.0");
+  WebServer server = WebServer(Config.WebServer_UdpPortReceive, Config.WebServer_UdpPortSend, Config.WebServer_UdpBroadcastAddress);
   server.initServer();
   await FlutterLogs.initLogs(
-    logLevelsEnabled: [
-      LogLevel.INFO,
-      LogLevel.WARNING,
-      LogLevel.ERROR,
-      LogLevel.SEVERE,
-    ],
-    timeStampFormat: TimeStampFormat.TIME_FORMAT_FULL_2,
-    directoryStructure: DirectoryStructure.FOR_DATE,
-    logTypesEnabled: [
-      "network",
-      "info",
-      "errors",
-    ],
-    logFileExtension: LogFileExtension.LOG,
-    logsWriteDirectoryName: "Logs",
-    logsExportDirectoryName: "Logs/Exported",
-    debugFileOperations: true,
-    isDebuggable: true,
+    logLevelsEnabled: Config.Log_LogLevelsEnabled,
+    timeStampFormat: Config.Log_TimeStampFormat,
+    directoryStructure: Config.Log_DirectoryStructure,
+    logTypesEnabled: Config.Log_LogTypesEnabled,
+    logFileExtension: Config.Log_LogFileExtension,
+    logsWriteDirectoryName: Config.Log_LogsWriteDirectoryName,
+    logsExportDirectoryName: Config.Log_LogsExportDirectoryName,
+    debugFileOperations: Config.Log_DebugFileOperations,
+    isDebuggable: Config.Log_IsDebuggable,
   );
   global.devices.init();
   runApp(const MyApp());

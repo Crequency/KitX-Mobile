@@ -13,8 +13,9 @@ import 'package:mac_address/mac_address.dart';
 
 
 import '../utils/datetime_format.dart';
-import '../rules/device_info_struct.dart';
+import '../utils/config.dart';
 import '../utils/global.dart' as global;
+import '../rules/device_info_struct.dart';
 
 
 /// 本文件可单独运行
@@ -69,7 +70,7 @@ class WebServer {
           isMainDevice: false,
           deviceServerPort: 0,
           deviceServerBuildTime: datetimeToIso8601(DateTime.now()),
-          deviceOSType: 1,
+          deviceOSType: Config.WebServer_DeviceOSType,
         );
         FlutterLogs.logInfo("network", "WebServer", "Get device info: ${jsonEncode(deviceInfo.toJson())}");
         await RawDatagramSocket.bind(InternetAddress.anyIPv4, _udpPortSend)
