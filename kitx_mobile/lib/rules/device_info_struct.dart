@@ -1,3 +1,8 @@
+import 'dart:convert';
+
+import '../utils/datetime_format.dart';
+
+
 class DeviceInfo {
   late String deviceName;
   late String deviceOSVersion;
@@ -6,10 +11,10 @@ class DeviceInfo {
   late String deviceMacAddress;
   late int pluginServerPort;
   late int pluginsCount;
-  late String sendTime;
-  late bool isMainDevice=false;
+  late DateTime sendTime;
+  late bool isMainDevice;
   late int deviceServerPort;
-  late String deviceServerBuildTime;
+  late DateTime deviceServerBuildTime;
   late int deviceOSType;
 
   DeviceInfo(
@@ -26,7 +31,8 @@ class DeviceInfo {
         required this.deviceServerBuildTime,
         required this.deviceOSType});
 
-  DeviceInfo.fromJson(Map<String, dynamic> json) {
+  DeviceInfo.fromString(str) {
+    final Map<String, dynamic> json = jsonDecode(str);
     deviceName = json['DeviceName'];
     deviceOSVersion = json['DeviceOSVersion'];
     iPv4 = json['IPv4'];
@@ -34,14 +40,14 @@ class DeviceInfo {
     deviceMacAddress = json['DeviceMacAddress'];
     pluginServerPort = json['PluginServerPort'];
     pluginsCount = json['PluginsCount'];
-    sendTime = json['SendTime'];
+    sendTime = DateTime.parse(json['SendTime']);
     isMainDevice = json['IsMainDevice'];
     deviceServerPort = json['DeviceServerPort'];
-    deviceServerBuildTime = json['DeviceServerBuildTime'];
+    deviceServerBuildTime = DateTime.parse(json['DeviceServerBuildTime']);
     deviceOSType = json['DeviceOSType'];
   }
 
-  Map<String, dynamic> toJson() {
+  String toString() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['DeviceName'] = this.deviceName;
     data['DeviceOSVersion'] = this.deviceOSVersion;
@@ -50,11 +56,11 @@ class DeviceInfo {
     data['DeviceMacAddress'] = this.deviceMacAddress;
     data['PluginServerPort'] = this.pluginServerPort;
     data['PluginsCount'] = this.pluginsCount;
-    data['SendTime'] = this.sendTime;
+    data['SendTime'] = datetimeToIso8601(this.sendTime);
     data['IsMainDevice'] = this.isMainDevice;
     data['DeviceServerPort'] = this.deviceServerPort;
-    data['DeviceServerBuildTime'] = this.deviceServerBuildTime;
+    data['DeviceServerBuildTime'] = datetimeToIso8601(this.deviceServerBuildTime);
     data['DeviceOSType'] = this.deviceOSType;
-    return data;
+    return jsonEncode(data);
   }
 }

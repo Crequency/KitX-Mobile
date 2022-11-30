@@ -39,7 +39,7 @@ class Devices {
       List<DeviceInfo> _tempList = deviceInfoList.toList();
       _tempList.forEach((each) {
         DateTime now = DateTime.now();
-        DateTime time = DateTime.parse(each.sendTime);
+        DateTime time = each.sendTime;
         if (now.difference(time).inSeconds > Config.WebServer_DeviceInfoTTLSeconds) {
           deviceInfoList.remove(each);
           deviceInfoList.refresh();

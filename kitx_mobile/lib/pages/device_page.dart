@@ -126,7 +126,7 @@ Widget createDeviceCard(DeviceInfo info) {
                 // crossAxisAlignment: CrossAxisAlignment.center,
                 // children: [
                 Text(
-                  datetimeToShortString(DateTime.parse(info.sendTime)),
+                  datetimeToShortString(info.sendTime),
                   // textAlign: TextAlign.start,
                   style: TextStyle(
                     fontSize: 14,
