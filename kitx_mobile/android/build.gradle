@@ -1,8 +1,10 @@
 buildscript {
     ext.kotlin_version = '1.6.10'
     repositories {
-        google()
-        mavenCentral()
+        maven { url 'https://maven.aliyun.com/repository/public' }
+        maven { url 'https://maven.aliyun.com/repository/google' }
+//        google()
+//        mavenCentral()
     }
 
     dependencies {
@@ -13,8 +15,10 @@ buildscript {
 
 allprojects {
     repositories {
-        google()
-        mavenCentral()
+        maven { url 'https://maven.aliyun.com/repository/public' }
+        maven { url 'https://maven.aliyun.com/repository/google' }
+//        google()
+//        mavenCentral()
     }
     gradle.projectsEvaluated {
     tasks.withType(JavaCompile) {

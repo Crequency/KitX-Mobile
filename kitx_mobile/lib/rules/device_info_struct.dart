@@ -2,6 +2,8 @@ import 'dart:convert';
 
 import '../utils/datetime_format.dart';
 
+/// 基于 https://jsontodart.com/ 工具更改而来
+
 
 class DeviceInfo {
   late String deviceName;
