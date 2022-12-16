@@ -18,7 +18,7 @@ class Config {
   static const TimeStampFormat Log_TimeStampFormat = TimeStampFormat.TIME_FORMAT_FULL_2;
   static const DirectoryStructure Log_DirectoryStructure = DirectoryStructure.FOR_DATE;
   static const List<String> Log_LogTypesEnabled = [
-    "network",
+    "server",
     "info",
     "errors",
   ];

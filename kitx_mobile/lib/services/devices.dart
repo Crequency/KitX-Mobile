@@ -4,6 +4,7 @@ import 'dart:async';
 import 'package:get/get.dart';
 
 import '../utils/config.dart';
+import '../utils/global.dart' as global;
 import '../rules/device_info_struct.dart';
 
 
@@ -28,7 +29,11 @@ class Devices {
         }
       });
       if (_tag) {
-        deviceInfoList.add(info);
+        if (info.deviceName == global.DeviceName) {
+          deviceInfoList.insert(0, info);
+        } else {
+          deviceInfoList.add(info);
+        }
         deviceInfoList.refresh();
       }
     }

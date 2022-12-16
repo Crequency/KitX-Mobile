@@ -40,25 +40,34 @@ class WebServer {
   Future<void> initServer() async {
     try {
       if (kIsWeb == false && Platform.isAndroid) {
-        late String _ipv4, _ipv6, _mac, _name;
+        late String _ipv4, _ipv6, _mac;
         // print(await _networkInfo.getWifiIP());
         await _networkInfo.getWifiIP().then((value) {_ipv4 = value.toString();});
         await _networkInfo.getWifiIPv6().then((value) {_ipv6 = value.toString();});
-        await _flutterBlue.name.then((value) {_name = value.toString();});
+        await _flutterBlue.name.then((value) {global.DeviceName = value.toString();});
         // await _networkInfo.getWifiBroadcast().then((value) {_udpBroadcastAddress = value.toString();});
         await GetMac.macAddress.then((value) {_mac = value.toString();});
+        FlutterLogs.logInfo("server", "WebServer", "Get network information. Ipv4: $_ipv4 Ipv6: $_ipv6 Mac: $_mac");
+        if (_ipv4 == "null") {
+          FlutterLogs.logError("errors", "WebServer", "Can not get IPv4. WebServer will not start.");
+          return;
+        }
+        if (_ipv6 == "null") {
+          FlutterLogs.logError("errors", "WebServer", "Can not get IPv6, but WebServer will still start.");
+          _ipv6 = "";
+        }
         if (_mac == "null") {
+          FlutterLogs.logError("errors", "WebServer", "Can not get MAC Address, but WebServer will still start.");
           _mac = "";
         }
-        FlutterLogs.logInfo("network", "WebServer", "Get network information. Ipv4: $_ipv4 Ipv6: $_ipv6 Broadcast: $_udpBroadcastAddress Mac: $_mac");
-        if ((_ipv4 == "null") || (_ipv6 == "null") || (_udpBroadcastAddress == "null")) { // null.toString() =>"null"
-          FlutterLogs.logError("errors", "WebServer", "Can not get network information. Ipv4: $_ipv4 Ipv6: $_ipv6 Broadcast: $_udpBroadcastAddress Mac: $_mac");
-          return ;
-        }
+        // if ((_ipv4 == "null") || (_ipv6 == "null") || (_udpBroadcastAddress == "null")) { // null.toString() =>"null"
+        //   FlutterLogs.logError("errors", "WebServer", "Can not get network information. Ipv4: $_ipv4 Ipv6: $_ipv6 Broadcast: $_udpBroadcastAddress Mac: $_mac");
+        //   return ;
+        // }
         // var _ipv6 = _networkInfo.getWifi_ipv6();
         AndroidDeviceInfo deviceData = await _deviceInfoPlugin.androidInfo;
         DeviceInfo deviceInfo = await DeviceInfo(
-          deviceName: _name,
+          deviceName: global.DeviceName,
           deviceOSVersion: "${deviceData.model.toString()} (Android ${deviceData.version.release} SDK ${deviceData.version.sdkInt})",
           iPv4: _ipv4,
           iPv6: _ipv6,
@@ -71,7 +80,7 @@ class WebServer {
           deviceServerBuildTime: DateTime.now(),
           deviceOSType: Config.WebServer_DeviceOSType,
         );
-        FlutterLogs.logInfo("network", "WebServer", "Get device info: ${deviceInfo.toString()}");
+        FlutterLogs.logInfo("server", "WebServer", "Get device info: ${deviceInfo.toString()}");
         await RawDatagramSocket.bind(InternetAddress.anyIPv4, _udpPortSend)
             .then((RawDatagramSocket socket) {
               socket.broadcastEnabled = true;
@@ -80,7 +89,7 @@ class WebServer {
                 deviceInfo.sendTime = DateTime.now();
                 // deviceInfo.deviceServerBuildTime = datetimeToIso8601(DateTime.now()); // Not necessary
                 String _data = deviceInfo.toString();
-                FlutterLogs.logInfo("network", "WebServer", "UDP send: $_data");
+                // FlutterLogs.logInfo("server", "WebServer", "UDP send: $_data");
                 socket.send(utf8.encode(_data), InternetAddress(_udpBroadcastAddress), _udpPortReceive);
               });
               print('UDP Echo ready to receive');
@@ -94,7 +103,7 @@ class WebServer {
                 Datagram? d = socket.receive();
                 if (d == null) return;
                 String _data = utf8.decode(d.data);
-                FlutterLogs.logInfo("network", "WebServer", "UDP receive: $_data");
+                // FlutterLogs.logInfo("server", "WebServer", "UDP receive: $_data");
                 DeviceInfo _deviceInfo = DeviceInfo.fromString(_data);
                 global.devices.addDevice(_deviceInfo);
               });

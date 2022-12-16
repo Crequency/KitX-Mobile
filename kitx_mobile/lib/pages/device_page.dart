@@ -150,13 +150,17 @@ Widget createDeviceCard(DeviceInfo info) {
                         fontSize: 10,
                       ),
                     ),
-                    Text(
-                      info.iPv6,
-                      // textAlign: TextAlign.right,
-                      style: TextStyle(
-                        fontSize: 10,
+                    Expanded(child: SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Text(
+                        info.iPv6,
+                        textAlign: TextAlign.right,
+                        style: TextStyle(
+                          fontSize: 10,
+                        ),
                       ),
-                    ),
+                    ),),
+
                   ],
                 ),
               ],
