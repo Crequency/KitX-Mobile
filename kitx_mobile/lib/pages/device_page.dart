@@ -17,10 +17,6 @@ class DevicePage extends StatefulWidget {
 }
 
 class _DevicePage extends State<DevicePage> {
-  // void _onPressed() {}
-  // Widget _cardBuilder(BuildContext context, int index) {
-  //   return createDeviceCard(global)
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -94,8 +90,6 @@ Widget createDeviceCard(DeviceInfo info) {
             margin: EdgeInsets.all(10),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              // mainAxisSize: MainAxisSize.max,
               children: <Widget>[
                 Row(
                   children: <Widget>[
@@ -125,11 +119,8 @@ Widget createDeviceCard(DeviceInfo info) {
                     ),
                   ],
                 ),
-                // crossAxisAlignment: CrossAxisAlignment.center,
-                // children: [
                 Text(
                   datetimeToShortString(info.sendTime),
-                  // textAlign: TextAlign.start,
                   style: TextStyle(
                     fontSize: 14,
                   ),
@@ -137,7 +128,6 @@ Widget createDeviceCard(DeviceInfo info) {
                 Text(
                   "DevicePage_PluginsCountText".tr +
                       info.pluginsCount.toString(),
-                  // textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 14,
                   ),
@@ -147,7 +137,6 @@ Widget createDeviceCard(DeviceInfo info) {
                   children: [
                     Text(
                       info.iPv4,
-                      // textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 10,
                       ),
@@ -170,7 +159,6 @@ Widget createDeviceCard(DeviceInfo info) {
             ),
           ),
         )
-        // ]),
         ),
   );
 }
