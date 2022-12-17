@@ -14,7 +14,8 @@ class Translation extends Translations {
       "HomePage_Text": "你点了这个按钮多少次？",
       "HomePage_Hello": "你好，世界！",
       "DevicePage_Title": "设备管理",
-      "DevicePage_PluginsCountText": "在线插件数: "
+      "DevicePage_PluginsCountText": "在线插件数: ",
+      "DevicePage_LocalDevice": "(本机)"
     },
     'en_US': {
       "Drawer_Title": "KitX",
@@ -27,7 +28,8 @@ class Translation extends Translations {
       "HomePage_Text": "You have clicked the button this many times:",
       "HomePage_Hello": "Hello World!",
       "DevicePage_Title": "Devices",
-      "DevicePage_PluginsCountText": "Enabled Plugins Count: "
+      "DevicePage_PluginsCountText": "Enabled Plugins Count: ",
+      "DevicePage_LocalDevice": "(Local Device)"
     }
   };
 }

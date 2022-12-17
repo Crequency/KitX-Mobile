@@ -111,7 +111,9 @@ Widget createDeviceCard(DeviceInfo info) {
                           children: <Widget>[
                             SingleChildScrollView(
                               scrollDirection: Axis.horizontal,
-                              child: Text(info.deviceName),
+                              child: Text(info.deviceName == global.DeviceName
+                                  ? info.deviceName + " " + "DevicePage_LocalDevice".tr
+                                  : info.deviceName),
                             ),
                             SingleChildScrollView(
                               scrollDirection: Axis.horizontal,
@@ -150,17 +152,18 @@ Widget createDeviceCard(DeviceInfo info) {
                         fontSize: 10,
                       ),
                     ),
-                    Expanded(child: SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Text(
-                        info.iPv6,
-                        textAlign: TextAlign.right,
-                        style: TextStyle(
-                          fontSize: 10,
+                    Flexible(
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Text(
+                          info.iPv6,
+                          textAlign: TextAlign.right,
+                          style: TextStyle(
+                            fontSize: 10,
+                          ),
                         ),
                       ),
-                    ),),
-
+                    ),
                   ],
                 ),
               ],
