@@ -32,7 +32,7 @@ class WebServer {
   final int _udpPortSend;
   late RawDatagramSocket socket;
   static final DeviceInfoPlugin _deviceInfoPlugin = DeviceInfoPlugin();
-  static final NetworkInfo _networkInfo = NetworkInfo();
+  static NetworkInfo _networkInfo = NetworkInfo();
   static final FlutterBluePlus _flutterBlue = FlutterBluePlus.instance;
 
   WebServer(this._udpPortReceive, this._udpPortSend, this._udpBroadcastAddress);
@@ -85,12 +85,24 @@ class WebServer {
             .then((RawDatagramSocket socket) {
               socket.broadcastEnabled = true;
               socket.joinMulticast(InternetAddress(_udpBroadcastAddress));
-              Timer.periodic(const Duration(seconds: 2), (_) {
-                deviceInfo.sendTime = DateTime.now();
-                // deviceInfo.deviceServerBuildTime = datetimeToIso8601(DateTime.now()); // Not necessary
-                String _data = deviceInfo.toString();
-                // FlutterLogs.logInfo("server", "WebServer", "UDP send: $_data");
-                socket.send(utf8.encode(_data), InternetAddress(_udpBroadcastAddress), _udpPortReceive);
+              Timer.periodic(const Duration(seconds: 2), (timer) {
+                try {
+                  deviceInfo.sendTime = DateTime.now();
+                  // deviceInfo.deviceServerBuildTime = datetimeToIso8601(DateTime.now()); // Not necessary
+                  String _data = deviceInfo.toString();
+                  // FlutterLogs.logInfo("server", "WebServer", "UDP send: $_data");
+                  socket.send(
+                      utf8.encode(_data), InternetAddress(_udpBroadcastAddress),
+                      _udpPortReceive);
+                }
+                catch (ex) {
+                  socket.close();
+                  timer.cancel();
+
+                  Future.delayed(const Duration(seconds: 5), (){
+                    initServer();
+                  });
+                }
               });
               print('UDP Echo ready to receive');
         }).catchError((e, stack) {FlutterLogs.logError("errors", "WebServer", "Catch an error: ${e.toString()} $stack");});
@@ -111,6 +123,7 @@ class WebServer {
       }
     } catch (e, stack) {
       FlutterLogs.logError("errors", "WebServer", "Catch an error: $e On: $stack");
+      _networkInfo = NetworkInfo();
     }
   }
 }
