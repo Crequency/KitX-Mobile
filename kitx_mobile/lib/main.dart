@@ -6,8 +6,10 @@ import 'package:flutter/material.dart' hide Intent;
 import 'package:flutter_logs/flutter_logs.dart';
 // import 'package:receive_intent/receive_intent.dart';
 import 'package:get/get.dart';
+import 'package:kitx_mobile/pages/account_page.dart';
+import 'package:kitx_mobile/pages/setting_page.dart';
 
-import 'pages/home_page.dart';
+import 'pages/about_page.dart';
 import 'pages/device_page.dart';
 import 'pages/test_page.dart';
 
@@ -56,7 +58,7 @@ class MyApp extends StatelessWidget {
       getPages: [
         GetPage(
           name: "/",
-          page: () => HomePage(),
+          page: () => AboutPage(),
         ),
         GetPage(
           name: "/DevicePage/",
@@ -104,14 +106,6 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           ),
           ListTile(
-            leading: Icon(Icons.home),
-            title: Text("Drawer_Home".tr),
-            onTap: () {
-              Get.back();
-              Get.to(() => HomePage());
-            },
-          ),
-          ListTile(
             leading: Icon(Icons.devices),
             title: Text("Drawer_Devices".tr),
             onTap: () {
@@ -124,11 +118,12 @@ class _MyHomePageState extends State<MyHomePage> {
             title: Text("Drawer_Account".tr),
             onTap: () {
               Get.back();
+              Get.to(() => AccountPage());
             },
           ),
           ListTile(
             leading: Icon(Icons.bug_report),
-            title: Text("TestPage"),
+            title: Text("Drawer_Test".tr),
             onTap: () {
               Get.back();
               Get.to(() => TestPage());
@@ -139,6 +134,15 @@ class _MyHomePageState extends State<MyHomePage> {
             title: Text("Drawer_Setting".tr),
             onTap: () {
               Get.back();
+              Get.to(() => SettingPage());
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.info_outline_rounded),
+            title: Text("Drawer_About".tr),
+            onTap: () {
+              Get.back();
+              Get.to(() => AboutPage());
             },
           ),
         ],
