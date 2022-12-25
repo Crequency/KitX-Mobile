@@ -22,7 +22,6 @@ class _TestPageState extends State<TestPage> {
 
     @override
     Widget build(BuildContext context) {
-        // imageCache.clear();
         return DefaultTabController(
             initialIndex: 0,
             length: 3,

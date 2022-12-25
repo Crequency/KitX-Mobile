@@ -13,7 +13,6 @@ class AboutPage extends StatefulWidget {
 class _AboutPageState extends State<AboutPage> {
     @override
     Widget build(BuildContext context) {
-        imageCache.clear();
         return Scaffold(
             appBar: AppBar(
                 title: Text("AboutPage_Title".tr),

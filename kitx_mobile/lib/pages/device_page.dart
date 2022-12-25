@@ -20,7 +20,6 @@ class _DevicePage extends State<DevicePage> {
 
     @override
     Widget build(BuildContext context) {
-        imageCache.clear();
         return Scaffold(
             appBar: AppBar(
                 title: Text("DevicePage_Title".tr),

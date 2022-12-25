@@ -13,7 +13,6 @@ class SettingPage extends StatefulWidget {
 class _SettingPageState extends State<SettingPage> {
     @override
     Widget build(BuildContext context) {
-        imageCache.clear();
         return Scaffold(
                 appBar: AppBar(
                     title: Text("SettingPage_Title".tr),
