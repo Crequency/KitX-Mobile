@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import 'test_pages/device_test.dart';
 import 'test_pages/network_info_test.dart';
@@ -27,7 +28,7 @@ class _TestPageState extends State<TestPage> {
             length: 3,
             child: Scaffold(
                 appBar: AppBar(
-                    title: const Text('Test Page'),
+                    title: Text("TestPage_Title".tr),
                     bottom: TabBar(
                         tabs: <Widget>[
                             Tab(

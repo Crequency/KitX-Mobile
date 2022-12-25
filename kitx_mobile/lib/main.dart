@@ -7,9 +7,11 @@ import 'package:flutter_logs/flutter_logs.dart';
 // import 'package:receive_intent/receive_intent.dart';
 import 'package:get/get.dart';
 
-import 'pages/home_page.dart';
 import 'pages/device_page.dart';
+import 'pages/account_page.dart';
 import 'pages/test_page.dart';
+import 'pages/setting_page.dart';
+import 'pages/about_page.dart';
 
 import 'services/web_service.dart';
 // import 'services/sms_server.dart';
@@ -22,6 +24,10 @@ import 'utils/global.dart' as global;
 Future<void> main() async {
     // 提前初始化
     WidgetsFlutterBinding.ensureInitialized();
+
+    // 初始化 WebService
+    WebService webService = WebService(Config.WebService_UdpPortReceive, Config.WebService_UdpPortSend, Config.WebService_UdpBroadcastAddress);
+    webService.initService();
     // 初始化 log
     await FlutterLogs.initLogs(
         logLevelsEnabled: Config.Log_LogLevelsEnabled, // Log 等级
@@ -34,10 +40,6 @@ Future<void> main() async {
         debugFileOperations: Config.Log_DebugFileOperations, // 调试文件操作
         isDebuggable: Config.Log_IsDebuggable, // 是否调试
     );
-
-    // 初始化 WebService
-    WebService webService = WebService(Config.WebService_UdpPortReceive, Config.WebService_UdpPortSend, Config.WebService_UdpBroadcastAddress);
-    webService.initService();
 
     // 初始化 Devices
     global.devices.init();
@@ -68,7 +70,7 @@ class MyApp extends StatelessWidget {
             getPages: [ // 定义路由
                 GetPage(
                     name: "/",
-                    page: () => HomePage(),
+                    page: () => AboutPage(),
                 ),
                 GetPage(
                     name: "/DevicePage/",
@@ -90,13 +92,12 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
     @override
     Widget build(BuildContext context) {
-        // imageCache.clear(); // 清理图片缓存
+        // imageCache.clear(); // 清除图片缓存
         return Scaffold(
             appBar: AppBar(
                 title: Text("IndexPage_Title".tr),
             ),
-            drawer: Drawer( // 定义侧滑栏
-                    child: ListView(
+            drawer: Drawer( child: ListView(
                 children: <Widget>[
                     DrawerHeader(
                         decoration: BoxDecoration(
@@ -116,14 +117,6 @@ class _MyHomePageState extends State<MyHomePage> {
                         ),
                     ),
                     ListTile(
-                        leading: Icon(Icons.home),
-                        title: Text("Drawer_Home".tr),
-                        onTap: () {
-                            Get.back();
-                            Get.to(() => HomePage());
-                        },
-                    ),
-                    ListTile(
                         leading: Icon(Icons.devices),
                         title: Text("Drawer_Devices".tr),
                         onTap: () {
@@ -136,11 +129,12 @@ class _MyHomePageState extends State<MyHomePage> {
                         title: Text("Drawer_Account".tr),
                         onTap: () {
                             Get.back();
+                            Get.to(() => AccountPage());
                         },
                     ),
                     ListTile(
                         leading: Icon(Icons.bug_report),
-                        title: Text("TestPage"),
+                        title: Text("Drawer_Test".tr),
                         onTap: () {
                             Get.back();
                             Get.to(() => TestPage());
@@ -151,11 +145,20 @@ class _MyHomePageState extends State<MyHomePage> {
                         title: Text("Drawer_Setting".tr),
                         onTap: () {
                             Get.back();
+                            Get.to(() => SettingPage());
+                        },
+                    ),
+                    ListTile(
+                        leading: Icon(Icons.info_outline_rounded),
+                        title: Text("Drawer_About".tr),
+                        onTap: () {
+                            Get.back();
+                            Get.to(() => AboutPage());
                         },
                     ),
                 ],
             )),
-            body: Center( // 定义主体
+            body: Center(
                 child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
