@@ -11,151 +11,163 @@ import 'pages/home_page.dart';
 import 'pages/device_page.dart';
 import 'pages/test_page.dart';
 
-import 'services/web_server.dart';
+import 'services/web_service.dart';
+// import 'services/sms_server.dart';
 
 import 'utils/translation.dart';
 import 'utils/config.dart';
 import 'utils/global.dart' as global;
 
+/// 程序入口
 Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  WebServer server = WebServer(Config.WebServer_UdpPortReceive, Config.WebServer_UdpPortSend, Config.WebServer_UdpBroadcastAddress);
-  server.initServer();
-  await FlutterLogs.initLogs(
-    logLevelsEnabled: Config.Log_LogLevelsEnabled,
-    timeStampFormat: Config.Log_TimeStampFormat,
-    directoryStructure: Config.Log_DirectoryStructure,
-    logTypesEnabled: Config.Log_LogTypesEnabled,
-    logFileExtension: Config.Log_LogFileExtension,
-    logsWriteDirectoryName: Config.Log_LogsWriteDirectoryName,
-    logsExportDirectoryName: Config.Log_LogsExportDirectoryName,
-    debugFileOperations: Config.Log_DebugFileOperations,
-    isDebuggable: Config.Log_IsDebuggable,
-  );
-  global.devices.init();
-  runApp(const MyApp());
+    // 提前初始化
+    WidgetsFlutterBinding.ensureInitialized();
+    // 初始化 log
+    await FlutterLogs.initLogs(
+        logLevelsEnabled: Config.Log_LogLevelsEnabled, // Log 等级
+        timeStampFormat: Config.Log_TimeStampFormat, // 时间戳格式
+        directoryStructure: Config.Log_DirectoryStructure, // 日志目录结构
+        logTypesEnabled: Config.Log_LogTypesEnabled, // 日志类型
+        logFileExtension: Config.Log_LogFileExtension,// 日志文件扩展名
+        logsWriteDirectoryName: Config.Log_LogsWriteDirectoryName, // 日志写入目录名
+        logsExportDirectoryName: Config.Log_LogsExportDirectoryName, // 日志导出目录名
+        debugFileOperations: Config.Log_DebugFileOperations, // 调试文件操作
+        isDebuggable: Config.Log_IsDebuggable, // 是否调试
+    );
+
+    // 初始化 WebService
+    WebService webService = WebService(Config.WebService_UdpPortReceive, Config.WebService_UdpPortSend, Config.WebService_UdpBroadcastAddress);
+    webService.initService();
+
+    // 初始化 Devices
+    global.devices.init();
+
+    // 初始化 SmsServer
+    // SmsServer smsServer = SmsServer();
+    // smsServer.initServer();
+    runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+    const MyApp({Key? key}) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    return GetMaterialApp(
-      title: 'KitX Mobile',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      translations: Translation(),
-      locale: ui.window.locale,
-      fallbackLocale: Locale('en', 'US'),
-      // supportedLocales: const [
-      //   Locale("en", "US"),
-      //   Locale("zh", "CN"),
-      // ],
-      getPages: [
-        GetPage(
-          name: "/",
-          page: () => HomePage(),
-        ),
-        GetPage(
-          name: "/DevicePage/",
-          page: () => DevicePage(),
-        ),
-      ],
-      home: const MyHomePage(),
-    );
-  }
+    @override
+    Widget build(BuildContext context) {
+        return GetMaterialApp(
+            title: 'KitX Mobile',
+            theme: ThemeData(
+                primarySwatch: Colors.blue,
+            ),
+            translations: Translation(), // 定义翻译 使用: "Text".tr
+            locale: ui.window.locale, // 定义当前语言
+            fallbackLocale: Locale('en', 'US'), // 定义默认语言
+            // supportedLocales: const [ // 定义支持的语言
+            //     Locale("en", "US"),
+            //     Locale("zh", "CN"),
+            // ],
+            getPages: [ // 定义路由
+                GetPage(
+                    name: "/",
+                    page: () => HomePage(),
+                ),
+                GetPage(
+                    name: "/DevicePage/",
+                    page: () => DevicePage(),
+                ),
+            ],
+            home: const MyHomePage(),
+        );
+    }
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key}) : super(key: key);
+    const MyHomePage({Key? key}) : super(key: key);
 
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
+    @override
+    State<MyHomePage> createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  @override
-  Widget build(BuildContext context) {
-    imageCache.clear();
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("IndexPage_Title".tr),
-      ),
-      drawer: Drawer(
-          child: ListView(
-        children: <Widget>[
-          DrawerHeader(
-            decoration: BoxDecoration(
-              // color: Colors.blue,
-              image: DecorationImage(
-                alignment: Alignment.topCenter,
-                image: AssetImage("assets/KitX-Background.png"),
-                fit: BoxFit.cover,
-              ),
+    @override
+    Widget build(BuildContext context) {
+        // imageCache.clear(); // 清理图片缓存
+        return Scaffold(
+            appBar: AppBar(
+                title: Text("IndexPage_Title".tr),
             ),
-            child: Text(
-              "Drawer_Title".tr,
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 24,
-              ),
+            drawer: Drawer( // 定义侧滑栏
+                    child: ListView(
+                children: <Widget>[
+                    DrawerHeader(
+                        decoration: BoxDecoration(
+                            // color: Colors.blue,
+                            image: DecorationImage(
+                                alignment: Alignment.topCenter,
+                                image: AssetImage("assets/KitX-Background.png"),
+                                fit: BoxFit.cover,
+                            ),
+                        ),
+                        child: Text(
+                            "Drawer_Title".tr,
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 24,
+                            ),
+                        ),
+                    ),
+                    ListTile(
+                        leading: Icon(Icons.home),
+                        title: Text("Drawer_Home".tr),
+                        onTap: () {
+                            Get.back();
+                            Get.to(() => HomePage());
+                        },
+                    ),
+                    ListTile(
+                        leading: Icon(Icons.devices),
+                        title: Text("Drawer_Devices".tr),
+                        onTap: () {
+                            Get.back();
+                            Get.to(() => DevicePage());
+                        },
+                    ),
+                    ListTile(
+                        leading: Icon(Icons.alternate_email),
+                        title: Text("Drawer_Account".tr),
+                        onTap: () {
+                            Get.back();
+                        },
+                    ),
+                    ListTile(
+                        leading: Icon(Icons.bug_report),
+                        title: Text("TestPage"),
+                        onTap: () {
+                            Get.back();
+                            Get.to(() => TestPage());
+                        },
+                    ),
+                    ListTile(
+                        leading: Icon(Icons.settings),
+                        title: Text("Drawer_Setting".tr),
+                        onTap: () {
+                            Get.back();
+                        },
+                    ),
+                ],
+            )),
+            body: Center( // 定义主体
+                child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                        Text(
+                            "欢迎来到 KitX",
+                            style: TextStyle(
+                                fontSize: 20,
+                            ),
+                        ),
+                    ],
+                ),
             ),
-          ),
-          ListTile(
-            leading: Icon(Icons.home),
-            title: Text("Drawer_Home".tr),
-            onTap: () {
-              Get.back();
-              Get.to(() => HomePage());
-            },
-          ),
-          ListTile(
-            leading: Icon(Icons.devices),
-            title: Text("Drawer_Devices".tr),
-            onTap: () {
-              Get.back();
-              Get.to(() => DevicePage());
-            },
-          ),
-          ListTile(
-            leading: Icon(Icons.alternate_email),
-            title: Text("Drawer_Account".tr),
-            onTap: () {
-              Get.back();
-            },
-          ),
-          ListTile(
-            leading: Icon(Icons.bug_report),
-            title: Text("TestPage"),
-            onTap: () {
-              Get.back();
-              Get.to(() => TestPage());
-            },
-          ),
-          ListTile(
-            leading: Icon(Icons.settings),
-            title: Text("Drawer_Setting".tr),
-            onTap: () {
-              Get.back();
-            },
-          ),
-        ],
-      )),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              "欢迎来到 KitX",
-              style: TextStyle(
-                fontSize: 20,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
+        );
+    }
 }
