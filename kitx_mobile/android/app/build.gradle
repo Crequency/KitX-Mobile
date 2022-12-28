@@ -21,6 +21,9 @@ if (flutterVersionName == null) {
     flutterVersionName = '1.0'
 }
 
+def majorVersion = "0.1.0"
+def majorVersionCode = 100000
+
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
@@ -49,8 +52,8 @@ android {
         minSdkVersion 21
         compileSdkVersion 33
         targetSdkVersion 24
-        versionCode flutterVersionCode.toInteger()
-        versionName flutterVersionName
+        versionCode majorVersionCode + (new Date (new Date().getTime() - new Date("1/1/2022").getTime()).getTime() / 86400000 as int)
+        versionName "v" + majorVersion + ".dev." + (new Date (new Date().getTime() - new Date("1/1/2022").getTime()).getTime() / 86400000 as int)
     }
 
     buildTypes {
