@@ -3,7 +3,7 @@ description: Mobile Client for KitX
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 1.0.0+1
+# version: 1.0.0+1
 
 environment:
   sdk: ">=2.17.6 <3.0.0"
@@ -23,15 +23,21 @@ dependencies:
   date_format: ^2.0.7 # 时间格式
   flutter_logs: ^2.1.7 # 日志
 #  sms_receiver: ^0.4.1 # 短信接收
-  permission_handler: ^8.1.4+2 #权限管理
+  permission_handler: ^8.1.4+2 # 权限管理
   mac_address: ^1.0.0 # 获取 MAC
   community_material_icon: ^5.9.55 # Material Design Icons 社区贡献
-  flutter_blue_plus: ^1.3.1
+  flutter_blue_plus: ^1.3.1 # 蓝牙
+  built_value: ^8.4.2 # JSON 序列化
+  built_collection: ^5.1.1
 #  flutter_blue: ^0.8.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  build_runner: ^2.3.3 # Build 工具
+  flutter_gen: ^5.1.0 # 生成工具
+  built_value_generator: ^8.4.2 # 生成工具
+  # 使用 flutter packages pub run build_runner build 生成 g.dart 文件
 
 flutter:
   uses-material-design: true

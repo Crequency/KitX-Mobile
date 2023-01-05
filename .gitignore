@@ -46,3 +46,6 @@ kitx_mobile/android/app/debug
 kitx_mobile/android/app/profile
 kitx_mobile/android/app/release
 kitx_mobile/pubspec.lock
+
+# VSCode workspace settings
+**/.vscode
