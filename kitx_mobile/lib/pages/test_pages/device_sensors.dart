@@ -1,5 +1,11 @@
 ﻿import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:sensors_plus/sensors_plus.dart';
+import 'package:vibration/vibration.dart';
+
+// import 'package:model_viewer/model_viewer.dart';
+// import 'package:flutter_cube/flutter_cube.dart';
 
 class DeviceSensorsPage extends StatefulWidget {
   @override
@@ -41,6 +47,20 @@ class _DeviceSensorsPage extends State<DeviceSensorsPage> {
     super.initState();
   }
 
+  int vibrate_duration = 200;
+
+  Future<void> vibrate() async {
+    if (await Vibration.hasCustomVibrationsSupport() ?? false) {
+      Vibration.vibrate(duration: vibrate_duration);
+    } else if (await Vibration.hasVibrator() ?? false) {
+      Vibration.vibrate();
+    }
+  }
+
+  void vibrate_cancel() {
+    Vibration.cancel();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,28 +72,48 @@ class _DeviceSensorsPage extends State<DeviceSensorsPage> {
           alignment: Alignment.center,
           padding: EdgeInsets.all(30),
           child: ListView(children: [
+            Text("Gyroscope Data", style: TextStyle(fontSize: 42)),
             Row(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text(
-                  direction_x,
-                  style: TextStyle(fontSize: 30),
-                ),
-                Text(
-                  direction_y,
-                  style: TextStyle(fontSize: 30),
-                ),
-                Text(
-                  direction_z,
-                  style: TextStyle(fontSize: 30),
-                ),
-              ]
-            ),
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    direction_x,
+                    style: TextStyle(fontSize: 30),
+                  ),
+                  Text(
+                    direction_y,
+                    style: TextStyle(fontSize: 30),
+                  ),
+                  Text(
+                    direction_z,
+                    style: TextStyle(fontSize: 30),
+                  ),
+                ]),
             Text("x: $x", style: TextStyle(fontSize: 14)),
             Text("y: $y", style: TextStyle(fontSize: 14)),
             Text("z: $z", style: TextStyle(fontSize: 14)),
+            // Cube(
+            //   onSceneCreated: (Scene scene) {
+            //     scene.world.add(Object(fileName: 'assets/cube/KitX-Icon-1.obj'));
+            //   },
+            // ),
+            Text("Vibration Test", style: TextStyle(fontSize: 42)),
+            TextField(
+              decoration:
+                  new InputDecoration(labelText: "Vibration Duration (ms)"),
+              keyboardType: TextInputType.number,
+              inputFormatters: <TextInputFormatter>[
+                FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+                FilteringTextInputFormatter.digitsOnly,
+              ], // Only numbers can be entered
+              onChanged: (val) {
+                vibrate_duration = int.parse(val);
+              },
+            ),
+            OutlinedButton(onPressed: vibrate, child: Text("Vibrate")),
+            OutlinedButton(onPressed: vibrate_cancel, child: Text("Cancel")),
           ])),
     );
   }
