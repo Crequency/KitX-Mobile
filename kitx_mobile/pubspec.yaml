@@ -32,6 +32,7 @@ dependencies:
 #  flutter_cube: ^0.1.0  # 加载简单 3D 模型
 #  model_viewer: ^0.8.1  # 3D 模型查看器
   vibration: ^1.7.6 # 手机震动
+#  battery_plus: ^3.0.2  # 电池数据
 
 dev_dependencies:
   flutter_test:
