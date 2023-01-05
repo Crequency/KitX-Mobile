@@ -4,7 +4,7 @@ import 'package:community_material_icon/community_material_icon.dart';
 
 import 'package:get/get.dart';
 
-import '../rules/device_info_struct.dart';
+import '../models/device_info_struct.dart';
 
 import '../utils/global.dart' as global;
 import '../utils/datetime_format.dart' show datetimeToShortString;
@@ -34,9 +34,9 @@ class _DevicePage extends State<DevicePage> {
     }
 }
 
-Widget createDeviceCard(DeviceInfo info) {
+Widget createDeviceCard(DeviceInfoStruct info) {
     IconData _iconStyle;
-    switch (info.deviceOSType) {
+    switch (info.DeviceOSType) {
         case 0:
             _iconStyle = Icons.help;
             break;
@@ -104,13 +104,13 @@ Widget createDeviceCard(DeviceInfo info) {
                                                     children: <Widget>[
                                                         SingleChildScrollView(
                                                             scrollDirection: Axis.horizontal,
-                                                            child: Text(info.deviceName == global.DeviceName
-                                                                    ? info.deviceName + " " + "DevicePage_LocalDevice".tr
-                                                                    : info.deviceName),
+                                                            child: Text(info.DeviceName == global.DeviceName
+                                                                    ? info.DeviceName + " " + "DevicePage_LocalDevice".tr
+                                                                    : info.DeviceName),
                                                         ),
                                                         SingleChildScrollView(
                                                             scrollDirection: Axis.horizontal,
-                                                            child: Text(info.deviceOSVersion),
+                                                            child: Text(info.DeviceOSVersion),
                                                         ),
                                                     ],
                                                 ),
@@ -119,14 +119,14 @@ Widget createDeviceCard(DeviceInfo info) {
                                     ],
                                 ),
                                 Text(
-                                    datetimeToShortString(info.sendTime),
+                                    datetimeToShortString(info.SendTime),
                                     style: TextStyle(
                                         fontSize: 14,
                                     ),
                                 ),
                                 Text(
                                     "DevicePage_PluginsCountText".tr +
-                                            info.pluginsCount.toString(),
+                                            info.PluginsCount.toString(),
                                     style: TextStyle(
                                         fontSize: 14,
                                     ),
@@ -135,7 +135,7 @@ Widget createDeviceCard(DeviceInfo info) {
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
                                         Text(
-                                            info.iPv4,
+                                            info.IPv4,
                                             style: TextStyle(
                                                 fontSize: 10,
                                             ),
@@ -144,7 +144,7 @@ Widget createDeviceCard(DeviceInfo info) {
                                             child: SingleChildScrollView(
                                                 scrollDirection: Axis.horizontal,
                                                 child: Text(
-                                                    info.iPv6,
+                                                    info.IPv6,
                                                     textAlign: TextAlign.right,
                                                     style: TextStyle(
                                                         fontSize: 10,
