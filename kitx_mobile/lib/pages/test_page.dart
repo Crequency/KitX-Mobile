@@ -33,7 +33,7 @@ class _TestPageState extends State<TestPage> {
                 icon: Icon(Icons.sensors),
               ),
               Tab(
-                text: "NetworkInfo",
+                text: "Network Info",
                 icon: Icon(Icons.wifi),
               ),
             ],

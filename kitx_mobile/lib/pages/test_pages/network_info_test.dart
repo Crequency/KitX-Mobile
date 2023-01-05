@@ -42,7 +42,7 @@ class _NetworkInfoPage extends State<NetworkInfoPage> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: const Text('NetworkInfo example app'),
+        title: const Text('Network Info'),
       ),
       body: Center(child: Text('Connection Status: \r\n$_connectionStatus')),
     );
