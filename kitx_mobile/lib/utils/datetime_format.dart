@@ -31,6 +31,8 @@ String _twoDigits(int n) {
 /// 以符合 KitX 要求
 ///
 /// e.g. `2022-10-14T18:09:02.367214+08:00`
+/// Update: 2023-1-7 由于改用 build_value 生成代码, 此方法弃用
+/*
 String datetimeToIso8601(DateTime time) {
     time = time.toLocal();
     String y =
@@ -45,6 +47,7 @@ String datetimeToIso8601(DateTime time) {
     var offset = time.timeZoneOffset;
     return "$y-$m-${d}T$h:$min:$sec.$ms$us${offset.isNegative ? "-" : "+"}${offset.inHours.abs().toString().padLeft(2, "0")}:${(offset.inMinutes - offset.inHours * 60).toString().padLeft(2, "0")}";
 }
+*/
 
 String datetimeToShortString(DateTime time) {
     time = time.toLocal();

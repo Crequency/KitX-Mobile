@@ -12,9 +12,9 @@ import 'package:network_info_plus/network_info_plus.dart';
 import 'package:mac_address/mac_address.dart';
 
 
+import '../models/device_info.dart';
 import '../utils/config.dart';
 import '../utils/global.dart' as global;
-import '../rules/device_info_struct.dart';
 
 
 /// 本文件可单独运行
@@ -41,6 +41,7 @@ class WebService {
     Future<void> initService() async {
         try {
             if (kIsWeb == false && Platform.isAndroid) {
+                // 获取设备信息
                 late String _ipv4, _ipv6, _mac;
                 await _networkInfo.getWifiIP().then((value) {_ipv4 = value.toString();});
                 await _networkInfo.getWifiIPv6().then((value) {_ipv6 = value.toString();});
@@ -53,6 +54,7 @@ class WebService {
                     Future.delayed(const Duration(seconds: 5), (){
                         initService();
                     });
+                    return;
                 }
                 if (_ipv6 == "null") {
                     FlutterLogs.logWarn("warnings", "WebService", "Can not get IPv6, but WebService will still start.");
@@ -63,47 +65,51 @@ class WebService {
                     _mac = "";
                 }
                 AndroidDeviceInfo deviceData = await _deviceInfoPlugin.androidInfo;
-                DeviceInfo deviceInfo = await DeviceInfo(
-                    deviceName: global.DeviceName,
-                    deviceOSVersion: "${deviceData.model.toString()} (Android ${deviceData.version.release} SDK ${deviceData.version.sdkInt})",
-                    iPv4: _ipv4,
-                    iPv6: _ipv6,
-                    deviceMacAddress: _mac,
-                    pluginServerPort: 0,
-                    pluginsCount: 0,
-                    sendTime: DateTime.now(),
-                    isMainDevice: false,
-                    deviceServerPort: 0,
-                    deviceServerBuildTime: DateTime.now(),
-                    deviceOSType: Config.WebService_DeviceOSType,
-                );
+                // deviceInfo 初始值
+                DeviceInfoStruct deviceInfo = DeviceInfoStruct(((b) => b
+                    ..DeviceName = global.DeviceName
+                    ..DeviceOSVersion = "${deviceData.model.toString()} (Android ${deviceData.version.release} SDK ${deviceData.version.sdkInt})"
+                    ..IPv4 = _ipv4
+                    ..IPv6 = _ipv6
+                    ..DeviceMacAddress = _mac
+                    ..PluginServerPort = 0
+                    ..PluginsCount = 0
+                    ..SendTime = DateTime.now().toUtc()
+                    ..IsMainDevice = false
+                    ..DeviceServerPort = 0
+                    ..DeviceServerBuildTime = DateTime.now().toUtc()
+                    ..DeviceOSType = Config.WebService_DeviceOSType
+                ));
                 FlutterLogs.logInfo("server", "WebService", "Get device info: ${deviceInfo.toString()}");
+                // 启动 UDP 服务
+                // UDP 发送
                 await RawDatagramSocket.bind(InternetAddress.anyIPv4, _udpPortSend)
                         .then((RawDatagramSocket socket) {
                             socket.broadcastEnabled = true;
                             socket.joinMulticast(InternetAddress(_udpBroadcastAddress));
                             Timer.periodic(const Duration(seconds: 2), (timer) {
                                 try {
-                                    deviceInfo.sendTime = DateTime.now();
-                                    // deviceInfo.deviceServerBuildTime = datetimeToIso8601(DateTime.now()); // Not necessary
+                                    deviceInfo = deviceInfo.rebuild((b) => b
+                                        ..SendTime = DateTime.now().toUtc());
                                     String _data = deviceInfo.toString();
                                     // FlutterLogs.logInfo("server", "WebService", "UDP send: $_data");
                                     socket.send(
                                             utf8.encode(_data), InternetAddress(_udpBroadcastAddress),
                                             _udpPortReceive);
                                 }
-                                catch (ex) {
+                                catch (e, stack) {
                                     socket.close();
                                     timer.cancel();
-
+                                    FlutterLogs.logInfo("errors", "WebService", "UDP send error: $e $stack. Try to restart the service in 5 seconds.");
                                     Future.delayed(const Duration(seconds: 5), (){
                                         initService();
                                     });
                                 }
                             });
-                            print('UDP Echo ready to receive');
-                }).catchError((e, stack) {FlutterLogs.logError("errors", "WebService", "Catch an error: ${e.toString()} $stack");});
+                            FlutterLogs.logInfo("server", "WebService", "UDP send service started.");
+                }).catchError((e, stack) {FlutterLogs.logError("errors", "WebService", "Catch an error: $e $stack");});
 
+                // UDP 接收
                 await RawDatagramSocket.bind(InternetAddress.anyIPv4, _udpPortReceive, ttl: 2)
                         .then((RawDatagramSocket socket) {
                             // socket.broadcastEnabled = true;
@@ -113,8 +119,12 @@ class WebService {
                                 if (d == null) return;
                                 String _data = utf8.decode(d.data);
                                 // FlutterLogs.logInfo("server", "WebService", "UDP receive: $_data");
-                                DeviceInfo _deviceInfo = DeviceInfo.fromString(_data);
-                                global.devices.addDevice(_deviceInfo);
+                                try {
+                                    DeviceInfoStruct? _deviceInfo = DeviceInfoStruct.fromString(_data);
+                                    if (_deviceInfo != null) global.devices.addDevice(_deviceInfo);
+                                } catch (e, stack) {
+                                    FlutterLogs.logError("errors", "WebService", "Can not deserialize deviceinfopack: '$_data'. Error: $e $stack");
+                                }
                             });
                 }).catchError((e, stack) {FlutterLogs.logError("errors", "WebService", "Catch an error: $e $stack");});
             }

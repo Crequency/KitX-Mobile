@@ -3,7 +3,7 @@ description: Mobile Client for KitX
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 1.0.0+1
+# version: 1.0.0+1
 
 environment:
   sdk: ">=2.17.6 <3.0.0"
@@ -30,13 +30,19 @@ dependencies:
   #  flutter_blue: ^0.8.0
   sensors_plus: ^1.2.2  # 传感器
 #  flutter_cube: ^0.1.0  # 加载简单 3D 模型
-#  model_viewer: ^0.8.1  # 3D 模型查看器
+  model_viewer: ^0.8.1  # 3D 模型查看器
   vibration: ^1.7.6 # 手机震动
 #  battery_plus: ^3.0.2  # 电池数据
+  built_value: ^8.4.2 # JSON 序列化
+  built_collection: ^5.1.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  build_runner: ^2.3.3 # Build 工具
+  flutter_gen: ^5.1.0 # 生成工具
+  built_value_generator: ^8.4.2 # 生成工具
+  # 使用 flutter packages pub run build_runner build 生成 g.dart 文件
 
 flutter:
   uses-material-design: true
