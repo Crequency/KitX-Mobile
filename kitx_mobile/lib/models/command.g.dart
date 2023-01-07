@@ -21,6 +21,12 @@ class _$CommandSerializer implements StructuredSerializer<Command> {
       'Type',
       serializers.serialize(object.Type,
           specifiedType: const FullType(CommandTypeEnum)),
+      'Sender',
+      serializers.serialize(object.Sender,
+          specifiedType: const FullType(DeviceLocator)),
+      'Target',
+      serializers.serialize(object.Target,
+          specifiedType: const FullType(DeviceLocator)),
       'CallId',
       serializers.serialize(object.CallId, specifiedType: const FullType(int)),
       'CallIdTTL',
@@ -34,33 +40,19 @@ class _$CommandSerializer implements StructuredSerializer<Command> {
           specifiedType: const FullType(String)),
       'RequestArgs',
       serializers.serialize(object.RequestArgs,
-          specifiedType: const FullType(List, const [const FullType(String)])),
+          specifiedType:
+              const FullType(BuiltList, const [const FullType(String)])),
       'Body',
-      serializers.serialize(object.Body,
-          specifiedType: const FullType(Uint8List)),
+      serializers.serialize(object.Body, specifiedType: const FullType(String)),
       'BodyLength',
       serializers.serialize(object.BodyLength,
           specifiedType: const FullType(int)),
       'Tags',
       serializers.serialize(object.Tags,
-          specifiedType: const FullType(
-              Map, const [const FullType(String), const FullType(String)])),
+          specifiedType: const FullType(BuiltMap,
+              const [const FullType(String), const FullType(String)])),
     ];
-    Object? value;
-    value = object.Sender;
-    if (value != null) {
-      result
-        ..add('Sender')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(DeviceLocator)));
-    }
-    value = object.Target;
-    if (value != null) {
-      result
-        ..add('Target')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(DeviceLocator)));
-    }
+
     return result;
   }
 
@@ -105,25 +97,23 @@ class _$CommandSerializer implements StructuredSerializer<Command> {
               specifiedType: const FullType(String))! as String;
           break;
         case 'RequestArgs':
-          result.RequestArgs = serializers.deserialize(value,
-                  specifiedType:
-                      const FullType(List, const [const FullType(String)]))!
-              as List<String>;
+          result.RequestArgs.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(String)]))!
+              as BuiltList<Object?>);
           break;
         case 'Body':
           result.Body = serializers.deserialize(value,
-              specifiedType: const FullType(Uint8List))! as Uint8List;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'BodyLength':
           result.BodyLength = serializers.deserialize(value,
               specifiedType: const FullType(int))! as int;
           break;
         case 'Tags':
-          result.Tags = serializers.deserialize(value,
-              specifiedType: const FullType(Map, const [
-                const FullType(String),
-                const FullType(String)
-              ]))! as Map<String, String>;
+          result.Tags.replace(serializers.deserialize(value,
+              specifiedType: const FullType(BuiltMap,
+                  const [const FullType(String), const FullType(String)]))!);
           break;
       }
     }
@@ -136,9 +126,9 @@ class _$Command extends Command {
   @override
   final CommandTypeEnum Type;
   @override
-  final DeviceLocator? Sender;
+  final DeviceLocator Sender;
   @override
-  final DeviceLocator? Target;
+  final DeviceLocator Target;
   @override
   final int CallId;
   @override
@@ -148,21 +138,21 @@ class _$Command extends Command {
   @override
   final String Request;
   @override
-  final List<String> RequestArgs;
+  final BuiltList<String> RequestArgs;
   @override
-  final Uint8List Body;
+  final String Body;
   @override
   final int BodyLength;
   @override
-  final Map<String, String> Tags;
+  final BuiltMap<String, String> Tags;
 
   factory _$Command([void Function(CommandBuilder)? updates]) =>
       (new CommandBuilder()..update(updates))._build();
 
   _$Command._(
       {required this.Type,
-      this.Sender,
-      this.Target,
+      required this.Sender,
+      required this.Target,
       required this.CallId,
       required this.CallIdTTL,
       required this.SendTime,
@@ -173,6 +163,8 @@ class _$Command extends Command {
       required this.Tags})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(Type, r'Command', 'Type');
+    BuiltValueNullFieldError.checkNotNull(Sender, r'Command', 'Sender');
+    BuiltValueNullFieldError.checkNotNull(Target, r'Command', 'Target');
     BuiltValueNullFieldError.checkNotNull(CallId, r'Command', 'CallId');
     BuiltValueNullFieldError.checkNotNull(CallIdTTL, r'Command', 'CallIdTTL');
     BuiltValueNullFieldError.checkNotNull(SendTime, r'Command', 'SendTime');
@@ -266,22 +258,24 @@ class CommandBuilder implements Builder<Command, CommandBuilder> {
   String? get Request => _$this._Request;
   set Request(String? Request) => _$this._Request = Request;
 
-  List<String>? _RequestArgs;
-  List<String>? get RequestArgs => _$this._RequestArgs;
-  set RequestArgs(List<String>? RequestArgs) =>
+  ListBuilder<String>? _RequestArgs;
+  ListBuilder<String> get RequestArgs =>
+      _$this._RequestArgs ??= new ListBuilder<String>();
+  set RequestArgs(ListBuilder<String>? RequestArgs) =>
       _$this._RequestArgs = RequestArgs;
 
-  Uint8List? _Body;
-  Uint8List? get Body => _$this._Body;
-  set Body(Uint8List? Body) => _$this._Body = Body;
+  String? _Body;
+  String? get Body => _$this._Body;
+  set Body(String? Body) => _$this._Body = Body;
 
   int? _BodyLength;
   int? get BodyLength => _$this._BodyLength;
   set BodyLength(int? BodyLength) => _$this._BodyLength = BodyLength;
 
-  Map<String, String>? _Tags;
-  Map<String, String>? get Tags => _$this._Tags;
-  set Tags(Map<String, String>? Tags) => _$this._Tags = Tags;
+  MapBuilder<String, String>? _Tags;
+  MapBuilder<String, String> get Tags =>
+      _$this._Tags ??= new MapBuilder<String, String>();
+  set Tags(MapBuilder<String, String>? Tags) => _$this._Tags = Tags;
 
   CommandBuilder();
 
@@ -289,16 +283,16 @@ class CommandBuilder implements Builder<Command, CommandBuilder> {
     final $v = _$v;
     if ($v != null) {
       _Type = $v.Type;
-      _Sender = $v.Sender?.toBuilder();
-      _Target = $v.Target?.toBuilder();
+      _Sender = $v.Sender.toBuilder();
+      _Target = $v.Target.toBuilder();
       _CallId = $v.CallId;
       _CallIdTTL = $v.CallIdTTL;
       _SendTime = $v.SendTime;
       _Request = $v.Request;
-      _RequestArgs = $v.RequestArgs;
+      _RequestArgs = $v.RequestArgs.toBuilder();
       _Body = $v.Body;
       _BodyLength = $v.BodyLength;
-      _Tags = $v.Tags;
+      _Tags = $v.Tags.toBuilder();
       _$v = null;
     }
     return this;
@@ -325,8 +319,8 @@ class CommandBuilder implements Builder<Command, CommandBuilder> {
           new _$Command._(
               Type: BuiltValueNullFieldError.checkNotNull(
                   Type, r'Command', 'Type'),
-              Sender: _Sender?.build(),
-              Target: _Target?.build(),
+              Sender: Sender.build(),
+              Target: Target.build(),
               CallId: BuiltValueNullFieldError.checkNotNull(
                   CallId, r'Command', 'CallId'),
               CallIdTTL: BuiltValueNullFieldError.checkNotNull(
@@ -335,21 +329,25 @@ class CommandBuilder implements Builder<Command, CommandBuilder> {
                   SendTime, r'Command', 'SendTime'),
               Request: BuiltValueNullFieldError.checkNotNull(
                   Request, r'Command', 'Request'),
-              RequestArgs: BuiltValueNullFieldError.checkNotNull(
-                  RequestArgs, r'Command', 'RequestArgs'),
+              RequestArgs: RequestArgs.build(),
               Body: BuiltValueNullFieldError.checkNotNull(
                   Body, r'Command', 'Body'),
               BodyLength: BuiltValueNullFieldError.checkNotNull(
                   BodyLength, r'Command', 'BodyLength'),
-              Tags: BuiltValueNullFieldError.checkNotNull(
-                  Tags, r'Command', 'Tags'));
+              Tags: Tags.build());
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'Sender';
-        _Sender?.build();
+        Sender.build();
         _$failedField = 'Target';
-        _Target?.build();
+        Target.build();
+
+        _$failedField = 'RequestArgs';
+        RequestArgs.build();
+
+        _$failedField = 'Tags';
+        Tags.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             r'Command', _$failedField, e.toString());

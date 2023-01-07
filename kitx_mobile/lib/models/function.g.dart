@@ -24,18 +24,19 @@ class _$PluginFunctionSerializer
       serializers.serialize(object.Name, specifiedType: const FullType(String)),
       'DisplayNames',
       serializers.serialize(object.DisplayNames,
-          specifiedType: const FullType(
-              Map, const [const FullType(String), const FullType(String)])),
+          specifiedType: const FullType(BuiltMap,
+              const [const FullType(String), const FullType(String)])),
       'Parameters',
       serializers.serialize(object.Parameters,
-          specifiedType: const FullType(Map, const [
+          specifiedType: const FullType(BuiltMap, const [
             const FullType(String),
             const FullType(
                 Map, const [const FullType(String), const FullType(String)])
           ])),
       'ParametersType',
       serializers.serialize(object.ParametersType,
-          specifiedType: const FullType(List, const [const FullType(String)])),
+          specifiedType:
+              const FullType(BuiltList, const [const FullType(String)])),
       'HasAppendParameters',
       serializers.serialize(object.HasAppendParameters,
           specifiedType: const FullType(bool)),
@@ -64,25 +65,23 @@ class _$PluginFunctionSerializer
               specifiedType: const FullType(String))! as String;
           break;
         case 'DisplayNames':
-          result.DisplayNames = serializers.deserialize(value,
-              specifiedType: const FullType(Map, const [
-                const FullType(String),
-                const FullType(String)
-              ]))! as Map<String, String>;
+          result.DisplayNames.replace(serializers.deserialize(value,
+              specifiedType: const FullType(BuiltMap,
+                  const [const FullType(String), const FullType(String)]))!);
           break;
         case 'Parameters':
-          result.Parameters = serializers.deserialize(value,
-              specifiedType: const FullType(Map, const [
+          result.Parameters.replace(serializers.deserialize(value,
+              specifiedType: const FullType(BuiltMap, const [
                 const FullType(String),
                 const FullType(
                     Map, const [const FullType(String), const FullType(String)])
-              ]))! as Map<String, Map<String, String>>;
+              ]))!);
           break;
         case 'ParametersType':
-          result.ParametersType = serializers.deserialize(value,
-                  specifiedType:
-                      const FullType(List, const [const FullType(String)]))!
-              as List<String>;
+          result.ParametersType.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(String)]))!
+              as BuiltList<Object?>);
           break;
         case 'HasAppendParameters':
           result.HasAppendParameters = serializers.deserialize(value,
@@ -103,11 +102,11 @@ class _$PluginFunction extends PluginFunction {
   @override
   final String Name;
   @override
-  final Map<String, String> DisplayNames;
+  final BuiltMap<String, String> DisplayNames;
   @override
-  final Map<String, Map<String, String>> Parameters;
+  final BuiltMap<String, Map<String, String>> Parameters;
   @override
-  final List<String> ParametersType;
+  final BuiltList<String> ParametersType;
   @override
   final bool HasAppendParameters;
   @override
@@ -178,19 +177,22 @@ class PluginFunctionBuilder
   String? get Name => _$this._Name;
   set Name(String? Name) => _$this._Name = Name;
 
-  Map<String, String>? _DisplayNames;
-  Map<String, String>? get DisplayNames => _$this._DisplayNames;
-  set DisplayNames(Map<String, String>? DisplayNames) =>
+  MapBuilder<String, String>? _DisplayNames;
+  MapBuilder<String, String> get DisplayNames =>
+      _$this._DisplayNames ??= new MapBuilder<String, String>();
+  set DisplayNames(MapBuilder<String, String>? DisplayNames) =>
       _$this._DisplayNames = DisplayNames;
 
-  Map<String, Map<String, String>>? _Parameters;
-  Map<String, Map<String, String>>? get Parameters => _$this._Parameters;
-  set Parameters(Map<String, Map<String, String>>? Parameters) =>
+  MapBuilder<String, Map<String, String>>? _Parameters;
+  MapBuilder<String, Map<String, String>> get Parameters =>
+      _$this._Parameters ??= new MapBuilder<String, Map<String, String>>();
+  set Parameters(MapBuilder<String, Map<String, String>>? Parameters) =>
       _$this._Parameters = Parameters;
 
-  List<String>? _ParametersType;
-  List<String>? get ParametersType => _$this._ParametersType;
-  set ParametersType(List<String>? ParametersType) =>
+  ListBuilder<String>? _ParametersType;
+  ListBuilder<String> get ParametersType =>
+      _$this._ParametersType ??= new ListBuilder<String>();
+  set ParametersType(ListBuilder<String>? ParametersType) =>
       _$this._ParametersType = ParametersType;
 
   bool? _HasAppendParameters;
@@ -209,9 +211,9 @@ class PluginFunctionBuilder
     final $v = _$v;
     if ($v != null) {
       _Name = $v.Name;
-      _DisplayNames = $v.DisplayNames;
-      _Parameters = $v.Parameters;
-      _ParametersType = $v.ParametersType;
+      _DisplayNames = $v.DisplayNames.toBuilder();
+      _Parameters = $v.Parameters.toBuilder();
+      _ParametersType = $v.ParametersType.toBuilder();
       _HasAppendParameters = $v.HasAppendParameters;
       _ReturnValueType = $v.ReturnValueType;
       _$v = null;
@@ -234,20 +236,36 @@ class PluginFunctionBuilder
   PluginFunction build() => _build();
 
   _$PluginFunction _build() {
-    final _$result = _$v ??
-        new _$PluginFunction._(
-            Name: BuiltValueNullFieldError.checkNotNull(
-                Name, r'PluginFunction', 'Name'),
-            DisplayNames: BuiltValueNullFieldError.checkNotNull(
-                DisplayNames, r'PluginFunction', 'DisplayNames'),
-            Parameters: BuiltValueNullFieldError.checkNotNull(
-                Parameters, r'PluginFunction', 'Parameters'),
-            ParametersType: BuiltValueNullFieldError.checkNotNull(
-                ParametersType, r'PluginFunction', 'ParametersType'),
-            HasAppendParameters: BuiltValueNullFieldError.checkNotNull(
-                HasAppendParameters, r'PluginFunction', 'HasAppendParameters'),
-            ReturnValueType: BuiltValueNullFieldError.checkNotNull(
-                ReturnValueType, r'PluginFunction', 'ReturnValueType'));
+    _$PluginFunction _$result;
+    try {
+      _$result = _$v ??
+          new _$PluginFunction._(
+              Name: BuiltValueNullFieldError.checkNotNull(
+                  Name, r'PluginFunction', 'Name'),
+              DisplayNames: DisplayNames.build(),
+              Parameters: Parameters.build(),
+              ParametersType: ParametersType.build(),
+              HasAppendParameters: BuiltValueNullFieldError.checkNotNull(
+                  HasAppendParameters,
+                  r'PluginFunction',
+                  'HasAppendParameters'),
+              ReturnValueType: BuiltValueNullFieldError.checkNotNull(
+                  ReturnValueType, r'PluginFunction', 'ReturnValueType'));
+    } catch (_) {
+      late String _$failedField;
+      try {
+        _$failedField = 'DisplayNames';
+        DisplayNames.build();
+        _$failedField = 'Parameters';
+        Parameters.build();
+        _$failedField = 'ParametersType';
+        ParametersType.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            r'PluginFunction', _$failedField, e.toString());
+      }
+      rethrow;
+    }
     replace(_$result);
     return _$result;
   }

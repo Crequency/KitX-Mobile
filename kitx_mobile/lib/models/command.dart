@@ -1,6 +1,6 @@
 import 'dart:convert';
-import 'package:flutter/foundation.dart';
 
+import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 
@@ -15,9 +15,9 @@ abstract class Command implements Built<Command, CommandBuilder> {
     
     CommandTypeEnum get Type;
 
-    DeviceLocator? get Sender;
+    DeviceLocator get Sender;
 
-    DeviceLocator? get Target;
+    DeviceLocator get Target;
 
     int get CallId;
 
@@ -27,13 +27,13 @@ abstract class Command implements Built<Command, CommandBuilder> {
 
     String get Request;
 
-    List<String> get RequestArgs;
+    BuiltList<String> get RequestArgs;
 
-    Uint8List get Body;
+    String get Body;
 
     int get BodyLength;
 
-    Map<String, String> get Tags;
+    BuiltMap<String, String> get Tags;
 
     Command._();
     factory Command([void Function(CommandBuilder) updates]) = _$Command;

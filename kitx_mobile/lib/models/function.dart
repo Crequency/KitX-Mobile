@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 
@@ -11,11 +12,11 @@ abstract class PluginFunction implements Built<PluginFunction, PluginFunctionBui
 
     String get Name;
 
-    Map<String, String> get DisplayNames;
+    BuiltMap<String, String> get DisplayNames;
 
-    Map<String, Map<String, String>> get Parameters;
+    BuiltMap<String, Map<String, String>> get Parameters;
 
-    List<String> get ParametersType;
+    BuiltList<String> get ParametersType;
 
     bool get HasAppendParameters;
 
