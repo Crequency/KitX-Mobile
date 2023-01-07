@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 import '../utils/config.dart';
 import '../utils/global.dart' as global;
 // import '../rules/device_info_struct.dart';
-import '../models/device_info_struct.dart';
+import '../models/device_info.dart';
 
 
 class Devices {

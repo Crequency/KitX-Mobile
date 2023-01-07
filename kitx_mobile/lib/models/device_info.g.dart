@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'device_info_struct.dart';
+part of 'device_info.dart';
 
 // **************************************************************************
 // BuiltValueGenerator
@@ -53,7 +53,7 @@ class _$DeviceInfoStructSerializer
           specifiedType: const FullType(DateTime)),
       'DeviceOSType',
       serializers.serialize(object.DeviceOSType,
-          specifiedType: const FullType(int)),
+          specifiedType: const FullType(DeviceOSTypeEnum)),
     ];
 
     return result;
@@ -117,7 +117,8 @@ class _$DeviceInfoStructSerializer
           break;
         case 'DeviceOSType':
           result.DeviceOSType = serializers.deserialize(value,
-              specifiedType: const FullType(int))! as int;
+                  specifiedType: const FullType(DeviceOSTypeEnum))!
+              as DeviceOSTypeEnum;
           break;
       }
     }
@@ -150,7 +151,7 @@ class _$DeviceInfoStruct extends DeviceInfoStruct {
   @override
   final DateTime DeviceServerBuildTime;
   @override
-  final int DeviceOSType;
+  final DeviceOSTypeEnum DeviceOSType;
 
   factory _$DeviceInfoStruct(
           [void Function(DeviceInfoStructBuilder)? updates]) =>
@@ -300,9 +301,10 @@ class DeviceInfoStructBuilder
   set DeviceServerBuildTime(DateTime? DeviceServerBuildTime) =>
       _$this._DeviceServerBuildTime = DeviceServerBuildTime;
 
-  int? _DeviceOSType;
-  int? get DeviceOSType => _$this._DeviceOSType;
-  set DeviceOSType(int? DeviceOSType) => _$this._DeviceOSType = DeviceOSType;
+  DeviceOSTypeEnum? _DeviceOSType;
+  DeviceOSTypeEnum? get DeviceOSType => _$this._DeviceOSType;
+  set DeviceOSType(DeviceOSTypeEnum? DeviceOSType) =>
+      _$this._DeviceOSType = DeviceOSType;
 
   DeviceInfoStructBuilder();
 

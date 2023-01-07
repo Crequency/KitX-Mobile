@@ -4,7 +4,8 @@ import 'package:community_material_icon/community_material_icon.dart';
 
 import 'package:get/get.dart';
 
-import '../models/device_info_struct.dart';
+import '../models/device_info.dart';
+import '../models/enums/device_os_type.dart';
 
 import '../utils/global.dart' as global;
 import '../utils/datetime_format.dart' show datetimeToShortString;
@@ -37,40 +38,40 @@ class _DevicePage extends State<DevicePage> {
 Widget createDeviceCard(DeviceInfoStruct info) {
     IconData _iconStyle;
     switch (info.DeviceOSType) {
-        case 0:
+        case DeviceOSTypeEnum.Unknown:
             _iconStyle = Icons.help;
             break;
-        case 1:
+        case DeviceOSTypeEnum.Android:
             _iconStyle = Icons.android;
             break;
-        case 2:
+        case DeviceOSTypeEnum.Browser:
             _iconStyle = CommunityMaterialIcons.microsoft_edge;
             break;
-        case 3:
+        case DeviceOSTypeEnum.FreeBSD:
             _iconStyle = CommunityMaterialIcons.freebsd;
             break;
-        case 4:
+        case DeviceOSTypeEnum.iOS:
             _iconStyle = CommunityMaterialIcons.apple_ios;
             break;
-        case 5:
+        case DeviceOSTypeEnum.Linux:
             _iconStyle = CommunityMaterialIcons.linux;
             break;
-        case 6:
+        case DeviceOSTypeEnum.MacCatalyst:
             _iconStyle = CommunityMaterialIcons.apple_finder;
             break;
-        case 7:
+        case DeviceOSTypeEnum.MacOS:
             _iconStyle = CommunityMaterialIcons.apple;
             break;
-        case 8:
+        case DeviceOSTypeEnum.TvOS:
             _iconStyle = CommunityMaterialIcons.apple;
             break;
-        case 9:
+        case DeviceOSTypeEnum.WatchOS:
             _iconStyle = CommunityMaterialIcons.apple;
             break;
-        case 10:
+        case DeviceOSTypeEnum.Windows:
             _iconStyle = CommunityMaterialIcons.microsoft_windows;
             break;
-        case 11:
+        case DeviceOSTypeEnum.IoT:
             _iconStyle = CommunityMaterialIcons.chip;
             break;
         default:

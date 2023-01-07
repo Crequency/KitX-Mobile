@@ -8,14 +8,13 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_logs/flutter_logs.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
-import 'package:kitx_mobile/models/device_info_struct.dart';
 import 'package:network_info_plus/network_info_plus.dart';
 import 'package:mac_address/mac_address.dart';
 
 
+import '../models/device_info.dart';
 import '../utils/config.dart';
 import '../utils/global.dart' as global;
-import '../models/device_info_struct.dart';
 
 
 /// 本文件可单独运行
@@ -55,6 +54,7 @@ class WebService {
                     Future.delayed(const Duration(seconds: 5), (){
                         initService();
                     });
+                    return;
                 }
                 if (_ipv6 == "null") {
                     FlutterLogs.logWarn("warnings", "WebService", "Can not get IPv6, but WebService will still start.");
@@ -82,7 +82,7 @@ class WebService {
                 ));
                 FlutterLogs.logInfo("server", "WebService", "Get device info: ${deviceInfo.toString()}");
                 // 启动 UDP 服务
-                // UDP 发生
+                // UDP 发送
                 await RawDatagramSocket.bind(InternetAddress.anyIPv4, _udpPortSend)
                         .then((RawDatagramSocket socket) {
                             socket.broadcastEnabled = true;
@@ -106,7 +106,7 @@ class WebService {
                                     });
                                 }
                             });
-                            print('UDP Echo ready to receive');
+                            FlutterLogs.logInfo("server", "WebService", "UDP send service started.");
                 }).catchError((e, stack) {FlutterLogs.logError("errors", "WebService", "Catch an error: $e $stack");});
 
                 // UDP 接收

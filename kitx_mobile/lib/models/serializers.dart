@@ -1,13 +1,13 @@
-// JSON 序列化器，这个文件是自动生成的，不要手动修改，如果需要添加新的模型，需要在这里添加
+// JSON 序列化器 如果需要添加新的模型, 需要在这里添加
 
 library serializers;
 
-import 'package:built_collection/built_collection.dart';
 import 'package:built_value/iso_8601_date_time_serializer.dart';
 import 'package:built_value/serializer.dart';
 import 'package:built_value/standard_json_plugin.dart';
 
-import 'device_info_struct.dart';
+import 'device_info.dart';
+import 'enums/device_os_type.dart';
 
 part 'serializers.g.dart';
 
@@ -15,6 +15,7 @@ part 'serializers.g.dart';
     // TODO: add the built values that require serialization
     // TODO: 添加需要序列化的 built value
     DeviceInfoStruct,
+    // DeviceOSType,
 ])
 
 /// Can add additional plugins that will serialize types like [DateTime]

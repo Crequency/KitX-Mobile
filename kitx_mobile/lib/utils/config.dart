@@ -2,13 +2,15 @@ library kitx_moblie.config;
 
 import 'package:flutter_logs/flutter_logs.dart';
 
+import '../models/enums/device_os_type.dart';
+
 class Config {
     static const String WebService_UdpBroadcastAddress = "224.0.0.0";
     static const int WebService_UdpPortReceive = 24040;
     static const int WebService_UdpPortSend = 23404;
     static const int WebService_DeviceInfoCheckTTLSeconds = 5;
     static const int WebService_DeviceInfoTTLSeconds = 5;
-    static const int WebService_DeviceOSType = 1;
+    static const DeviceOSTypeEnum WebService_DeviceOSType = DeviceOSTypeEnum.Android;
     static const List<LogLevel> Log_LogLevelsEnabled= [
         LogLevel.INFO,
         LogLevel.WARNING,

@@ -3,9 +3,11 @@ import 'dart:convert';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 
+import 'enums/device_os_type.dart';
+
 import 'serializers.dart';
 
-part 'device_info_struct.g.dart';
+part 'device_info.g.dart';
 
 abstract class DeviceInfoStruct implements Built<DeviceInfoStruct, DeviceInfoStructBuilder> {
     String get DeviceName;
@@ -30,7 +32,7 @@ abstract class DeviceInfoStruct implements Built<DeviceInfoStruct, DeviceInfoStr
 
     DateTime get DeviceServerBuildTime;
     
-    int get DeviceOSType;
+    DeviceOSTypeEnum get DeviceOSType;
 
     DeviceInfoStruct._();
     factory DeviceInfoStruct([void Function(DeviceInfoStructBuilder) updates]) = _$DeviceInfoStruct;
