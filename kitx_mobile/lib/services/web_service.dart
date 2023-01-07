@@ -66,7 +66,7 @@ class WebService {
                 }
                 AndroidDeviceInfo deviceData = await _deviceInfoPlugin.androidInfo;
                 // deviceInfo 初始值
-                DeviceInfoStruct deviceInfo = new DeviceInfoStruct(((b) => b
+                DeviceInfoStruct deviceInfo = DeviceInfoStruct(((b) => b
                     ..DeviceName = global.DeviceName
                     ..DeviceOSVersion = "${deviceData.model.toString()} (Android ${deviceData.version.release} SDK ${deviceData.version.sdkInt})"
                     ..IPv4 = _ipv4
