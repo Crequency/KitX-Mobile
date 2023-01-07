@@ -10,6 +10,7 @@ import 'serializers.dart';
 part 'device_info.g.dart';
 
 abstract class DeviceInfoStruct implements Built<DeviceInfoStruct, DeviceInfoStructBuilder> {
+
     String get DeviceName;
 
     String get DeviceOSVersion;
@@ -41,6 +42,7 @@ abstract class DeviceInfoStruct implements Built<DeviceInfoStruct, DeviceInfoStr
         return serializers.serializeWith(DeviceInfoStruct.serializer, this);
     }
 
+    @override
     String toString() {
         return json.encode(serializers.serializeWith(DeviceInfoStruct.serializer, this));
     }

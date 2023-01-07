@@ -6,16 +6,23 @@ import 'package:built_value/iso_8601_date_time_serializer.dart';
 import 'package:built_value/serializer.dart';
 import 'package:built_value/standard_json_plugin.dart';
 
+import 'command.dart';
 import 'device_info.dart';
+import 'device_locator.dart';
+import 'function.dart';
+
 import 'enums/device_os_type.dart';
+import 'enums/command_type.dart';
 
 part 'serializers.g.dart';
 
 @SerializersFor([
     // TODO: add the built values that require serialization
     // TODO: 添加需要序列化的 built value
+    Command,
     DeviceInfoStruct,
-    // DeviceOSType,
+    DeviceLocator,
+    PluginFunction,
 ])
 
 /// Can add additional plugins that will serialize types like [DateTime]

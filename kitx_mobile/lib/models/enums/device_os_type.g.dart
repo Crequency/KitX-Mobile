@@ -6,8 +6,6 @@ part of 'device_os_type.dart';
 // BuiltValueGenerator
 // **************************************************************************
 
-const DeviceOSTypeEnum _$deviceOSTypeEnumSerializers =
-    const DeviceOSTypeEnum._('deviceOSTypeEnumSerializers');
 const DeviceOSTypeEnum _$unknown = const DeviceOSTypeEnum._('Unknown');
 const DeviceOSTypeEnum _$android = const DeviceOSTypeEnum._('Android');
 const DeviceOSTypeEnum _$browser = const DeviceOSTypeEnum._('Browser');
@@ -23,8 +21,6 @@ const DeviceOSTypeEnum _$ioT = const DeviceOSTypeEnum._('IoT');
 
 DeviceOSTypeEnum _$deviceOSTypeEnumValueOf(String name) {
   switch (name) {
-    case 'deviceOSTypeEnumSerializers':
-      return _$deviceOSTypeEnumSerializers;
     case 'Unknown':
       return _$unknown;
     case 'Android':
@@ -56,7 +52,6 @@ DeviceOSTypeEnum _$deviceOSTypeEnumValueOf(String name) {
 
 final BuiltSet<DeviceOSTypeEnum> _$deviceOSTypeEnumValues =
     new BuiltSet<DeviceOSTypeEnum>(const <DeviceOSTypeEnum>[
-  _$deviceOSTypeEnumSerializers,
   _$unknown,
   _$android,
   _$browser,
