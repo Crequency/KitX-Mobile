@@ -12,24 +12,29 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-#  flutter_localizations:
-#    sdk: flutter
+  #  flutter_localizations:
+  #    sdk: flutter
 
-#  intl: ^0.17.0
-#  flutter_i18n: ^0.32.4 # 国际化
+  #  intl: ^0.17.0
+  #  flutter_i18n: ^0.32.4 # 国际化
   get: ^4.6.5 # 路由管理
   network_info_plus: ^1.3.0 # 网络信息
   device_info_plus: ^5.0.1 # 设备信息
   date_format: ^2.0.7 # 时间格式
   flutter_logs: ^2.1.7 # 日志
-#  sms_receiver: ^0.4.1 # 短信接收
-  permission_handler: ^8.1.4+2 # 权限管理
+  #  sms_receiver: ^0.4.1 # 短信接收
+  permission_handler: ^8.1.4+2 #权限管理
   mac_address: ^1.0.0 # 获取 MAC
   community_material_icon: ^5.9.55 # Material Design Icons 社区贡献
-  flutter_blue_plus: ^1.3.1 # 蓝牙
+  flutter_blue_plus: ^1.3.1
+  #  flutter_blue: ^0.8.0
+  sensors_plus: ^1.2.2  # 传感器
+#  flutter_cube: ^0.1.0  # 加载简单 3D 模型
+  model_viewer: ^0.8.1  # 3D 模型查看器
+  vibration: ^1.7.6 # 手机震动
+#  battery_plus: ^3.0.2  # 电池数据
   built_value: ^8.4.2 # JSON 序列化
   built_collection: ^5.1.1
-#  flutter_blue: ^0.8.0
 
 dev_dependencies:
   flutter_test:

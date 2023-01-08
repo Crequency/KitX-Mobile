@@ -1,9 +1,3 @@
-// Copyright 2017 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
-
-// ignore_for_file: public_member_api_docs
-
 import 'dart:async';
 import 'dart:io';
 
@@ -24,7 +18,7 @@ import 'package:flutter/services.dart';
 //   _enablePlatformOverrideForDesktop();
 // }
 
-class networkInfoTestPage extends StatelessWidget {
+class NetworkInfoTestPage extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -33,21 +27,21 @@ class networkInfoTestPage extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: _networkInfoTestPage(title: 'Flutter Demo Home Page'),
+      home: _NetworkInfoTestPage(title: 'Flutter Demo Home Page'),
     );
   }
 }
 
-class _networkInfoTestPage extends StatefulWidget {
-  _networkInfoTestPage({Key? key, this.title}) : super(key: key);
+class _NetworkInfoTestPage extends StatefulWidget {
+  _NetworkInfoTestPage({Key? key, this.title}) : super(key: key);
 
   final String? title;
 
   @override
-  _networkInfoTestPageState createState() => _networkInfoTestPageState();
+  _NetworkInfoTestPageState createState() => _NetworkInfoTestPageState();
 }
 
-class _networkInfoTestPageState extends State<_networkInfoTestPage> {
+class _NetworkInfoTestPageState extends State<_NetworkInfoTestPage> {
   String _connectionStatus = 'Unknown';
   final NetworkInfo _networkInfo = NetworkInfo();
 

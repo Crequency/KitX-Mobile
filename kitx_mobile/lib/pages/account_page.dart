@@ -2,7 +2,6 @@
 
 import 'package:get/get.dart';
 
-
 class AccountPage extends StatefulWidget {
   const AccountPage({Key? key}) : super(key: key);
 

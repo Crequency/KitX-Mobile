@@ -2,8 +2,8 @@
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart' hide Intent;
-
 import 'package:flutter_logs/flutter_logs.dart';
+
 // import 'package:receive_intent/receive_intent.dart';
 import 'package:get/get.dart';
 

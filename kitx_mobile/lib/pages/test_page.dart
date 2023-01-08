@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'test_pages/device_test.dart';
+import 'test_pages/device_sensors.dart';
 import 'test_pages/network_info_test.dart';
 
 class TestPage extends StatefulWidget {
@@ -12,13 +13,6 @@ class TestPage extends StatefulWidget {
 }
 
 class _TestPageState extends State<TestPage> {
-  // int _counter = 0;
-  //
-  // void _incrementCounter() {
-  //   setState(() {
-  //     _counter++;
-  //   });
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -35,11 +29,12 @@ class _TestPageState extends State<TestPage> {
                 icon: Icon(Icons.devices),
               ),
               Tab(
-                text: "NetworkInfo",
-                icon: Icon(Icons.wifi),
+                text: "Device Sensors",
+                icon: Icon(Icons.sensors),
               ),
               Tab(
-                icon: Icon(Icons.brightness_5_sharp),
+                text: "Network Info",
+                icon: Icon(Icons.wifi),
               ),
             ],
           ),
@@ -50,10 +45,10 @@ class _TestPageState extends State<TestPage> {
               child: DeviceTestPage(),
             ),
             Center(
-              child: networkInfoTestPage(),
+              child: DeviceSensorsPage(),
             ),
             Center(
-              child: Text("It's sunny here"),
+              child: NetworkInfoTestPage(),
             ),
           ],
         ),
