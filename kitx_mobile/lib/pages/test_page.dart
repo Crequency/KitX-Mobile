@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:kitx_mobile/pages/test_pages/device_sensors.dart';
 
 import 'test_pages/device_test.dart';
+import 'test_pages/device_sensors.dart';
 import 'test_pages/network_info_test.dart';
 
 class TestPage extends StatefulWidget {
@@ -48,7 +48,7 @@ class _TestPageState extends State<TestPage> {
               child: DeviceSensorsPage(),
             ),
             Center(
-              child: NetworkInfoPage(),
+              child: NetworkInfoTestPage(),
             ),
           ],
         ),
