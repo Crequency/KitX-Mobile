@@ -9,25 +9,39 @@ import 'package:flutter/services.dart';
 // Sets a platform override for desktop to avoid exceptions. See
 // https://flutter.dev/desktop#target-platform-override for more info.
 // void _enablePlatformOverrideForDesktop() {
-//     if (!kIsWeb && (Platform.isWindows || Platform.isLinux)) {
-//         debugDefaultTargetPlatformOverride = TargetPlatform.fuchsia;
-//     }
+//   if (!kIsWeb && (Platform.isWindows || Platform.isLinux)) {
+//     debugDefaultTargetPlatformOverride = TargetPlatform.fuchsia;
+//   }
 // }
 //
 // void main() {
-//     _enablePlatformOverrideForDesktop();
+//   _enablePlatformOverrideForDesktop();
 // }
 
-class NetworkInfoPage extends StatefulWidget {
-  NetworkInfoPage({Key? key, this.title}) : super(key: key);
+class networkInfoTestPage extends StatelessWidget {
+  // This widget is the root of your application.
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: _networkInfoTestPage(title: 'Flutter Demo Home Page'),
+    );
+  }
+}
+
+class _networkInfoTestPage extends StatefulWidget {
+  _networkInfoTestPage({Key? key, this.title}) : super(key: key);
 
   final String? title;
 
   @override
-  _NetworkInfoPage createState() => _NetworkInfoPage();
+  _networkInfoTestPageState createState() => _networkInfoTestPageState();
 }
 
-class _NetworkInfoPage extends State<NetworkInfoPage> {
+class _networkInfoTestPageState extends State<_networkInfoTestPage> {
   String _connectionStatus = 'Unknown';
   final NetworkInfo _networkInfo = NetworkInfo();
 
@@ -41,10 +55,9 @@ class _NetworkInfoPage extends State<NetworkInfoPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        automaticallyImplyLeading: false,
-        title: const Text('Network Info'),
+        title: const Text('NetworkInfo example app'),
       ),
-      body: Center(child: Text('Connection Status: \r\n$_connectionStatus')),
+      body: Center(child: Text('Connection Status: $_connectionStatus')),
     );
   }
 

@@ -190,53 +190,53 @@ class _DeviceTestPage extends State<DeviceTestPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        title: Text(
-          kIsWeb
-              ? 'Web Browser info'
-              : Platform.isAndroid
-                  ? 'Android Device Info'
-                  : Platform.isIOS
-                      ? 'iOS Device Info'
-                      : Platform.isLinux
-                          ? 'Linux Device Info'
-                          : Platform.isMacOS
-                              ? 'MacOS Device Info'
-                              : Platform.isWindows
-                                  ? 'Windows Device Info'
-                                  : '',
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text(
+            kIsWeb
+                ? 'Web Browser info'
+                : Platform.isAndroid
+                ? 'Android Device Info'
+                : Platform.isIOS
+                ? 'iOS Device Info'
+                : Platform.isLinux
+                ? 'Linux Device Info'
+                : Platform.isMacOS
+                ? 'MacOS Device Info'
+                : Platform.isWindows
+                ? 'Windows Device Info'
+                : '',
+          ),
         ),
-      ),
-      body: ListView(
-        children: _deviceData.keys.map(
-          (String property) {
-            return Row(
-              children: <Widget>[
-                Container(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Text(
-                    property,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
+        body: ListView(
+          children: _deviceData.keys.map(
+                (String property) {
+              return Row(
+                children: <Widget>[
+                  Container(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Text(
+                      property,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
-                ),
-                Expanded(
-                    child: Container(
-                  padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
-                  child: Text(
-                    '${_deviceData[property]}',
-                    maxLines: 10,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                )),
-              ],
-            );
-          },
-        ).toList(),
+                  Expanded(
+                      child: Container(
+                        padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
+                        child: Text(
+                          '${_deviceData[property]}',
+                          maxLines: 10,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      )),
+                ],
+              );
+            },
+          ).toList(),
+        ),
       ),
     );
   }

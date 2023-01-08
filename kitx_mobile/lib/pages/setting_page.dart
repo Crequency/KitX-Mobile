@@ -25,6 +25,7 @@ class _SettingPageState extends State<SettingPage> {
               ),
             ],
           ),
-        ));
+        )
+    );
   }
 }

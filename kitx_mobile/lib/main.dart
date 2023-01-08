@@ -29,25 +29,16 @@ Future<void> main() async {
   WebService webService = WebService(Config.WebService_UdpPortReceive,
       Config.WebService_UdpPortSend, Config.WebService_UdpBroadcastAddress);
   webService.initService();
-
   // 初始化 log
   await FlutterLogs.initLogs(
-    logLevelsEnabled: Config.Log_LogLevelsEnabled,
-    // Log 等级
-    timeStampFormat: Config.Log_TimeStampFormat,
-    // 时间戳格式
-    directoryStructure: Config.Log_DirectoryStructure,
-    // 日志目录结构
-    logTypesEnabled: Config.Log_LogTypesEnabled,
-    // 日志类型
-    logFileExtension: Config.Log_LogFileExtension,
-    // 日志文件扩展名
-    logsWriteDirectoryName: Config.Log_LogsWriteDirectoryName,
-    // 日志写入目录名
-    logsExportDirectoryName: Config.Log_LogsExportDirectoryName,
-    // 日志导出目录名
-    debugFileOperations: Config.Log_DebugFileOperations,
-    // 调试文件操作
+    logLevelsEnabled: Config.Log_LogLevelsEnabled, // Log 等级
+    timeStampFormat: Config.Log_TimeStampFormat, // 时间戳格式
+    directoryStructure: Config.Log_DirectoryStructure, // 日志目录结构
+    logTypesEnabled: Config.Log_LogTypesEnabled, // 日志类型
+    logFileExtension: Config.Log_LogFileExtension, // 日志文件扩展名
+    logsWriteDirectoryName: Config.Log_LogsWriteDirectoryName, // 日志写入目录名
+    logsExportDirectoryName: Config.Log_LogsExportDirectoryName, // 日志导出目录名
+    debugFileOperations: Config.Log_DebugFileOperations, // 调试文件操作
     isDebuggable: Config.Log_IsDebuggable, // 是否调试
   );
 
@@ -70,15 +61,12 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      translations: Translation(),
-      // 定义翻译 使用: "Text".tr
-      locale: ui.window.locale,
-      // 定义当前语言
-      fallbackLocale: Locale('en', 'US'),
-      // 定义默认语言
+      translations: Translation(), // 定义翻译 使用: "Text".tr
+      locale: ui.window.locale, // 定义当前语言
+      fallbackLocale: Locale('en', 'US'), // 定义默认语言
       // supportedLocales: const [ // 定义支持的语言
-      //     Locale("en", "US"),
-      //     Locale("zh", "CN"),
+      //   Locale("en", "US"),
+      //   Locale("zh", "CN"),
       // ],
       getPages: [
         // 定义路由
@@ -91,7 +79,6 @@ class MyApp extends StatelessWidget {
           page: () => DevicePage(),
         ),
       ],
-      debugShowCheckedModeBanner: false,
       home: const MyHomePage(),
     );
   }

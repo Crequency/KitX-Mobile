@@ -18,21 +18,21 @@ import 'enums/command_type.dart';
 part 'serializers.g.dart';
 
 @SerializersFor([
-    // TODO: add the built values that require serialization
-    // TODO: 添加需要序列化的 built value
-    Command,
-    DeviceInfoStruct,
-    DeviceLocator,
-    PluginFunction,
+  // TODO: add the built values that require serialization
+  // TODO: 添加需要序列化的 built value
+  Command,
+  DeviceInfoStruct,
+  DeviceLocator,
+  PluginFunction,
 ])
 
 /// Can add additional plugins that will serialize types like [DateTime]
 ///   - It is also possible to write your own Serializer plugins for type that
-///     are not supported by default.
+///   are not supported by default.
 ///   - For Example: https://github.com/google/built_value.dart/issues/543
-///     implements [SerializerPlugin] and writes a serializer for Firebase
-///     Datetime that converts TimeStamp or DateTime to integers.
+///   implements [SerializerPlugin] and writes a serializer for Firebase
+///   Datetime that converts TimeStamp or DateTime to integers.
 final Serializers serializers = (_$serializers.toBuilder()
-      ..addPlugin(StandardJsonPlugin())
-      ..add(Iso8601DateTimeSerializer()))
-    .build();
+    ..addPlugin(StandardJsonPlugin())
+    ..add(Iso8601DateTimeSerializer()))
+  .build();
