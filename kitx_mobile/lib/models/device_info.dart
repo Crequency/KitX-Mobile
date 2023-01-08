@@ -11,50 +11,50 @@ part 'device_info.g.dart';
 
 abstract class DeviceInfoStruct implements Built<DeviceInfoStruct, DeviceInfoStructBuilder> {
 
-    String get DeviceName;
+  String get DeviceName;
 
-    String get DeviceOSVersion;
+  String get DeviceOSVersion;
 
-    String get IPv4;
+  String get IPv4;
 
-    String get IPv6;
+  String get IPv6;
 
-    String get DeviceMacAddress;
+  String get DeviceMacAddress;
 
-    int get PluginServerPort;
+  int get PluginServerPort;
 
-    int get PluginsCount;
+  int get PluginsCount;
 
-    DateTime get SendTime;
+  DateTime get SendTime;
 
-    bool get IsMainDevice;
+  bool get IsMainDevice;
 
-    int get DeviceServerPort;
+  int get DeviceServerPort;
 
-    DateTime get DeviceServerBuildTime;
-    
-    DeviceOSTypeEnum get DeviceOSType;
+  DateTime get DeviceServerBuildTime;
+  
+  DeviceOSTypeEnum get DeviceOSType;
 
-    DeviceInfoStruct._();
-    factory DeviceInfoStruct([void Function(DeviceInfoStructBuilder) updates]) = _$DeviceInfoStruct;
+  DeviceInfoStruct._();
+  factory DeviceInfoStruct([void Function(DeviceInfoStructBuilder) updates]) = _$DeviceInfoStruct;
 
-    Object? toJson() {
-        return serializers.serializeWith(DeviceInfoStruct.serializer, this);
-    }
+  Object? toJson() {
+    return serializers.serializeWith(DeviceInfoStruct.serializer, this);
+  }
 
-    @override
-    String toString() {
-        return json.encode(serializers.serializeWith(DeviceInfoStruct.serializer, this));
-    }
+  @override
+  String toString() {
+    return json.encode(serializers.serializeWith(DeviceInfoStruct.serializer, this));
+  }
 
-    static DeviceInfoStruct? fromString(String jsonString) {
-        DeviceInfoStruct? result = serializers.deserializeWith(DeviceInfoStruct.serializer, json.decode(jsonString));
-        return result;
-    }
+  static DeviceInfoStruct? fromString(String jsonString) {
+    DeviceInfoStruct? result = serializers.deserializeWith(DeviceInfoStruct.serializer, json.decode(jsonString));
+    return result;
+  }
 
-    static DeviceInfoStruct? fromJson(Map<String, dynamic> json) {
-        return serializers.deserializeWith(DeviceInfoStruct.serializer, json);
-    }
+  static DeviceInfoStruct? fromJson(Map<String, dynamic> json) {
+    return serializers.deserializeWith(DeviceInfoStruct.serializer, json);
+  }
 
-    static Serializer<DeviceInfoStruct> get serializer => _$deviceInfoStructSerializer;
+  static Serializer<DeviceInfoStruct> get serializer => _$deviceInfoStructSerializer;
 }
