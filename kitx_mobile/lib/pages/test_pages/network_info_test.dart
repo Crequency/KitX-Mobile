@@ -1,4 +1,11 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+// ignore_for_file: public_member_api_docs
+
 import 'dart:async';
+import 'dart:developer' as developer;
 import 'dart:io';
 
 import 'package:network_info_plus/network_info_plus.dart';
@@ -8,17 +15,20 @@ import 'package:flutter/services.dart';
 
 // Sets a platform override for desktop to avoid exceptions. See
 // https://flutter.dev/desktop#target-platform-override for more info.
-// void _enablePlatformOverrideForDesktop() {
-//   if (!kIsWeb && (Platform.isWindows || Platform.isLinux)) {
-//     debugDefaultTargetPlatformOverride = TargetPlatform.fuchsia;
-//   }
-// }
-//
-// void main() {
-//   _enablePlatformOverrideForDesktop();
-// }
+void _enablePlatformOverrideForDesktop() {
+  if (!kIsWeb && (Platform.isWindows || Platform.isLinux)) {
+    debugDefaultTargetPlatformOverride = TargetPlatform.fuchsia;
+  }
+}
 
-class NetworkInfoTestPage extends StatelessWidget {
+void main() {
+  _enablePlatformOverrideForDesktop();
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -27,13 +37,13 @@ class NetworkInfoTestPage extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: _NetworkInfoTestPage(title: 'Flutter Demo Home Page'),
+      home: const NetworkInfoTestPage(title: 'Flutter Demo Home Page'),
     );
   }
 }
 
-class _NetworkInfoTestPage extends StatefulWidget {
-  _NetworkInfoTestPage({Key? key, this.title}) : super(key: key);
+class NetworkInfoTestPage extends StatefulWidget {
+  const NetworkInfoTestPage({Key? key, this.title}) : super(key: key);
 
   final String? title;
 
@@ -41,7 +51,7 @@ class _NetworkInfoTestPage extends StatefulWidget {
   _NetworkInfoTestPageState createState() => _NetworkInfoTestPageState();
 }
 
-class _NetworkInfoTestPageState extends State<_NetworkInfoTestPage> {
+class _NetworkInfoTestPageState extends State<NetworkInfoTestPage> {
   String _connectionStatus = 'Unknown';
   final NetworkInfo _networkInfo = NetworkInfo();
 
@@ -54,9 +64,9 @@ class _NetworkInfoTestPageState extends State<_NetworkInfoTestPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('NetworkInfo example app'),
-      ),
+      // appBar: AppBar(
+      //   title: const Text('NetworkInfo example app'),
+      // ),
       body: Center(child: Text('Connection Status: $_connectionStatus')),
     );
   }
@@ -86,7 +96,7 @@ class _NetworkInfoTestPageState extends State<_NetworkInfoTestPage> {
         wifiName = await _networkInfo.getWifiName();
       }
     } on PlatformException catch (e) {
-      print(e.toString());
+      developer.log('Failed to get Wifi Name', error: e);
       wifiName = 'Failed to get Wifi Name';
     }
 
@@ -106,49 +116,49 @@ class _NetworkInfoTestPageState extends State<_NetworkInfoTestPage> {
         wifiBSSID = await _networkInfo.getWifiBSSID();
       }
     } on PlatformException catch (e) {
-      print(e.toString());
+      developer.log('Failed to get Wifi BSSID', error: e);
       wifiBSSID = 'Failed to get Wifi BSSID';
     }
 
     try {
       wifiIPv4 = await _networkInfo.getWifiIP();
     } on PlatformException catch (e) {
-      print(e.toString());
+      developer.log('Failed to get Wifi IPv4', error: e);
       wifiIPv4 = 'Failed to get Wifi IPv4';
     }
 
     try {
       wifiIPv6 = await _networkInfo.getWifiIPv6();
     } on PlatformException catch (e) {
-      print(e.toString());
+      developer.log('Failed to get Wifi IPv6', error: e);
       wifiIPv6 = 'Failed to get Wifi IPv6';
     }
 
     try {
       wifiSubmask = await _networkInfo.getWifiSubmask();
     } on PlatformException catch (e) {
-      print(e.toString());
+      developer.log('Failed to get Wifi submask address', error: e);
       wifiSubmask = 'Failed to get Wifi submask address';
     }
 
     try {
       wifiBroadcast = await _networkInfo.getWifiBroadcast();
     } on PlatformException catch (e) {
-      print(e.toString());
+      developer.log('Failed to get Wifi broadcast', error: e);
       wifiBroadcast = 'Failed to get Wifi broadcast';
     }
 
     try {
       wifiGatewayIP = await _networkInfo.getWifiGatewayIP();
     } on PlatformException catch (e) {
-      print(e.toString());
+      developer.log('Failed to get Wifi gateway address', error: e);
       wifiGatewayIP = 'Failed to get Wifi gateway address';
     }
 
     try {
       wifiSubmask = await _networkInfo.getWifiSubmask();
     } on PlatformException catch (e) {
-      print(e.toString());
+      developer.log('Failed to get Wifi submask', error: e);
       wifiSubmask = 'Failed to get Wifi submask';
     }
 

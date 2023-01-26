@@ -1,6 +1,11 @@
-import 'dart:async';
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
-// import 'dart:developer' as developer;
+// ignore_for_file: public_member_api_docs
+
+import 'dart:async';
+import 'dart:developer' as developer;
 import 'dart:io';
 
 import 'package:device_info_plus/device_info_plus.dart';
@@ -8,14 +13,22 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class DeviceTestPage extends StatefulWidget {
-  const DeviceTestPage({Key? key}) : super(key: key);
-
-  @override
-  _DeviceTestPage createState() => _DeviceTestPage();
+void main() {
+  runZonedGuarded(() {
+    runApp(const DeviceInfoTestPage());
+  }, (dynamic error, dynamic stack) {
+    developer.log("Something went wrong!", error: error, stackTrace: stack);
+  });
 }
 
-class _DeviceTestPage extends State<DeviceTestPage> {
+class DeviceInfoTestPage extends StatefulWidget {
+  const DeviceInfoTestPage({Key? key}) : super(key: key);
+
+  @override
+  State<DeviceInfoTestPage> createState() => _DeviceInfoTestPageState();
+}
+
+class _DeviceInfoTestPageState extends State<DeviceInfoTestPage> {
   static final DeviceInfoPlugin deviceInfoPlugin = DeviceInfoPlugin();
   Map<String, dynamic> _deviceData = <String, dynamic>{};
 
@@ -87,6 +100,14 @@ class _DeviceTestPage extends State<DeviceTestPage> {
       'type': build.type,
       'isPhysicalDevice': build.isPhysicalDevice,
       'systemFeatures': build.systemFeatures,
+      'displaySizeInches':
+          ((build.displayMetrics.sizeInches * 10).roundToDouble() / 10),
+      'displayWidthPixels': build.displayMetrics.widthPx,
+      'displayWidthInches': build.displayMetrics.widthInches,
+      'displayHeightPixels': build.displayMetrics.heightPx,
+      'displayHeightInches': build.displayMetrics.heightInches,
+      'displayXDpi': build.displayMetrics.xDpi,
+      'displayYDpi': build.displayMetrics.yDpi,
     };
   }
 
@@ -190,54 +211,55 @@ class _DeviceTestPage extends State<DeviceTestPage> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text(
-            kIsWeb
-                ? 'Web Browser info'
-                : Platform.isAndroid
-                ? 'Android Device Info'
-                : Platform.isIOS
-                ? 'iOS Device Info'
-                : Platform.isLinux
-                ? 'Linux Device Info'
-                : Platform.isMacOS
-                ? 'MacOS Device Info'
-                : Platform.isWindows
-                ? 'Windows Device Info'
-                : '',
-          ),
-        ),
-        body: ListView(
-          children: _deviceData.keys.map(
-                (String property) {
-              return Row(
-                children: <Widget>[
-                  Container(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Text(
-                      property,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                      ),
+    // return MaterialApp(
+    //   home: Scaffold(
+    // appBar: AppBar(
+    //   title: Text(
+    //     kIsWeb
+    //         ? 'Web Browser info'
+    //         : Platform.isAndroid
+    //             ? 'Android Device Info'
+    //             : Platform.isIOS
+    //                 ? 'iOS Device Info'
+    //                 : Platform.isLinux
+    //                     ? 'Linux Device Info'
+    //                     : Platform.isMacOS
+    //                         ? 'MacOS Device Info'
+    //                         : Platform.isWindows
+    //                             ? 'Windows Device Info'
+    //                             : '',
+    //   ),
+    // ),
+    return Scaffold(
+      body: ListView(
+        children: _deviceData.keys.map(
+          (String property) {
+            return Row(
+              children: <Widget>[
+                Container(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Text(
+                    property,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
-                  Expanded(
-                      child: Container(
-                        padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
-                        child: Text(
-                          '${_deviceData[property]}',
-                          maxLines: 10,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      )),
-                ],
-              );
-            },
-          ).toList(),
-        ),
+                ),
+                Expanded(
+                    child: Container(
+                  padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
+                  child: Text(
+                    '${_deviceData[property]}',
+                    maxLines: 10,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                )),
+              ],
+            );
+          },
+        ).toList(),
       ),
+      // ),
     );
   }
 }

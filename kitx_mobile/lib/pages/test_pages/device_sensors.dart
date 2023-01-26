@@ -4,54 +4,51 @@ import 'package:get/get.dart';
 import 'package:sensors_plus/sensors_plus.dart';
 import 'package:vibration/vibration.dart';
 
-// import 'package:model_viewer/model_viewer.dart';
-// import 'package:flutter_cube/flutter_cube.dart';
-
 class DeviceSensorsPage extends StatefulWidget {
   @override
   _DeviceSensorsPage createState() => _DeviceSensorsPage();
 }
 
 class _DeviceSensorsPage extends State<DeviceSensorsPage> {
-  double dir_x = 0, dir_y = 0, dir_z = 0;
-  double acc_x = 0, acc_y = 0, acc_z = 0;
-  String direction_x = "none";
-  String direction_y = "none";
-  String direction_z = "none";
+  final dir_x = 0.0.obs, dir_y = 0.0.obs, dir_z = 0.0.obs;
+  final acc_x = 0.0.obs, acc_y = 0.0.obs, acc_z = 0.0.obs;
+  final direction_x = "none".obs;
+  final direction_y = "none".obs;
+  final direction_z = "none".obs;
 
   @override
   void initState() {
     gyroscopeEvents.listen((event) {
       print(event);
 
-      dir_x = event.x;
-      dir_y = event.y;
-      dir_z = event.z;
+      dir_x.value = event.x;
+      dir_y.value = event.y;
+      dir_z.value = event.z;
 
       //rough calculation, you can use
       //advance formula to calculate the orentation
       if (dir_x >= 0)
-        direction_x = "back";
+        direction_x.value = "back";
       else
-        direction_x = "forward";
-      if (dir_y >= 0)
-        direction_y = "right";
-      else
-        direction_y = "left";
-      if (dir_z >= 0)
-        direction_z = "👈";
-      else
-        direction_z = "👉";
+        direction_x.value = "forward";
 
-      setState(() {});
+      if (dir_y >= 0)
+        direction_y.value = "right";
+      else
+        direction_y.value = "left";
+
+      if (dir_z >= 0)
+        direction_z.value = "👈";
+      else
+        direction_z.value = "👉";
     });
 
     userAccelerometerEvents.listen((event) {
       print(event);
 
-      acc_x = event.x;
-      acc_y = event.y;
-      acc_z = event.z;
+      acc_x.value = event.x;
+      acc_y.value = event.y;
+      acc_z.value = event.z;
     });
 
     super.initState();
@@ -74,10 +71,10 @@ class _DeviceSensorsPage extends State<DeviceSensorsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        title: Text("Device Sensors Info"),
-      ),
+      // appBar: AppBar(
+      //   automaticallyImplyLeading: false,
+      //   title: Text("Device Sensors Info"),
+      // ),
       body: Container(
           alignment: Alignment.center,
           padding: EdgeInsets.all(30),
@@ -88,17 +85,38 @@ class _DeviceSensorsPage extends State<DeviceSensorsPage> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Text(direction_x, style: TextStyle(fontSize: 26),),
-                  Text(direction_y, style: TextStyle(fontSize: 26),),
-                  Text(direction_z, style: TextStyle(fontSize: 26),),
+                  Obx(() => Text(
+                        direction_x.value,
+                        style: TextStyle(fontSize: 26),
+                      )),
+                  Obx(() => Text(
+                        direction_y.value,
+                        style: TextStyle(fontSize: 26),
+                      )),
+                  Obx(() => Text(
+                        direction_z.value,
+                        style: TextStyle(fontSize: 26),
+                      )),
                 ]),
-            Text("x: $dir_x", style: TextStyle(fontSize: 14)),
-            Text("y: $dir_y", style: TextStyle(fontSize: 14)),
-            Text("z: $dir_z", style: TextStyle(fontSize: 14)),
+            Obx(
+              () => Text("x: ${dir_x.value}", style: TextStyle(fontSize: 14)),
+            ),
+            Obx(
+              () => Text("y: ${dir_y.value}", style: TextStyle(fontSize: 14)),
+            ),
+            Obx(
+              () => Text("z: ${dir_z.value}", style: TextStyle(fontSize: 14)),
+            ),
             Text("Acceleration Data", style: TextStyle(fontSize: 32)),
-            Text("x: $acc_x", style: TextStyle(fontSize: 14)),
-            Text("y: $acc_y", style: TextStyle(fontSize: 14)),
-            Text("z: $acc_z", style: TextStyle(fontSize: 14)),
+            Obx(
+              () => Text("x: ${acc_x.value}", style: TextStyle(fontSize: 14)),
+            ),
+            Obx(
+              () => Text("y: ${acc_y.value}", style: TextStyle(fontSize: 14)),
+            ),
+            Obx(
+              () => Text("z: ${acc_z.value}", style: TextStyle(fontSize: 14)),
+            ),
             Text("Vibration Test", style: TextStyle(fontSize: 32)),
             TextField(
               decoration:

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'test_pages/device_test.dart';
+import 'test_pages/device_info_test.dart';
 import 'test_pages/device_sensors.dart';
 import 'test_pages/network_info_test.dart';
 
@@ -13,7 +13,6 @@ class TestPage extends StatefulWidget {
 }
 
 class _TestPageState extends State<TestPage> {
-
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -42,7 +41,7 @@ class _TestPageState extends State<TestPage> {
         body: TabBarView(
           children: <Widget>[
             Center(
-              child: DeviceTestPage(),
+              child: DeviceInfoTestPage(),
             ),
             Center(
               child: DeviceSensorsPage(),
