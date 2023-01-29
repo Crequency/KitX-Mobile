@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'package:community_material_icon/community_material_icon.dart';
-
 import 'package:get/get.dart';
 
 import '../models/device_info.dart';
-import '../models/enums/device_os_type.dart';
 
 import '../converters/os_type_2_icon.dart';
 
