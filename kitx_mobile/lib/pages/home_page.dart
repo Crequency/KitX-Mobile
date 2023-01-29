@@ -1,12 +1,14 @@
 ﻿
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:kitx_mobile/pages/settings_page.dart';
-import 'package:kitx_mobile/pages/test_page.dart';
 
-import 'about_page.dart';
-import 'account_page.dart';
 import 'device_page.dart';
+import 'account_page.dart';
+import 'test_page.dart';
+import 'settings_page.dart';
+import 'about_page.dart';
+
+import "controls/devices_status.dart";
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -89,6 +91,7 @@ class _HomePageState extends State<HomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            DevicesStatus(),
             Text(
               "欢迎来到 KitX",
               style: TextStyle(

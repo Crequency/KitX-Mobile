@@ -48,11 +48,11 @@ Future<void> main() async {
   // 初始化 SmsServer
   // SmsServer smsServer = SmsServer();
   // smsServer.initServer();
-  runApp(const MyApp());
+  runApp(const MainApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+class MainApp extends StatelessWidget {
+  const MainApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
