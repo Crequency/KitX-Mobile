@@ -24,17 +24,22 @@ class _DevicePage extends State<DevicePage> {
       appBar: AppBar(
         title: Text("DevicePage_Title".tr),
       ),
-      body: Obx(() => ListView.builder(
-            itemCount: global.devices.length,
-            itemBuilder: (_, int index) {
-              return createDeviceCard(global.devices.deviceInfoList[index]);
-            },
-          )),
+      body: Obx(
+              () => ListView.builder(
+                itemCount: global.devices.length,
+                itemBuilder: (_, int index) {
+                  return Container(
+                    // margin: EdgeInsets.only(left: 0, top: 10, right: 0, bottom: 0),
+                    child: createDeviceCard(global.devices.deviceInfoList[index], index),
+                  );
+                },
+              )
+            ),
     );
   }
 }
 
-Widget createDeviceCard(DeviceInfoStruct info) {
+Widget createDeviceCard(DeviceInfoStruct info, int index) {
   IconData _iconStyle = Convert(info.DeviceOSType);
   Icon _icon = Icon(
     _iconStyle,
@@ -43,7 +48,7 @@ Widget createDeviceCard(DeviceInfoStruct info) {
   return FractionallySizedBox(
     widthFactor: 0.9,
     child: Padding(
-        padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
+        padding: EdgeInsets.fromLTRB(10, index == 0 ? 40 : 10, 10, 10),
         child: Card(
           child: Container(
             margin: EdgeInsets.all(10),
