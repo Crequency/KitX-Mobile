@@ -57,10 +57,10 @@ Widget createDeviceCard(DeviceInfoStruct info) {
       _iconStyle = CommunityMaterialIcons.linux;
       break;
     case DeviceOSTypeEnum.MacCatalyst:
-      _iconStyle = CommunityMaterialIcons.apple_finder;
+      _iconStyle = CommunityMaterialIcons.apple;
       break;
     case DeviceOSTypeEnum.MacOS:
-      _iconStyle = CommunityMaterialIcons.apple;
+      _iconStyle = CommunityMaterialIcons.apple_keyboard_command;
       break;
     case DeviceOSTypeEnum.TvOS:
       _iconStyle = CommunityMaterialIcons.apple;
