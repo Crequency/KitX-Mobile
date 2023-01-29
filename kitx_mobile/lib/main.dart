@@ -56,11 +56,26 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // return MaterialApp(
+    //   title: 'KitX Mobile',
+    //   themeMode: ThemeMode.system,
+    //   locale: ui.window.locale,
+    //   home: const HomePage(),
+    //   showPerformanceOverlay: true,
+    // );
     return GetMaterialApp(
       title: 'KitX Mobile',
+      themeMode: ThemeMode.system,
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        brightness: Brightness.light,
       ),
+      darkTheme: ThemeData(
+        primarySwatch: Colors.indigo,
+        brightness: Brightness.dark,
+      ),
+      highContrastTheme: ThemeData(),
+      highContrastDarkTheme: ThemeData(),
       translations: Translation(), // 定义翻译 使用: "Text".tr
       locale: ui.window.locale, // 定义当前语言
       fallbackLocale: Locale('en', 'US'), // 定义默认语言
