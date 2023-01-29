@@ -7,6 +7,8 @@ import 'package:get/get.dart';
 import '../models/device_info.dart';
 import '../models/enums/device_os_type.dart';
 
+import '../converters/os_type_2_icon.dart';
+
 import '../utils/global.dart' as global;
 import '../utils/datetime_format.dart' show datetimeToShortString;
 
@@ -36,47 +38,7 @@ class _DevicePage extends State<DevicePage> {
 }
 
 Widget createDeviceCard(DeviceInfoStruct info) {
-  IconData _iconStyle;
-  switch (info.DeviceOSType) {
-    case DeviceOSTypeEnum.Unknown:
-      _iconStyle = Icons.help;
-      break;
-    case DeviceOSTypeEnum.Android:
-      _iconStyle = Icons.android;
-      break;
-    case DeviceOSTypeEnum.Browser:
-      _iconStyle = CommunityMaterialIcons.microsoft_edge;
-      break;
-    case DeviceOSTypeEnum.FreeBSD:
-      _iconStyle = CommunityMaterialIcons.freebsd;
-      break;
-    case DeviceOSTypeEnum.iOS:
-      _iconStyle = CommunityMaterialIcons.apple_ios;
-      break;
-    case DeviceOSTypeEnum.Linux:
-      _iconStyle = CommunityMaterialIcons.linux;
-      break;
-    case DeviceOSTypeEnum.MacCatalyst:
-      _iconStyle = CommunityMaterialIcons.apple;
-      break;
-    case DeviceOSTypeEnum.MacOS:
-      _iconStyle = CommunityMaterialIcons.apple_keyboard_command;
-      break;
-    case DeviceOSTypeEnum.TvOS:
-      _iconStyle = CommunityMaterialIcons.apple;
-      break;
-    case DeviceOSTypeEnum.WatchOS:
-      _iconStyle = CommunityMaterialIcons.apple;
-      break;
-    case DeviceOSTypeEnum.Windows:
-      _iconStyle = CommunityMaterialIcons.microsoft_windows;
-      break;
-    case DeviceOSTypeEnum.IoT:
-      _iconStyle = CommunityMaterialIcons.chip;
-      break;
-    default:
-      _iconStyle = Icons.help;
-  }
+  IconData _iconStyle = Convert(info.DeviceOSType);
   Icon _icon = Icon(
     _iconStyle,
     size: 36,
