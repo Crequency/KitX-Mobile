@@ -16,7 +16,7 @@ class Translation extends Translations {
       "DevicePage_LocalDevice": "(本机)",
       "AccountPage_Title": "账户",
       "TestPage_Title": "测试",
-      "SettingPage_Title": "设置",
+      "SettingsPage_Title": "设置",
       "AboutPage_Title": "关于"
     },
     'en_US': {
@@ -31,7 +31,7 @@ class Translation extends Translations {
       "DevicePage_LocalDevice": "(Local Device)",
       "AccountPage_Title": "Account",
       "TestPage_Title": "Test",
-      "SettingPage_Title": "Setting",
+      "SettingsPage_Title": "Setting",
       "AboutPage_Title": "About"
     }
   };
