@@ -26,7 +26,7 @@ class _DeviceSensorsPage extends State<DeviceSensorsPage> {
       dir_z.value = event.z;
 
       //rough calculation, you can use
-      //advance formula to calculate the orentation
+      //advance formula to calculate the orientation
       if (dir_x >= 0)
         direction_x.value = "back";
       else
