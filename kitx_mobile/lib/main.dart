@@ -1,14 +1,13 @@
 // import 'dart:io';
 import 'dart:ui' as ui;
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart' hide Intent;
-import 'package:flutter_logs/flutter_logs.dart';
 
 // import 'package:receive_intent/receive_intent.dart';
 import 'package:get/get.dart';
 import 'package:kitx_mobile/themes/dark_theme.dart';
 import 'package:kitx_mobile/themes/light_theme.dart';
+import 'package:kitx_mobile/utils/log/init.dart';
 
 import 'pages/get_pages.dart';
 import 'pages/home_page.dart';
@@ -28,18 +27,9 @@ Future<void> main() async {
   // 初始化 WebService
   WebService webService = WebService(Config.WebService_UdpPortReceive,
       Config.WebService_UdpPortSend, Config.WebService_UdpBroadcastAddress);  webService.initService();
+
   // 初始化 log
-  await FlutterLogs.initLogs(
-    logLevelsEnabled: Config.Log_LogLevelsEnabled, // Log 等级
-    timeStampFormat: Config.Log_TimeStampFormat, // 时间戳格式
-    directoryStructure: Config.Log_DirectoryStructure, // 日志目录结构
-    logTypesEnabled: Config.Log_LogTypesEnabled, // 日志类型
-    logFileExtension: Config.Log_LogFileExtension, // 日志文件扩展名
-    logsWriteDirectoryName: Config.Log_LogsWriteDirectoryName, // 日志写入目录名
-    logsExportDirectoryName: Config.Log_LogsExportDirectoryName, // 日志导出目录名
-    debugFileOperations: Config.Log_DebugFileOperations, // 调试文件操作
-    isDebuggable: Config.Log_IsDebuggable, // 是否调试
-  );
+  await InitLogger();
 
   // 初始化 Devices
   global.devices.init();
