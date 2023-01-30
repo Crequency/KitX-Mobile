@@ -10,11 +10,8 @@ import 'package:get/get.dart';
 import 'package:kitx_mobile/themes/dark_theme.dart';
 import 'package:kitx_mobile/themes/light_theme.dart';
 
-import 'pages/device_page.dart';
-import 'pages/account_page.dart';
-import 'pages/test_page.dart';
-import 'pages/settings_page.dart';
-import 'pages/about_page.dart';
+import 'pages/get_pages.dart';
+import 'pages/home_page.dart';
 
 import 'services/web_service.dart';
 // import 'services/sms_server.dart';
@@ -87,33 +84,7 @@ class MainApp extends StatelessWidget {
       //   Locale("en", "US"),
       //   Locale("zh", "CN"),
       // ],
-      getPages: [
-        // 定义路由
-        GetPage(
-          name: "/",
-          page: () => HomePage(),
-        ),
-        GetPage(
-          name: "/DevicePage/",
-          page: () => DevicePage(),
-        ),
-        GetPage(
-          name: "/AccountPage/",
-          page: () => AccountPage()
-        ),
-        GetPage(
-          name: "/TestPage/",
-          page: () => TestPage()
-        ),
-        GetPage(
-          name: "/SettingsPage/",
-          page: () => SettingsPage()
-        ),
-        GetPage(
-          name: "/AboutPage/",
-          page: () => AboutPage()
-        ),
-      ],
+      getPages: GetPages(),
       home: const HomePage(),
     );
   }
