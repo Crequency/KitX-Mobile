@@ -9,9 +9,7 @@ class VibrationDisplayStand extends StatefulWidget{
 
 class VibrationDisplayStandState extends State<VibrationDisplayStand>{
   @override
-  void initState(){
-    super.initState();
-  }
+  void initState() => super.initState();
 
   int vibrate_duration = 200;
 

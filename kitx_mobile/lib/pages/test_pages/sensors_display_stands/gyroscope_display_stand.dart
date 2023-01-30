@@ -22,20 +22,14 @@ class GyroscopeDisplayStandState extends State<GyroscopeDisplayStand>{
 
       //rough calculation, you can use
       //advance formula to calculate the orientation
-      if (dir_x >= 0)
-        direction_x.value = "back";
-      else
-        direction_x.value = "forward";
+      if (dir_x >= 0) direction_x.value = "back";
+      else direction_x.value = "forward";
 
-      if (dir_y >= 0)
-        direction_y.value = "right";
-      else
-        direction_y.value = "left";
+      if (dir_y >= 0) direction_y.value = "right";
+      else direction_y.value = "left";
 
-      if (dir_z >= 0)
-        direction_z.value = "👈";
-      else
-        direction_z.value = "👉";
+      if (dir_z >= 0) direction_z.value = "👈";
+      else direction_z.value = "👉";
     });
 
     super.initState();
@@ -48,31 +42,31 @@ class GyroscopeDisplayStandState extends State<GyroscopeDisplayStand>{
       children: [
         Text("Gyroscope Data", style: TextStyle(fontSize: 32)),
         Row(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Obx(() => Text(
-                direction_x.value,
-                style: TextStyle(fontSize: 26),
-              )),
-              Obx(() => Text(
-                direction_y.value,
-                style: TextStyle(fontSize: 26),
-              )),
-              Obx(() => Text(
-                direction_z.value,
-                style: TextStyle(fontSize: 26),
-              )),
-            ]),
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Obx(() => Text(
+              direction_x.value,
+              style: TextStyle(fontSize: 26),
+            )),
+            Obx(() => Text(
+              direction_y.value,
+              style: TextStyle(fontSize: 26),
+            )),
+            Obx(() => Text(
+              direction_z.value,
+              style: TextStyle(fontSize: 26),
+            )),
+          ]),
         Obx(
-              () => Text("x: ${dir_x.value}", style: TextStyle(fontSize: 14)),
+          () => Text("x: ${dir_x.value}", style: TextStyle(fontSize: 14)),
         ),
         Obx(
-              () => Text("y: ${dir_y.value}", style: TextStyle(fontSize: 14)),
+          () => Text("y: ${dir_y.value}", style: TextStyle(fontSize: 14)),
         ),
         Obx(
-              () => Text("z: ${dir_z.value}", style: TextStyle(fontSize: 14)),
+          () => Text("z: ${dir_z.value}", style: TextStyle(fontSize: 14)),
         ),
       ],
     );

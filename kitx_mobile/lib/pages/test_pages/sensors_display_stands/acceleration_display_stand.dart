@@ -30,13 +30,13 @@ class AccelerationDisplayStandState extends State<AccelerationDisplayStand>{
       children: [
         Text("Acceleration Data", style: TextStyle(fontSize: 32)),
         Obx(
-              () => Text("x: ${acc_x.value}", style: TextStyle(fontSize: 14)),
+          () => Text("x: ${acc_x.value}", style: TextStyle(fontSize: 14)),
         ),
         Obx(
-              () => Text("y: ${acc_y.value}", style: TextStyle(fontSize: 14)),
+          () => Text("y: ${acc_y.value}", style: TextStyle(fontSize: 14)),
         ),
         Obx(
-              () => Text("z: ${acc_z.value}", style: TextStyle(fontSize: 14)),
+          () => Text("z: ${acc_z.value}", style: TextStyle(fontSize: 14)),
         ),
       ],
     );
