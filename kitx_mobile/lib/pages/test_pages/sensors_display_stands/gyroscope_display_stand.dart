@@ -2,6 +2,8 @@
 import 'package:get/get.dart';
 import 'package:sensors_plus/sensors_plus.dart';
 
+import 'device_rotation_display_stand.dart';
+
 class GyroscopeDisplayStand extends StatefulWidget{
   @override
   GyroscopeDisplayStandState createState() => GyroscopeDisplayStandState();
@@ -41,6 +43,7 @@ class GyroscopeDisplayStandState extends State<GyroscopeDisplayStand>{
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text("Gyroscope Data", style: TextStyle(fontSize: 32)),
+        DeviceRotationDisplayStand(),
         Row(
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
