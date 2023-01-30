@@ -7,7 +7,8 @@ import 'package:flutter_logs/flutter_logs.dart';
 
 // import 'package:receive_intent/receive_intent.dart';
 import 'package:get/get.dart';
-import 'package:kitx_mobile/pages/home_page.dart';
+import 'package:kitx_mobile/themes/dark_theme.dart';
+import 'package:kitx_mobile/themes/light_theme.dart';
 
 import 'pages/device_page.dart';
 import 'pages/account_page.dart';
@@ -75,14 +76,8 @@ class MainApp extends StatelessWidget {
     return GetMaterialApp(
       title: 'KitX Mobile',
       themeMode: ThemeMode.system,
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        brightness: Brightness.light,
-      ),
-      darkTheme: ThemeData(
-        primarySwatch: Colors.indigo,
-        brightness: Brightness.dark,
-      ),
+      theme: GetLightThemeData(),
+      darkTheme: GetDarkThemeData(),
       highContrastTheme: ThemeData(),
       highContrastDarkTheme: ThemeData(),
       translations: Translation(), // 定义翻译 使用: "Text".tr
