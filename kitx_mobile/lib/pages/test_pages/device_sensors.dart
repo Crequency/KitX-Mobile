@@ -1,8 +1,8 @@
 ﻿import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:sensors_plus/sensors_plus.dart';
-import 'package:vibration/vibration.dart';
+
+import 'sensors_display_stands/vibration_display_stand.dart';
 
 class DeviceSensorsPage extends StatefulWidget {
   @override
@@ -54,27 +54,9 @@ class _DeviceSensorsPage extends State<DeviceSensorsPage> {
     super.initState();
   }
 
-  int vibrate_duration = 200;
-
-  Future<void> vibrate() async {
-    if (await Vibration.hasCustomVibrationsSupport() ?? false) {
-      Vibration.vibrate(duration: vibrate_duration);
-    } else if (await Vibration.hasVibrator() ?? false) {
-      Vibration.vibrate();
-    }
-  }
-
-  void vibrate_cancel() {
-    Vibration.cancel();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   automaticallyImplyLeading: false,
-      //   title: Text("Device Sensors Info"),
-      // ),
       body: Container(
           alignment: Alignment.center,
           padding: EdgeInsets.all(30),
@@ -117,21 +99,7 @@ class _DeviceSensorsPage extends State<DeviceSensorsPage> {
             Obx(
               () => Text("z: ${acc_z.value}", style: TextStyle(fontSize: 14)),
             ),
-            Text("Vibration Test", style: TextStyle(fontSize: 32)),
-            TextField(
-              decoration:
-                  new InputDecoration(labelText: "Vibration Duration (ms)"),
-              keyboardType: TextInputType.number,
-              inputFormatters: <TextInputFormatter>[
-                FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
-                FilteringTextInputFormatter.digitsOnly,
-              ], // Only numbers can be entered
-              onChanged: (val) {
-                vibrate_duration = int.parse(val);
-              },
-            ),
-            OutlinedButton(onPressed: vibrate, child: Text("Vibrate")),
-            OutlinedButton(onPressed: vibrate_cancel, child: Text("Cancel")),
+            VibrationDisplayStand(),
           ])),
     );
   }
