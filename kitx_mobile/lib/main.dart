@@ -1,6 +1,7 @@
 // import 'dart:io';
 import 'dart:ui' as ui;
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart' hide Intent;
 import 'package:flutter_logs/flutter_logs.dart';
 
@@ -63,6 +64,14 @@ class MainApp extends StatelessWidget {
     //   home: const HomePage(),
     //   showPerformanceOverlay: true,
     // );
+
+    // return GetCupertinoApp(
+    //   title: 'KitX Mobile',
+    //   home: CupertinoPageScaffold(
+    //       child: CupertinoSlider(value: 0.4, onChanged: (_) => print('a')),
+    //   ),
+    // );
+
     return GetMaterialApp(
       title: 'KitX Mobile',
       themeMode: ThemeMode.system,
