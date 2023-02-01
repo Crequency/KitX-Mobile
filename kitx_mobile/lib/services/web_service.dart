@@ -87,7 +87,7 @@ class WebService {
             .then((RawDatagramSocket socket) {
               socket.broadcastEnabled = true;
               socket.joinMulticast(InternetAddress(_udpBroadcastAddress));
-              Timer.periodic(const Duration(seconds: 2), (timer) {
+              Timer.periodic(const Duration(seconds: Config.WebService_UdpSendFrequency), (timer) {
                 try {
                   deviceInfo = deviceInfo.rebuild((b) => b
                     ..SendTime = DateTime.now().toUtc());
@@ -110,7 +110,7 @@ class WebService {
         }).catchError((e, stack) {FlutterLogs.logError("errors", "WebService", "Catch an error: $e $stack");});
 
         // UDP 接收
-        await RawDatagramSocket.bind(InternetAddress.anyIPv4, _udpPortReceive, ttl: 2)
+        await RawDatagramSocket.bind(InternetAddress.anyIPv4, _udpPortReceive, ttl: 1)
             .then((RawDatagramSocket socket) {
               // socket.broadcastEnabled = true;
               socket.joinMulticast(InternetAddress(_udpBroadcastAddress));

@@ -48,9 +48,9 @@ class Devices {
         DateTime time = each.SendTime;
         if (now.difference(time).inSeconds > Config.WebService_DeviceInfoTTLSeconds) {
           deviceInfoList.remove(each);
-          deviceInfoList.refresh();
         }
       });
+      deviceInfoList.refresh();
     });
   }
 
