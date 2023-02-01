@@ -16,7 +16,7 @@ class GyroscopeDisplayStandState extends State<GyroscopeDisplayStand>{
   @override
   void initState(){
     gyroscopeEvents.listen((event) {
-      print(event);
+      // print(event);
 
       dir_x.value = event.x;
       dir_y.value = event.y;
@@ -39,39 +39,42 @@ class GyroscopeDisplayStandState extends State<GyroscopeDisplayStand>{
 
   @override
   Widget build(BuildContext context){
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text("Gyroscope Data", style: TextStyle(fontSize: 32)),
-        DeviceRotationDisplayStand(),
-        Row(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Obx(() => Text(
-              direction_x.value,
-              style: TextStyle(fontSize: 26),
-            )),
-            Obx(() => Text(
-              direction_y.value,
-              style: TextStyle(fontSize: 26),
-            )),
-            Obx(() => Text(
-              direction_z.value,
-              style: TextStyle(fontSize: 26),
-            )),
-          ]),
-        Obx(
-          () => Text("x: ${dir_x.value}", style: TextStyle(fontSize: 14)),
-        ),
-        Obx(
-          () => Text("y: ${dir_y.value}", style: TextStyle(fontSize: 14)),
-        ),
-        Obx(
-          () => Text("z: ${dir_z.value}", style: TextStyle(fontSize: 14)),
-        ),
-      ],
+    return Container(
+      padding: EdgeInsets.all(30),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text("Gyroscope Data", style: TextStyle(fontSize: 32)),
+          DeviceRotationDisplayStand(),
+          Row(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Obx(() => Text(
+                direction_x.value,
+                style: TextStyle(fontSize: 26),
+              )),
+              Obx(() => Text(
+                direction_y.value,
+                style: TextStyle(fontSize: 26),
+              )),
+              Obx(() => Text(
+                direction_z.value,
+                style: TextStyle(fontSize: 26),
+              )),
+            ]),
+          Obx(
+            () => Text("x: ${dir_x.value}", style: TextStyle(fontSize: 14)),
+          ),
+          Obx(
+            () => Text("y: ${dir_y.value}", style: TextStyle(fontSize: 14)),
+          ),
+          Obx(
+            () => Text("z: ${dir_z.value}", style: TextStyle(fontSize: 14)),
+          ),
+        ],
+      )
     );
   }
 }

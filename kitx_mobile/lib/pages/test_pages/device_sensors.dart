@@ -19,12 +19,13 @@ class _DeviceSensorsPage extends State<DeviceSensorsPage> {
     return Scaffold(
       body: Container(
         alignment: Alignment.center,
-        padding: EdgeInsets.all(30),
-        child: ListView(children: [
-          GyroscopeDisplayStand(),
-          AccelerationDisplayStand(),
-          VibrationDisplayStand(),
-        ])),
+        child: ListView(
+          children: [
+            GyroscopeDisplayStand(),
+            AccelerationDisplayStand(),
+            VibrationDisplayStand(),
+          ]
+        )),
     );
   }
 }

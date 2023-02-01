@@ -13,7 +13,7 @@ class AccelerationDisplayStandState extends State<AccelerationDisplayStand>{
   @override
   void initState(){
     userAccelerometerEvents.listen((event) {
-      print(event);
+      // print(event);
 
       acc_x.value = event.x;
       acc_y.value = event.y;
@@ -25,20 +25,23 @@ class AccelerationDisplayStandState extends State<AccelerationDisplayStand>{
 
   @override
   Widget build(BuildContext context){
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text("Acceleration Data", style: TextStyle(fontSize: 32)),
-        Obx(
-          () => Text("x: ${acc_x.value}", style: TextStyle(fontSize: 14)),
-        ),
-        Obx(
-          () => Text("y: ${acc_y.value}", style: TextStyle(fontSize: 14)),
-        ),
-        Obx(
-          () => Text("z: ${acc_z.value}", style: TextStyle(fontSize: 14)),
-        ),
-      ],
+    return Container(
+      padding: EdgeInsets.all(30),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text("Acceleration Data", style: TextStyle(fontSize: 32)),
+          Obx(
+                () => Text("x: ${acc_x.value}", style: TextStyle(fontSize: 14)),
+          ),
+          Obx(
+                () => Text("y: ${acc_y.value}", style: TextStyle(fontSize: 14)),
+          ),
+          Obx(
+                () => Text("z: ${acc_z.value}", style: TextStyle(fontSize: 14)),
+          ),
+        ],
+      ),
     );
   }
 }
