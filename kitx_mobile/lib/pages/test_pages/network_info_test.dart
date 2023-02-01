@@ -64,10 +64,10 @@ class _NetworkInfoTestPageState extends State<NetworkInfoTestPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   title: const Text('NetworkInfo example app'),
-      // ),
-      body: Center(child: Text('Connection Status: $_connectionStatus')),
+      body: Container(
+        padding: EdgeInsets.all(30),
+        child: Text('Connection Status: \n$_connectionStatus'),
+      ),
     );
   }
 

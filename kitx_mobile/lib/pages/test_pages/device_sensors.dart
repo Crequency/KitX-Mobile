@@ -24,6 +24,9 @@ class _DeviceSensorsPage extends State<DeviceSensorsPage> {
             GyroscopeDisplayStand(),
             AccelerationDisplayStand(),
             VibrationDisplayStand(),
+            Container(
+              height: 300,
+            ),
           ]
         )),
     );
