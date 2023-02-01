@@ -11,9 +11,9 @@ class DeviceRotationHost{
   //  pitch -> y
   //  roll -> x
   static void RotateWithAcceleration(double x, double y, double z, double time){
-    yaw += z * time * perRadToDegrees / 2;
-    pitch += x * time * perRadToDegrees / 2;
-    roll += y * time * perRadToDegrees / 2;
+    yaw += z * time * perRadToDegrees;
+    pitch += x * time * perRadToDegrees;
+    roll += y * time * perRadToDegrees;
 
     // print("yaw: $yaw, pitch: $pitch, roll: $roll");
   }
