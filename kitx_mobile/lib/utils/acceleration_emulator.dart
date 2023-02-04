@@ -1,6 +1,6 @@
 import 'rotation_emulator.dart';
 
-class DeviceRotationHost{
+class DeviceRotationHost {
   static double yaw = 0, pitch = 0, roll = 0;
 
   static double perRadToDegrees = 57.29577951308232;
@@ -10,7 +10,8 @@ class DeviceRotationHost{
   //  yaw -> z
   //  pitch -> y
   //  roll -> x
-  static void RotateWithAcceleration(double x, double y, double z, double time){
+  static void RotateWithAcceleration(
+      double x, double y, double z, double time) {
     yaw += z * time * perRadToDegrees;
     pitch += x * time * perRadToDegrees;
     roll += y * time * perRadToDegrees;
@@ -18,7 +19,7 @@ class DeviceRotationHost{
     // print("yaw: $yaw, pitch: $pitch, roll: $roll");
   }
 
-  static void Restore(){
+  static void Restore() {
     yaw = 0;
     pitch = 0;
     roll = 0;

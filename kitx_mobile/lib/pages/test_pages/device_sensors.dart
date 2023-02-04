@@ -10,7 +10,6 @@ class DeviceSensorsPage extends StatefulWidget {
 }
 
 class _DeviceSensorsPage extends State<DeviceSensorsPage> {
-
   @override
   void initState() => super.initState();
 
@@ -18,17 +17,15 @@ class _DeviceSensorsPage extends State<DeviceSensorsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        alignment: Alignment.center,
-        child: ListView(
-          children: [
+          alignment: Alignment.center,
+          child: ListView(children: [
             GyroscopeDisplayStand(),
             AccelerationDisplayStand(),
             VibrationDisplayStand(),
             Container(
               height: 300,
             ),
-          ]
-        )),
+          ])),
     );
   }
 }

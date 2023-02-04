@@ -7,9 +7,9 @@ class DevicesStatus extends StatefulWidget {
   State<DevicesStatus> createState() => _DevicesStatusState();
 }
 
-class _DevicesStatusState extends State<DevicesStatus>{
+class _DevicesStatusState extends State<DevicesStatus> {
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     return Text("Hi");
   }
 }

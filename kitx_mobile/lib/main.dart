@@ -26,7 +26,8 @@ Future<void> main() async {
 
   // 初始化 WebService
   WebService webService = WebService(Config.WebService_UdpPortReceive,
-      Config.WebService_UdpPortSend, Config.WebService_UdpBroadcastAddress);  webService.initService();
+      Config.WebService_UdpPortSend, Config.WebService_UdpBroadcastAddress);
+  webService.initService();
 
   // 初始化 log
   await InitLogger();

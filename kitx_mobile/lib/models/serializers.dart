@@ -33,6 +33,6 @@ part 'serializers.g.dart';
 ///   implements [SerializerPlugin] and writes a serializer for Firebase
 ///   Datetime that converts TimeStamp or DateTime to integers.
 final Serializers serializers = (_$serializers.toBuilder()
-    ..addPlugin(StandardJsonPlugin())
-    ..add(Iso8601DateTimeSerializer()))
-  .build();
+      ..addPlugin(StandardJsonPlugin())
+      ..add(Iso8601DateTimeSerializer()))
+    .build();

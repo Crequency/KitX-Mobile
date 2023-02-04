@@ -5,7 +5,6 @@ import 'package:built_value/serializer.dart';
 part 'command_type.g.dart';
 
 class CommandTypeEnum extends EnumClass {
-  
   @BuiltValueEnumConst(wireNumber: 0)
   static const CommandTypeEnum Call = _$call;
 
@@ -13,9 +12,10 @@ class CommandTypeEnum extends EnumClass {
   static const CommandTypeEnum CallBack = _$callBack;
 
   const CommandTypeEnum._(String name) : super(name);
-  
+
   static BuiltSet<CommandTypeEnum> get values => _$commandTypeEnumValues;
   static CommandTypeEnum valueOf(String name) => _$commandTypeEnumValueOf(name);
 
-  static Serializer<CommandTypeEnum> get serializer => _$commandTypeEnumSerializer;
+  static Serializer<CommandTypeEnum> get serializer =>
+      _$commandTypeEnumSerializer;
 }

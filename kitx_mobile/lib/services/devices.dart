@@ -8,7 +8,6 @@ import '../utils/global.dart' as global;
 // import '../rules/device_info_struct.dart';
 import '../models/device_info.dart';
 
-
 class Devices {
   final deviceInfoList = RxList<DeviceInfoStruct>([]);
   bool lock = true;
@@ -23,8 +22,10 @@ class Devices {
       List<DeviceInfoStruct> _tempList = deviceInfoList.toList();
       bool _tag = true;
       _tempList.forEach((each) {
-        if (each.IPv4 == info.IPv4 || each.DeviceMacAddress == info.DeviceMacAddress) {
-          deviceInfoList[deviceInfoList.indexOf(each)] = each.rebuild((b) => b..SendTime = info.SendTime);
+        if (each.IPv4 == info.IPv4 ||
+            each.DeviceMacAddress == info.DeviceMacAddress) {
+          deviceInfoList[deviceInfoList.indexOf(each)] =
+              each.rebuild((b) => b..SendTime = info.SendTime);
           deviceInfoList.refresh();
           _tag = false;
         }
@@ -41,12 +42,14 @@ class Devices {
   }
 
   Future<void> init() async {
-    Timer.periodic(Duration(seconds: Config.WebService_DeviceInfoCheckTTLSeconds), (_) {
+    Timer.periodic(
+        Duration(seconds: Config.WebService_DeviceInfoCheckTTLSeconds), (_) {
       List<DeviceInfoStruct> _tempList = deviceInfoList.toList();
       _tempList.forEach((each) {
         DateTime now = DateTime.now();
         DateTime time = each.SendTime;
-        if (now.difference(time).inSeconds > Config.WebService_DeviceInfoTTLSeconds) {
+        if (now.difference(time).inSeconds >
+            Config.WebService_DeviceInfoTTLSeconds) {
           deviceInfoList.remove(each);
         }
       });
