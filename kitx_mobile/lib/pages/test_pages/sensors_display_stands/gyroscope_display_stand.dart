@@ -10,8 +10,6 @@ class GyroscopeDisplayStand extends StatefulWidget {
 }
 
 class GyroscopeDisplayStandState extends State<GyroscopeDisplayStand> {
-  static bool firstEnter = true;
-
   final dir_x = 0.0.obs, dir_y = 0.0.obs, dir_z = 0.0.obs;
   final direction_x = "none".obs,
       direction_y = "none".obs,
@@ -19,33 +17,30 @@ class GyroscopeDisplayStandState extends State<GyroscopeDisplayStand> {
 
   @override
   void initState() {
-    if (firstEnter) {
-      gyroscopeEvents.listen((event) {
-        // print(event);
+    gyroscopeEvents.listen((event) {
+      // print(event);
 
-        dir_x.value = event.x;
-        dir_y.value = event.y;
-        dir_z.value = event.z;
+      dir_x.value = event.x;
+      dir_y.value = event.y;
+      dir_z.value = event.z;
 
-        //rough calculation, you can use
-        //advance formula to calculate the orientation
-        if (dir_x >= 0)
-          direction_x.value = "back";
-        else
-          direction_x.value = "forward";
+      //rough calculation, you can use
+      //advance formula to calculate the orientation
+      if (dir_x >= 0)
+        direction_x.value = "back";
+      else
+        direction_x.value = "forward";
 
-        if (dir_y >= 0)
-          direction_y.value = "right";
-        else
-          direction_y.value = "left";
+      if (dir_y >= 0)
+        direction_y.value = "right";
+      else
+        direction_y.value = "left";
 
-        if (dir_z >= 0)
-          direction_z.value = "👈";
-        else
-          direction_z.value = "👉";
-      });
-      firstEnter = false;
-    }
+      if (dir_z >= 0)
+        direction_z.value = "👈";
+      else
+        direction_z.value = "👉";
+    });
 
     super.initState();
   }

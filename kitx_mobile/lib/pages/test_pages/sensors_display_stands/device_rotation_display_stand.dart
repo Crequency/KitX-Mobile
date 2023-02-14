@@ -11,7 +11,7 @@ class DeviceRotationDisplayStand extends StatefulWidget {
 }
 
 class DeviceRotationDisplayStandState
-    extends State<DeviceRotationDisplayStand> {
+  extends State<DeviceRotationDisplayStand> {
   static double canvas_width = 400;
   static double canvas_height = 300;
   static bool firstEnterPage = true;
@@ -142,7 +142,5 @@ class Painter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) {
-    return false;
-  }
+  bool shouldRepaint(covariant CustomPainter oldDelegate) => true;
 }
