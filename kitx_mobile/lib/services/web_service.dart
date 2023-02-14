@@ -89,8 +89,7 @@ class WebService {
         // deviceInfo 初始值
         DeviceInfoStruct deviceInfo = DeviceInfoStruct(((b) => b
           ..DeviceName = global.DeviceName
-          ..DeviceOSVersion =
-              "${deviceData.model.toString()} (Android ${deviceData.version.release} SDK ${deviceData.version.sdkInt})"
+          ..DeviceOSVersion = deviceOSVersion
           ..IPv4 = _ipv4
           ..IPv6 = _ipv6
           ..DeviceMacAddress = _mac
