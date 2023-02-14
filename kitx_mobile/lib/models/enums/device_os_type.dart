@@ -5,7 +5,6 @@ import 'package:built_value/serializer.dart';
 part 'device_os_type.g.dart';
 
 class DeviceOSTypeEnum extends EnumClass {
-
   @BuiltValueEnumConst(wireNumber: 0)
   static const DeviceOSTypeEnum Unknown = _$unknown;
 
@@ -42,11 +41,12 @@ class DeviceOSTypeEnum extends EnumClass {
   @BuiltValueEnumConst(wireNumber: 11)
   static const DeviceOSTypeEnum IoT = _$ioT;
 
-
   const DeviceOSTypeEnum._(String name) : super(name);
 
   static BuiltSet<DeviceOSTypeEnum> get values => _$deviceOSTypeEnumValues;
-  static DeviceOSTypeEnum valueOf(String name) => _$deviceOSTypeEnumValueOf(name);
+  static DeviceOSTypeEnum valueOf(String name) =>
+      _$deviceOSTypeEnumValueOf(name);
 
-  static Serializer<DeviceOSTypeEnum> get serializer => _$deviceOSTypeEnumSerializer;
+  static Serializer<DeviceOSTypeEnum> get serializer =>
+      _$deviceOSTypeEnumSerializer;
 }

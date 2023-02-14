@@ -2,19 +2,19 @@
 
 import 'package:get/get.dart';
 
-class SettingPage extends StatefulWidget {
-  const SettingPage({Key? key}) : super(key: key);
+class SettingsPage extends StatefulWidget {
+  const SettingsPage({Key? key}) : super(key: key);
 
   @override
-  State<SettingPage> createState() => _SettingPageState();
+  State<SettingsPage> createState() => _SettingsPageState();
 }
 
-class _SettingPageState extends State<SettingPage> {
+class _SettingsPageState extends State<SettingsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("SettingPage_Title".tr),
+          title: Text("SettingsPage_Title".tr),
         ),
         body: Center(
           child: Column(
@@ -25,7 +25,6 @@ class _SettingPageState extends State<SettingPage> {
               ),
             ],
           ),
-        )
-    );
+        ));
   }
 }

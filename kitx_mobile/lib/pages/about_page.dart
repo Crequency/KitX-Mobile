@@ -13,19 +13,18 @@ class _AboutPageState extends State<AboutPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("AboutPage_Title".tr),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              "Developing ...",
-            ),
-          ],
+        appBar: AppBar(
+          title: Text("AboutPage_Title".tr),
         ),
-      )
-    );
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text(
+                "Developing ...",
+              ),
+            ],
+          ),
+        ));
   }
 }

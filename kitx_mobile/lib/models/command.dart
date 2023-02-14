@@ -12,7 +12,6 @@ import 'enums/command_type.dart';
 part 'command.g.dart';
 
 abstract class Command implements Built<Command, CommandBuilder> {
-  
   CommandTypeEnum get Type;
 
   DeviceLocator get Sender;
@@ -52,7 +51,8 @@ abstract class Command implements Built<Command, CommandBuilder> {
   }
 
   static Command? fromString(String jsonString) {
-    return serializers.deserializeWith(Command.serializer, json.decode(jsonString));
+    return serializers.deserializeWith(
+        Command.serializer, json.decode(jsonString));
   }
 
   static Serializer<Command> get serializer => _$commandSerializer;

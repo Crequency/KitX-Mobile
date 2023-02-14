@@ -9,7 +9,7 @@ import 'package:flutter_logs/flutter_logs.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 import 'package:network_info_plus/network_info_plus.dart';
-// import 'package:mac_address/mac_address.dart';
+import 'package:mac_address/mac_address.dart';
 
 import '../models/device_info.dart';
 import '../utils/config.dart';
@@ -52,8 +52,9 @@ class WebService {
           global.DeviceName = value.toString();
         });
         // await _networkInfo.getWifiBroadcast().then((value) {_udpBroadcastAddress = value.toString();});
-        // await GetMac.macAddress.then((value) {_mac = value.toString();});
-        _mac = "114:514";
+        await GetMac.macAddress.then((value) {
+          _mac = value.toString();
+        });
         FlutterLogs.logInfo("server", "WebService",
             "Get network information. Ipv4: $_ipv4 Ipv6: $_ipv6 Mac: $_mac");
         if (_ipv4 == "null") {
@@ -88,7 +89,8 @@ class WebService {
         // deviceInfo 初始值
         DeviceInfoStruct deviceInfo = DeviceInfoStruct(((b) => b
           ..DeviceName = global.DeviceName
-          ..DeviceOSVersion = deviceOSVersion
+          ..DeviceOSVersion =
+              "${deviceData.model.toString()} (Android ${deviceData.version.release} SDK ${deviceData.version.sdkInt})"
           ..IPv4 = _ipv4
           ..IPv6 = _ipv6
           ..DeviceMacAddress = _mac
@@ -107,7 +109,9 @@ class WebService {
             .then((RawDatagramSocket socket) {
           socket.broadcastEnabled = true;
           socket.joinMulticast(InternetAddress(_udpBroadcastAddress));
-          Timer.periodic(const Duration(seconds: 2), (timer) {
+          Timer.periodic(
+              const Duration(seconds: Config.WebService_UdpSendFrequency),
+              (timer) {
             try {
               deviceInfo = deviceInfo
                   .rebuild((b) => b..SendTime = DateTime.now().toUtc());
@@ -134,7 +138,7 @@ class WebService {
 
         // UDP 接收
         await RawDatagramSocket.bind(InternetAddress.anyIPv4, _udpPortReceive,
-                ttl: 2)
+                ttl: 1)
             .then((RawDatagramSocket socket) {
           // socket.broadcastEnabled = true;
           socket.joinMulticast(InternetAddress(_udpBroadcastAddress));

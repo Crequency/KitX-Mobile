@@ -13,19 +13,18 @@ class _AccountPageState extends State<AccountPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("AccountPage_Title".tr),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              "Developing ...",
-            ),
-          ],
+        appBar: AppBar(
+          title: Text("AccountPage_Title".tr),
         ),
-      )
-    );
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text(
+                "Developing ...",
+              ),
+            ],
+          ),
+        ));
   }
 }
