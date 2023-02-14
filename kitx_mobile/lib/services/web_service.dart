@@ -39,9 +39,9 @@ class WebService {
   /// 初始化服务
   Future<void> initService() async {
     try {
-      if (kIsWeb == false && Platform.isAndroid) {
+      if (kIsWeb == false) {
         // 获取设备信息
-        late String _ipv4, _ipv6, _mac;
+        late String _ipv4, _ipv6, _mac, deviceOSVersion;
         await _networkInfo.getWifiIP().then((value) {
           _ipv4 = value.toString();
         });
@@ -75,7 +75,17 @@ class WebService {
               "Can not get MAC Address, but WebService will still start.");
           _mac = "";
         }
-        AndroidDeviceInfo deviceData = await _deviceInfoPlugin.androidInfo;
+        if (Platform.isAndroid) {
+          AndroidDeviceInfo deviceData = await _deviceInfoPlugin.androidInfo;
+          deviceOSVersion =
+              "${deviceData.model.toString()} (Android ${deviceData.version.release} SDK ${deviceData.version.sdkInt})";
+        } else if (Platform.isIOS) {
+          IosDeviceInfo deviceData = await _deviceInfoPlugin.iosInfo;
+          deviceOSVersion =
+              "${deviceData.name.toString()} (iOS ${deviceData.systemVersion})";
+        } else {
+          deviceOSVersion = "Unknown";
+        }
         // deviceInfo 初始值
         DeviceInfoStruct deviceInfo = DeviceInfoStruct(((b) => b
           ..DeviceName = global.DeviceName
