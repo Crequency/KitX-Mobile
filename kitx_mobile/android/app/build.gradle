@@ -21,7 +21,7 @@ if (flutterVersionName == null) {
     flutterVersionName = '1.0'
 }
 
-def majorVersion = "0.1.0"
+def majorVersion = "1.0.0"
 def majorVersionCode = 100000
 
 apply plugin: 'com.android.application'
