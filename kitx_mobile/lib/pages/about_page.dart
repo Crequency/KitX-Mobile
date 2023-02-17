@@ -27,102 +27,216 @@ class _AboutPageState extends State<AboutPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text("AboutPage_Title".tr),
-        ),
-        body: Center(
-            child: ListView(
-          padding: EdgeInsets.all(20),
-          children: [
-            Obx(() => AnimatedContainer(
-                duration: const Duration(milliseconds: 1000),
-                curve: Curves.easeInOutCubicEmphasized,
-                alignment: Alignment.topCenter,
-                padding: entering.value
-                    ? EdgeInsets.fromLTRB(80, 0, 80, 0)
-                    : EdgeInsets.all(40),
-                // onEnd: () => entering = true,
-                child: InkWell(
-                    splashColor: context.iconColor?.withOpacity(0.3),
-                    child: const Image(
-                      alignment: Alignment.center,
-                      image: AssetImage("assets/KitX-Icon-1920x-margin-2x.png"),
-                      fit: BoxFit.cover,
-                    )))),
-            Container(
-              alignment: Alignment.center,
-              child: Column(
+      body: CustomScrollView(
+        slivers: [
+          SliverAppBar(
+            pinned: true,
+            snap: false,
+            floating: false,
+            expandedHeight: 380.0,
+            title: Text("AboutPage_Title".tr),
+            flexibleSpace: FlexibleSpaceBar(
+              // title: Text("AboutPage_Title".tr),
+              centerTitle: true,
+              collapseMode: CollapseMode.parallax,
+              background: ListView(
                 children: [
-                  const Text(
-                    "KitX",
-                    style: TextStyle(
-                      fontSize: 50,
+                  Container(height: 30),
+                  Obx(() => AnimatedContainer(
+                      duration: const Duration(milliseconds: 1000),
+                      curve: Curves.easeInOutCubicEmphasized,
+                      alignment: Alignment.topCenter,
+                      padding: entering.value
+                          ? EdgeInsets.fromLTRB(80, 0, 80, 0)
+                          : EdgeInsets.all(40),
+                      // onEnd: () => entering = true,
+                      child: InkWell(
+                          splashColor: context.iconColor?.withOpacity(0.3),
+                          child: const Image(
+                            alignment: Alignment.center,
+                            image: AssetImage(
+                                "assets/KitX-Icon-1920x-margin-2x.png"),
+                            fit: BoxFit.cover,
+                          )))),
+                  Container(
+                    alignment: Alignment.center,
+                    child: Column(
+                      children: [
+                        const Text(
+                          "KitX",
+                          style: TextStyle(
+                            fontSize: 50,
+                          ),
+                        ),
+                        Obx(() => Text(
+                            "${"AboutPage_Version".tr}: ${version.value}")),
+                        // Divider(),
+                      ],
                     ),
                   ),
-                  Obx(() => Text("${"AboutPage_Version".tr}: ${version.value}")),
-                  Divider(),
                 ],
               ),
             ),
-            Container(height: 20),
-            Container(
-                alignment: Alignment.center,
-                child: Text("AboutPage_Contributors".tr, style: TextStyle(fontSize: 20))),
-            Divider(),
-            Container(
-                height: 40,
-                alignment: Alignment.center,
-                child: ListView(
-                    // Wrap(
-                    //   spacing: 8.0,
-                    //   runSpacing: -4.0,
-                    //   alignment: WrapAlignment.center,
+          ),
+          SliverList(
+            delegate: SliverChildBuilderDelegate(
+              (BuildContext context, int index) {
+                return ListView(
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  children: [
+                    Container(
+                        alignment: Alignment.center,
+                        child: Text("AboutPage_Contributors".tr,
+                            style: TextStyle(fontSize: 20))),
+                    Divider(),
+                    Container(
+                        height: 40,
+                        alignment: Alignment.center,
+                        child: ListView(
+                            shrinkWrap: true,
+                            scrollDirection: Axis.horizontal,
+                            children: [
+                              Chip(label: const Text("Dynesshely")),
+                              Container(width: 10),
+                              Chip(label: const Text("LYF511")),
+                              Container(width: 10),
+                              Chip(label: const Text("orzMaster")),
+                            ])),
+                    Divider(),
+                    Container(height: 20),
+                    Container(
+                        alignment: Alignment.center,
+                        child: Text("AboutPage_Repos".tr,
+                            style: TextStyle(fontSize: 20))),
+                    Divider(),
+                    Container(
+                        height: 60,
+                        alignment: Alignment.center,
+                        child: ListView(
+                            shrinkWrap: true,
+                            scrollDirection: Axis.horizontal,
+                            padding: EdgeInsets.all(10),
+                            children: [
+                              ElevatedButton(
+                                  onPressed: () => launchUrl(Uri.parse(
+                                      "https://github.com/Crequency/KitX")),
+                                  child: Text("GitHub")),
+                              Container(width: 10),
+                              ElevatedButton(
+                                  onPressed: () => launchUrl(Uri.parse(
+                                      "https://gitee.com/Crequency/KitX")),
+                                  child: Text("Gitee")),
+                            ])),
+                    Divider(),
+                    Container(height: 500),
+                  ],
+                );
+              },
+              childCount: 1,
+            ),
+          ),
+        ],
+      ),
+    );
 
-                    shrinkWrap: true,
-                    scrollDirection: Axis.horizontal,
-                    // physics: NeverScrollableScrollPhysics(),
-
-                    children: [
-                      Chip(label: const Text("Dynesshely")),
-                      Container(width: 10),
-                      Chip(label: const Text("LYF511")),
-                      Container(width: 10),
-                      Chip(label: const Text("orzMaster")),
-                    ])),
-            Divider(),
-            Container(height: 20),
-            Container(
-                alignment: Alignment.center,
-                child: Text("AboutPage_Repos".tr, style: TextStyle(fontSize: 20))),
-            Divider(),
-            Container(
-                height: 60,
-                alignment: Alignment.center,
-                child: ListView(
-                    // Wrap(
-                    //   spacing: 8.0,
-                    //   runSpacing: -4.0,
-                    //   alignment: WrapAlignment.center,
-
-                    shrinkWrap: true,
-                    scrollDirection: Axis.horizontal,
-                    padding: EdgeInsets.all(10),
-                    // physics: NeverScrollableScrollPhysics(),
-
-                    children: [
-                      ElevatedButton(
-                          onPressed: () => launchUrl(
-                              Uri.parse("https://github.com/Crequency/KitX")),
-                          child: Text("GitHub")),
-                      Container(width: 10),
-                      ElevatedButton(
-                          onPressed: () => launchUrl(
-                              Uri.parse("https://gitee.com/Crequency/KitX")),
-                          child: Text("Gitee")),
-                    ])),
-            Divider(),
-            Container(height: 300),
-          ],
-        )));
+    // return Scaffold(
+    //     appBar: AppBar(
+    //       title: Text("AboutPage_Title".tr),
+    //     ),
+    //     body: Center(
+    //         child: ListView(
+    //       padding: EdgeInsets.all(20),
+    //       children: [
+    //         Obx(() => AnimatedContainer(
+    //             duration: const Duration(milliseconds: 1000),
+    //             curve: Curves.easeInOutCubicEmphasized,
+    //             alignment: Alignment.topCenter,
+    //             padding: entering.value
+    //                 ? EdgeInsets.fromLTRB(80, 0, 80, 0)
+    //                 : EdgeInsets.all(40),
+    //             // onEnd: () => entering = true,
+    //             child: InkWell(
+    //                 splashColor: context.iconColor?.withOpacity(0.3),
+    //                 child: const Image(
+    //                   alignment: Alignment.center,
+    //                   image: AssetImage("assets/KitX-Icon-1920x-margin-2x.png"),
+    //                   fit: BoxFit.cover,
+    //                 )))),
+    //         Container(
+    //           alignment: Alignment.center,
+    //           child: Column(
+    //             children: [
+    //               const Text(
+    //                 "KitX",
+    //                 style: TextStyle(
+    //                   fontSize: 50,
+    //                 ),
+    //               ),
+    //               Obx(() => Text("${"AboutPage_Version".tr}: ${version.value}")),
+    //               Divider(),
+    //             ],
+    //           ),
+    //         ),
+    //         Container(height: 20),
+    //         Container(
+    //             alignment: Alignment.center,
+    //             child: Text("AboutPage_Contributors".tr, style: TextStyle(fontSize: 20))),
+    //         Divider(),
+    //         Container(
+    //             height: 40,
+    //             alignment: Alignment.center,
+    //             child: ListView(
+    //                 // Wrap(
+    //                 //   spacing: 8.0,
+    //                 //   runSpacing: -4.0,
+    //                 //   alignment: WrapAlignment.center,
+    //
+    //                 shrinkWrap: true,
+    //                 scrollDirection: Axis.horizontal,
+    //                 // physics: NeverScrollableScrollPhysics(),
+    //
+    //                 children: [
+    //                   Chip(label: const Text("Dynesshely")),
+    //                   Container(width: 10),
+    //                   Chip(label: const Text("LYF511")),
+    //                   Container(width: 10),
+    //                   Chip(label: const Text("orzMaster")),
+    //                 ])),
+    //         Divider(),
+    //         Container(height: 20),
+    //         Container(
+    //             alignment: Alignment.center,
+    //             child: Text("AboutPage_Repos".tr, style: TextStyle(fontSize: 20))),
+    //         Divider(),
+    //         Container(
+    //             height: 60,
+    //             alignment: Alignment.center,
+    //             child: ListView(
+    //                 // Wrap(
+    //                 //   spacing: 8.0,
+    //                 //   runSpacing: -4.0,
+    //                 //   alignment: WrapAlignment.center,
+    //
+    //                 shrinkWrap: true,
+    //                 scrollDirection: Axis.horizontal,
+    //                 padding: EdgeInsets.all(10),
+    //                 // physics: NeverScrollableScrollPhysics(),
+    //
+    //                 children: [
+    //                   ElevatedButton(
+    //                       onPressed: () => launchUrl(
+    //                           Uri.parse("https://github.com/Crequency/KitX")),
+    //                       child: Text("GitHub")),
+    //                   Container(width: 10),
+    //                   ElevatedButton(
+    //                       onPressed: () => launchUrl(
+    //                           Uri.parse("https://gitee.com/Crequency/KitX")),
+    //                       child: Text("Gitee")),
+    //                 ])),
+    //         Divider(),
+    //         Container(height: 300),
+    //       ],
+    //     )));
   }
 }
