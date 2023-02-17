@@ -103,7 +103,7 @@ Widget createDeviceCard(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          info.IPv4,
+                          "${info.IPv4}:${info.PluginServerPort}",
                           style: TextStyle(
                             fontSize: 10,
                           ),
