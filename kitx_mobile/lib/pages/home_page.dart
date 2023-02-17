@@ -38,7 +38,8 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             child: Text(
-              "Drawer_Title".tr,
+              "",
+              // "Drawer_Title".tr,
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 24,
