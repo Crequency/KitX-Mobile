@@ -26,11 +26,12 @@ class _HomePageState extends State<HomePage> {
       ),
       drawer: Drawer(
           child: ListView(
+        padding: EdgeInsets.zero,
         children: <Widget>[
           DrawerHeader(
             decoration: BoxDecoration(
               // color: Colors.blue,
-              image: DecorationImage(
+              image: const DecorationImage(
                 alignment: Alignment.topCenter,
                 image: AssetImage("assets/KitX-Background.png"),
                 fit: BoxFit.cover,

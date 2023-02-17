@@ -31,6 +31,7 @@ dependencies:
   #battery_plus: ^3.0.2  # 电池数据
   built_value: ^8.4.3 # JSON 序列化
   built_collection: ^5.1.1
+  package_info_plus: ^3.0.3 # 包信息
 
 dev_dependencies:
   flutter_test:
