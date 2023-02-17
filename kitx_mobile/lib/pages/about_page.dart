@@ -13,14 +13,25 @@ class AboutPage extends StatefulWidget {
 
 class _AboutPageState extends State<AboutPage> {
   final version = "getting ...".obs;
-  final entering = false.obs;
+  final iconEntering = false.obs;
+  final iconEntered = false.obs;
+  final titleEntered = false.obs;
+  bool contentEntering = false;
 
   @override
   void initState() {
     var packageInfo = PackageInfo.fromPlatform();
     packageInfo.then((value) => version.value = value.version);
+    Future.delayed(Duration(milliseconds: 150))
+        .then((value) => iconEntering.value = true);
+    Future.delayed(Duration(milliseconds: 400))
+        .then((value) => iconEntered.value = true);
+    Future.delayed(Duration(milliseconds: 600))
+        .then((value) => titleEntered.value = true);
     Future.delayed(Duration(milliseconds: 0))
-        .then((value) => entering.value = true);
+        .then((value) => super.setState(() {
+              contentEntering = true;
+            }));
     super.initState();
   }
 
@@ -33,7 +44,8 @@ class _AboutPageState extends State<AboutPage> {
             pinned: true,
             snap: false,
             floating: false,
-            expandedHeight: 380.0,
+            // expandedHeight: entered ? 380.0 : 380.0,
+            expandedHeight: 320.0,
             title: Text("AboutPage_Title".tr),
             flexibleSpace: FlexibleSpaceBar(
               // title: Text("AboutPage_Title".tr),
@@ -43,13 +55,15 @@ class _AboutPageState extends State<AboutPage> {
                 children: [
                   Container(height: 30),
                   Obx(() => AnimatedContainer(
-                      duration: const Duration(milliseconds: 1000),
+                      duration: const Duration(milliseconds: 800),
                       curve: Curves.easeInOutCubicEmphasized,
                       alignment: Alignment.topCenter,
-                      padding: entering.value
-                          ? EdgeInsets.fromLTRB(80, 0, 80, 0)
-                          : EdgeInsets.all(40),
-                      // onEnd: () => entering = true,
+                      padding: iconEntering.value
+                          ? EdgeInsets.fromLTRB(100, 0, 100, 0)
+                          : EdgeInsets.all(0),
+                      // onEnd: () => super.setState(() {
+                      //       entered = true;
+                      //     }),
                       child: InkWell(
                           splashColor: context.iconColor?.withOpacity(0.3),
                           child: const Image(
@@ -62,14 +76,23 @@ class _AboutPageState extends State<AboutPage> {
                     alignment: Alignment.center,
                     child: Column(
                       children: [
-                        const Text(
-                          "KitX",
-                          style: TextStyle(
-                            fontSize: 50,
-                          ),
-                        ),
-                        Obx(() => Text(
-                            "${"AboutPage_Version".tr}: ${version.value}")),
+                        Obx(() => AnimatedOpacity(
+                              opacity: iconEntered.value ? 1 : 0,
+                              duration: Duration(milliseconds: 300),
+                              curve: Curves.easeInCubic,
+                              child: const Text(
+                                "KitX",
+                                style: TextStyle(
+                                  fontSize: 50,
+                                ),
+                              ),
+                            )),
+                        Obx(() => AnimatedOpacity(
+                            opacity: titleEntered.value ? 1 : 0,
+                            duration: Duration(milliseconds: 500),
+                            curve: Curves.easeInOutCubic,
+                            child: Text(
+                                "${"AboutPage_Version".tr}: ${version.value}"))),
                         // Divider(),
                       ],
                     ),
@@ -85,6 +108,11 @@ class _AboutPageState extends State<AboutPage> {
                   shrinkWrap: true,
                   physics: NeverScrollableScrollPhysics(),
                   children: [
+                    AnimatedContainer(
+                      duration: Duration(milliseconds: 1000),
+                      curve: Curves.easeInOutCubicEmphasized,
+                      height: contentEntering ? 0 : 800,
+                    ),
                     Container(
                         alignment: Alignment.center,
                         child: Text("AboutPage_Contributors".tr,
@@ -104,7 +132,11 @@ class _AboutPageState extends State<AboutPage> {
                               Chip(label: const Text("orzMaster")),
                             ])),
                     Divider(),
-                    Container(height: 20),
+                    AnimatedContainer(
+                      duration: Duration(milliseconds: 1000),
+                      curve: Curves.easeInOutCubicEmphasized,
+                      height: contentEntering ? 20 : 1600,
+                    ),
                     Container(
                         alignment: Alignment.center,
                         child: Text("AboutPage_Repos".tr,
