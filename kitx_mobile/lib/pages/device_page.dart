@@ -24,18 +24,30 @@ class _DevicePage extends State<DevicePage> {
         title: Text("DevicePage_Title".tr),
       ),
       body: Obx(() => ListView.builder(
-            itemCount: global.devices.length,
+            itemCount: global.devices.length + 1,
             itemBuilder: (_, int index) {
               return createDeviceCard(
-                  context, global.devices.deviceInfoList[index], index);
+                  context,
+                  index >= global.devices.length
+                      ? null
+                      : global.devices.deviceInfoList[index],
+                  index);
             },
           )),
+
+      // body: Obx(() => AnimatedList(
+      //       initialItemCount: global.devices.length,
+      //       itemBuilder: (context, index, animation) => createDeviceCard(
+      //           context, global.devices.deviceInfoList[index], index),
+      //     ))
     );
   }
 }
 
 Widget createDeviceCard(
-    BuildContext context, DeviceInfoStruct info, int index) {
+    BuildContext context, DeviceInfoStruct? info, int index) {
+  if (info == null) return Container(height: 300);
+
   IconData _iconStyle = Convert(info.DeviceOSType);
   Icon _icon = Icon(
     _iconStyle,
@@ -103,7 +115,7 @@ Widget createDeviceCard(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          info.IPv4,
+                          "${info.IPv4}:${info.PluginServerPort}",
                           style: TextStyle(
                             fontSize: 10,
                           ),

@@ -17,7 +17,15 @@ class Translation extends Translations {
           "AccountPage_Title": "账户",
           "TestPage_Title": "测试",
           "SettingsPage_Title": "设置",
-          "AboutPage_Title": "关于"
+          "AboutPage_Title": "关于",
+          "AboutPage_Version": "版本",
+          "AboutPage_Contributors": "贡献者",
+          "AboutPage_Repos": "仓库",
+          "AboutPage_ThirdPartyLicenses": "第三方许可",
+          "AboutPage_ThirdPartyLicenses_DisplayAll": "显示全部",
+          "AboutPage_JoinUS": "加入我们",
+          "AboutPage_JoinUS_Text":
+              "我们的项目都托管在 https://github.com/Crequency/, " + "欢迎 Fork 并贡献您宝贵的意见",
         },
         'en_US': {
           "Drawer_Title": "KitX",
@@ -32,7 +40,16 @@ class Translation extends Translations {
           "AccountPage_Title": "Account",
           "TestPage_Title": "Test",
           "SettingsPage_Title": "Setting",
-          "AboutPage_Title": "About"
+          "AboutPage_Title": "About",
+          "AboutPage_Version": "Version",
+          "AboutPage_Contributors": "Contributors",
+          "AboutPage_Repos": "Repos",
+          "AboutPage_ThirdPartyLicenses": "Third-Party Licenses",
+          "AboutPage_ThirdPartyLicenses_DisplayAll": "Display all",
+          "AboutPage_JoinUS": "Join US",
+          "AboutPage_JoinUS_Text":
+              "All our projects storage on https://github.com/Crequency/, " +
+                  "welcome to Fork and contribute to them.",
         }
       };
 }
