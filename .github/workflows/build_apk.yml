@@ -45,13 +45,13 @@ jobs:
         run: |
           python build.py
 
-          DATA=$(cat data.json)
+          # DATA=$(cat data.json)
 
-      - name: Upload Published Dashboard Artifacts
-        uses: nanoufo/action-upload-artifacts-and-release-assets@main
-        with:
-          path: |-
-            ${{ join(fromJSON(env.DATA).publish_list, '') }}
+      # - name: Upload Published Dashboard Artifacts
+      #   uses: nanoufo/action-upload-artifacts-and-release-assets@main
+      #   with:
+      #     path: |-
+      #       ${{ join(fromJSON(env.DATA).publish_list, '') }}
 
       # - uses: actions/upload-artifact@v3
       #   with:
@@ -60,3 +60,24 @@ jobs:
       # - uses: actions/upload-artifact@v3
       #   with:
       #     path: kitx_mobile/.ci_cd/*.sha1
+
+      - uses: actions/upload-artifact@v3
+        with:
+          path: kitx_mobile/.ci_cd/kitx-mobile-arm64-v8a-release.apk
+
+      - uses: actions/upload-artifact@v3
+        with:
+          path: kitx_mobile/.ci_cd/kitx-mobile-armeabi-v7a-release.apk
+
+      - uses: actions/upload-artifact@v3
+        with:
+          path: kitx_mobile/.ci_cd/kitx-mobile-x86_64-release.apk
+
+      - uses: actions/upload-artifact@v3
+        with:
+          path: kitx_mobile/.ci_cd/kitx-mobile-release.apk
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: apk signatures
+          path: kitx_mobile/.ci_cd/*.sha1
