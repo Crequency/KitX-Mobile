@@ -5,11 +5,14 @@ on:
     branches:
       - main
       - dev=better-ci-cd
-    paths-ignore:
-      - ".*/**"
-      - "**/*.md"
-      - "kitx_mobile/.*/**"
+    paths:
+      - ".github/workflows/*.yml"
+      - "!.*/**"
+      - "!**/*.md"
+      - "!kitx_mobile/.*/**"
   pull_request:
+    branches:
+      - main
     paths-ignore:
       - ".*/**"
       - "**/*.md"
@@ -45,5 +48,8 @@ jobs:
 
       - uses: actions/upload-artifact@v3
         with:
-          name: flutter-apk
-          path: kitx_mobile/.ci_cd/
+          path: kitx_mobile/.ci_cd/*.apk
+
+      - uses: actions/upload-artifact@v3
+        with:
+          path: kitx_mobile/.ci_cd/*.sha1
