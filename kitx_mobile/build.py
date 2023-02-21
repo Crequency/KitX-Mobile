@@ -37,7 +37,7 @@ index = 0
 for file in files:
     newName = file.replace("app", "kitx-mobile")
     os.rename(path + file, path + newName)
-    items += "\"" + path + newName + "\"" + \
+    items += "\"" + "kitx_mobile/" + path + newName + "\"" + \
         ("" if index == len(files) - 1 else ",")
     print(file + " -> " + newName)
     index += 1

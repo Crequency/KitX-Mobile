@@ -51,8 +51,7 @@ jobs:
         uses: nanoufo/action-upload-artifacts-and-release-assets@main
         with:
           path: |-
-            ${{ join(fromJSON(env.DATA).publish_list, '
-            ') }}
+            ${{ join(fromJSON(env.DATA).publish_list, '') }}
 
       # - uses: actions/upload-artifact@v3
       #   with:
