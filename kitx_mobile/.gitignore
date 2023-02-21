@@ -1,5 +1,6 @@
 # Custom Items for CI/CD build
 .ci_cd/
+data.json
 
 # Miscellaneous
 *.class
