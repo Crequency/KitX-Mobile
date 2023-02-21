@@ -45,10 +45,19 @@ jobs:
         run: |
           python build.py
 
-      - uses: actions/upload-artifact@v3
-        with:
-          path: kitx_mobile/.ci_cd/*.apk
+          "DATA=$(cat data.json)" >> $env:GITHUB_ENV
 
-      - uses: actions/upload-artifact@v3
+      - name: Upload Published Dashboard Artifacts
+        uses: nanoufo/action-upload-artifacts-and-release-assets@main
         with:
-          path: kitx_mobile/.ci_cd/*.sha1
+          path: |-
+            ${{ join(fromJSON(env.DATA).publish_list, '
+            ') }}
+
+      # - uses: actions/upload-artifact@v3
+      #   with:
+      #     path: kitx_mobile/.ci_cd/*.apk
+
+      # - uses: actions/upload-artifact@v3
+      #   with:
+      #     path: kitx_mobile/.ci_cd/*.sha1
