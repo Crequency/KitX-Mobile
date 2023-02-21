@@ -5,11 +5,9 @@ on:
     branches:
       - main
       - dev=better-ci-cd
-    paths:
-      - ".github/workflows/*.yml"
-      - "!.*/**"
-      - "!**/*.md"
-      - "!kitx_mobile/.*/**"
+    paths-ignore:
+      - "**/*.md"
+      - "kitx_mobile/.*/**"
   pull_request:
     branches:
       - main
