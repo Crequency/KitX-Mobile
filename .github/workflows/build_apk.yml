@@ -45,7 +45,7 @@ jobs:
         run: |
           python build.py
 
-          "DATA=$(cat data.json)" >> $env:GITHUB_ENV
+          DATA=$(cat data.json)
 
       - name: Upload Published Dashboard Artifacts
         uses: nanoufo/action-upload-artifacts-and-release-assets@main
