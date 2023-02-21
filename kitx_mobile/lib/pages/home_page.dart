@@ -21,73 +21,76 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     // imageCache.clear(); // 清除图片缓存
     return Scaffold(
+      drawerEnableOpenDragGesture: true,
+      drawerEdgeDragWidth: 100,
       appBar: AppBar(
         title: Text("IndexPage_Title".tr),
       ),
       drawer: Drawer(
-          child: ListView(
-        padding: EdgeInsets.zero,
-        children: <Widget>[
-          DrawerHeader(
-            decoration: BoxDecoration(
-              // color: Colors.blue,
-              image: const DecorationImage(
-                alignment: Alignment.topCenter,
-                image: AssetImage("assets/KitX-Background.png"),
-                fit: BoxFit.cover,
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: <Widget>[
+            DrawerHeader(
+              decoration: BoxDecoration(
+                // color: Colors.blue,
+                image: const DecorationImage(
+                  alignment: Alignment.topCenter,
+                  image: AssetImage("assets/KitX-Background.png"),
+                  fit: BoxFit.cover,
+                ),
+              ),
+              child: Text(
+                "",
+                // "Drawer_Title".tr,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 24,
+                ),
               ),
             ),
-            child: Text(
-              "",
-              // "Drawer_Title".tr,
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 24,
-              ),
+            ListTile(
+              leading: Icon(Icons.devices),
+              title: Text("Drawer_Devices".tr),
+              onTap: () {
+                Get.back();
+                Get.to(() => DevicePage());
+              },
             ),
-          ),
-          ListTile(
-            leading: Icon(Icons.devices),
-            title: Text("Drawer_Devices".tr),
-            onTap: () {
-              Get.back();
-              Get.to(() => DevicePage());
-            },
-          ),
-          ListTile(
-            leading: Icon(Icons.alternate_email),
-            title: Text("Drawer_Account".tr),
-            onTap: () {
-              Get.back();
-              Get.to(() => AccountPage());
-            },
-          ),
-          ListTile(
-            leading: Icon(Icons.bug_report),
-            title: Text("Drawer_Test".tr),
-            onTap: () {
-              Get.back();
-              Get.to(() => TestPage());
-            },
-          ),
-          ListTile(
-            leading: Icon(Icons.settings),
-            title: Text("Drawer_Setting".tr),
-            onTap: () {
-              Get.back();
-              Get.to(() => SettingsPage());
-            },
-          ),
-          ListTile(
-            leading: Icon(Icons.info_outline_rounded),
-            title: Text("Drawer_About".tr),
-            onTap: () {
-              Get.back();
-              Get.to(() => AboutPage());
-            },
-          ),
-        ],
-      )),
+            ListTile(
+              leading: Icon(Icons.alternate_email),
+              title: Text("Drawer_Account".tr),
+              onTap: () {
+                Get.back();
+                Get.to(() => AccountPage());
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.bug_report),
+              title: Text("Drawer_Test".tr),
+              onTap: () {
+                Get.back();
+                Get.to(() => TestPage());
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.settings),
+              title: Text("Drawer_Setting".tr),
+              onTap: () {
+                Get.back();
+                Get.to(() => SettingsPage());
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.info_outline_rounded),
+              title: Text("Drawer_About".tr),
+              onTap: () {
+                Get.back();
+                Get.to(() => AboutPage());
+              },
+            ),
+          ],
+        ),
+      ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
