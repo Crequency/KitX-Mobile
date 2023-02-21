@@ -5,11 +5,9 @@ on:
     branches:
       - main
       - dev=better-ci-cd
-    paths:
-      - ".github/workflows/*.yml"
-      - "!.*/**"
-      - "!**/*.md"
-      - "!kitx_mobile/.*/**"
+    paths-ignore:
+      - "**/*.md"
+      - "kitx_mobile/.*/**"
   pull_request:
     branches:
       - main
@@ -28,6 +26,7 @@ jobs:
       - uses: subosito/flutter-action@v2
         with:
           channel: "stable"
+          cache: true
 
       - name: "[Debug] Flutter Version"
         run: |
@@ -46,10 +45,43 @@ jobs:
         run: |
           python build.py
 
-      - uses: actions/upload-artifact@v3
-        with:
-          path: kitx_mobile/.ci_cd/*.apk
+          # DATA=$(cat data.json)
+
+      # - name: Upload Published Dashboard Artifacts
+      #   uses: nanoufo/action-upload-artifacts-and-release-assets@main
+      #   with:
+      #     path: |-
+      #       ${{ join(fromJSON(env.DATA).publish_list, '') }}
+
+      # - uses: actions/upload-artifact@v3
+      #   with:
+      #     path: kitx_mobile/.ci_cd/*.apk
+
+      # - uses: actions/upload-artifact@v3
+      #   with:
+      #     path: kitx_mobile/.ci_cd/*.sha1
 
       - uses: actions/upload-artifact@v3
         with:
+          name: kitx-mobile-arm64-v8a-release.apk
+          path: kitx_mobile/.ci_cd/kitx-mobile-arm64-v8a-release.apk
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: kitx-mobile-armeabi-v7a-release.apk
+          path: kitx_mobile/.ci_cd/kitx-mobile-armeabi-v7a-release.apk
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: kitx-mobile-x86_64-release.apk
+          path: kitx_mobile/.ci_cd/kitx-mobile-x86_64-release.apk
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: kitx-mobile-release.apk
+          path: kitx_mobile/.ci_cd/kitx-mobile-release.apk
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: apk signatures
           path: kitx_mobile/.ci_cd/*.sha1
