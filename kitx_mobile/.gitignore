@@ -1,3 +1,6 @@
+# Custom Items for CI/CD build
+.ci_cd/
+
 # Miscellaneous
 *.class
 *.log

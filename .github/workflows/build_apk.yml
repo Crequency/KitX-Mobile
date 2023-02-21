@@ -4,36 +4,46 @@ on:
   push:
     branches:
       - main
+      - dev=better-ci-cd
     paths-ignore:
-      # - '.*/**'
-      - 'kitx_mobile/.*/**'
-      - '**/*.md'
+      - ".*/**"
+      - "**/*.md"
+      - "kitx_mobile/.*/**"
   pull_request:
     paths-ignore:
-      - '**/*.md'
+      - ".*/**"
+      - "**/*.md"
+      - "kitx_mobile/.*/**"
 
 jobs:
   build:
     name: Build APK
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
-    - uses: subosito/flutter-action@v2
-      with:
-        channel: 'stable'
-    - name: "[Debug] Flutter & Java version"
-      run: |
-        echo Debug Info
-        echo ------------ Flutter version ------------
-        flutter --version
-        echo ------------- Java version --------------
-        java --version
-    - name: Build apk
-      working-directory: kitx_mobile
-      run: |
-        flutter pub get
-        flutter build apk --split-per-abi
-    - uses: actions/upload-artifact@v3
-      with:
-        name: flutter-apk
-        path: kitx_mobile/build/app/outputs/flutter-apk/
+      - uses: actions/checkout@v3
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: "stable"
+
+      - name: "[Debug] Flutter Version"
+        run: |
+          flutter --version
+
+      - name: "[Debug] Flutter Doctor"
+        run: |
+          flutter doctor -v
+
+      - name: "[Debug] Java Version"
+        run: |
+          java --version
+
+      - name: Build
+        working-directory: kitx_mobile
+        run: |
+          python build.py
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: flutter-apk
+          path: kitx_mobile/.ci_cd/
