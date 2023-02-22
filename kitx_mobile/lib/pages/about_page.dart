@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:vibration/vibration.dart';
 
 import '../data/third_party_licenses_provider.dart';
 
@@ -23,6 +24,14 @@ class _AboutPageState extends State<AboutPage> {
   bool contentEntering = false;
 
   final thirdPartyDataDisplayCount = 1.obs;
+
+  Future<void> vibrate() async {
+    if (await Vibration.hasCustomVibrationsSupport() ?? false) {
+      Vibration.vibrate(duration: 200);
+    } else if (await Vibration.hasVibrator() ?? false) {
+      Vibration.vibrate();
+    }
+  }
 
   @override
   void initState() {
@@ -51,10 +60,12 @@ class _AboutPageState extends State<AboutPage> {
         physics: NeverScrollableScrollPhysics(),
         children: [
           Container(height: 30),
-          Obx(() => AnimatedContainer(
+          Obx(
+            () => AnimatedContainer(
               duration: const Duration(milliseconds: 800),
               curve: Curves.easeInOutCubicEmphasized,
               alignment: Alignment.topCenter,
+              margin: EdgeInsets.only(top: 25),
               width: iconEntering.value ? 184 : 384,
               height: iconEntering.value ? 184 : 384,
               // padding: iconEntering.value
@@ -64,30 +75,39 @@ class _AboutPageState extends State<AboutPage> {
               //       entered = true;
               //     }),
               child: AnimatedOpacity(
-                  duration: Duration(milliseconds: 500),
-                  curve: Curves.easeInCirc,
-                  opacity: iconEntering.value ? 1 : 0,
+                duration: Duration(milliseconds: 500),
+                curve: Curves.easeInCirc,
+                opacity: iconEntering.value ? 1 : 0,
+                child: InkWell(
+                  borderRadius: BorderRadius.all(Radius.elliptical(15, 15)),
+                  onTap: () async => await vibrate(),
                   child: const Image(
                     alignment: Alignment.center,
                     image: AssetImage("assets/KitX-Icon-1920x-margin-2x.png"),
                     fit: BoxFit.cover,
-                  )))),
+                  ),
+                ),
+              ),
+            ),
+          ),
           Container(
             alignment: Alignment.center,
             child: Column(
               children: [
-                Obx(() => AnimatedOpacity(
-                      opacity: iconEntered.value ? 1 : 0,
-                      duration: Duration(milliseconds: 300),
-                      curve: Curves.easeInCubic,
-                      child: const Text(
-                        "KitX",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 50,
-                        ),
+                Obx(
+                  () => AnimatedOpacity(
+                    opacity: iconEntered.value ? 1 : 0,
+                    duration: Duration(milliseconds: 300),
+                    curve: Curves.easeInCubic,
+                    child: const Text(
+                      "KitX",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 50,
                       ),
-                    )),
+                    ),
+                  ),
+                ),
                 Obx(() => AnimatedOpacity(
                     opacity: titleEntered.value ? 1 : 0,
                     duration: Duration(milliseconds: 500),
@@ -113,7 +133,7 @@ class _AboutPageState extends State<AboutPage> {
             snap: false,
             floating: false,
             // expandedHeight: entered ? 380.0 : 380.0,
-            expandedHeight: 320.0,
+            expandedHeight: 345.0,
             title: Text("AboutPage_Title".tr),
             flexibleSpace: getFlexibleSpaceControl(context),
           ),
@@ -143,20 +163,21 @@ class _AboutPageState extends State<AboutPage> {
                       curve: Curves.easeInCubic,
                       opacity: contentEntering ? 1 : 0,
                       child: Container(
-                          height: 40,
-                          padding: EdgeInsets.symmetric(horizontal: 15),
-                          alignment: Alignment.center,
-                          child: ListView(
-                              shrinkWrap: true,
-                              scrollDirection: Axis.horizontal,
-                              physics: BouncingScrollPhysics(),
-                              children: [
-                                Chip(label: const Text("Dynesshely")),
-                                Container(width: 10),
-                                Chip(label: const Text("LYF511")),
-                                Container(width: 10),
-                                Chip(label: const Text("orzMaster")),
-                              ])),
+                        height: 40,
+                        padding: EdgeInsets.symmetric(horizontal: 15),
+                        alignment: Alignment.center,
+                        child: ListView(
+                            shrinkWrap: true,
+                            scrollDirection: Axis.horizontal,
+                            physics: BouncingScrollPhysics(),
+                            children: [
+                              Chip(label: const Text("Dynesshely")),
+                              Container(width: 10),
+                              Chip(label: const Text("LYF511")),
+                              Container(width: 10),
+                              Chip(label: const Text("orzMaster")),
+                            ]),
+                      ),
                     ),
                     Divider(),
                     AnimatedContainer(
@@ -178,23 +199,23 @@ class _AboutPageState extends State<AboutPage> {
                       curve: Curves.easeInCubic,
                       opacity: contentEntering ? 1 : 0,
                       child: Container(
-                          height: 60,
-                          alignment: Alignment.center,
-                          child: ListView(
-                              shrinkWrap: true,
-                              scrollDirection: Axis.horizontal,
-                              physics: BouncingScrollPhysics(),
-                              padding: EdgeInsets.all(10),
-                              children: [
-                                ElevatedButton(
-                                    onPressed: () =>
-                                        launchUrl(Uri.parse("https://github.com/Crequency/KitX")),
-                                    child: Text("GitHub")),
-                                Container(width: 10),
-                                ElevatedButton(
-                                    onPressed: () => launchUrl(Uri.parse("https://gitee.com/Crequency/KitX")),
-                                    child: Text("Gitee")),
-                              ])),
+                        height: 60,
+                        alignment: Alignment.center,
+                        child: ListView(
+                            shrinkWrap: true,
+                            scrollDirection: Axis.horizontal,
+                            physics: BouncingScrollPhysics(),
+                            padding: EdgeInsets.all(10),
+                            children: [
+                              ElevatedButton(
+                                  onPressed: () => launchUrl(Uri.parse("https://github.com/Crequency/KitX")),
+                                  child: Text("GitHub")),
+                              Container(width: 10),
+                              ElevatedButton(
+                                  onPressed: () => launchUrl(Uri.parse("https://gitee.com/Crequency/KitX")),
+                                  child: Text("Gitee")),
+                            ]),
+                      ),
                     ),
                     Divider(),
                     AnimatedContainer(
@@ -264,49 +285,51 @@ class _AboutPageState extends State<AboutPage> {
     var url = thirdPartyData.ThirdPartyUrl;
     var repo = thirdPartyData.ThirdPartyRepo;
     return Card(
-        child: SizedBox(
-            width: 300,
-            height: 50,
-            child: InkWell(
-              splashColor: Colors.blue.withAlpha(30),
-              onTap: () => print("${thirdPartyData.ThirdPartyName} tapped."),
-              child: ListView(
-                  shrinkWrap: true,
-                  padding: EdgeInsets.all(10),
-                  scrollDirection: Axis.horizontal,
-                  physics: BouncingScrollPhysics(),
-                  children: [
-                    IconButton(
-                      alignment: Alignment.center,
-                      splashRadius: 20,
-                      padding: const EdgeInsets.all(0),
-                      iconSize: 24,
-                      icon: url?.contains("pub.dev") ?? false
-                          ? const Icon(CommunityMaterialIcons.link)
-                          : const Icon(CommunityMaterialIcons.link),
-                      onPressed: () => launchUrl(Uri.parse(thirdPartyData.ThirdPartyUrl ?? "")),
-                    ),
-                    IconButton(
-                      alignment: Alignment.center,
-                      splashRadius: 20,
-                      padding: const EdgeInsets.all(0),
-                      iconSize: 24,
-                      icon: repo?.contains("github.com") ?? false
-                          ? const Icon(CommunityMaterialIcons.github)
-                          : const Icon(CommunityMaterialIcons.link),
-                      onPressed: () => launchUrl(Uri.parse(thirdPartyData.ThirdPartyRepo ?? "")),
-                    ),
-                    Container(
-                        alignment: Alignment.center,
-                        child: Text(
-                          thirdPartyData.ThirdPartyName ?? "null",
-                          style: TextStyle(fontSize: 20),
-                        )),
-                    Text(
-                      thirdPartyData.ThirdPartyVersion ?? "null",
-                      style: TextStyle(fontSize: 12),
-                    ),
-                  ]),
-            )));
+      child: SizedBox(
+        width: 300,
+        height: 50,
+        child: InkWell(
+          splashColor: Colors.blue.withAlpha(30),
+          onTap: () => print("${thirdPartyData.ThirdPartyName} tapped."),
+          child: ListView(
+              shrinkWrap: true,
+              padding: EdgeInsets.all(10),
+              scrollDirection: Axis.horizontal,
+              physics: BouncingScrollPhysics(),
+              children: [
+                IconButton(
+                  alignment: Alignment.center,
+                  splashRadius: 20,
+                  padding: const EdgeInsets.all(0),
+                  iconSize: 24,
+                  icon: url?.contains("pub.dev") ?? false
+                      ? const Icon(CommunityMaterialIcons.link)
+                      : const Icon(CommunityMaterialIcons.link),
+                  onPressed: () => launchUrl(Uri.parse(thirdPartyData.ThirdPartyUrl ?? "")),
+                ),
+                IconButton(
+                  alignment: Alignment.center,
+                  splashRadius: 20,
+                  padding: const EdgeInsets.all(0),
+                  iconSize: 24,
+                  icon: repo?.contains("github.com") ?? false
+                      ? const Icon(CommunityMaterialIcons.github)
+                      : const Icon(CommunityMaterialIcons.link),
+                  onPressed: () => launchUrl(Uri.parse(thirdPartyData.ThirdPartyRepo ?? "")),
+                ),
+                Container(
+                    alignment: Alignment.center,
+                    child: Text(
+                      thirdPartyData.ThirdPartyName ?? "null",
+                      style: TextStyle(fontSize: 20),
+                    )),
+                Text(
+                  thirdPartyData.ThirdPartyVersion ?? "null",
+                  style: TextStyle(fontSize: 12),
+                ),
+              ]),
+        ),
+      ),
+    );
   }
 }
