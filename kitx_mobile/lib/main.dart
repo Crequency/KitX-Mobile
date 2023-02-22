@@ -25,8 +25,8 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   // 初始化 WebService
-  WebService webService = WebService(Config.WebService_UdpPortReceive,
-      Config.WebService_UdpPortSend, Config.WebService_UdpBroadcastAddress);
+  WebService webService = WebService(
+      Config.WebService_UdpPortReceive, Config.WebService_UdpPortSend, Config.WebService_UdpBroadcastAddress);
   webService.initService();
 
   // 初始化 log

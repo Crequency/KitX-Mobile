@@ -44,9 +44,7 @@ class DeviceOSTypeEnum extends EnumClass {
   const DeviceOSTypeEnum._(String name) : super(name);
 
   static BuiltSet<DeviceOSTypeEnum> get values => _$deviceOSTypeEnumValues;
-  static DeviceOSTypeEnum valueOf(String name) =>
-      _$deviceOSTypeEnumValueOf(name);
+  static DeviceOSTypeEnum valueOf(String name) => _$deviceOSTypeEnumValueOf(name);
 
-  static Serializer<DeviceOSTypeEnum> get serializer =>
-      _$deviceOSTypeEnumSerializer;
+  static Serializer<DeviceOSTypeEnum> get serializer => _$deviceOSTypeEnumSerializer;
 }

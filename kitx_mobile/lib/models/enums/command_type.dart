@@ -16,6 +16,5 @@ class CommandTypeEnum extends EnumClass {
   static BuiltSet<CommandTypeEnum> get values => _$commandTypeEnumValues;
   static CommandTypeEnum valueOf(String name) => _$commandTypeEnumValueOf(name);
 
-  static Serializer<CommandTypeEnum> get serializer =>
-      _$commandTypeEnumSerializer;
+  static Serializer<CommandTypeEnum> get serializer => _$commandTypeEnumSerializer;
 }

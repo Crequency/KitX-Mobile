@@ -72,13 +72,7 @@ class _NetworkInfoTestPageState extends State<NetworkInfoTestPage> {
   }
 
   Future<void> _initNetworkInfo() async {
-    String? wifiName,
-        wifiBSSID,
-        wifiIPv4,
-        wifiIPv6,
-        wifiGatewayIP,
-        wifiBroadcast,
-        wifiSubmask;
+    String? wifiName, wifiBSSID, wifiIPv4, wifiIPv6, wifiGatewayIP, wifiBroadcast, wifiSubmask;
 
     try {
       if (!kIsWeb && Platform.isIOS) {

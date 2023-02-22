@@ -26,12 +26,8 @@ class _DevicePage extends State<DevicePage> {
       body: Obx(() => ListView.builder(
             itemCount: global.devices.length + 1,
             itemBuilder: (_, int index) {
-              return createDeviceCard(
-                  context,
-                  index >= global.devices.length
-                      ? null
-                      : global.devices.deviceInfoList[index],
-                  index);
+              return createDeviceCard(context,
+                  index >= global.devices.length ? null : global.devices.deviceInfoList[index], index);
             },
           )),
 
@@ -44,8 +40,7 @@ class _DevicePage extends State<DevicePage> {
   }
 }
 
-Widget createDeviceCard(
-    BuildContext context, DeviceInfoStruct? info, int index) {
+Widget createDeviceCard(BuildContext context, DeviceInfoStruct? info, int index) {
   if (info == null) return Container(height: 300);
 
   IconData _iconStyle = Convert(info.DeviceOSType);
@@ -81,12 +76,9 @@ Widget createDeviceCard(
                               children: <Widget>[
                                 SingleChildScrollView(
                                   scrollDirection: Axis.horizontal,
-                                  child: Text(
-                                      info.DeviceName == global.DeviceName
-                                          ? info.DeviceName +
-                                              " " +
-                                              "DevicePage_LocalDevice".tr
-                                          : info.DeviceName),
+                                  child: Text(info.DeviceName == global.DeviceName
+                                      ? info.DeviceName + " " + "DevicePage_LocalDevice".tr
+                                      : info.DeviceName),
                                 ),
                                 SingleChildScrollView(
                                   scrollDirection: Axis.horizontal,
@@ -105,8 +97,7 @@ Widget createDeviceCard(
                       ),
                     ),
                     Text(
-                      "DevicePage_PluginsCountText".tr +
-                          info.PluginsCount.toString(),
+                      "DevicePage_PluginsCountText".tr + info.PluginsCount.toString(),
                       style: TextStyle(
                         fontSize: 14,
                       ),

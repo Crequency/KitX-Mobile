@@ -9,8 +9,7 @@ import 'serializers.dart';
 
 part 'device_info.g.dart';
 
-abstract class DeviceInfoStruct
-    implements Built<DeviceInfoStruct, DeviceInfoStructBuilder> {
+abstract class DeviceInfoStruct implements Built<DeviceInfoStruct, DeviceInfoStructBuilder> {
   String get DeviceName;
 
   String get DeviceOSVersion;
@@ -36,8 +35,7 @@ abstract class DeviceInfoStruct
   DeviceOSTypeEnum get DeviceOSType;
 
   DeviceInfoStruct._();
-  factory DeviceInfoStruct([void Function(DeviceInfoStructBuilder) updates]) =
-      _$DeviceInfoStruct;
+  factory DeviceInfoStruct([void Function(DeviceInfoStructBuilder) updates]) = _$DeviceInfoStruct;
 
   Object? toJson() {
     return serializers.serializeWith(DeviceInfoStruct.serializer, this);
@@ -45,13 +43,12 @@ abstract class DeviceInfoStruct
 
   @override
   String toString() {
-    return json
-        .encode(serializers.serializeWith(DeviceInfoStruct.serializer, this));
+    return json.encode(serializers.serializeWith(DeviceInfoStruct.serializer, this));
   }
 
   static DeviceInfoStruct? fromString(String jsonString) {
-    DeviceInfoStruct? result = serializers.deserializeWith(
-        DeviceInfoStruct.serializer, json.decode(jsonString));
+    DeviceInfoStruct? result =
+        serializers.deserializeWith(DeviceInfoStruct.serializer, json.decode(jsonString));
     return result;
   }
 
@@ -59,6 +56,5 @@ abstract class DeviceInfoStruct
     return serializers.deserializeWith(DeviceInfoStruct.serializer, json);
   }
 
-  static Serializer<DeviceInfoStruct> get serializer =>
-      _$deviceInfoStructSerializer;
+  static Serializer<DeviceInfoStruct> get serializer => _$deviceInfoStructSerializer;
 }
