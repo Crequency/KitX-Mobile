@@ -17,6 +17,9 @@ Runs on `Android`, `iOS`
 
    > Only works in current window. Config system envrionment varieties for permanent.
 3. Set system environment varieties `GRADLE_OPTS` to `-Dfile.encoding=UTF-8`.
+4. Use `flutter run` to run the project, but you need connect your phone to your computer in adb first.
+5. Use `flutter build --split-per-abi` to build the project, remove `--split-per-abi` arguments for flat apk which is much bigger.
+6. The output apk is in `/kitx_mobile/build/app/outputs/flutter-apk/` folder.
 
 ## 构建项目
 
@@ -36,3 +39,6 @@ Runs on `Android`, `iOS`
 
    若要配置永久镜像，请修改系统环境变量
 3. 在编译时，如出现输出乱码，请修改系统环境变量 `GRADLE_OPTS` 为 `-Dfile.encoding=UTF-8` 即可解决
+4. 使用 `flutter run` 运行项目，但是需要先将手机通过 adb 连接到电脑上
+5. 使用 `flutter build --split-per-abi` 构建项目，移除 `--split-per-abi` 参数可以构建出适应多个 CPU 架构的 apk，但是体积会更大
+6. 构建出的 apk 位于 `/kitx_mobile/build/app/outputs/flutter-apk/` 文件夹
