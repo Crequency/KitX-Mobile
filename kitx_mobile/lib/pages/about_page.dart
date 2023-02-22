@@ -59,9 +59,11 @@ class _AboutPageState extends State<AboutPage> {
               duration: const Duration(milliseconds: 800),
               curve: Curves.easeInOutCubicEmphasized,
               alignment: Alignment.topCenter,
-              padding: iconEntering.value
-                  ? EdgeInsets.fromLTRB(100, 0, 100, 0)
-                  : EdgeInsets.all(0),
+              width: iconEntering.value ? 184 : 384,
+              height: iconEntering.value ? 184 : 384,
+              // padding: iconEntering.value
+              //     ? EdgeInsets.fromLTRB(100, 0, 100, 0)
+              //     : EdgeInsets.all(0),
               // onEnd: () => super.setState(() {
               //       entered = true;
               //     }),
@@ -69,14 +71,11 @@ class _AboutPageState extends State<AboutPage> {
                   duration: Duration(milliseconds: 500),
                   curve: Curves.easeInCirc,
                   opacity: iconEntering.value ? 1 : 0,
-                  child: InkWell(
-                      splashColor: context.iconColor?.withOpacity(0.3),
-                      child: const Image(
-                        alignment: Alignment.center,
-                        image:
-                            AssetImage("assets/KitX-Icon-1920x-margin-2x.png"),
-                        fit: BoxFit.cover,
-                      ))))),
+                  child: const Image(
+                    alignment: Alignment.center,
+                    image: AssetImage("assets/KitX-Icon-1920x-margin-2x.png"),
+                    fit: BoxFit.cover,
+                  )))),
           Container(
             alignment: Alignment.center,
             child: Column(
