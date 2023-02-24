@@ -22,6 +22,9 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     // imageCache.clear(); // 清除图片缓存
+    var tileRadius = ContinuousRectangleBorder(borderRadius: BorderRadius.circular(10.0));
+    var tilesPadding = 15.0;
+
     return Scaffold(
         drawerEnableOpenDragGesture: true,
         drawerEdgeDragWidth: MediaQuery.of(context).size.width / 2 + 50,
@@ -108,31 +111,40 @@ class _HomePageState extends State<HomePage> {
                       title: Text("Drawer_Devices".tr),
                       subtitle: Text("${global.devices.length.obs} " + "HomePage_DevicesCount".tr),
                       trailing: Icon(Icons.keyboard_arrow_right),
+                      shape: tileRadius,
                       onTap: () => Get.to(() => DevicePage()),
                     ),
                   ),
+                  Container(height: tilesPadding),
                   ListTile(
                     leading: Icon(Icons.alternate_email),
                     title: Text("Drawer_Account".tr),
                     trailing: Icon(Icons.keyboard_arrow_right),
+                    shape: tileRadius,
                     onTap: () => Get.to(() => AccountPage()),
                   ),
+                  Container(height: tilesPadding),
                   ListTile(
                     leading: Icon(Icons.bug_report),
                     title: Text("Drawer_Test".tr),
                     trailing: Icon(Icons.keyboard_arrow_right),
+                    shape: tileRadius,
                     onTap: () => Get.to(() => TestPage()),
                   ),
+                  Container(height: tilesPadding),
                   ListTile(
                     leading: Icon(Icons.settings),
                     title: Text("Drawer_Setting".tr),
                     trailing: Icon(Icons.keyboard_arrow_right),
+                    shape: tileRadius,
                     onTap: () => Get.to(() => SettingsPage()),
                   ),
+                  Container(height: tilesPadding),
                   ListTile(
                     leading: Icon(Icons.info_outline_rounded),
                     title: Text("Drawer_About".tr),
                     trailing: Icon(Icons.keyboard_arrow_right),
+                    shape: tileRadius,
                     onTap: () => Get.to(() => AboutPage()),
                   ),
                 ],
