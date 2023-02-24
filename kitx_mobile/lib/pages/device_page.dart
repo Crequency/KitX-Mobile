@@ -23,13 +23,27 @@ class _DevicePage extends State<DevicePage> {
       appBar: AppBar(
         title: Text("DevicePage_Title".tr),
       ),
-      body: Obx(() => ListView.builder(
-            itemCount: global.devices.length + 1,
-            itemBuilder: (_, int index) {
-              return createDeviceCard(context,
-                  index >= global.devices.length ? null : global.devices.deviceInfoList[index], index);
-            },
-          )),
+      body: ListView(
+        children: [
+          Obx(
+            () => Container(
+              margin: EdgeInsets.fromLTRB(30, 30, 30, 0),
+              child: Text("${global.devices.length.obs} " + "HomePage_DevicesCount".tr),
+            ),
+          ),
+          Obx(
+            () => ListView.builder(
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+              itemCount: global.devices.length + 1,
+              itemBuilder: (_, int index) {
+                return createDeviceCard(context,
+                    index >= global.devices.length ? null : global.devices.deviceInfoList[index], index);
+              },
+            ),
+          ),
+        ],
+      ),
 
       // body: Obx(() => AnimatedList(
       //       initialItemCount: global.devices.length,
