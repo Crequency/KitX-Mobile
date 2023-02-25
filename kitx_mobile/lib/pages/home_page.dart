@@ -32,11 +32,11 @@ class _HomePageState extends State<HomePage> {
     var tilesPadding = 15.0;
 
     return Scaffold(
-      drawerEnableOpenDragGesture: true,
-      drawerEdgeDragWidth: MediaQuery.of(context).size.width / 2 + 50,
       appBar: AppBar(
         title: Text("IndexPage_Title".tr),
       ),
+      drawerEnableOpenDragGesture: true,
+      drawerEdgeDragWidth: MediaQuery.of(context).size.width / 2 + 50,
       drawer: Drawer(
         child: ListView(
           padding: EdgeInsets.zero,
@@ -111,6 +111,7 @@ class _HomePageState extends State<HomePage> {
               shrinkWrap: true,
               physics: NeverScrollableScrollPhysics(),
               children: [
+                Container(height: tilesPadding),
                 Obx(
                   () => ListTile(
                     leading: Icon(Icons.devices),
@@ -118,6 +119,9 @@ class _HomePageState extends State<HomePage> {
                     subtitle: Text("${global.devices.length.obs} " + "HomePage_DevicesCount".tr),
                     trailing: Icon(Icons.keyboard_arrow_right),
                     shape: tileRadius,
+                    // tileColor: Colors.indigo,
+                    // textColor: Colors.white,
+                    // iconColor: Colors.white,
                     onTap: () => Get.to(() => DevicePage()),
                   ),
                 ),
@@ -156,6 +160,7 @@ class _HomePageState extends State<HomePage> {
                     onTap: () => Get.to(() => AboutPage()),
                   ),
                 ),
+                Container(height: tilesPadding),
               ],
             ),
           ),
