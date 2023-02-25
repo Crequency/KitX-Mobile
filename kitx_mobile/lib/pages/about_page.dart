@@ -102,18 +102,23 @@ class _AboutPageState extends State<AboutPage> {
                     child: const Text(
                       "KitX",
                       style: TextStyle(
-                        color: Colors.white,
+                        // color: Colors.white,
                         fontSize: 50,
                       ),
                     ),
                   ),
                 ),
-                Obx(() => AnimatedOpacity(
+                Obx(
+                  () => AnimatedOpacity(
                     opacity: titleEntered.value ? 1 : 0,
                     duration: Duration(milliseconds: 500),
                     curve: Curves.easeInOutCubic,
-                    child: Text("${"AboutPage_Version".tr}: ${version.value}",
-                        style: TextStyle(color: Colors.white)))),
+                    child: Text(
+                      "${"AboutPage_Version".tr}: ${version.value}",
+                      // style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                ),
                 // Divider(),
               ],
             ),
