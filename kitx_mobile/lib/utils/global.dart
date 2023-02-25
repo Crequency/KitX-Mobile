@@ -1,11 +1,17 @@
-library kitx_moblie.global;
-
 import '../services/devices.dart';
 
-Devices devices = Devices();
+class _Global {
+  static final _Global _singleton = _Global._internal();
+  static bool get isRelease => bool.fromEnvironment("dart.vm.product");
+  static bool get isDebug => !isRelease;
+  String deviceName = "";
+  Devices devices = Devices();
 
-String DeviceName = "";
+  factory _Global() {
+    return _singleton;
+  }
 
-bool get isRelease => bool.fromEnvironment("dart.vm.product");
+  _Global._internal();
+}
 
-bool DeviceError = false;
+_Global Global = _Global();

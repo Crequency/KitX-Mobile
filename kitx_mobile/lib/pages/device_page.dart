@@ -6,7 +6,7 @@ import '../models/device_info.dart';
 
 import '../converters/os_type_2_icon.dart';
 
-import '../utils/global.dart' as global;
+import '../utils/global.dart';
 import '../utils/datetime_format.dart' show datetimeToShortString;
 
 class DevicePage extends StatefulWidget {
@@ -24,13 +24,13 @@ class _DevicePage extends State<DevicePage> {
         title: Text("DevicePage_Title".tr),
       ),
       body: Obx(() => ListView.builder(
-            itemCount: global.devices.length + 1,
+            itemCount: Global.devices.length + 1,
             itemBuilder: (_, int index) {
               return createDeviceCard(
                   context,
-                  index >= global.devices.length
+                  index >= Global.devices.length
                       ? null
-                      : global.devices.deviceInfoList[index],
+                      : Global.devices.deviceInfoList[index],
                   index);
             },
           )),
@@ -48,7 +48,7 @@ Widget createDeviceCard(
     BuildContext context, DeviceInfoStruct? info, int index) {
   if (info == null) return Container(height: 300);
 
-  IconData _iconStyle = Convert(info.DeviceOSType);
+  IconData _iconStyle = Convert(info.deviceOSType);
   Icon _icon = Icon(
     _iconStyle,
     size: 36,
@@ -61,7 +61,7 @@ Widget createDeviceCard(
             clipBehavior: Clip.hardEdge,
             child: InkWell(
               splashColor: context.iconColor?.withOpacity(0.3),
-              onTap: () => print(info.DeviceName + " card tapped."),
+              onTap: () => print(info.deviceName + " card tapped."),
               child: Container(
                 margin: EdgeInsets.all(10),
                 child: Column(
@@ -82,15 +82,15 @@ Widget createDeviceCard(
                                 SingleChildScrollView(
                                   scrollDirection: Axis.horizontal,
                                   child: Text(
-                                      info.DeviceName == global.DeviceName
-                                          ? info.DeviceName +
+                                      info.deviceName == Global.deviceName
+                                          ? info.deviceName +
                                               " " +
                                               "DevicePage_LocalDevice".tr
-                                          : info.DeviceName),
+                                          : info.deviceName),
                                 ),
                                 SingleChildScrollView(
                                   scrollDirection: Axis.horizontal,
-                                  child: Text(info.DeviceOSVersion),
+                                  child: Text(info.deviceOSVersion),
                                 ),
                               ],
                             ),
@@ -99,14 +99,14 @@ Widget createDeviceCard(
                       ],
                     ),
                     Text(
-                      datetimeToShortString(info.SendTime),
+                      datetimeToShortString(info.sendTime),
                       style: TextStyle(
                         fontSize: 14,
                       ),
                     ),
                     Text(
                       "DevicePage_PluginsCountText".tr +
-                          info.PluginsCount.toString(),
+                          info.pluginsCount.toString(),
                       style: TextStyle(
                         fontSize: 14,
                       ),
@@ -115,7 +115,7 @@ Widget createDeviceCard(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          "${info.IPv4}:${info.PluginServerPort}",
+                          "${info.iPv4}:${info.pluginServerPort}",
                           style: TextStyle(
                             fontSize: 10,
                           ),
@@ -124,7 +124,7 @@ Widget createDeviceCard(
                           child: SingleChildScrollView(
                             scrollDirection: Axis.horizontal,
                             child: Text(
-                              info.IPv6,
+                              info.iPv6,
                               textAlign: TextAlign.right,
                               style: TextStyle(
                                 fontSize: 10,

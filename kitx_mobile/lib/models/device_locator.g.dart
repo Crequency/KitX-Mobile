@@ -20,14 +20,14 @@ class _$DeviceLocatorSerializer implements StructuredSerializer<DeviceLocator> {
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object?>[
       'DeviceName',
-      serializers.serialize(object.DeviceName,
+      serializers.serialize(object.deviceName,
           specifiedType: const FullType(String)),
       'IPv4',
-      serializers.serialize(object.IPv4, specifiedType: const FullType(String)),
+      serializers.serialize(object.iPv4, specifiedType: const FullType(String)),
       'IPv6',
-      serializers.serialize(object.IPv6, specifiedType: const FullType(String)),
+      serializers.serialize(object.iPv6, specifiedType: const FullType(String)),
       'DeviceMacAddress',
-      serializers.serialize(object.DeviceMacAddress,
+      serializers.serialize(object.deviceMacAddress,
           specifiedType: const FullType(String)),
     ];
 
@@ -47,19 +47,19 @@ class _$DeviceLocatorSerializer implements StructuredSerializer<DeviceLocator> {
       final Object? value = iterator.current;
       switch (key) {
         case 'DeviceName':
-          result.DeviceName = serializers.deserialize(value,
+          result.deviceName = serializers.deserialize(value,
               specifiedType: const FullType(String))! as String;
           break;
         case 'IPv4':
-          result.IPv4 = serializers.deserialize(value,
+          result.iPv4 = serializers.deserialize(value,
               specifiedType: const FullType(String))! as String;
           break;
         case 'IPv6':
-          result.IPv6 = serializers.deserialize(value,
+          result.iPv6 = serializers.deserialize(value,
               specifiedType: const FullType(String))! as String;
           break;
         case 'DeviceMacAddress':
-          result.DeviceMacAddress = serializers.deserialize(value,
+          result.deviceMacAddress = serializers.deserialize(value,
               specifiedType: const FullType(String))! as String;
           break;
       }
@@ -71,29 +71,29 @@ class _$DeviceLocatorSerializer implements StructuredSerializer<DeviceLocator> {
 
 class _$DeviceLocator extends DeviceLocator {
   @override
-  final String DeviceName;
+  final String deviceName;
   @override
-  final String IPv4;
+  final String iPv4;
   @override
-  final String IPv6;
+  final String iPv6;
   @override
-  final String DeviceMacAddress;
+  final String deviceMacAddress;
 
   factory _$DeviceLocator([void Function(DeviceLocatorBuilder)? updates]) =>
       (new DeviceLocatorBuilder()..update(updates))._build();
 
   _$DeviceLocator._(
-      {required this.DeviceName,
-      required this.IPv4,
-      required this.IPv6,
-      required this.DeviceMacAddress})
+      {required this.deviceName,
+      required this.iPv4,
+      required this.iPv6,
+      required this.deviceMacAddress})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
-        DeviceName, r'DeviceLocator', 'DeviceName');
-    BuiltValueNullFieldError.checkNotNull(IPv4, r'DeviceLocator', 'IPv4');
-    BuiltValueNullFieldError.checkNotNull(IPv6, r'DeviceLocator', 'IPv6');
+        deviceName, r'DeviceLocator', 'deviceName');
+    BuiltValueNullFieldError.checkNotNull(iPv4, r'DeviceLocator', 'iPv4');
+    BuiltValueNullFieldError.checkNotNull(iPv6, r'DeviceLocator', 'iPv6');
     BuiltValueNullFieldError.checkNotNull(
-        DeviceMacAddress, r'DeviceLocator', 'DeviceMacAddress');
+        deviceMacAddress, r'DeviceLocator', 'deviceMacAddress');
   }
 
   @override
@@ -107,19 +107,19 @@ class _$DeviceLocator extends DeviceLocator {
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
     return other is DeviceLocator &&
-        DeviceName == other.DeviceName &&
-        IPv4 == other.IPv4 &&
-        IPv6 == other.IPv6 &&
-        DeviceMacAddress == other.DeviceMacAddress;
+        deviceName == other.deviceName &&
+        iPv4 == other.iPv4 &&
+        iPv6 == other.iPv6 &&
+        deviceMacAddress == other.deviceMacAddress;
   }
 
   @override
   int get hashCode {
     var _$hash = 0;
-    _$hash = $jc(_$hash, DeviceName.hashCode);
-    _$hash = $jc(_$hash, IPv4.hashCode);
-    _$hash = $jc(_$hash, IPv6.hashCode);
-    _$hash = $jc(_$hash, DeviceMacAddress.hashCode);
+    _$hash = $jc(_$hash, deviceName.hashCode);
+    _$hash = $jc(_$hash, iPv4.hashCode);
+    _$hash = $jc(_$hash, iPv6.hashCode);
+    _$hash = $jc(_$hash, deviceMacAddress.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -129,32 +129,32 @@ class DeviceLocatorBuilder
     implements Builder<DeviceLocator, DeviceLocatorBuilder> {
   _$DeviceLocator? _$v;
 
-  String? _DeviceName;
-  String? get DeviceName => _$this._DeviceName;
-  set DeviceName(String? DeviceName) => _$this._DeviceName = DeviceName;
+  String? _deviceName;
+  String? get deviceName => _$this._deviceName;
+  set deviceName(String? deviceName) => _$this._deviceName = deviceName;
 
-  String? _IPv4;
-  String? get IPv4 => _$this._IPv4;
-  set IPv4(String? IPv4) => _$this._IPv4 = IPv4;
+  String? _iPv4;
+  String? get iPv4 => _$this._iPv4;
+  set iPv4(String? iPv4) => _$this._iPv4 = iPv4;
 
-  String? _IPv6;
-  String? get IPv6 => _$this._IPv6;
-  set IPv6(String? IPv6) => _$this._IPv6 = IPv6;
+  String? _iPv6;
+  String? get iPv6 => _$this._iPv6;
+  set iPv6(String? iPv6) => _$this._iPv6 = iPv6;
 
-  String? _DeviceMacAddress;
-  String? get DeviceMacAddress => _$this._DeviceMacAddress;
-  set DeviceMacAddress(String? DeviceMacAddress) =>
-      _$this._DeviceMacAddress = DeviceMacAddress;
+  String? _deviceMacAddress;
+  String? get deviceMacAddress => _$this._deviceMacAddress;
+  set deviceMacAddress(String? deviceMacAddress) =>
+      _$this._deviceMacAddress = deviceMacAddress;
 
   DeviceLocatorBuilder();
 
   DeviceLocatorBuilder get _$this {
     final $v = _$v;
     if ($v != null) {
-      _DeviceName = $v.DeviceName;
-      _IPv4 = $v.IPv4;
-      _IPv6 = $v.IPv6;
-      _DeviceMacAddress = $v.DeviceMacAddress;
+      _deviceName = $v.deviceName;
+      _iPv4 = $v.iPv4;
+      _iPv6 = $v.iPv6;
+      _deviceMacAddress = $v.deviceMacAddress;
       _$v = null;
     }
     return this;
@@ -177,14 +177,14 @@ class DeviceLocatorBuilder
   _$DeviceLocator _build() {
     final _$result = _$v ??
         new _$DeviceLocator._(
-            DeviceName: BuiltValueNullFieldError.checkNotNull(
-                DeviceName, r'DeviceLocator', 'DeviceName'),
-            IPv4: BuiltValueNullFieldError.checkNotNull(
-                IPv4, r'DeviceLocator', 'IPv4'),
-            IPv6: BuiltValueNullFieldError.checkNotNull(
-                IPv6, r'DeviceLocator', 'IPv6'),
-            DeviceMacAddress: BuiltValueNullFieldError.checkNotNull(
-                DeviceMacAddress, r'DeviceLocator', 'DeviceMacAddress'));
+            deviceName: BuiltValueNullFieldError.checkNotNull(
+                deviceName, r'DeviceLocator', 'deviceName'),
+            iPv4: BuiltValueNullFieldError.checkNotNull(
+                iPv4, r'DeviceLocator', 'iPv4'),
+            iPv6: BuiltValueNullFieldError.checkNotNull(
+                iPv6, r'DeviceLocator', 'iPv6'),
+            deviceMacAddress: BuiltValueNullFieldError.checkNotNull(
+                deviceMacAddress, r'DeviceLocator', 'deviceMacAddress'));
     replace(_$result);
     return _$result;
   }

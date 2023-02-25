@@ -10,17 +10,23 @@ part 'function.g.dart';
 
 abstract class PluginFunction
     implements Built<PluginFunction, PluginFunctionBuilder> {
+  @BuiltValueField(wireName: 'Name')
   String get Name;
 
-  BuiltMap<String, String> get DisplayNames;
+  @BuiltValueField(wireName: 'DisplayNames')
+  BuiltMap<String, String> get displayNames;
 
-  BuiltMap<String, Map<String, String>> get Parameters;
+  @BuiltValueField(wireName: 'Parameters')
+  BuiltMap<String, Map<String, String>> get parameters;
 
-  BuiltList<String> get ParametersType;
+  @BuiltValueField(wireName: 'ParametersType')
+  BuiltList<String> get parametersType;
 
-  bool get HasAppendParameters;
+  @BuiltValueField(wireName: 'HasAppendParameters')
+  bool get hasAppendParameters;
 
-  String get ReturnValueType;
+  @BuiltValueField(wireName: 'ReturnValueType')
+  String get returnValueType;
 
   PluginFunction._();
   factory PluginFunction([void Function(PluginFunctionBuilder) updates]) =

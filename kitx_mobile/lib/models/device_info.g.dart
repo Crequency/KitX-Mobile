@@ -21,38 +21,38 @@ class _$DeviceInfoStructSerializer
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object?>[
       'DeviceName',
-      serializers.serialize(object.DeviceName,
+      serializers.serialize(object.deviceName,
           specifiedType: const FullType(String)),
       'DeviceOSVersion',
-      serializers.serialize(object.DeviceOSVersion,
+      serializers.serialize(object.deviceOSVersion,
           specifiedType: const FullType(String)),
       'IPv4',
-      serializers.serialize(object.IPv4, specifiedType: const FullType(String)),
+      serializers.serialize(object.iPv4, specifiedType: const FullType(String)),
       'IPv6',
-      serializers.serialize(object.IPv6, specifiedType: const FullType(String)),
+      serializers.serialize(object.iPv6, specifiedType: const FullType(String)),
       'DeviceMacAddress',
-      serializers.serialize(object.DeviceMacAddress,
+      serializers.serialize(object.deviceMacAddress,
           specifiedType: const FullType(String)),
       'PluginServerPort',
-      serializers.serialize(object.PluginServerPort,
+      serializers.serialize(object.pluginServerPort,
           specifiedType: const FullType(int)),
       'PluginsCount',
-      serializers.serialize(object.PluginsCount,
+      serializers.serialize(object.pluginsCount,
           specifiedType: const FullType(int)),
       'SendTime',
-      serializers.serialize(object.SendTime,
+      serializers.serialize(object.sendTime,
           specifiedType: const FullType(DateTime)),
       'IsMainDevice',
-      serializers.serialize(object.IsMainDevice,
+      serializers.serialize(object.isMainDevice,
           specifiedType: const FullType(bool)),
       'DeviceServerPort',
-      serializers.serialize(object.DeviceServerPort,
+      serializers.serialize(object.deviceServerPort,
           specifiedType: const FullType(int)),
       'DeviceServerBuildTime',
-      serializers.serialize(object.DeviceServerBuildTime,
+      serializers.serialize(object.deviceServerBuildTime,
           specifiedType: const FullType(DateTime)),
       'DeviceOSType',
-      serializers.serialize(object.DeviceOSType,
+      serializers.serialize(object.deviceOSType,
           specifiedType: const FullType(DeviceOSTypeEnum)),
     ];
 
@@ -72,51 +72,51 @@ class _$DeviceInfoStructSerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'DeviceName':
-          result.DeviceName = serializers.deserialize(value,
+          result.deviceName = serializers.deserialize(value,
               specifiedType: const FullType(String))! as String;
           break;
         case 'DeviceOSVersion':
-          result.DeviceOSVersion = serializers.deserialize(value,
+          result.deviceOSVersion = serializers.deserialize(value,
               specifiedType: const FullType(String))! as String;
           break;
         case 'IPv4':
-          result.IPv4 = serializers.deserialize(value,
+          result.iPv4 = serializers.deserialize(value,
               specifiedType: const FullType(String))! as String;
           break;
         case 'IPv6':
-          result.IPv6 = serializers.deserialize(value,
+          result.iPv6 = serializers.deserialize(value,
               specifiedType: const FullType(String))! as String;
           break;
         case 'DeviceMacAddress':
-          result.DeviceMacAddress = serializers.deserialize(value,
+          result.deviceMacAddress = serializers.deserialize(value,
               specifiedType: const FullType(String))! as String;
           break;
         case 'PluginServerPort':
-          result.PluginServerPort = serializers.deserialize(value,
+          result.pluginServerPort = serializers.deserialize(value,
               specifiedType: const FullType(int))! as int;
           break;
         case 'PluginsCount':
-          result.PluginsCount = serializers.deserialize(value,
+          result.pluginsCount = serializers.deserialize(value,
               specifiedType: const FullType(int))! as int;
           break;
         case 'SendTime':
-          result.SendTime = serializers.deserialize(value,
+          result.sendTime = serializers.deserialize(value,
               specifiedType: const FullType(DateTime))! as DateTime;
           break;
         case 'IsMainDevice':
-          result.IsMainDevice = serializers.deserialize(value,
+          result.isMainDevice = serializers.deserialize(value,
               specifiedType: const FullType(bool))! as bool;
           break;
         case 'DeviceServerPort':
-          result.DeviceServerPort = serializers.deserialize(value,
+          result.deviceServerPort = serializers.deserialize(value,
               specifiedType: const FullType(int))! as int;
           break;
         case 'DeviceServerBuildTime':
-          result.DeviceServerBuildTime = serializers.deserialize(value,
+          result.deviceServerBuildTime = serializers.deserialize(value,
               specifiedType: const FullType(DateTime))! as DateTime;
           break;
         case 'DeviceOSType':
-          result.DeviceOSType = serializers.deserialize(value,
+          result.deviceOSType = serializers.deserialize(value,
                   specifiedType: const FullType(DeviceOSTypeEnum))!
               as DeviceOSTypeEnum;
           break;
@@ -129,70 +129,70 @@ class _$DeviceInfoStructSerializer
 
 class _$DeviceInfoStruct extends DeviceInfoStruct {
   @override
-  final String DeviceName;
+  final String deviceName;
   @override
-  final String DeviceOSVersion;
+  final String deviceOSVersion;
   @override
-  final String IPv4;
+  final String iPv4;
   @override
-  final String IPv6;
+  final String iPv6;
   @override
-  final String DeviceMacAddress;
+  final String deviceMacAddress;
   @override
-  final int PluginServerPort;
+  final int pluginServerPort;
   @override
-  final int PluginsCount;
+  final int pluginsCount;
   @override
-  final DateTime SendTime;
+  final DateTime sendTime;
   @override
-  final bool IsMainDevice;
+  final bool isMainDevice;
   @override
-  final int DeviceServerPort;
+  final int deviceServerPort;
   @override
-  final DateTime DeviceServerBuildTime;
+  final DateTime deviceServerBuildTime;
   @override
-  final DeviceOSTypeEnum DeviceOSType;
+  final DeviceOSTypeEnum deviceOSType;
 
   factory _$DeviceInfoStruct(
           [void Function(DeviceInfoStructBuilder)? updates]) =>
       (new DeviceInfoStructBuilder()..update(updates))._build();
 
   _$DeviceInfoStruct._(
-      {required this.DeviceName,
-      required this.DeviceOSVersion,
-      required this.IPv4,
-      required this.IPv6,
-      required this.DeviceMacAddress,
-      required this.PluginServerPort,
-      required this.PluginsCount,
-      required this.SendTime,
-      required this.IsMainDevice,
-      required this.DeviceServerPort,
-      required this.DeviceServerBuildTime,
-      required this.DeviceOSType})
+      {required this.deviceName,
+      required this.deviceOSVersion,
+      required this.iPv4,
+      required this.iPv6,
+      required this.deviceMacAddress,
+      required this.pluginServerPort,
+      required this.pluginsCount,
+      required this.sendTime,
+      required this.isMainDevice,
+      required this.deviceServerPort,
+      required this.deviceServerBuildTime,
+      required this.deviceOSType})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
-        DeviceName, r'DeviceInfoStruct', 'DeviceName');
+        deviceName, r'DeviceInfoStruct', 'deviceName');
     BuiltValueNullFieldError.checkNotNull(
-        DeviceOSVersion, r'DeviceInfoStruct', 'DeviceOSVersion');
-    BuiltValueNullFieldError.checkNotNull(IPv4, r'DeviceInfoStruct', 'IPv4');
-    BuiltValueNullFieldError.checkNotNull(IPv6, r'DeviceInfoStruct', 'IPv6');
+        deviceOSVersion, r'DeviceInfoStruct', 'deviceOSVersion');
+    BuiltValueNullFieldError.checkNotNull(iPv4, r'DeviceInfoStruct', 'iPv4');
+    BuiltValueNullFieldError.checkNotNull(iPv6, r'DeviceInfoStruct', 'iPv6');
     BuiltValueNullFieldError.checkNotNull(
-        DeviceMacAddress, r'DeviceInfoStruct', 'DeviceMacAddress');
+        deviceMacAddress, r'DeviceInfoStruct', 'deviceMacAddress');
     BuiltValueNullFieldError.checkNotNull(
-        PluginServerPort, r'DeviceInfoStruct', 'PluginServerPort');
+        pluginServerPort, r'DeviceInfoStruct', 'pluginServerPort');
     BuiltValueNullFieldError.checkNotNull(
-        PluginsCount, r'DeviceInfoStruct', 'PluginsCount');
+        pluginsCount, r'DeviceInfoStruct', 'pluginsCount');
     BuiltValueNullFieldError.checkNotNull(
-        SendTime, r'DeviceInfoStruct', 'SendTime');
+        sendTime, r'DeviceInfoStruct', 'sendTime');
     BuiltValueNullFieldError.checkNotNull(
-        IsMainDevice, r'DeviceInfoStruct', 'IsMainDevice');
+        isMainDevice, r'DeviceInfoStruct', 'isMainDevice');
     BuiltValueNullFieldError.checkNotNull(
-        DeviceServerPort, r'DeviceInfoStruct', 'DeviceServerPort');
+        deviceServerPort, r'DeviceInfoStruct', 'deviceServerPort');
     BuiltValueNullFieldError.checkNotNull(
-        DeviceServerBuildTime, r'DeviceInfoStruct', 'DeviceServerBuildTime');
+        deviceServerBuildTime, r'DeviceInfoStruct', 'deviceServerBuildTime');
     BuiltValueNullFieldError.checkNotNull(
-        DeviceOSType, r'DeviceInfoStruct', 'DeviceOSType');
+        deviceOSType, r'DeviceInfoStruct', 'deviceOSType');
   }
 
   @override
@@ -207,35 +207,35 @@ class _$DeviceInfoStruct extends DeviceInfoStruct {
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
     return other is DeviceInfoStruct &&
-        DeviceName == other.DeviceName &&
-        DeviceOSVersion == other.DeviceOSVersion &&
-        IPv4 == other.IPv4 &&
-        IPv6 == other.IPv6 &&
-        DeviceMacAddress == other.DeviceMacAddress &&
-        PluginServerPort == other.PluginServerPort &&
-        PluginsCount == other.PluginsCount &&
-        SendTime == other.SendTime &&
-        IsMainDevice == other.IsMainDevice &&
-        DeviceServerPort == other.DeviceServerPort &&
-        DeviceServerBuildTime == other.DeviceServerBuildTime &&
-        DeviceOSType == other.DeviceOSType;
+        deviceName == other.deviceName &&
+        deviceOSVersion == other.deviceOSVersion &&
+        iPv4 == other.iPv4 &&
+        iPv6 == other.iPv6 &&
+        deviceMacAddress == other.deviceMacAddress &&
+        pluginServerPort == other.pluginServerPort &&
+        pluginsCount == other.pluginsCount &&
+        sendTime == other.sendTime &&
+        isMainDevice == other.isMainDevice &&
+        deviceServerPort == other.deviceServerPort &&
+        deviceServerBuildTime == other.deviceServerBuildTime &&
+        deviceOSType == other.deviceOSType;
   }
 
   @override
   int get hashCode {
     var _$hash = 0;
-    _$hash = $jc(_$hash, DeviceName.hashCode);
-    _$hash = $jc(_$hash, DeviceOSVersion.hashCode);
-    _$hash = $jc(_$hash, IPv4.hashCode);
-    _$hash = $jc(_$hash, IPv6.hashCode);
-    _$hash = $jc(_$hash, DeviceMacAddress.hashCode);
-    _$hash = $jc(_$hash, PluginServerPort.hashCode);
-    _$hash = $jc(_$hash, PluginsCount.hashCode);
-    _$hash = $jc(_$hash, SendTime.hashCode);
-    _$hash = $jc(_$hash, IsMainDevice.hashCode);
-    _$hash = $jc(_$hash, DeviceServerPort.hashCode);
-    _$hash = $jc(_$hash, DeviceServerBuildTime.hashCode);
-    _$hash = $jc(_$hash, DeviceOSType.hashCode);
+    _$hash = $jc(_$hash, deviceName.hashCode);
+    _$hash = $jc(_$hash, deviceOSVersion.hashCode);
+    _$hash = $jc(_$hash, iPv4.hashCode);
+    _$hash = $jc(_$hash, iPv6.hashCode);
+    _$hash = $jc(_$hash, deviceMacAddress.hashCode);
+    _$hash = $jc(_$hash, pluginServerPort.hashCode);
+    _$hash = $jc(_$hash, pluginsCount.hashCode);
+    _$hash = $jc(_$hash, sendTime.hashCode);
+    _$hash = $jc(_$hash, isMainDevice.hashCode);
+    _$hash = $jc(_$hash, deviceServerPort.hashCode);
+    _$hash = $jc(_$hash, deviceServerBuildTime.hashCode);
+    _$hash = $jc(_$hash, deviceOSType.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -245,77 +245,77 @@ class DeviceInfoStructBuilder
     implements Builder<DeviceInfoStruct, DeviceInfoStructBuilder> {
   _$DeviceInfoStruct? _$v;
 
-  String? _DeviceName;
-  String? get DeviceName => _$this._DeviceName;
-  set DeviceName(String? DeviceName) => _$this._DeviceName = DeviceName;
+  String? _deviceName;
+  String? get deviceName => _$this._deviceName;
+  set deviceName(String? deviceName) => _$this._deviceName = deviceName;
 
-  String? _DeviceOSVersion;
-  String? get DeviceOSVersion => _$this._DeviceOSVersion;
-  set DeviceOSVersion(String? DeviceOSVersion) =>
-      _$this._DeviceOSVersion = DeviceOSVersion;
+  String? _deviceOSVersion;
+  String? get deviceOSVersion => _$this._deviceOSVersion;
+  set deviceOSVersion(String? deviceOSVersion) =>
+      _$this._deviceOSVersion = deviceOSVersion;
 
-  String? _IPv4;
-  String? get IPv4 => _$this._IPv4;
-  set IPv4(String? IPv4) => _$this._IPv4 = IPv4;
+  String? _iPv4;
+  String? get iPv4 => _$this._iPv4;
+  set iPv4(String? iPv4) => _$this._iPv4 = iPv4;
 
-  String? _IPv6;
-  String? get IPv6 => _$this._IPv6;
-  set IPv6(String? IPv6) => _$this._IPv6 = IPv6;
+  String? _iPv6;
+  String? get iPv6 => _$this._iPv6;
+  set iPv6(String? iPv6) => _$this._iPv6 = iPv6;
 
-  String? _DeviceMacAddress;
-  String? get DeviceMacAddress => _$this._DeviceMacAddress;
-  set DeviceMacAddress(String? DeviceMacAddress) =>
-      _$this._DeviceMacAddress = DeviceMacAddress;
+  String? _deviceMacAddress;
+  String? get deviceMacAddress => _$this._deviceMacAddress;
+  set deviceMacAddress(String? deviceMacAddress) =>
+      _$this._deviceMacAddress = deviceMacAddress;
 
-  int? _PluginServerPort;
-  int? get PluginServerPort => _$this._PluginServerPort;
-  set PluginServerPort(int? PluginServerPort) =>
-      _$this._PluginServerPort = PluginServerPort;
+  int? _pluginServerPort;
+  int? get pluginServerPort => _$this._pluginServerPort;
+  set pluginServerPort(int? pluginServerPort) =>
+      _$this._pluginServerPort = pluginServerPort;
 
-  int? _PluginsCount;
-  int? get PluginsCount => _$this._PluginsCount;
-  set PluginsCount(int? PluginsCount) => _$this._PluginsCount = PluginsCount;
+  int? _pluginsCount;
+  int? get pluginsCount => _$this._pluginsCount;
+  set pluginsCount(int? pluginsCount) => _$this._pluginsCount = pluginsCount;
 
-  DateTime? _SendTime;
-  DateTime? get SendTime => _$this._SendTime;
-  set SendTime(DateTime? SendTime) => _$this._SendTime = SendTime;
+  DateTime? _sendTime;
+  DateTime? get sendTime => _$this._sendTime;
+  set sendTime(DateTime? sendTime) => _$this._sendTime = sendTime;
 
-  bool? _IsMainDevice;
-  bool? get IsMainDevice => _$this._IsMainDevice;
-  set IsMainDevice(bool? IsMainDevice) => _$this._IsMainDevice = IsMainDevice;
+  bool? _isMainDevice;
+  bool? get isMainDevice => _$this._isMainDevice;
+  set isMainDevice(bool? isMainDevice) => _$this._isMainDevice = isMainDevice;
 
-  int? _DeviceServerPort;
-  int? get DeviceServerPort => _$this._DeviceServerPort;
-  set DeviceServerPort(int? DeviceServerPort) =>
-      _$this._DeviceServerPort = DeviceServerPort;
+  int? _deviceServerPort;
+  int? get deviceServerPort => _$this._deviceServerPort;
+  set deviceServerPort(int? deviceServerPort) =>
+      _$this._deviceServerPort = deviceServerPort;
 
-  DateTime? _DeviceServerBuildTime;
-  DateTime? get DeviceServerBuildTime => _$this._DeviceServerBuildTime;
-  set DeviceServerBuildTime(DateTime? DeviceServerBuildTime) =>
-      _$this._DeviceServerBuildTime = DeviceServerBuildTime;
+  DateTime? _deviceServerBuildTime;
+  DateTime? get deviceServerBuildTime => _$this._deviceServerBuildTime;
+  set deviceServerBuildTime(DateTime? deviceServerBuildTime) =>
+      _$this._deviceServerBuildTime = deviceServerBuildTime;
 
-  DeviceOSTypeEnum? _DeviceOSType;
-  DeviceOSTypeEnum? get DeviceOSType => _$this._DeviceOSType;
-  set DeviceOSType(DeviceOSTypeEnum? DeviceOSType) =>
-      _$this._DeviceOSType = DeviceOSType;
+  DeviceOSTypeEnum? _deviceOSType;
+  DeviceOSTypeEnum? get deviceOSType => _$this._deviceOSType;
+  set deviceOSType(DeviceOSTypeEnum? deviceOSType) =>
+      _$this._deviceOSType = deviceOSType;
 
   DeviceInfoStructBuilder();
 
   DeviceInfoStructBuilder get _$this {
     final $v = _$v;
     if ($v != null) {
-      _DeviceName = $v.DeviceName;
-      _DeviceOSVersion = $v.DeviceOSVersion;
-      _IPv4 = $v.IPv4;
-      _IPv6 = $v.IPv6;
-      _DeviceMacAddress = $v.DeviceMacAddress;
-      _PluginServerPort = $v.PluginServerPort;
-      _PluginsCount = $v.PluginsCount;
-      _SendTime = $v.SendTime;
-      _IsMainDevice = $v.IsMainDevice;
-      _DeviceServerPort = $v.DeviceServerPort;
-      _DeviceServerBuildTime = $v.DeviceServerBuildTime;
-      _DeviceOSType = $v.DeviceOSType;
+      _deviceName = $v.deviceName;
+      _deviceOSVersion = $v.deviceOSVersion;
+      _iPv4 = $v.iPv4;
+      _iPv6 = $v.iPv6;
+      _deviceMacAddress = $v.deviceMacAddress;
+      _pluginServerPort = $v.pluginServerPort;
+      _pluginsCount = $v.pluginsCount;
+      _sendTime = $v.sendTime;
+      _isMainDevice = $v.isMainDevice;
+      _deviceServerPort = $v.deviceServerPort;
+      _deviceServerBuildTime = $v.deviceServerBuildTime;
+      _deviceOSType = $v.deviceOSType;
       _$v = null;
     }
     return this;
@@ -338,26 +338,26 @@ class DeviceInfoStructBuilder
   _$DeviceInfoStruct _build() {
     final _$result = _$v ??
         new _$DeviceInfoStruct._(
-            DeviceName: BuiltValueNullFieldError.checkNotNull(
-                DeviceName, r'DeviceInfoStruct', 'DeviceName'),
-            DeviceOSVersion: BuiltValueNullFieldError.checkNotNull(
-                DeviceOSVersion, r'DeviceInfoStruct', 'DeviceOSVersion'),
-            IPv4: BuiltValueNullFieldError.checkNotNull(
-                IPv4, r'DeviceInfoStruct', 'IPv4'),
-            IPv6: BuiltValueNullFieldError.checkNotNull(
-                IPv6, r'DeviceInfoStruct', 'IPv6'),
-            DeviceMacAddress: BuiltValueNullFieldError.checkNotNull(
-                DeviceMacAddress, r'DeviceInfoStruct', 'DeviceMacAddress'),
-            PluginServerPort: BuiltValueNullFieldError.checkNotNull(
-                PluginServerPort, r'DeviceInfoStruct', 'PluginServerPort'),
-            PluginsCount: BuiltValueNullFieldError.checkNotNull(
-                PluginsCount, r'DeviceInfoStruct', 'PluginsCount'),
-            SendTime: BuiltValueNullFieldError.checkNotNull(
-                SendTime, r'DeviceInfoStruct', 'SendTime'),
-            IsMainDevice: BuiltValueNullFieldError.checkNotNull(IsMainDevice, r'DeviceInfoStruct', 'IsMainDevice'),
-            DeviceServerPort: BuiltValueNullFieldError.checkNotNull(DeviceServerPort, r'DeviceInfoStruct', 'DeviceServerPort'),
-            DeviceServerBuildTime: BuiltValueNullFieldError.checkNotNull(DeviceServerBuildTime, r'DeviceInfoStruct', 'DeviceServerBuildTime'),
-            DeviceOSType: BuiltValueNullFieldError.checkNotNull(DeviceOSType, r'DeviceInfoStruct', 'DeviceOSType'));
+            deviceName: BuiltValueNullFieldError.checkNotNull(
+                deviceName, r'DeviceInfoStruct', 'deviceName'),
+            deviceOSVersion: BuiltValueNullFieldError.checkNotNull(
+                deviceOSVersion, r'DeviceInfoStruct', 'deviceOSVersion'),
+            iPv4: BuiltValueNullFieldError.checkNotNull(
+                iPv4, r'DeviceInfoStruct', 'iPv4'),
+            iPv6: BuiltValueNullFieldError.checkNotNull(
+                iPv6, r'DeviceInfoStruct', 'iPv6'),
+            deviceMacAddress: BuiltValueNullFieldError.checkNotNull(
+                deviceMacAddress, r'DeviceInfoStruct', 'deviceMacAddress'),
+            pluginServerPort: BuiltValueNullFieldError.checkNotNull(
+                pluginServerPort, r'DeviceInfoStruct', 'pluginServerPort'),
+            pluginsCount: BuiltValueNullFieldError.checkNotNull(
+                pluginsCount, r'DeviceInfoStruct', 'pluginsCount'),
+            sendTime: BuiltValueNullFieldError.checkNotNull(
+                sendTime, r'DeviceInfoStruct', 'sendTime'),
+            isMainDevice: BuiltValueNullFieldError.checkNotNull(isMainDevice, r'DeviceInfoStruct', 'isMainDevice'),
+            deviceServerPort: BuiltValueNullFieldError.checkNotNull(deviceServerPort, r'DeviceInfoStruct', 'deviceServerPort'),
+            deviceServerBuildTime: BuiltValueNullFieldError.checkNotNull(deviceServerBuildTime, r'DeviceInfoStruct', 'deviceServerBuildTime'),
+            deviceOSType: BuiltValueNullFieldError.checkNotNull(deviceOSType, r'DeviceInfoStruct', 'deviceOSType'));
     replace(_$result);
     return _$result;
   }

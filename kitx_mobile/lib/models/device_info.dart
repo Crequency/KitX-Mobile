@@ -11,29 +11,41 @@ part 'device_info.g.dart';
 
 abstract class DeviceInfoStruct
     implements Built<DeviceInfoStruct, DeviceInfoStructBuilder> {
-  String get DeviceName;
+  @BuiltValueField(wireName: 'DeviceName')
+  String get deviceName;
 
-  String get DeviceOSVersion;
+  @BuiltValueField(wireName: 'DeviceOSVersion')
+  String get deviceOSVersion;
 
-  String get IPv4;
+  @BuiltValueField(wireName: 'IPv4')
+  String get iPv4;
 
-  String get IPv6;
+  @BuiltValueField(wireName: 'IPv6')
+  String get iPv6;
 
-  String get DeviceMacAddress;
+  @BuiltValueField(wireName: 'DeviceMacAddress')
+  String get deviceMacAddress;
 
-  int get PluginServerPort;
+  @BuiltValueField(wireName: 'PluginServerPort')
+  int get pluginServerPort;
 
-  int get PluginsCount;
+  @BuiltValueField(wireName: 'PluginsCount')
+  int get pluginsCount;
 
-  DateTime get SendTime;
+  @BuiltValueField(wireName: 'SendTime')
+  DateTime get sendTime;
 
-  bool get IsMainDevice;
+  @BuiltValueField(wireName: 'IsMainDevice')
+  bool get isMainDevice;
 
-  int get DeviceServerPort;
+  @BuiltValueField(wireName: 'DeviceServerPort')
+  int get deviceServerPort;
 
-  DateTime get DeviceServerBuildTime;
+  @BuiltValueField(wireName: 'DeviceServerBuildTime')
+  DateTime get deviceServerBuildTime;
 
-  DeviceOSTypeEnum get DeviceOSType;
+  @BuiltValueField(wireName: 'DeviceOSType')
+  DeviceOSTypeEnum get deviceOSType;
 
   DeviceInfoStruct._();
   factory DeviceInfoStruct([void Function(DeviceInfoStructBuilder) updates]) =

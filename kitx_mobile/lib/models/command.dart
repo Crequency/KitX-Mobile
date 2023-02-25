@@ -12,27 +12,38 @@ import 'enums/command_type.dart';
 part 'command.g.dart';
 
 abstract class Command implements Built<Command, CommandBuilder> {
-  CommandTypeEnum get Type;
+  @BuiltValueField(wireName: 'Type')
+  CommandTypeEnum get type;
 
-  DeviceLocator get Sender;
+  @BuiltValueField(wireName: 'Sender')
+  DeviceLocator get sender;
 
-  DeviceLocator get Target;
+  @BuiltValueField(wireName: 'Target')
+  DeviceLocator get target;
 
-  int get CallId;
+  @BuiltValueField(wireName: 'CallId')
+  int get callId;
 
-  int get CallIdTTL;
+  @BuiltValueField(wireName: 'CallIdTTL')
+  int get callIdTTL;
 
-  DateTime get SendTime;
+  @BuiltValueField(wireName: 'SendTime')
+  DateTime get sendTime;
 
-  String get Request;
+  @BuiltValueField(wireName: 'Request')
+  String get request;
 
-  BuiltList<String> get RequestArgs;
+  @BuiltValueField(wireName: 'RequestArgs')
+  BuiltList<String> get requestArgs;
 
-  String get Body;
+  @BuiltValueField(wireName: 'Body')
+  String get body;
 
-  int get BodyLength;
+  @BuiltValueField(wireName: 'BodyLength')
+  int get bodyLength;
 
-  BuiltMap<String, String> get Tags;
+  @BuiltValueField(wireName: 'Tags')
+  BuiltMap<String, String> get tags;
 
   Command._();
   factory Command([void Function(CommandBuilder) updates]) = _$Command;

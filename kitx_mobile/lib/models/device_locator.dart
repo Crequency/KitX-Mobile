@@ -9,13 +9,17 @@ part 'device_locator.g.dart';
 
 abstract class DeviceLocator
     implements Built<DeviceLocator, DeviceLocatorBuilder> {
-  String get DeviceName;
+  @BuiltValueField(wireName: 'DeviceName')
+  String get deviceName;
 
-  String get IPv4;
+  @BuiltValueField(wireName: 'IPv4')
+  String get iPv4;
 
-  String get IPv6;
+  @BuiltValueField(wireName: 'IPv6')
+  String get iPv6;
 
-  String get DeviceMacAddress;
+  @BuiltValueField(wireName: 'DeviceMacAddress')
+  String get deviceMacAddress;
 
   DeviceLocator._();
   factory DeviceLocator([void Function(DeviceLocatorBuilder) updates]) =
