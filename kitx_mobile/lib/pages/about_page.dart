@@ -323,11 +323,12 @@ class _AboutPageState extends State<AboutPage> {
     var repo = thirdPartyData.ThirdPartyRepo;
 
     return Card(
+      clipBehavior: Clip.hardEdge,
       child: SizedBox(
         width: 300,
         height: 50,
         child: InkWell(
-          splashColor: Colors.blue.withAlpha(30),
+          splashColor: context.iconColor?.withOpacity(0.3),
           onTap: () => print("${thirdPartyData.ThirdPartyName} tapped."),
           child: ListView(
             shrinkWrap: true,
