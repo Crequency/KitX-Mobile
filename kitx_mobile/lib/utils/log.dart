@@ -4,7 +4,7 @@ import 'package:f_logs/model/flog/log_level.dart';
 import 'package:f_logs/utils/formatter/formate_type.dart';
 import 'package:f_logs/utils/timestamp/timestamp_format.dart';
 
-LogsConfig config = LogsConfig()
+var config = LogsConfig()
   ..isDebuggable = true
   ..customOpeningDivider = "["
   ..customClosingDivider = "]"

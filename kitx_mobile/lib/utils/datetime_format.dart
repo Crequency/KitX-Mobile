@@ -1,6 +1,6 @@
 String _fourDigits(int n) {
-  int absN = n.abs();
-  String sign = n < 0 ? "-" : "";
+  var absN = n.abs();
+  var sign = n < 0 ? "-" : "";
   if (absN >= 1000) return "$n";
   if (absN >= 100) return "${sign}0$absN";
   if (absN >= 10) return "${sign}00$absN";
@@ -9,8 +9,8 @@ String _fourDigits(int n) {
 
 String _sixDigits(int n) {
   assert(n < -9999 || n > 9999);
-  int absN = n.abs();
-  String sign = n < 0 ? "-" : "+";
+  var absN = n.abs();
+  var sign = n < 0 ? "-" : "+";
   if (absN >= 100000) return "$sign$absN";
   return "${sign}0$absN";
 }
@@ -51,11 +51,11 @@ String datetimeToIso8601(DateTime time) {
 
 String datetimeToShortString(DateTime time) {
   time = time.toLocal();
-  String y = (time.year >= -9999 && time.year <= 9999) ? _fourDigits(time.year) : _sixDigits(time.year);
-  String m = _twoDigits(time.month);
-  String d = _twoDigits(time.day);
-  String h = _twoDigits(time.hour);
-  String min = _twoDigits(time.minute);
-  String sec = _twoDigits(time.second);
+  var y = (time.year >= -9999 && time.year <= 9999) ? _fourDigits(time.year) : _sixDigits(time.year);
+  var m = _twoDigits(time.month);
+  var d = _twoDigits(time.day);
+  var h = _twoDigits(time.hour);
+  var min = _twoDigits(time.minute);
+  var sec = _twoDigits(time.second);
   return "$y-$m-$d $h:$min:$sec";
 }

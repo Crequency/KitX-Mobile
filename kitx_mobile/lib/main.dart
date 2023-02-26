@@ -2,22 +2,23 @@
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart' hide Intent;
+import 'package:get/get.dart';
 
 // import 'package:receive_intent/receive_intent.dart';
-import 'package:get/get.dart';
+
 import 'package:kitx_mobile/themes/dark_theme.dart';
 import 'package:kitx_mobile/themes/light_theme.dart';
+
+import 'package:kitx_mobile/pages/get_pages.dart';
+import 'package:kitx_mobile/pages/home_page.dart';
+
+import 'package:kitx_mobile/services/web_service.dart';
+// import 'package:kitx_mobile/services/sms_server.dart';
+
+import 'package:kitx_mobile/utils/translation.dart';
+import 'package:kitx_mobile/utils/config.dart';
+import 'package:kitx_mobile/utils/global.dart';
 import 'package:kitx_mobile/utils/log.dart';
-
-import 'pages/get_pages.dart';
-import 'pages/home_page.dart';
-
-import 'services/web_service.dart';
-// import 'services/sms_server.dart';
-
-import 'utils/translation.dart';
-import 'utils/config.dart';
-import 'utils/global.dart';
 
 /// 程序入口
 Future<void> main() async {
@@ -25,7 +26,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   // 初始化 WebService
-  WebService webService = WebService(
+  var webService = WebService(
       Config.WebService_UdpPortReceive, Config.WebService_UdpPortSend, Config.WebService_UdpBroadcastAddress);
   webService.initService();
 
@@ -66,8 +67,8 @@ class MainApp extends StatelessWidget {
       builder: (_, mode, __) => GetMaterialApp(
         title: "KitX Mobile",
         themeMode: mode,
-        theme: GetLightThemeData(),
-        darkTheme: GetDarkThemeData(),
+        theme: lightThemeData,
+        darkTheme: darkThemeData,
         highContrastTheme: ThemeData(),
         highContrastDarkTheme: ThemeData(),
         translations: Translation(), // 定义翻译 使用: "Text".tr

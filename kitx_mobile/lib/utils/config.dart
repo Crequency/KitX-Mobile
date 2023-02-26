@@ -1,6 +1,6 @@
 library kitx_moblie.config;
 
-import '../models/enums/device_os_type.dart';
+import 'package:kitx_mobile/models/enums/device_os_type.dart';
 
 class Config {
   static const String WebService_UdpBroadcastAddress = "224.0.0.0";

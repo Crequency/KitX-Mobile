@@ -24,5 +24,5 @@ class DeviceRotationHost {
     roll = 0;
   }
 
-  static Doubles3D GetRotationAngles() => new Doubles3D(yaw, pitch, roll);
+  static Doubles3D GetRotationAngles() => Doubles3D(yaw, pitch, roll);
 }

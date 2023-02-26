@@ -12,7 +12,7 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
-  Set<ThemeMode> selectedModes = <ThemeMode>{Global.themeMode};
+  var selectedModes = <ThemeMode>{Global.themeMode};
 
   @override
   void initState() {

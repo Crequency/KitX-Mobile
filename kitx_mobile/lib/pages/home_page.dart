@@ -2,15 +2,13 @@
 import 'package:get/get.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
-import 'device_page.dart';
-import 'account_page.dart';
-import 'test_page.dart';
-import 'settings_page.dart';
-import 'about_page.dart';
+import 'package:kitx_mobile/pages/device_page.dart';
+import 'package:kitx_mobile/pages/account_page.dart';
+import 'package:kitx_mobile/pages/test_page.dart';
+import 'package:kitx_mobile/pages/settings_page.dart';
+import 'package:kitx_mobile/pages/about_page.dart';
 
-import '../utils/global.dart';
-
-import "controls/devices_status.dart";
+import 'package:kitx_mobile/utils/global.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);

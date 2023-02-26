@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'test_pages/device_info_test.dart';
-import 'test_pages/device_sensors.dart';
-import 'test_pages/network_info_test.dart';
+import 'package:kitx_mobile/pages/test_pages/device_info_test.dart';
+import 'package:kitx_mobile/pages/test_pages/device_sensors.dart';
+import 'package:kitx_mobile/pages/test_pages/network_info_test.dart';
 
 class TestPage extends StatefulWidget {
   const TestPage({Key? key}) : super(key: key);

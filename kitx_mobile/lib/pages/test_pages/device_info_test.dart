@@ -30,7 +30,7 @@ class DeviceInfoTestPage extends StatefulWidget {
 
 class _DeviceInfoTestPageState extends State<DeviceInfoTestPage> {
   static final DeviceInfoPlugin deviceInfoPlugin = DeviceInfoPlugin();
-  Map<String, dynamic> _deviceData = <String, dynamic>{};
+  var _deviceData = <String, dynamic>{};
 
   @override
   void initState() {
@@ -206,25 +206,6 @@ class _DeviceInfoTestPageState extends State<DeviceInfoTestPage> {
 
   @override
   Widget build(BuildContext context) {
-    // return MaterialApp(
-    //   home: Scaffold(
-    // appBar: AppBar(
-    //   title: Text(
-    //     kIsWeb
-    //         ? 'Web Browser info'
-    //         : Platform.isAndroid
-    //             ? 'Android Device Info'
-    //             : Platform.isIOS
-    //                 ? 'iOS Device Info'
-    //                 : Platform.isLinux
-    //                     ? 'Linux Device Info'
-    //                     : Platform.isMacOS
-    //                         ? 'MacOS Device Info'
-    //                         : Platform.isWindows
-    //                             ? 'Windows Device Info'
-    //                             : '',
-    //   ),
-    // ),
     return Scaffold(
       body: ListView(
         children: _deviceData.keys.map(
@@ -241,20 +222,20 @@ class _DeviceInfoTestPageState extends State<DeviceInfoTestPage> {
                   ),
                 ),
                 Expanded(
-                    child: Container(
-                  padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
-                  child: Text(
-                    '${_deviceData[property]}',
-                    maxLines: 10,
-                    overflow: TextOverflow.ellipsis,
+                  child: Container(
+                    padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
+                    child: Text(
+                      '${_deviceData[property]}',
+                      maxLines: 10,
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   ),
-                )),
+                ),
               ],
             );
           },
         ).toList(),
       ),
-      // ),
     );
   }
 }
