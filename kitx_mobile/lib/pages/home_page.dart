@@ -29,8 +29,7 @@ class _HomePageState extends State<HomePage> {
     packageInfo.then((value) => version.value = value.version);
 
     // imageCache.clear(); // 清除图片缓存
-    var tileRadius =
-        ContinuousRectangleBorder(borderRadius: BorderRadius.circular(10.0));
+    var tileRadius = ContinuousRectangleBorder(borderRadius: BorderRadius.circular(10.0));
     var tilesPadding = 15.0;
 
     return Scaffold(
@@ -118,15 +117,13 @@ class _HomePageState extends State<HomePage> {
                   () => ListTile(
                     leading: Icon(Icons.devices),
                     title: Text("Drawer_Devices".tr),
-                    subtitle: Text("${Global.devices.length.obs} " +
-                        "HomePage_DevicesCount".tr),
+                    subtitle: Text("${Global.devices.length.obs} " + "HomePage_DevicesCount".tr),
                     trailing: Icon(Icons.keyboard_arrow_right),
                     shape: tileRadius,
                     // tileColor: Colors.indigo,
                     // textColor: Colors.white,
                     // iconColor: Colors.white,
-                    onTap: () => Global.delay(
-                        () => Get.to(() => DevicePage()), pageOpenDelay),
+                    onTap: () => Global.delay(() => Get.to(() => DevicePage()), pageOpenDelay),
                   ),
                 ),
                 Container(height: tilesPadding),
@@ -135,8 +132,7 @@ class _HomePageState extends State<HomePage> {
                   title: Text("Drawer_Account".tr),
                   trailing: Icon(Icons.keyboard_arrow_right),
                   shape: tileRadius,
-                  onTap: () => Global.delay(
-                      () => Get.to(() => AccountPage()), pageOpenDelay),
+                  onTap: () => Global.delay(() => Get.to(() => AccountPage()), pageOpenDelay),
                 ),
                 Container(height: tilesPadding),
                 ListTile(
@@ -144,8 +140,7 @@ class _HomePageState extends State<HomePage> {
                   title: Text("Drawer_Test".tr),
                   trailing: Icon(Icons.keyboard_arrow_right),
                   shape: tileRadius,
-                  onTap: () => Global.delay(
-                      () => Get.to(() => TestPage()), pageOpenDelay),
+                  onTap: () => Global.delay(() => Get.to(() => TestPage()), pageOpenDelay),
                 ),
                 Container(height: tilesPadding),
                 ListTile(
@@ -153,8 +148,7 @@ class _HomePageState extends State<HomePage> {
                   title: Text("Drawer_Setting".tr),
                   trailing: Icon(Icons.keyboard_arrow_right),
                   shape: tileRadius,
-                  onTap: () => Global.delay(
-                      () => Get.to(() => SettingsPage()), pageOpenDelay),
+                  onTap: () => Global.delay(() => Get.to(() => SettingsPage()), pageOpenDelay),
                 ),
                 Container(height: tilesPadding),
                 Obx(
@@ -164,8 +158,7 @@ class _HomePageState extends State<HomePage> {
                     subtitle: Text(version.value),
                     trailing: Icon(Icons.keyboard_arrow_right),
                     shape: tileRadius,
-                    onTap: () => Global.delay(
-                        () => Get.to(() => AboutPage()), pageOpenDelay),
+                    onTap: () => Global.delay(() => Get.to(() => AboutPage()), pageOpenDelay),
                   ),
                 ),
                 Container(height: tilesPadding),

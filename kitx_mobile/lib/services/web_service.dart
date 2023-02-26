@@ -33,8 +33,7 @@ class WebService {
   static NetworkInfo _networkInfo = NetworkInfo();
   static final FlutterBluePlus _flutterBlue = FlutterBluePlus.instance;
 
-  WebService(
-      this._udpPortReceive, this._udpPortSend, this._udpBroadcastAddress);
+  WebService(this._udpPortReceive, this._udpPortSend, this._udpBroadcastAddress);
 
   /// 初始化服务
   Future<void> initService() async {
@@ -81,8 +80,7 @@ class WebService {
             "${deviceData.model.toString()} (Android ${deviceData.version.release} SDK ${deviceData.version.sdkInt})";
       } else if (Platform.isIOS) {
         IosDeviceInfo deviceData = await _deviceInfoPlugin.iosInfo;
-        deviceOSVersion =
-            "${deviceData.name.toString()} (iOS ${deviceData.systemVersion})";
+        deviceOSVersion = "${deviceData.name.toString()} (iOS ${deviceData.systemVersion})";
       } else {
         deviceOSVersion = "Unknown";
       }
@@ -103,25 +101,19 @@ class WebService {
       Log.info("Get device info: ${deviceInfo.toString()}");
       // 启动 UDP 服务
       // UDP 发送
-      await RawDatagramSocket.bind(InternetAddress.anyIPv4, _udpPortSend)
-          .then((RawDatagramSocket socket) {
+      await RawDatagramSocket.bind(InternetAddress.anyIPv4, _udpPortSend).then((RawDatagramSocket socket) {
         socket.broadcastEnabled = true;
         socket.joinMulticast(InternetAddress(_udpBroadcastAddress));
-        Timer.periodic(
-            const Duration(seconds: Config.WebService_UdpSendFrequency),
-            (timer) {
+        Timer.periodic(const Duration(seconds: Config.WebService_UdpSendFrequency), (timer) {
           try {
-            deviceInfo =
-                deviceInfo.rebuild((b) => b..sendTime = DateTime.now().toUtc());
+            deviceInfo = deviceInfo.rebuild((b) => b..sendTime = DateTime.now().toUtc());
             String _data = deviceInfo.toString();
             // Log.info("UDP send: $_data");
-            socket.send(utf8.encode(_data),
-                InternetAddress(_udpBroadcastAddress), _udpPortReceive);
+            socket.send(utf8.encode(_data), InternetAddress(_udpBroadcastAddress), _udpPortReceive);
           } catch (e, stack) {
             socket.close();
             timer.cancel();
-            Log.info(
-                "UDP send error: $e $stack. Try to restart the service in 5 seconds.");
+            Log.info("UDP send error: $e $stack. Try to restart the service in 5 seconds.");
             Future.delayed(const Duration(seconds: 5), () {
               initService();
             });
@@ -133,8 +125,7 @@ class WebService {
       });
 
       // UDP 接收
-      await RawDatagramSocket.bind(InternetAddress.anyIPv4, _udpPortReceive,
-              ttl: 1)
+      await RawDatagramSocket.bind(InternetAddress.anyIPv4, _udpPortReceive, ttl: 1)
           .then((RawDatagramSocket socket) {
         // socket.broadcastEnabled = true;
         socket.joinMulticast(InternetAddress(_udpBroadcastAddress));
@@ -147,8 +138,7 @@ class WebService {
             DeviceInfoStruct? _deviceInfo = DeviceInfoStruct.fromString(_data);
             if (_deviceInfo != null) Global.devices.addDevice(_deviceInfo);
           } catch (e, stack) {
-            Log.error(
-                "Can not deserialize deviceinfopack: '$_data'. Error: $e $stack");
+            Log.error("Can not deserialize deviceinfopack: '$_data'. Error: $e $stack");
           }
         });
       }).catchError((e, stack) {

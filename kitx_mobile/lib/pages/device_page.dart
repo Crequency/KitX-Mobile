@@ -28,8 +28,7 @@ class _DevicePage extends State<DevicePage> {
           Obx(
             () => Container(
               margin: EdgeInsets.fromLTRB(30, 30, 30, 0),
-              child: Text(
-                  "${Global.devices.length.obs} " + "HomePage_DevicesCount".tr),
+              child: Text("${Global.devices.length.obs} " + "HomePage_DevicesCount".tr),
             ),
           ),
           Obx(
@@ -38,12 +37,8 @@ class _DevicePage extends State<DevicePage> {
               physics: NeverScrollableScrollPhysics(),
               itemCount: Global.devices.length + 1,
               itemBuilder: (_, int index) {
-                return createDeviceCard(
-                    context,
-                    index >= Global.devices.length
-                        ? null
-                        : Global.devices.deviceInfoList[index],
-                    index);
+                return createDeviceCard(context,
+                    index >= Global.devices.length ? null : Global.devices.deviceInfoList[index], index);
               },
             ),
           ),
@@ -59,8 +54,7 @@ class _DevicePage extends State<DevicePage> {
   }
 }
 
-Widget createDeviceCard(
-    BuildContext context, DeviceInfoStruct? info, int index) {
+Widget createDeviceCard(BuildContext context, DeviceInfoStruct? info, int index) {
   if (info == null) return Container(height: 300);
 
   IconData _iconStyle = Convert(info.deviceOSType);
@@ -96,12 +90,9 @@ Widget createDeviceCard(
                               children: <Widget>[
                                 SingleChildScrollView(
                                   scrollDirection: Axis.horizontal,
-                                  child: Text(
-                                      info.deviceName == Global.deviceName
-                                          ? info.deviceName +
-                                              " " +
-                                              "DevicePage_LocalDevice".tr
-                                          : info.deviceName),
+                                  child: Text(info.deviceName == Global.deviceName
+                                      ? info.deviceName + " " + "DevicePage_LocalDevice".tr
+                                      : info.deviceName),
                                 ),
                                 SingleChildScrollView(
                                   scrollDirection: Axis.horizontal,
@@ -120,8 +111,7 @@ Widget createDeviceCard(
                       ),
                     ),
                     Text(
-                      "DevicePage_PluginsCountText".tr +
-                          info.pluginsCount.toString(),
+                      "DevicePage_PluginsCountText".tr + info.pluginsCount.toString(),
                       style: TextStyle(
                         fontSize: 14,
                       ),

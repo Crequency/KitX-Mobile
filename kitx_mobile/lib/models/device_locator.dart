@@ -7,8 +7,7 @@ import 'serializers.dart';
 
 part 'device_locator.g.dart';
 
-abstract class DeviceLocator
-    implements Built<DeviceLocator, DeviceLocatorBuilder> {
+abstract class DeviceLocator implements Built<DeviceLocator, DeviceLocatorBuilder> {
   @BuiltValueField(wireName: 'DeviceName')
   String get deviceName;
 
@@ -22,8 +21,7 @@ abstract class DeviceLocator
   String get deviceMacAddress;
 
   DeviceLocator._();
-  factory DeviceLocator([void Function(DeviceLocatorBuilder) updates]) =
-      _$DeviceLocator;
+  factory DeviceLocator([void Function(DeviceLocatorBuilder) updates]) = _$DeviceLocator;
 
   Object? toJson() {
     return serializers.serializeWith(DeviceLocator.serializer, this);
@@ -31,8 +29,7 @@ abstract class DeviceLocator
 
   @override
   String toString() {
-    return json
-        .encode(serializers.serializeWith(DeviceLocator.serializer, this));
+    return json.encode(serializers.serializeWith(DeviceLocator.serializer, this));
   }
 
   static DeviceLocator? fromJson(Map<String, dynamic> json) {
@@ -40,8 +37,7 @@ abstract class DeviceLocator
   }
 
   static DeviceLocator? fromString(String jsonString) {
-    return serializers.deserializeWith(
-        DeviceLocator.serializer, json.decode(jsonString));
+    return serializers.deserializeWith(DeviceLocator.serializer, json.decode(jsonString));
   }
 
   static Serializer<DeviceLocator> get serializer => _$deviceLocatorSerializer;

@@ -22,10 +22,8 @@ class Devices {
       List<DeviceInfoStruct> _tempList = deviceInfoList.toList();
       bool _tag = true;
       _tempList.forEach((each) {
-        if (each.iPv4 == info.iPv4 ||
-            each.deviceMacAddress == info.deviceMacAddress) {
-          deviceInfoList[deviceInfoList.indexOf(each)] =
-              each.rebuild((b) => b..sendTime = info.sendTime);
+        if (each.iPv4 == info.iPv4 || each.deviceMacAddress == info.deviceMacAddress) {
+          deviceInfoList[deviceInfoList.indexOf(each)] = each.rebuild((b) => b..sendTime = info.sendTime);
           deviceInfoList.refresh();
           _tag = false;
         }
@@ -42,14 +40,12 @@ class Devices {
   }
 
   Future<void> init() async {
-    Timer.periodic(
-        Duration(seconds: Config.WebService_DeviceInfoCheckTTLSeconds), (_) {
+    Timer.periodic(Duration(seconds: Config.WebService_DeviceInfoCheckTTLSeconds), (_) {
       List<DeviceInfoStruct> _tempList = deviceInfoList.toList();
       _tempList.forEach((each) {
         DateTime now = DateTime.now();
         DateTime time = each.sendTime;
-        if (now.difference(time).inSeconds >
-            Config.WebService_DeviceInfoTTLSeconds) {
+        if (now.difference(time).inSeconds > Config.WebService_DeviceInfoTTLSeconds) {
           deviceInfoList.remove(each);
         }
       });

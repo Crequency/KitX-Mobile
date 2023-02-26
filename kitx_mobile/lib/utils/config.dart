@@ -9,6 +9,5 @@ class Config {
   static const int WebService_UdpSendFrequency = 1;
   static const int WebService_DeviceInfoCheckTTLSeconds = 1;
   static const int WebService_DeviceInfoTTLSeconds = 7;
-  static const DeviceOSTypeEnum WebService_DeviceOSType =
-      DeviceOSTypeEnum.Android;
+  static const DeviceOSTypeEnum WebService_DeviceOSType = DeviceOSTypeEnum.Android;
 }

@@ -15,8 +15,7 @@ class _Global {
   ThemeMode themeMode = ThemeMode.system;
 
   void delay(Function func, int milliseconds) {
-    Future.delayed(Duration(milliseconds: milliseconds))
-        .then((value) => func.call());
+    Future.delayed(Duration(milliseconds: milliseconds)).then((value) => func.call());
   }
 
   factory _Global() {
