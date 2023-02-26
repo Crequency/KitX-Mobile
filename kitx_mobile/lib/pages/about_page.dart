@@ -155,6 +155,7 @@ class _AboutPageState extends State<AboutPage> {
                       curve: Curves.easeInOutCubicEmphasized,
                       height: contentEntering ? 0 : 800,
                     ),
+                    Container(height: 30),
                     AnimatedOpacity(
                       duration: Duration(milliseconds: 800),
                       curve: Curves.easeInCubic,
