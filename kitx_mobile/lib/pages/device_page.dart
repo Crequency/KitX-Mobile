@@ -45,6 +45,24 @@ class _DevicePage extends State<DevicePage> {
   }
 }
 
+String GetDeviceDisplayName(DeviceInfoStruct info) {
+  var result = info.deviceName;
+
+  if (info.deviceName == Global.deviceName) result += " " + "DevicePage_LocalDevice".tr;
+  if (info.isMainDevice) result += " " + "DevicePage_MainDevice".tr;
+
+  return result;
+}
+
+Color GetDeviceCardColor(BuildContext context, DeviceInfoStruct info) {
+  var result = context.theme.cardColor;
+
+  if (info.deviceName == Global.deviceName) result = context.isDarkMode ? Colors.indigo : Colors.limeAccent;
+  if (info.isMainDevice) result = context.isDarkMode ? Colors.deepPurple : Colors.tealAccent;
+
+  return result;
+}
+
 Widget createDeviceCard(BuildContext context, DeviceInfoStruct? info, int index) {
   if (info == null) return Container(height: 300);
 
@@ -59,6 +77,7 @@ Widget createDeviceCard(BuildContext context, DeviceInfoStruct? info, int index)
     child: Padding(
       padding: EdgeInsets.fromLTRB(0, index == 0 ? 25 : 0, 0, 20),
       child: Card(
+        color: GetDeviceCardColor(context, info),
         clipBehavior: Clip.hardEdge,
         child: InkWell(
           splashColor: context.iconColor?.withOpacity(0.3),
@@ -82,9 +101,10 @@ Widget createDeviceCard(BuildContext context, DeviceInfoStruct? info, int index)
                           children: <Widget>[
                             SingleChildScrollView(
                               scrollDirection: Axis.horizontal,
-                              child: Text(info.deviceName == Global.deviceName
-                                  ? info.deviceName + " " + "DevicePage_LocalDevice".tr
-                                  : info.deviceName),
+                              child: Text(
+                                GetDeviceDisplayName(info),
+                                style: TextStyle(fontSize: 18),
+                              ),
                             ),
                             SingleChildScrollView(
                               scrollDirection: Axis.horizontal,
