@@ -21,21 +21,31 @@ import 'package:kitx_mobile/utils/global.dart';
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
 
-  var server = WebService(24040, 23404, "224.0.0.0");
+  var server = WebService()
+    ..UdpPortSend = 23404
+    ..UdpPortReceive = 24040
+    ..UdpBroadcastAddress = "224.0.0.0";
 
   server.initService();
 }
 
 class WebService {
-  String _udpBroadcastAddress;
-  final int _udpPortReceive;
-  final int _udpPortSend;
+  var _udpPortSend = Config.WebService_UdpPortSend;
+  var _udpPortReceive = Config.WebService_UdpPortReceive;
+  var _udpBroadcastAddress = Config.WebService_UdpBroadcastAddress;
+
   late RawDatagramSocket socket;
   static final DeviceInfoPlugin _deviceInfoPlugin = DeviceInfoPlugin();
   static NetworkInfo _networkInfo = NetworkInfo();
   static final FlutterBluePlus _flutterBlue = FlutterBluePlus.instance;
 
-  WebService(this._udpPortReceive, this._udpPortSend, this._udpBroadcastAddress);
+  set UdpPortSend(int value) => _udpPortSend = value;
+
+  set UdpPortReceive(int value) => _udpPortReceive = value;
+
+  set UdpBroadcastAddress(String value) => _udpBroadcastAddress = value;
+
+  // WebService(this._udpPortReceive, this._udpPortSend, this._udpBroadcastAddress);
 
   /// 初始化服务
   Future<void> initService() async {

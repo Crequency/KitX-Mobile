@@ -2,7 +2,7 @@
 
 import 'package:get/get.dart';
 
-import '../utils/global.dart';
+import 'package:kitx_mobile/utils/global.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({Key? key}) : super(key: key);
