@@ -1,10 +1,7 @@
-// import 'dart:io';
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart' hide Intent;
 import 'package:get/get.dart';
-
-// import 'package:receive_intent/receive_intent.dart';
 
 import 'package:kitx_mobile/themes/dark_theme.dart';
 import 'package:kitx_mobile/themes/light_theme.dart';
@@ -13,7 +10,6 @@ import 'package:kitx_mobile/pages/get_pages.dart';
 import 'package:kitx_mobile/pages/home_page.dart';
 
 import 'package:kitx_mobile/services/web_service.dart';
-// import 'package:kitx_mobile/services/sms_server.dart';
 
 import 'package:kitx_mobile/utils/translation.dart';
 import 'package:kitx_mobile/utils/config.dart';
@@ -38,9 +34,6 @@ Future<void> main() async {
   // 初始化 Devices
   Global.devices.init();
 
-  // 初始化 SmsServer
-  // SmsServer smsServer = SmsServer();
-  // smsServer.initServer();
   runApp(MainApp());
 }
 
