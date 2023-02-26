@@ -12,43 +12,51 @@ class TestPage extends StatefulWidget {
   State<TestPage> createState() => _TestPageState();
 }
 
-class _TestPageState extends State<TestPage> {
+class _TestPageState extends State<TestPage> with SingleTickerProviderStateMixin {
+  late final TabController _tabController;
+
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(length: 3, vsync: this);
+  }
+
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      initialIndex: 0,
-      length: 3,
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text("TestPage_Title".tr),
-          bottom: TabBar(
-            tabs: <Widget>[
-              Tab(
-                text: "Device Info",
-                icon: Icon(Icons.devices),
-              ),
-              Tab(
-                text: "Device Sensors",
-                icon: Icon(Icons.sensors),
-              ),
-              Tab(
-                text: "Network Info",
-                icon: Icon(Icons.wifi),
-              ),
-            ],
+    return Scaffold(
+      body: NestedScrollView(
+        headerSliverBuilder: (context, innerBoxIsScrolled) => [
+          SliverAppBar(
+            title: Text("TestPage_Title".tr),
+            pinned: true,
+            snap: true,
+            floating: true,
+            forceElevated: innerBoxIsScrolled,
+            bottom: TabBar(
+              controller: _tabController,
+              tabs: <Tab>[
+                Tab(
+                  text: "Device Info",
+                  icon: Icon(Icons.devices),
+                ),
+                Tab(
+                  text: "Device Sensors",
+                  icon: Icon(Icons.sensors),
+                ),
+                Tab(
+                  text: "Network Info",
+                  icon: Icon(Icons.wifi),
+                ),
+              ],
+            ),
           ),
-        ),
+        ],
         body: TabBarView(
-          children: <Widget>[
-            Center(
-              child: DeviceInfoTestPage(),
-            ),
-            Center(
-              child: DeviceSensorsPage(),
-            ),
-            Center(
-              child: NetworkInfoTestPage(),
-            ),
+          controller: _tabController,
+          children: [
+            DeviceInfoTestPage(),
+            DeviceSensorsPage(),
+            NetworkInfoTestPage(),
           ],
         ),
       ),

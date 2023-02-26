@@ -11,9 +11,7 @@ class GyroscopeDisplayStand extends StatefulWidget {
 
 class GyroscopeDisplayStandState extends State<GyroscopeDisplayStand> {
   final dir_x = 0.0.obs, dir_y = 0.0.obs, dir_z = 0.0.obs;
-  final direction_x = "none".obs,
-      direction_y = "none".obs,
-      direction_z = "none".obs;
+  final direction_x = "none".obs, direction_y = "none".obs, direction_z = "none".obs;
 
   @override
   void initState() {

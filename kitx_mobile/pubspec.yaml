@@ -18,11 +18,11 @@ dependencies:
   #  intl: ^0.17.0
   #  flutter_i18n: ^0.32.4 # 国际化
   get: ^4.6.5 # 路由管理
-  network_info_plus: ^2.1.4+1 # 网络信息
+  network_info_plus: ^3.0.2 # 网络信息
   device_info_plus: ^8.0.0 # 设备信息
-  flutter_logs: ^2.1.7 # 日志
+  #flutter_logs: ^2.1.7 # 日志
   #sms_receiver: ^0.4.1 # 短信接收
-  permission_handler: ^8.1.4+2 #权限管理
+  permission_handler: ^10.2.0 #权限管理
   mac_address: ^1.0.0 # 获取 MAC  p.s. iOS 未实现
   community_material_icon: ^5.9.55 # Material Design Icons 社区贡献
   flutter_blue_plus: ^1.4.0

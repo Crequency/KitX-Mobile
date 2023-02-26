@@ -10,8 +10,7 @@ class DeviceRotationHost {
   //  yaw -> z
   //  pitch -> y
   //  roll -> x
-  static void RotateWithAcceleration(
-      double x, double y, double z, double time) {
+  static void RotateWithAcceleration(double x, double y, double z, double time) {
     yaw += z * time * perRadToDegrees;
     pitch += x * time * perRadToDegrees;
     roll += y * time * perRadToDegrees;

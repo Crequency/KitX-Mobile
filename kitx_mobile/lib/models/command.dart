@@ -62,8 +62,7 @@ abstract class Command implements Built<Command, CommandBuilder> {
   }
 
   static Command? fromString(String jsonString) {
-    return serializers.deserializeWith(
-        Command.serializer, json.decode(jsonString));
+    return serializers.deserializeWith(Command.serializer, json.decode(jsonString));
   }
 
   static Serializer<Command> get serializer => _$commandSerializer;

@@ -4,8 +4,7 @@ import 'package:sensors_plus/sensors_plus.dart';
 
 class AccelerationDisplayStand extends StatefulWidget {
   @override
-  AccelerationDisplayStandState createState() =>
-      AccelerationDisplayStandState();
+  AccelerationDisplayStandState createState() => AccelerationDisplayStandState();
 }
 
 class AccelerationDisplayStandState extends State<AccelerationDisplayStand> {

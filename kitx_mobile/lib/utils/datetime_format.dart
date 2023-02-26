@@ -51,9 +51,7 @@ String datetimeToIso8601(DateTime time) {
 
 String datetimeToShortString(DateTime time) {
   time = time.toLocal();
-  String y = (time.year >= -9999 && time.year <= 9999)
-      ? _fourDigits(time.year)
-      : _sixDigits(time.year);
+  String y = (time.year >= -9999 && time.year <= 9999) ? _fourDigits(time.year) : _sixDigits(time.year);
   String m = _twoDigits(time.month);
   String d = _twoDigits(time.day);
   String h = _twoDigits(time.hour);

@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 import '../services/devices.dart';
 
 class _Global {
@@ -6,6 +8,16 @@ class _Global {
   static bool get isDebug => !isRelease;
   String deviceName = "";
   Devices devices = Devices();
+  bool DeviceError = false;
+
+  ValueNotifier<ThemeMode> themeNotifier = ValueNotifier(ThemeMode.system);
+
+  ThemeMode themeMode = ThemeMode.system;
+
+  void delay(Function func, int milliseconds) {
+    Future.delayed(Duration(milliseconds: milliseconds))
+        .then((value) => func.call());
+  }
 
   factory _Global() {
     return _singleton;
