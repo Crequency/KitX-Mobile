@@ -7,6 +7,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:vibration/vibration.dart';
 
 import '../data/third_party_licenses_provider.dart';
+import '../utils/global.dart' as global;
 
 class AboutPage extends StatefulWidget {
   const AboutPage({Key? key}) : super(key: key);
@@ -162,7 +163,7 @@ class _AboutPageState extends State<AboutPage> {
                           alignment: Alignment.center,
                           child: Text("AboutPage_Contributors".tr, style: TextStyle(fontSize: 20))),
                     ),
-                    Divider(),
+                    Container(height: 30),
                     AnimatedOpacity(
                       duration: Duration(milliseconds: 800),
                       curve: Curves.easeInCubic,
@@ -184,12 +185,14 @@ class _AboutPageState extends State<AboutPage> {
                             ]),
                       ),
                     ),
+                    Container(height: 30),
                     Divider(),
                     AnimatedContainer(
                       duration: Duration(milliseconds: 1000),
                       curve: Curves.easeInOutCubicEmphasized,
                       height: contentEntering ? 20 : 1600,
                     ),
+                    Container(height: 60),
                     AnimatedOpacity(
                       duration: Duration(milliseconds: 1100),
                       curve: Curves.easeInCubic,
@@ -198,7 +201,7 @@ class _AboutPageState extends State<AboutPage> {
                           alignment: Alignment.center,
                           child: Text("AboutPage_Repos".tr, style: TextStyle(fontSize: 20))),
                     ),
-                    Divider(),
+                    Container(height: 30),
                     AnimatedOpacity(
                       duration: Duration(milliseconds: 1100),
                       curve: Curves.easeInCubic,
@@ -222,12 +225,14 @@ class _AboutPageState extends State<AboutPage> {
                             ]),
                       ),
                     ),
+                    Container(height: 30),
                     Divider(),
                     AnimatedContainer(
                       duration: Duration(milliseconds: 1000),
                       curve: Curves.easeInOutCubicEmphasized,
                       height: contentEntering ? 20 : 2400,
                     ),
+                    Container(height: 60),
                     AnimatedOpacity(
                       duration: Duration(milliseconds: 1400),
                       curve: Curves.easeInCubic,
@@ -236,7 +241,7 @@ class _AboutPageState extends State<AboutPage> {
                           alignment: Alignment.center,
                           child: Text("AboutPage_ThirdPartyLicenses".tr, style: TextStyle(fontSize: 20))),
                     ),
-                    Divider(),
+                    Container(height: 30),
                     AnimatedOpacity(
                       duration: Duration(milliseconds: 1400),
                       curve: Curves.easeInCubic,
@@ -257,16 +262,20 @@ class _AboutPageState extends State<AboutPage> {
                         duration: Duration(milliseconds: 1000),
                         padding: EdgeInsets.fromLTRB(20, 0, 20, 15),
                         child: ElevatedButton(
-                            onPressed: () => super.setState(() {
-                                  thirdPartyDataDisplayCount.value = thirdPartyDataList.length;
-                                }),
+                            onPressed: () => global.delay(
+                                () => super.setState(() {
+                                      thirdPartyDataDisplayCount.value = thirdPartyDataList.length;
+                                    }),
+                                200),
                             child: Text("AboutPage_ThirdPartyLicenses_DisplayAll".tr))),
+                    Container(height: 30),
                     Divider(),
                     AnimatedContainer(
                       duration: Duration(milliseconds: 1000),
                       curve: Curves.easeInOutCubicEmphasized,
                       height: contentEntering ? 20 : 3200,
                     ),
+                    Container(height: 60),
                     Container(
                         alignment: Alignment.center,
                         child: Text("AboutPage_JoinUS".tr, style: TextStyle(fontSize: 20))),
