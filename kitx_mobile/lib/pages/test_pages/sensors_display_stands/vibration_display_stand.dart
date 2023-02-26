@@ -32,7 +32,7 @@ class VibrationDisplayStandState extends State<VibrationDisplayStand> {
         children: [
           Text("Vibration Test", style: TextStyle(fontSize: 32)),
           TextField(
-            decoration: new InputDecoration(labelText: "Vibration Duration (ms)"),
+            decoration: InputDecoration(labelText: "Vibration Duration (ms)"),
             keyboardType: TextInputType.number,
             inputFormatters: <TextInputFormatter>[
               FilteringTextInputFormatter.allow(RegExp(r'\d')),

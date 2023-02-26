@@ -40,7 +40,7 @@ class DeviceRotationDisplayStandState extends State<DeviceRotationDisplayStand> 
             borderRadius: BorderRadius.all(Radius.elliptical(10, 10)),
             child: CustomPaint(
               isComplex: true,
-              size: new Size(canvas_width - 60, canvas_height),
+              size: Size(canvas_width - 60, canvas_height),
               willChange: true,
               painter: Painter(),
             ),
