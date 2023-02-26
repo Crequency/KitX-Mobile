@@ -21,6 +21,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final version = "getting ...".obs;
+  final pageOpenDelay = 200;
 
   @override
   Widget build(BuildContext context) {
@@ -62,42 +63,42 @@ class _HomePageState extends State<HomePage> {
             ListTile(
               leading: Icon(Icons.devices),
               title: Text("Drawer_Devices".tr),
-              onTap: () {
+              onTap: () => global.delay(() {
                 Get.back();
                 Get.to(() => DevicePage());
-              },
+              }, pageOpenDelay),
             ),
             ListTile(
               leading: Icon(Icons.alternate_email),
               title: Text("Drawer_Account".tr),
-              onTap: () {
+              onTap: () => global.delay(() {
                 Get.back();
                 Get.to(() => AccountPage());
-              },
+              }, pageOpenDelay),
             ),
             ListTile(
               leading: Icon(Icons.bug_report),
               title: Text("Drawer_Test".tr),
-              onTap: () {
+              onTap: () => global.delay(() {
                 Get.back();
                 Get.to(() => TestPage());
-              },
+              }, pageOpenDelay),
             ),
             ListTile(
               leading: Icon(Icons.settings),
               title: Text("Drawer_Setting".tr),
-              onTap: () {
+              onTap: () => global.delay(() {
                 Get.back();
                 Get.to(() => SettingsPage());
-              },
+              }, pageOpenDelay),
             ),
             ListTile(
               leading: Icon(Icons.info_outline_rounded),
               title: Text("Drawer_About".tr),
-              onTap: () {
+              onTap: () => global.delay(() {
                 Get.back();
                 Get.to(() => AboutPage());
-              },
+              }, pageOpenDelay),
             ),
           ],
         ),
@@ -122,7 +123,7 @@ class _HomePageState extends State<HomePage> {
                     // tileColor: Colors.indigo,
                     // textColor: Colors.white,
                     // iconColor: Colors.white,
-                    onTap: () => Get.to(() => DevicePage()),
+                    onTap: () => global.delay(() => Get.to(() => DevicePage()), pageOpenDelay),
                   ),
                 ),
                 Container(height: tilesPadding),
@@ -131,7 +132,7 @@ class _HomePageState extends State<HomePage> {
                   title: Text("Drawer_Account".tr),
                   trailing: Icon(Icons.keyboard_arrow_right),
                   shape: tileRadius,
-                  onTap: () => Get.to(() => AccountPage()),
+                  onTap: () => global.delay(() => Get.to(() => AccountPage()), pageOpenDelay),
                 ),
                 Container(height: tilesPadding),
                 ListTile(
@@ -139,7 +140,7 @@ class _HomePageState extends State<HomePage> {
                   title: Text("Drawer_Test".tr),
                   trailing: Icon(Icons.keyboard_arrow_right),
                   shape: tileRadius,
-                  onTap: () => Get.to(() => TestPage()),
+                  onTap: () => global.delay(() => Get.to(() => TestPage()), pageOpenDelay),
                 ),
                 Container(height: tilesPadding),
                 ListTile(
@@ -147,7 +148,7 @@ class _HomePageState extends State<HomePage> {
                   title: Text("Drawer_Setting".tr),
                   trailing: Icon(Icons.keyboard_arrow_right),
                   shape: tileRadius,
-                  onTap: () => Get.to(() => SettingsPage()),
+                  onTap: () => global.delay(() => Get.to(() => SettingsPage()), pageOpenDelay),
                 ),
                 Container(height: tilesPadding),
                 Obx(
@@ -157,7 +158,7 @@ class _HomePageState extends State<HomePage> {
                     subtitle: Text(version.value),
                     trailing: Icon(Icons.keyboard_arrow_right),
                     shape: tileRadius,
-                    onTap: () => Get.to(() => AboutPage()),
+                    onTap: () => global.delay(() => Get.to(() => AboutPage()), pageOpenDelay),
                   ),
                 ),
                 Container(height: tilesPadding),

@@ -15,3 +15,7 @@ bool DeviceError = false;
 ValueNotifier<ThemeMode> themeNotifier = ValueNotifier(ThemeMode.system);
 
 ThemeMode themeMode = ThemeMode.system;
+
+delay(Function func, int milliseconds) {
+  Future.delayed(Duration(milliseconds: milliseconds)).then((value) => func.call());
+}
