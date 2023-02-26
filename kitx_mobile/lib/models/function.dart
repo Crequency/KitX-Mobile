@@ -8,21 +8,29 @@ import 'serializers.dart';
 
 part 'function.g.dart';
 
-abstract class PluginFunction implements Built<PluginFunction, PluginFunctionBuilder> {
+abstract class PluginFunction
+    implements Built<PluginFunction, PluginFunctionBuilder> {
+  @BuiltValueField(wireName: 'Name')
   String get Name;
 
-  BuiltMap<String, String> get DisplayNames;
+  @BuiltValueField(wireName: 'DisplayNames')
+  BuiltMap<String, String> get displayNames;
 
-  BuiltMap<String, Map<String, String>> get Parameters;
+  @BuiltValueField(wireName: 'Parameters')
+  BuiltMap<String, Map<String, String>> get parameters;
 
-  BuiltList<String> get ParametersType;
+  @BuiltValueField(wireName: 'ParametersType')
+  BuiltList<String> get parametersType;
 
-  bool get HasAppendParameters;
+  @BuiltValueField(wireName: 'HasAppendParameters')
+  bool get hasAppendParameters;
 
-  String get ReturnValueType;
+  @BuiltValueField(wireName: 'ReturnValueType')
+  String get returnValueType;
 
   PluginFunction._();
-  factory PluginFunction([void Function(PluginFunctionBuilder) updates]) = _$PluginFunction;
+  factory PluginFunction([void Function(PluginFunctionBuilder) updates]) =
+      _$PluginFunction;
 
   Object? toJson() {
     return serializers.serializeWith(PluginFunction.serializer, this);
@@ -30,7 +38,8 @@ abstract class PluginFunction implements Built<PluginFunction, PluginFunctionBui
 
   @override
   String toString() {
-    return json.encode(serializers.serializeWith(PluginFunction.serializer, this));
+    return json
+        .encode(serializers.serializeWith(PluginFunction.serializer, this));
   }
 
   static PluginFunction? fromJson(Map<String, dynamic> json) {
@@ -38,8 +47,10 @@ abstract class PluginFunction implements Built<PluginFunction, PluginFunctionBui
   }
 
   static PluginFunction? fromString(String jsonString) {
-    return serializers.deserializeWith(PluginFunction.serializer, json.decode(jsonString));
+    return serializers.deserializeWith(
+        PluginFunction.serializer, json.decode(jsonString));
   }
 
-  static Serializer<PluginFunction> get serializer => _$pluginFunctionSerializer;
+  static Serializer<PluginFunction> get serializer =>
+      _$pluginFunctionSerializer;
 }

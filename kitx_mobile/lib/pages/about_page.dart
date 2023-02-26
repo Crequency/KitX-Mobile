@@ -7,7 +7,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:vibration/vibration.dart';
 
 import '../data/third_party_licenses_provider.dart';
-import '../utils/global.dart' as global;
+import '../utils/global.dart';
 
 class AboutPage extends StatefulWidget {
   const AboutPage({Key? key}) : super(key: key);
@@ -39,15 +39,19 @@ class _AboutPageState extends State<AboutPage> {
     var packageInfo = PackageInfo.fromPlatform();
     packageInfo.then((value) => version.value = value.version);
 
-    Future.delayed(Duration(milliseconds: 150)).then((value) => iconEntering.value = true);
+    Future.delayed(Duration(milliseconds: 150))
+        .then((value) => iconEntering.value = true);
 
-    Future.delayed(Duration(milliseconds: 400)).then((value) => iconEntered.value = true);
+    Future.delayed(Duration(milliseconds: 400))
+        .then((value) => iconEntered.value = true);
 
-    Future.delayed(Duration(milliseconds: 600)).then((value) => titleEntered.value = true);
+    Future.delayed(Duration(milliseconds: 600))
+        .then((value) => titleEntered.value = true);
 
-    Future.delayed(Duration(milliseconds: 0)).then((value) => super.setState(() {
-          contentEntering = true;
-        }));
+    Future.delayed(Duration(milliseconds: 0))
+        .then((value) => super.setState(() {
+              contentEntering = true;
+            }));
 
     super.initState();
   }
@@ -161,7 +165,8 @@ class _AboutPageState extends State<AboutPage> {
                       opacity: contentEntering ? 1 : 0,
                       child: Container(
                           alignment: Alignment.center,
-                          child: Text("AboutPage_Contributors".tr, style: TextStyle(fontSize: 20))),
+                          child: Text("AboutPage_Contributors".tr,
+                              style: TextStyle(fontSize: 20))),
                     ),
                     Container(height: 30),
                     AnimatedOpacity(
@@ -199,7 +204,8 @@ class _AboutPageState extends State<AboutPage> {
                       opacity: contentEntering ? 1 : 0,
                       child: Container(
                           alignment: Alignment.center,
-                          child: Text("AboutPage_Repos".tr, style: TextStyle(fontSize: 20))),
+                          child: Text("AboutPage_Repos".tr,
+                              style: TextStyle(fontSize: 20))),
                     ),
                     Container(height: 30),
                     AnimatedOpacity(
@@ -216,11 +222,13 @@ class _AboutPageState extends State<AboutPage> {
                             padding: EdgeInsets.all(10),
                             children: [
                               ElevatedButton(
-                                  onPressed: () => launchUrl(Uri.parse("https://github.com/Crequency/KitX")),
+                                  onPressed: () => launchUrl(Uri.parse(
+                                      "https://github.com/Crequency/KitX")),
                                   child: Text("GitHub")),
                               Container(width: 10),
                               ElevatedButton(
-                                  onPressed: () => launchUrl(Uri.parse("https://gitee.com/Crequency/KitX")),
+                                  onPressed: () => launchUrl(Uri.parse(
+                                      "https://gitee.com/Crequency/KitX")),
                                   child: Text("Gitee")),
                             ]),
                       ),
@@ -239,7 +247,8 @@ class _AboutPageState extends State<AboutPage> {
                       opacity: contentEntering ? 1 : 0,
                       child: Container(
                           alignment: Alignment.center,
-                          child: Text("AboutPage_ThirdPartyLicenses".tr, style: TextStyle(fontSize: 20))),
+                          child: Text("AboutPage_ThirdPartyLicenses".tr,
+                              style: TextStyle(fontSize: 20))),
                     ),
                     Container(height: 30),
                     AnimatedOpacity(
@@ -258,16 +267,21 @@ class _AboutPageState extends State<AboutPage> {
                       ),
                     ),
                     AnimatedContainer(
-                        height: thirdPartyDataDisplayCount.value != thirdPartyDataList.length ? 55 : 0,
+                        height: thirdPartyDataDisplayCount.value !=
+                                thirdPartyDataList.length
+                            ? 55
+                            : 0,
                         duration: Duration(milliseconds: 1000),
                         padding: EdgeInsets.fromLTRB(20, 0, 20, 15),
                         child: ElevatedButton(
-                            onPressed: () => global.delay(
+                            onPressed: () => Global.delay(
                                 () => super.setState(() {
-                                      thirdPartyDataDisplayCount.value = thirdPartyDataList.length;
+                                      thirdPartyDataDisplayCount.value =
+                                          thirdPartyDataList.length;
                                     }),
                                 200),
-                            child: Text("AboutPage_ThirdPartyLicenses_DisplayAll".tr))),
+                            child: Text(
+                                "AboutPage_ThirdPartyLicenses_DisplayAll".tr))),
                     Container(height: 30),
                     Divider(),
                     AnimatedContainer(
@@ -278,9 +292,12 @@ class _AboutPageState extends State<AboutPage> {
                     Container(height: 60),
                     Container(
                         alignment: Alignment.center,
-                        child: Text("AboutPage_JoinUS".tr, style: TextStyle(fontSize: 20))),
+                        child: Text("AboutPage_JoinUS".tr,
+                            style: TextStyle(fontSize: 20))),
                     Divider(),
-                    Container(padding: EdgeInsets.all(20), child: Text("AboutPage_JoinUS_Text".tr)),
+                    Container(
+                        padding: EdgeInsets.all(20),
+                        child: Text("AboutPage_JoinUS_Text".tr)),
                     Divider(),
                     Container(height: 500),
                   ],
@@ -319,7 +336,8 @@ class _AboutPageState extends State<AboutPage> {
                   icon: url?.contains("pub.dev") ?? false
                       ? const Icon(CommunityMaterialIcons.link)
                       : const Icon(CommunityMaterialIcons.link),
-                  onPressed: () => launchUrl(Uri.parse(thirdPartyData.ThirdPartyUrl ?? "")),
+                  onPressed: () =>
+                      launchUrl(Uri.parse(thirdPartyData.ThirdPartyUrl ?? "")),
                 ),
                 IconButton(
                   alignment: Alignment.center,
@@ -329,7 +347,8 @@ class _AboutPageState extends State<AboutPage> {
                   icon: repo?.contains("github.com") ?? false
                       ? const Icon(CommunityMaterialIcons.github)
                       : const Icon(CommunityMaterialIcons.link),
-                  onPressed: () => launchUrl(Uri.parse(thirdPartyData.ThirdPartyRepo ?? "")),
+                  onPressed: () =>
+                      launchUrl(Uri.parse(thirdPartyData.ThirdPartyRepo ?? "")),
                 ),
                 Container(
                     alignment: Alignment.center,

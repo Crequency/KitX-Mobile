@@ -23,25 +23,25 @@ class _$PluginFunctionSerializer
       'Name',
       serializers.serialize(object.Name, specifiedType: const FullType(String)),
       'DisplayNames',
-      serializers.serialize(object.DisplayNames,
+      serializers.serialize(object.displayNames,
           specifiedType: const FullType(BuiltMap,
               const [const FullType(String), const FullType(String)])),
       'Parameters',
-      serializers.serialize(object.Parameters,
+      serializers.serialize(object.parameters,
           specifiedType: const FullType(BuiltMap, const [
             const FullType(String),
             const FullType(
                 Map, const [const FullType(String), const FullType(String)])
           ])),
       'ParametersType',
-      serializers.serialize(object.ParametersType,
+      serializers.serialize(object.parametersType,
           specifiedType:
               const FullType(BuiltList, const [const FullType(String)])),
       'HasAppendParameters',
-      serializers.serialize(object.HasAppendParameters,
+      serializers.serialize(object.hasAppendParameters,
           specifiedType: const FullType(bool)),
       'ReturnValueType',
-      serializers.serialize(object.ReturnValueType,
+      serializers.serialize(object.returnValueType,
           specifiedType: const FullType(String)),
     ];
 
@@ -65,12 +65,12 @@ class _$PluginFunctionSerializer
               specifiedType: const FullType(String))! as String;
           break;
         case 'DisplayNames':
-          result.DisplayNames.replace(serializers.deserialize(value,
+          result.displayNames.replace(serializers.deserialize(value,
               specifiedType: const FullType(BuiltMap,
                   const [const FullType(String), const FullType(String)]))!);
           break;
         case 'Parameters':
-          result.Parameters.replace(serializers.deserialize(value,
+          result.parameters.replace(serializers.deserialize(value,
               specifiedType: const FullType(BuiltMap, const [
                 const FullType(String),
                 const FullType(
@@ -78,17 +78,17 @@ class _$PluginFunctionSerializer
               ]))!);
           break;
         case 'ParametersType':
-          result.ParametersType.replace(serializers.deserialize(value,
+          result.parametersType.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(String)]))!
               as BuiltList<Object?>);
           break;
         case 'HasAppendParameters':
-          result.HasAppendParameters = serializers.deserialize(value,
+          result.hasAppendParameters = serializers.deserialize(value,
               specifiedType: const FullType(bool))! as bool;
           break;
         case 'ReturnValueType':
-          result.ReturnValueType = serializers.deserialize(value,
+          result.returnValueType = serializers.deserialize(value,
               specifiedType: const FullType(String))! as String;
           break;
       }
@@ -102,38 +102,38 @@ class _$PluginFunction extends PluginFunction {
   @override
   final String Name;
   @override
-  final BuiltMap<String, String> DisplayNames;
+  final BuiltMap<String, String> displayNames;
   @override
-  final BuiltMap<String, Map<String, String>> Parameters;
+  final BuiltMap<String, Map<String, String>> parameters;
   @override
-  final BuiltList<String> ParametersType;
+  final BuiltList<String> parametersType;
   @override
-  final bool HasAppendParameters;
+  final bool hasAppendParameters;
   @override
-  final String ReturnValueType;
+  final String returnValueType;
 
   factory _$PluginFunction([void Function(PluginFunctionBuilder)? updates]) =>
       (new PluginFunctionBuilder()..update(updates))._build();
 
   _$PluginFunction._(
       {required this.Name,
-      required this.DisplayNames,
-      required this.Parameters,
-      required this.ParametersType,
-      required this.HasAppendParameters,
-      required this.ReturnValueType})
+      required this.displayNames,
+      required this.parameters,
+      required this.parametersType,
+      required this.hasAppendParameters,
+      required this.returnValueType})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(Name, r'PluginFunction', 'Name');
     BuiltValueNullFieldError.checkNotNull(
-        DisplayNames, r'PluginFunction', 'DisplayNames');
+        displayNames, r'PluginFunction', 'displayNames');
     BuiltValueNullFieldError.checkNotNull(
-        Parameters, r'PluginFunction', 'Parameters');
+        parameters, r'PluginFunction', 'parameters');
     BuiltValueNullFieldError.checkNotNull(
-        ParametersType, r'PluginFunction', 'ParametersType');
+        parametersType, r'PluginFunction', 'parametersType');
     BuiltValueNullFieldError.checkNotNull(
-        HasAppendParameters, r'PluginFunction', 'HasAppendParameters');
+        hasAppendParameters, r'PluginFunction', 'hasAppendParameters');
     BuiltValueNullFieldError.checkNotNull(
-        ReturnValueType, r'PluginFunction', 'ReturnValueType');
+        returnValueType, r'PluginFunction', 'returnValueType');
   }
 
   @override
@@ -149,22 +149,22 @@ class _$PluginFunction extends PluginFunction {
     if (identical(other, this)) return true;
     return other is PluginFunction &&
         Name == other.Name &&
-        DisplayNames == other.DisplayNames &&
-        Parameters == other.Parameters &&
-        ParametersType == other.ParametersType &&
-        HasAppendParameters == other.HasAppendParameters &&
-        ReturnValueType == other.ReturnValueType;
+        displayNames == other.displayNames &&
+        parameters == other.parameters &&
+        parametersType == other.parametersType &&
+        hasAppendParameters == other.hasAppendParameters &&
+        returnValueType == other.returnValueType;
   }
 
   @override
   int get hashCode {
     var _$hash = 0;
     _$hash = $jc(_$hash, Name.hashCode);
-    _$hash = $jc(_$hash, DisplayNames.hashCode);
-    _$hash = $jc(_$hash, Parameters.hashCode);
-    _$hash = $jc(_$hash, ParametersType.hashCode);
-    _$hash = $jc(_$hash, HasAppendParameters.hashCode);
-    _$hash = $jc(_$hash, ReturnValueType.hashCode);
+    _$hash = $jc(_$hash, displayNames.hashCode);
+    _$hash = $jc(_$hash, parameters.hashCode);
+    _$hash = $jc(_$hash, parametersType.hashCode);
+    _$hash = $jc(_$hash, hasAppendParameters.hashCode);
+    _$hash = $jc(_$hash, returnValueType.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -178,33 +178,33 @@ class PluginFunctionBuilder
   String? get Name => _$this._Name;
   set Name(String? Name) => _$this._Name = Name;
 
-  MapBuilder<String, String>? _DisplayNames;
-  MapBuilder<String, String> get DisplayNames =>
-      _$this._DisplayNames ??= new MapBuilder<String, String>();
-  set DisplayNames(MapBuilder<String, String>? DisplayNames) =>
-      _$this._DisplayNames = DisplayNames;
+  MapBuilder<String, String>? _displayNames;
+  MapBuilder<String, String> get displayNames =>
+      _$this._displayNames ??= new MapBuilder<String, String>();
+  set displayNames(MapBuilder<String, String>? displayNames) =>
+      _$this._displayNames = displayNames;
 
-  MapBuilder<String, Map<String, String>>? _Parameters;
-  MapBuilder<String, Map<String, String>> get Parameters =>
-      _$this._Parameters ??= new MapBuilder<String, Map<String, String>>();
-  set Parameters(MapBuilder<String, Map<String, String>>? Parameters) =>
-      _$this._Parameters = Parameters;
+  MapBuilder<String, Map<String, String>>? _parameters;
+  MapBuilder<String, Map<String, String>> get parameters =>
+      _$this._parameters ??= new MapBuilder<String, Map<String, String>>();
+  set parameters(MapBuilder<String, Map<String, String>>? parameters) =>
+      _$this._parameters = parameters;
 
-  ListBuilder<String>? _ParametersType;
-  ListBuilder<String> get ParametersType =>
-      _$this._ParametersType ??= new ListBuilder<String>();
-  set ParametersType(ListBuilder<String>? ParametersType) =>
-      _$this._ParametersType = ParametersType;
+  ListBuilder<String>? _parametersType;
+  ListBuilder<String> get parametersType =>
+      _$this._parametersType ??= new ListBuilder<String>();
+  set parametersType(ListBuilder<String>? parametersType) =>
+      _$this._parametersType = parametersType;
 
-  bool? _HasAppendParameters;
-  bool? get HasAppendParameters => _$this._HasAppendParameters;
-  set HasAppendParameters(bool? HasAppendParameters) =>
-      _$this._HasAppendParameters = HasAppendParameters;
+  bool? _hasAppendParameters;
+  bool? get hasAppendParameters => _$this._hasAppendParameters;
+  set hasAppendParameters(bool? hasAppendParameters) =>
+      _$this._hasAppendParameters = hasAppendParameters;
 
-  String? _ReturnValueType;
-  String? get ReturnValueType => _$this._ReturnValueType;
-  set ReturnValueType(String? ReturnValueType) =>
-      _$this._ReturnValueType = ReturnValueType;
+  String? _returnValueType;
+  String? get returnValueType => _$this._returnValueType;
+  set returnValueType(String? returnValueType) =>
+      _$this._returnValueType = returnValueType;
 
   PluginFunctionBuilder();
 
@@ -212,11 +212,11 @@ class PluginFunctionBuilder
     final $v = _$v;
     if ($v != null) {
       _Name = $v.Name;
-      _DisplayNames = $v.DisplayNames.toBuilder();
-      _Parameters = $v.Parameters.toBuilder();
-      _ParametersType = $v.ParametersType.toBuilder();
-      _HasAppendParameters = $v.HasAppendParameters;
-      _ReturnValueType = $v.ReturnValueType;
+      _displayNames = $v.displayNames.toBuilder();
+      _parameters = $v.parameters.toBuilder();
+      _parametersType = $v.parametersType.toBuilder();
+      _hasAppendParameters = $v.hasAppendParameters;
+      _returnValueType = $v.returnValueType;
       _$v = null;
     }
     return this;
@@ -243,24 +243,24 @@ class PluginFunctionBuilder
           new _$PluginFunction._(
               Name: BuiltValueNullFieldError.checkNotNull(
                   Name, r'PluginFunction', 'Name'),
-              DisplayNames: DisplayNames.build(),
-              Parameters: Parameters.build(),
-              ParametersType: ParametersType.build(),
-              HasAppendParameters: BuiltValueNullFieldError.checkNotNull(
-                  HasAppendParameters,
+              displayNames: displayNames.build(),
+              parameters: parameters.build(),
+              parametersType: parametersType.build(),
+              hasAppendParameters: BuiltValueNullFieldError.checkNotNull(
+                  hasAppendParameters,
                   r'PluginFunction',
-                  'HasAppendParameters'),
-              ReturnValueType: BuiltValueNullFieldError.checkNotNull(
-                  ReturnValueType, r'PluginFunction', 'ReturnValueType'));
+                  'hasAppendParameters'),
+              returnValueType: BuiltValueNullFieldError.checkNotNull(
+                  returnValueType, r'PluginFunction', 'returnValueType'));
     } catch (_) {
       late String _$failedField;
       try {
-        _$failedField = 'DisplayNames';
-        DisplayNames.build();
-        _$failedField = 'Parameters';
-        Parameters.build();
-        _$failedField = 'ParametersType';
-        ParametersType.build();
+        _$failedField = 'displayNames';
+        displayNames.build();
+        _$failedField = 'parameters';
+        parameters.build();
+        _$failedField = 'parametersType';
+        parametersType.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             r'PluginFunction', _$failedField, e.toString());

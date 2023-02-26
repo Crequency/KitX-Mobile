@@ -1,21 +1,29 @@
-library kitx_moblie.global;
-
 import 'package:flutter/material.dart';
 
 import '../services/devices.dart';
 
-Devices devices = Devices();
+class _Global {
+  static final _Global _singleton = _Global._internal();
+  static bool get isRelease => bool.fromEnvironment("dart.vm.product");
+  static bool get isDebug => !isRelease;
+  String deviceName = "";
+  Devices devices = Devices();
+  bool DeviceError = false;
 
-String DeviceName = "";
+  ValueNotifier<ThemeMode> themeNotifier = ValueNotifier(ThemeMode.system);
 
-bool get isRelease => bool.fromEnvironment("dart.vm.product");
+  ThemeMode themeMode = ThemeMode.system;
 
-bool DeviceError = false;
+  void delay(Function func, int milliseconds) {
+    Future.delayed(Duration(milliseconds: milliseconds))
+        .then((value) => func.call());
+  }
 
-ValueNotifier<ThemeMode> themeNotifier = ValueNotifier(ThemeMode.system);
+  factory _Global() {
+    return _singleton;
+  }
 
-ThemeMode themeMode = ThemeMode.system;
-
-delay(Function func, int milliseconds) {
-  Future.delayed(Duration(milliseconds: milliseconds)).then((value) => func.call());
+  _Global._internal();
 }
+
+_Global Global = _Global();

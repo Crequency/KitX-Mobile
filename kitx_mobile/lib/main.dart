@@ -7,7 +7,7 @@ import 'package:flutter/material.dart' hide Intent;
 import 'package:get/get.dart';
 import 'package:kitx_mobile/themes/dark_theme.dart';
 import 'package:kitx_mobile/themes/light_theme.dart';
-import 'package:kitx_mobile/utils/log/init.dart';
+import 'package:kitx_mobile/utils/log.dart';
 
 import 'pages/get_pages.dart';
 import 'pages/home_page.dart';
@@ -17,7 +17,7 @@ import 'services/web_service.dart';
 
 import 'utils/translation.dart';
 import 'utils/config.dart';
-import 'utils/global.dart' as global;
+import 'utils/global.dart';
 
 /// 程序入口
 Future<void> main() async {
@@ -25,15 +25,15 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   // 初始化 WebService
-  WebService webService = WebService(
-      Config.WebService_UdpPortReceive, Config.WebService_UdpPortSend, Config.WebService_UdpBroadcastAddress);
+  WebService webService = WebService(Config.WebService_UdpPortReceive,
+      Config.WebService_UdpPortSend, Config.WebService_UdpBroadcastAddress);
   webService.initService();
 
   // 初始化 log
-  await InitLogger();
+  InitLogger();
 
   // 初始化 Devices
-  global.devices.init();
+  Global.devices.init();
 
   // 初始化 SmsServer
   // SmsServer smsServer = SmsServer();
@@ -62,7 +62,7 @@ class MainApp extends StatelessWidget {
     // );
 
     return ValueListenableBuilder<ThemeMode>(
-      valueListenable: global.themeNotifier,
+      valueListenable: Global.themeNotifier,
       builder: (_, mode, __) => GetMaterialApp(
         title: "KitX Mobile",
         themeMode: mode,

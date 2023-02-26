@@ -2,7 +2,7 @@
 
 import 'package:get/get.dart';
 
-import '../utils/global.dart' as global;
+import '../utils/global.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({Key? key}) : super(key: key);
@@ -12,7 +12,7 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
-  Set<ThemeMode> selectedModes = <ThemeMode>{global.themeMode};
+  Set<ThemeMode> selectedModes = <ThemeMode>{Global.themeMode};
 
   @override
   void initState() {
@@ -57,8 +57,8 @@ class _SettingsPageState extends State<SettingsPage> {
                 setState(() {
                   selectedModes = newSelection;
                 }),
-                global.themeMode = newSelection.first,
-                global.themeNotifier.value = global.themeMode,
+                Global.themeMode = newSelection.first,
+                Global.themeNotifier.value = Global.themeMode,
               },
             ),
           ),

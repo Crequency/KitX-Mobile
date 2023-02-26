@@ -33,6 +33,7 @@ dependencies:
   built_collection: ^5.1.1
   package_info_plus: ^3.0.3 # 包信息
   url_launcher: ^6.1.9 # 打开链接
+  f_logs: ^2.0.1
 
 dev_dependencies:
   flutter_test:
