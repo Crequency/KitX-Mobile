@@ -35,8 +35,9 @@ class DeviceRotationDisplayStandState extends State<DeviceRotationDisplayStand> 
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Container(
-          padding: EdgeInsets.all(10),
+          padding: EdgeInsets.symmetric(vertical: 20),
           child: InkWell(
+            borderRadius: BorderRadius.all(Radius.elliptical(10, 10)),
             child: CustomPaint(
               isComplex: true,
               size: new Size(canvas_width - 60, canvas_height),
