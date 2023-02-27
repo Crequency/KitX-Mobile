@@ -98,33 +98,46 @@ class _DeviceInfoTestPageState extends State<DeviceInfoTestPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: ListView(
-        children: _deviceData.keys.map(
-          (property) {
-            return Row(
-              children: <Widget>[
-                Container(
-                  padding: const EdgeInsets.fromLTRB(30, 10, 10, 10),
-                  child: Text(
-                    property,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
+        children: [
+          Container(
+            margin: EdgeInsets.all(30),
+            child: Text(
+              "Device Info",
+              style: TextStyle(fontSize: 32),
+            ),
+          ),
+          ListView(
+            shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),
+            children: _deviceData.keys.map(
+              (property) {
+                return Row(
+                  children: <Widget>[
+                    Container(
+                      padding: const EdgeInsets.fromLTRB(30, 10, 10, 10),
+                      child: Text(
+                        property,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                     ),
-                  ),
-                ),
-                Expanded(
-                  child: Container(
-                    padding: const EdgeInsets.fromLTRB(10, 10, 30, 10),
-                    child: Text(
-                      '${_deviceData[property]}',
-                      maxLines: 10,
-                      overflow: TextOverflow.ellipsis,
+                    Expanded(
+                      child: Container(
+                        padding: const EdgeInsets.fromLTRB(10, 10, 30, 10),
+                        child: Text(
+                          _deviceData[property].toString(),
+                          maxLines: 10,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
                     ),
-                  ),
-                ),
-              ],
-            );
-          },
-        ).toList(),
+                  ],
+                );
+              },
+            ).toList(),
+          ),
+        ],
       ),
     );
   }
