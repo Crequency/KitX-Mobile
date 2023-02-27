@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 
 import 'package:kitx_mobile/utils/global.dart';
 
-import 'package:kitx_mobile/pages/drawer.dart';
+import 'package:kitx_mobile/pages/controls/drawer.dart';
 import 'package:kitx_mobile/pages/device_page.dart';
 import 'package:kitx_mobile/pages/account_page.dart';
 import 'package:kitx_mobile/pages/test_page.dart';
