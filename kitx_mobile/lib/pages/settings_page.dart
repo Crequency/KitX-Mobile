@@ -29,7 +29,10 @@ class _SettingsPageState extends State<SettingsPage> {
         children: [
           Container(
             margin: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-            child: Text("SettingsPage_Theme".tr),
+            child: Text(
+              "SettingsPage_Theme".tr,
+              style: TextStyle(fontSize: 24),
+            ),
           ),
           Container(
             margin: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
