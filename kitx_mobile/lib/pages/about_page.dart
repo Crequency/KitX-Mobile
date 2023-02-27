@@ -20,7 +20,12 @@ class _AboutPageState extends State<AboutPage> {
   final iconEntered = false.obs;
   final titleEntered = false.obs;
 
-  bool contentEntering = false;
+  final titleDisplay = true.obs;
+  final versionDisplay = true.obs;
+
+  var contentEntering = false;
+
+  var _scrollController = ScrollController();
 
   final thirdPartyDataDisplayCount = 1.obs;
 
@@ -34,6 +39,22 @@ class _AboutPageState extends State<AboutPage> {
 
   @override
   void initState() {
+    _scrollController.addListener(() {
+      // print("Scroller offset: ${_scrollController.offset}");
+
+      var offset = _scrollController.offset;
+
+      if (offset >= 50) {
+        if (titleDisplay.value) titleDisplay.value = false;
+      } else if (offset >= 5) {
+        if (!titleDisplay.value) titleDisplay.value = true;
+        if (versionDisplay.value) versionDisplay.value = false;
+      } else {
+        if (!titleDisplay.value) titleDisplay.value = true;
+        if (!versionDisplay.value) versionDisplay.value = true;
+      }
+    });
+
     Future.delayed(Duration(milliseconds: 150)).then((value) => iconEntering.value = true);
 
     Future.delayed(Duration(milliseconds: 400)).then((value) => iconEntered.value = true);
@@ -45,6 +66,13 @@ class _AboutPageState extends State<AboutPage> {
         }));
 
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+
+    super.dispose();
   }
 
   Widget getFlexibleSpaceControl(BuildContext context) {
@@ -92,7 +120,7 @@ class _AboutPageState extends State<AboutPage> {
               children: [
                 Obx(
                   () => AnimatedOpacity(
-                    opacity: iconEntered.value ? 1 : 0,
+                    opacity: iconEntered.value && titleDisplay.value ? 1 : 0,
                     duration: Duration(milliseconds: 300),
                     curve: Curves.easeInCubic,
                     child: const Text(
@@ -106,7 +134,7 @@ class _AboutPageState extends State<AboutPage> {
                 ),
                 Obx(
                   () => AnimatedOpacity(
-                    opacity: titleEntered.value ? 1 : 0,
+                    opacity: titleEntered.value && versionDisplay.value ? 1 : 0,
                     duration: Duration(milliseconds: 500),
                     curve: Curves.easeInOutCubic,
                     child: Text(
@@ -128,6 +156,7 @@ class _AboutPageState extends State<AboutPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: CustomScrollView(
+        controller: _scrollController,
         slivers: [
           SliverAppBar(
             pinned: true,
