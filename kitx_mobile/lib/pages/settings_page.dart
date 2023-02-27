@@ -28,7 +28,11 @@ class _SettingsPageState extends State<SettingsPage> {
       body: ListView(
         children: [
           Container(
-            margin: EdgeInsets.all(30),
+            margin: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+            child: Text("SettingsPage_Theme".tr),
+          ),
+          Container(
+            margin: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
             child: SegmentedButton<ThemeMode>(
               emptySelectionAllowed: false,
               multiSelectionEnabled: false,
