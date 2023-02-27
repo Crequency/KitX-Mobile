@@ -2,7 +2,6 @@ import 'package:community_material_icon/community_material_icon.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:vibration/vibration.dart';
 
@@ -17,7 +16,6 @@ class AboutPage extends StatefulWidget {
 }
 
 class _AboutPageState extends State<AboutPage> {
-  final version = "getting ...".obs;
   final iconEntering = false.obs;
   final iconEntered = false.obs;
   final titleEntered = false.obs;
@@ -36,9 +34,6 @@ class _AboutPageState extends State<AboutPage> {
 
   @override
   void initState() {
-    var packageInfo = PackageInfo.fromPlatform();
-    packageInfo.then((value) => version.value = value.version);
-
     Future.delayed(Duration(milliseconds: 150)).then((value) => iconEntering.value = true);
 
     Future.delayed(Duration(milliseconds: 400)).then((value) => iconEntered.value = true);
@@ -115,7 +110,7 @@ class _AboutPageState extends State<AboutPage> {
                     duration: Duration(milliseconds: 500),
                     curve: Curves.easeInOutCubic,
                     child: Text(
-                      "${"AboutPage_Version".tr}: ${version.value}",
+                      "${"AboutPage_Version".tr}: ${Global.versionString.value}",
                       // style: TextStyle(color: Colors.white),
                     ),
                   ),

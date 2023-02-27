@@ -28,10 +28,13 @@ Future<void> main() async {
     ..UdpBroadcastAddress = Config.WebService_UdpBroadcastAddress;
   webService.initService();
 
-  // 初始化 log
+  //  初始化 log
   InitLogger();
 
-  // 初始化 Devices
+  //  初始化 Global
+  await Global.init();
+
+  //  初始化 Devices
   Global.devices.init();
 
   runApp(MainApp());

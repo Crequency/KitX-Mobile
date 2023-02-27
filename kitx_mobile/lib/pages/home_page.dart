@@ -1,14 +1,13 @@
 ﻿import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:package_info_plus/package_info_plus.dart';
+
+import 'package:kitx_mobile/utils/global.dart';
 
 import 'package:kitx_mobile/pages/device_page.dart';
 import 'package:kitx_mobile/pages/account_page.dart';
 import 'package:kitx_mobile/pages/test_page.dart';
 import 'package:kitx_mobile/pages/settings_page.dart';
 import 'package:kitx_mobile/pages/about_page.dart';
-
-import 'package:kitx_mobile/utils/global.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -18,14 +17,10 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final version = "getting ...".obs;
   final pageOpenDelay = 200;
 
   @override
   Widget build(BuildContext context) {
-    var packageInfo = PackageInfo.fromPlatform();
-    packageInfo.then((value) => version.value = value.version);
-
     // imageCache.clear(); // 清除图片缓存
     var tileRadius = ContinuousRectangleBorder(borderRadius: BorderRadius.circular(10.0));
     var tilesPadding = 15.0;
@@ -153,7 +148,7 @@ class _HomePageState extends State<HomePage> {
                   () => ListTile(
                     leading: Icon(Icons.info_outline_rounded),
                     title: Text("Drawer_About".tr),
-                    subtitle: Text(version.value),
+                    subtitle: Text(Global.versionString.value),
                     trailing: Icon(Icons.keyboard_arrow_right),
                     shape: tileRadius,
                     onTap: () => Global.delay(() => Get.to(() => AboutPage()), pageOpenDelay),
