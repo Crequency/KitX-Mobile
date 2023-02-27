@@ -1,59 +1,26 @@
-// Copyright 2017 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
-
-// ignore_for_file: public_member_api_docs
-
 import 'dart:async';
-import 'dart:developer' as developer;
-import 'dart:io';
 
+import 'package:get/get.dart';
 import 'package:network_info_plus/network_info_plus.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-
-// Sets a platform override for desktop to avoid exceptions. See
-// https://flutter.dev/desktop#target-platform-override for more info.
-void _enablePlatformOverrideForDesktop() {
-  if (!kIsWeb && (Platform.isWindows || Platform.isLinux)) {
-    debugDefaultTargetPlatformOverride = TargetPlatform.fuchsia;
-  }
-}
-
-void main() {
-  _enablePlatformOverrideForDesktop();
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
-
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const NetworkInfoTestPage(title: 'Flutter Demo Home Page'),
-    );
-  }
-}
 
 class NetworkInfoTestPage extends StatefulWidget {
-  const NetworkInfoTestPage({Key? key, this.title}) : super(key: key);
-
-  final String? title;
+  const NetworkInfoTestPage({Key? key}) : super(key: key);
 
   @override
   _NetworkInfoTestPageState createState() => _NetworkInfoTestPageState();
 }
 
 class _NetworkInfoTestPageState extends State<NetworkInfoTestPage> {
-  String _connectionStatus = 'Unknown';
-  final NetworkInfo _networkInfo = NetworkInfo();
+  final _networkInfo = NetworkInfo();
+
+  final name = "".obs;
+  final bssid = "".obs;
+  final ipv4 = "".obs;
+  final ipv6 = "".obs;
+  final broadcast = "".obs;
+  final gateway = "".obs;
+  final subnetMask = "".obs;
 
   @override
   void initState() {
@@ -66,104 +33,37 @@ class _NetworkInfoTestPageState extends State<NetworkInfoTestPage> {
     return Scaffold(
       body: Container(
         padding: EdgeInsets.all(30),
-        child: Text('Connection Status: \n$_connectionStatus'),
+        child: Obx(
+          () => ListView(
+            children: [
+              Text(
+                "Connection Status:",
+                style: TextStyle(fontSize: 32),
+              ),
+              Text("Wifi Name: ${name.value}"),
+              Text("Wifi BSSID: ${bssid.value}"),
+              Text("Wifi IPv4: ${ipv4.value}"),
+              Text("Wifi IPv6: ${ipv6.value}"),
+              Text("Wifi Broadcast: ${broadcast.value}"),
+              Text("Wifi Gateway: ${gateway.value}"),
+              Text("Wifi Subnet mask: ${subnetMask.value}"),
+              Container(
+                height: 300,
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
 
   Future<void> _initNetworkInfo() async {
-    String? wifiName, wifiBSSID, wifiIPv4, wifiIPv6, wifiGatewayIP, wifiBroadcast, wifiSubmask;
-
-    try {
-      if (!kIsWeb && Platform.isIOS) {
-        var status = await _networkInfo.getLocationServiceAuthorization();
-        if (status == LocationAuthorizationStatus.notDetermined) {
-          status = await _networkInfo.requestLocationServiceAuthorization();
-        }
-        if (status == LocationAuthorizationStatus.authorizedAlways ||
-            status == LocationAuthorizationStatus.authorizedWhenInUse) {
-          wifiName = await _networkInfo.getWifiName();
-        } else {
-          wifiName = await _networkInfo.getWifiName();
-        }
-      } else {
-        wifiName = await _networkInfo.getWifiName();
-      }
-    } on PlatformException catch (e) {
-      developer.log('Failed to get Wifi Name', error: e);
-      wifiName = 'Failed to get Wifi Name';
-    }
-
-    try {
-      if (!kIsWeb && Platform.isIOS) {
-        var status = await _networkInfo.getLocationServiceAuthorization();
-        if (status == LocationAuthorizationStatus.notDetermined) {
-          status = await _networkInfo.requestLocationServiceAuthorization();
-        }
-        if (status == LocationAuthorizationStatus.authorizedAlways ||
-            status == LocationAuthorizationStatus.authorizedWhenInUse) {
-          wifiBSSID = await _networkInfo.getWifiBSSID();
-        } else {
-          wifiBSSID = await _networkInfo.getWifiBSSID();
-        }
-      } else {
-        wifiBSSID = await _networkInfo.getWifiBSSID();
-      }
-    } on PlatformException catch (e) {
-      developer.log('Failed to get Wifi BSSID', error: e);
-      wifiBSSID = 'Failed to get Wifi BSSID';
-    }
-
-    try {
-      wifiIPv4 = await _networkInfo.getWifiIP();
-    } on PlatformException catch (e) {
-      developer.log('Failed to get Wifi IPv4', error: e);
-      wifiIPv4 = 'Failed to get Wifi IPv4';
-    }
-
-    try {
-      wifiIPv6 = await _networkInfo.getWifiIPv6();
-    } on PlatformException catch (e) {
-      developer.log('Failed to get Wifi IPv6', error: e);
-      wifiIPv6 = 'Failed to get Wifi IPv6';
-    }
-
-    try {
-      wifiSubmask = await _networkInfo.getWifiSubmask();
-    } on PlatformException catch (e) {
-      developer.log('Failed to get Wifi submask address', error: e);
-      wifiSubmask = 'Failed to get Wifi submask address';
-    }
-
-    try {
-      wifiBroadcast = await _networkInfo.getWifiBroadcast();
-    } on PlatformException catch (e) {
-      developer.log('Failed to get Wifi broadcast', error: e);
-      wifiBroadcast = 'Failed to get Wifi broadcast';
-    }
-
-    try {
-      wifiGatewayIP = await _networkInfo.getWifiGatewayIP();
-    } on PlatformException catch (e) {
-      developer.log('Failed to get Wifi gateway address', error: e);
-      wifiGatewayIP = 'Failed to get Wifi gateway address';
-    }
-
-    try {
-      wifiSubmask = await _networkInfo.getWifiSubmask();
-    } on PlatformException catch (e) {
-      developer.log('Failed to get Wifi submask', error: e);
-      wifiSubmask = 'Failed to get Wifi submask';
-    }
-
-    setState(() {
-      _connectionStatus = 'Wifi Name: $wifiName\n'
-          'Wifi BSSID: $wifiBSSID\n'
-          'Wifi IPv4: $wifiIPv4\n'
-          'Wifi IPv6: $wifiIPv6\n'
-          'Wifi Broadcast: $wifiBroadcast\n'
-          'Wifi Gateway: $wifiGatewayIP\n'
-          'Wifi Submask: $wifiSubmask\n';
-    });
+    name.value = await _networkInfo.getWifiName() ?? "null";
+    bssid.value = await _networkInfo.getWifiBSSID() ?? "null";
+    ipv4.value = await _networkInfo.getWifiIP() ?? "null";
+    ipv6.value = await _networkInfo.getWifiIPv6() ?? "null";
+    subnetMask.value = await _networkInfo.getWifiSubmask() ?? "null";
+    broadcast.value = await _networkInfo.getWifiBroadcast() ?? "null";
+    gateway.value = await _networkInfo.getWifiGatewayIP() ?? "null";
   }
 }
