@@ -5,6 +5,9 @@ import 'package:url_launcher/url_launcher_string.dart';
 
 import 'package:kitx_mobile/services/devices.dart';
 
+import 'package:kitx_mobile/themes/light_theme.dart';
+import 'package:kitx_mobile/themes/dark_theme.dart';
+
 class _Global {
   static final _Global _singleton = _Global._internal();
 
@@ -36,6 +39,19 @@ class _Global {
 
   void openUrl(String url, {int delayMilliseconds = 0, LaunchMode mode = LaunchMode.externalApplication}) {
     delay(() => launchUrlString(url, mode: mode), delayMilliseconds);
+  }
+
+  void updateTheme({bool useMaterial3 = true}) {
+    lightThemeData.value = ThemeData(
+      useMaterial3: useMaterial3,
+      primarySwatch: Colors.blue,
+      brightness: Brightness.light,
+    );
+    darkThemeData.value = ThemeData(
+      useMaterial3: useMaterial3,
+      primarySwatch: Colors.blueGrey,
+      brightness: Brightness.dark,
+    );
   }
 
   factory _Global() {
