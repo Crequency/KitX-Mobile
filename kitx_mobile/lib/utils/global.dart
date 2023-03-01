@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 import 'package:kitx_mobile/services/devices.dart';
 
@@ -8,6 +9,7 @@ class _Global {
   static final _Global _singleton = _Global._internal();
 
   bool get isRelease => bool.fromEnvironment("dart.vm.product");
+
   bool get isDebug => !isRelease;
 
   var deviceName = "";
@@ -30,6 +32,10 @@ class _Global {
 
   void delay(Function func, int milliseconds) {
     Future.delayed(Duration(milliseconds: milliseconds)).then((value) => func.call());
+  }
+
+  void openUrl(String url, {int delayMilliseconds = 0, LaunchMode mode = LaunchMode.externalApplication}) {
+    delay(() => launchUrlString(url, mode: mode), delayMilliseconds);
   }
 
   factory _Global() {

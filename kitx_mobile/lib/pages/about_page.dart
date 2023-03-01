@@ -2,7 +2,6 @@ import 'package:community_material_icon/community_material_icon.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:vibration/vibration.dart';
 
 import 'package:kitx_mobile/data/third_party_licenses_provider.dart';
@@ -83,7 +82,7 @@ class _AboutPageState extends State<AboutPage> {
       background: ListView(
         physics: NeverScrollableScrollPhysics(),
         children: [
-          Container(height: 30),
+          SizedBox(height: 30),
           Obx(
             () => AnimatedContainer(
               duration: const Duration(milliseconds: 800),
@@ -180,7 +179,7 @@ class _AboutPageState extends State<AboutPage> {
                       curve: Curves.easeInOutCubicEmphasized,
                       height: contentEntering ? 0 : 800,
                     ),
-                    Container(height: 30),
+                    SizedBox(height: 30),
                     AnimatedOpacity(
                       duration: Duration(milliseconds: 800),
                       curve: Curves.easeInCubic,
@@ -193,7 +192,7 @@ class _AboutPageState extends State<AboutPage> {
                         ),
                       ),
                     ),
-                    Container(height: 30),
+                    SizedBox(height: 60),
                     AnimatedOpacity(
                       duration: Duration(milliseconds: 800),
                       curve: Curves.easeInCubic,
@@ -202,27 +201,64 @@ class _AboutPageState extends State<AboutPage> {
                         height: 40,
                         padding: EdgeInsets.symmetric(horizontal: 15),
                         alignment: Alignment.center,
-                        child: ListView(
-                            shrinkWrap: true,
-                            scrollDirection: Axis.horizontal,
-                            physics: BouncingScrollPhysics(),
-                            children: [
-                              Chip(label: const Text("Dynesshely")),
-                              Container(width: 10),
-                              Chip(label: const Text("LYF511")),
-                              Container(width: 10),
-                              Chip(label: const Text("orzMaster")),
-                            ]),
+                        child: ShaderMask(
+                          shaderCallback: (Rect rect) {
+                            return LinearGradient(
+                              begin: Alignment.centerLeft,
+                              end: Alignment.centerRight,
+                              colors: [
+                                Colors.indigo,
+                                Colors.transparent,
+                                Colors.transparent,
+                                Colors.indigo,
+                              ],
+                              stops: [0.0, 0.05, 0.95, 1.0], // 10% indigo, 80% transparent, 10% purple
+                            ).createShader(rect);
+                          },
+                          blendMode: BlendMode.dstOut,
+                          child: ListView(
+                              shrinkWrap: true,
+                              scrollDirection: Axis.horizontal,
+                              physics: BouncingScrollPhysics(),
+                              children: [
+                                AnimatedContainer(
+                                  duration: const Duration(milliseconds: 1200),
+                                  curve: Curves.easeInOutCubicEmphasized,
+                                  width: contentEntering ? 15 : 800,
+                                ),
+                                Chip(
+                                  label: const Text("Dynesshely"),
+                                  deleteIcon: const Icon(Icons.open_in_new),
+                                  onDeleted: () => Global.openUrl("https://github.com/Dynesshely"),
+                                  deleteButtonTooltipMessage: '',
+                                ),
+                                SizedBox(width: 10),
+                                Chip(
+                                  label: const Text("LYF511"),
+                                  deleteIcon: const Icon(Icons.open_in_new),
+                                  onDeleted: () => Global.openUrl("https://github.com/LYF511"),
+                                  deleteButtonTooltipMessage: '',
+                                ),
+                                SizedBox(width: 10),
+                                Chip(
+                                  label: const Text("orzMaster"),
+                                  deleteIcon: const Icon(Icons.open_in_new),
+                                  onDeleted: () => Global.openUrl("https://github.com/orzMaster"),
+                                  deleteButtonTooltipMessage: '',
+                                ),
+                                SizedBox(width: 15),
+                              ]),
+                        ),
                       ),
                     ),
-                    Container(height: 30),
+                    SizedBox(height: 30),
                     Divider(),
                     AnimatedContainer(
                       duration: Duration(milliseconds: 1000),
                       curve: Curves.easeInOutCubicEmphasized,
                       height: contentEntering ? 20 : 1600,
                     ),
-                    Container(height: 60),
+                    SizedBox(height: 60),
                     AnimatedOpacity(
                       duration: Duration(milliseconds: 1100),
                       curve: Curves.easeInCubic,
@@ -235,7 +271,7 @@ class _AboutPageState extends State<AboutPage> {
                         ),
                       ),
                     ),
-                    Container(height: 30),
+                    SizedBox(height: 30),
                     AnimatedOpacity(
                       duration: Duration(milliseconds: 1100),
                       curve: Curves.easeInCubic,
@@ -250,25 +286,25 @@ class _AboutPageState extends State<AboutPage> {
                             padding: EdgeInsets.all(10),
                             children: [
                               ElevatedButton(
-                                onPressed: () => launchUrl(Uri.parse("https://github.com/Crequency/KitX")),
+                                onPressed: () => Global.openUrl("https://github.com/Crequency/KitX"),
                                 child: Text("GitHub"),
                               ),
                               Container(width: 10),
                               ElevatedButton(
-                                onPressed: () => launchUrl(Uri.parse("https://gitee.com/Crequency/KitX")),
+                                onPressed: () => Global.openUrl("https://gitee.com/Crequency/KitX"),
                                 child: Text("Gitee"),
                               ),
                             ]),
                       ),
                     ),
-                    Container(height: 30),
+                    SizedBox(height: 30),
                     Divider(),
                     AnimatedContainer(
                       duration: Duration(milliseconds: 1000),
                       curve: Curves.easeInOutCubicEmphasized,
                       height: contentEntering ? 20 : 2400,
                     ),
-                    Container(height: 60),
+                    SizedBox(height: 60),
                     AnimatedOpacity(
                       duration: Duration(milliseconds: 1400),
                       curve: Curves.easeInCubic,
@@ -281,7 +317,7 @@ class _AboutPageState extends State<AboutPage> {
                         ),
                       ),
                     ),
-                    Container(height: 30),
+                    SizedBox(height: 30),
                     AnimatedOpacity(
                       duration: Duration(milliseconds: 1400),
                       curve: Curves.easeInCubic,
@@ -309,14 +345,14 @@ class _AboutPageState extends State<AboutPage> {
                         child: Text("AboutPage_ThirdPartyLicenses_DisplayAll".tr),
                       ),
                     ),
-                    Container(height: 30),
+                    SizedBox(height: 30),
                     Divider(),
                     AnimatedContainer(
                       duration: Duration(milliseconds: 1000),
                       curve: Curves.easeInOutCubicEmphasized,
                       height: contentEntering ? 20 : 3200,
                     ),
-                    Container(height: 60),
+                    SizedBox(height: 60),
                     Container(
                       alignment: Alignment.center,
                       child: Text(
@@ -330,7 +366,7 @@ class _AboutPageState extends State<AboutPage> {
                       child: Text("AboutPage_JoinUS_Text".tr),
                     ),
                     Divider(),
-                    Container(height: 500),
+                    SizedBox(height: 500),
                   ],
                 );
               },
@@ -368,7 +404,7 @@ class _AboutPageState extends State<AboutPage> {
                 icon: url?.contains("pub.dev") ?? false
                     ? const Icon(CommunityMaterialIcons.link)
                     : const Icon(CommunityMaterialIcons.link),
-                onPressed: () => launchUrl(Uri.parse(thirdPartyData.ThirdPartyUrl ?? "")),
+                onPressed: () => Global.openUrl(thirdPartyData.ThirdPartyUrl ?? ""),
               ),
               IconButton(
                 alignment: Alignment.center,
@@ -378,7 +414,7 @@ class _AboutPageState extends State<AboutPage> {
                 icon: repo?.contains("github.com") ?? false
                     ? const Icon(CommunityMaterialIcons.github)
                     : const Icon(CommunityMaterialIcons.link),
-                onPressed: () => launchUrl(Uri.parse(thirdPartyData.ThirdPartyRepo ?? "")),
+                onPressed: () => Global.openUrl(thirdPartyData.ThirdPartyRepo ?? ""),
               ),
               Container(
                 alignment: Alignment.center,
