@@ -40,6 +40,8 @@ dev_dependencies:
   built_value_generator: ^8.4.2 # 生成工具
   # 使用 flutter packages pub run build_runner build 生成 g.dart 文件
 
+  # flutter_lints: ^2.0.0
+
 flutter:
   uses-material-design: true
 
