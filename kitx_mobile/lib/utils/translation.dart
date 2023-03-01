@@ -4,6 +4,8 @@ class Translation extends Translations {
   @override
   Map<String, Map<String, String>> get keys => {
         'zh_CN': {
+          "Public_Enable": "启用",
+          "Public_Disable": "禁用",
           "Drawer_Title": "KitX",
           "Drawer_Devices": "设备管理",
           "Drawer_Account": "账户",
@@ -33,6 +35,8 @@ class Translation extends Translations {
           "AboutPage_JoinUS_Text": "我们的项目都托管在 https://github.com/Crequency/, 欢迎 Fork 并贡献您宝贵的意见",
         },
         'en_US': {
+          "Public_Enable": "Enable",
+          "Public_Disable": "Disable",
           "Drawer_Title": "KitX",
           "Drawer_Devices": "Devices",
           "Drawer_Account": "Account",
