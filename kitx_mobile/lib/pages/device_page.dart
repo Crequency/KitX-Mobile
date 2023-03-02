@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
 import 'package:kitx_mobile/converters/os_type_2_icon.dart';
 import 'package:kitx_mobile/models/device_info.dart';
 import 'package:kitx_mobile/utils/datetime_format.dart' show datetimeToShortString;
