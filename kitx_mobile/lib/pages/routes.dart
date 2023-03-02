@@ -10,27 +10,27 @@ import 'package:kitx_mobile/pages/about_page.dart';
 List<GetPage<dynamic>> GetPages() => [
       // 定义路由
       GetPage(
-        name: "/",
+        name: '/',
         page: () => HomePage(),
       ),
       GetPage(
-        name: "/DevicePage/",
+        name: '/DevicePage/',
         page: () => DevicePage(),
       ),
       GetPage(
-        name: "/AccountPage/",
+        name: '/AccountPage/',
         page: () => AccountPage(),
       ),
       GetPage(
-        name: "/TestPage/",
+        name: '/TestPage/',
         page: () => TestPage(),
       ),
       GetPage(
-        name: "/SettingsPage/",
+        name: '/SettingsPage/',
         page: () => SettingsPage(),
       ),
       GetPage(
-        name: "/AboutPage/",
+        name: '/AboutPage/',
         page: () => AboutPage(),
       ),
     ];

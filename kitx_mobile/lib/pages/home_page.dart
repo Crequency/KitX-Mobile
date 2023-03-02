@@ -28,7 +28,7 @@ class _HomePageState extends State<HomePage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("IndexPage_Title".tr),
+        title: Text('IndexPage_Title'.tr),
       ),
       drawer: AppDrawer(),
       drawerEnableOpenDragGesture: true,
@@ -46,8 +46,8 @@ class _HomePageState extends State<HomePage> {
                 Obx(
                   () => ListTile(
                     leading: Icon(Icons.devices),
-                    title: Text("Drawer_Devices".tr),
-                    subtitle: Text("${Global.devices.length.obs} " + "HomePage_DevicesCount".tr),
+                    title: Text('Drawer_Devices'.tr),
+                    subtitle: Text('${Global.devices.length.obs} ' + 'HomePage_DevicesCount'.tr),
                     trailing: Icon(Icons.keyboard_arrow_right),
                     shape: tileRadius,
                     // tileColor: Colors.indigo,
@@ -59,7 +59,7 @@ class _HomePageState extends State<HomePage> {
                 Container(height: tilesPadding),
                 ListTile(
                   leading: Icon(Icons.alternate_email),
-                  title: Text("Drawer_Account".tr),
+                  title: Text('Drawer_Account'.tr),
                   trailing: Icon(Icons.keyboard_arrow_right),
                   shape: tileRadius,
                   onTap: () => Global.delay(() => Get.to(() => AccountPage()), pageOpenDelay),
@@ -67,7 +67,7 @@ class _HomePageState extends State<HomePage> {
                 Container(height: tilesPadding),
                 ListTile(
                   leading: Icon(Icons.bug_report),
-                  title: Text("Drawer_Test".tr),
+                  title: Text('Drawer_Test'.tr),
                   trailing: Icon(Icons.keyboard_arrow_right),
                   shape: tileRadius,
                   onTap: () => Global.delay(() => Get.to(() => TestPage()), pageOpenDelay),
@@ -75,7 +75,7 @@ class _HomePageState extends State<HomePage> {
                 Container(height: tilesPadding),
                 ListTile(
                   leading: Icon(Icons.settings),
-                  title: Text("Drawer_Setting".tr),
+                  title: Text('Drawer_Setting'.tr),
                   trailing: Icon(Icons.keyboard_arrow_right),
                   shape: tileRadius,
                   onTap: () => Global.delay(() => Get.to(() => SettingsPage()), pageOpenDelay),
@@ -84,7 +84,7 @@ class _HomePageState extends State<HomePage> {
                 Obx(
                   () => ListTile(
                     leading: Icon(Icons.info_outline_rounded),
-                    title: Text("Drawer_About".tr),
+                    title: Text('Drawer_About'.tr),
                     subtitle: Text(Global.versionString.value),
                     trailing: Icon(Icons.keyboard_arrow_right),
                     shape: tileRadius,

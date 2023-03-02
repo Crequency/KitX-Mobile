@@ -24,7 +24,7 @@ void main() {
   var server = WebService()
     ..UdpPortSend = 23404
     ..UdpPortReceive = 24040
-    ..UdpBroadcastAddress = "224.0.0.0";
+    ..UdpBroadcastAddress = '224.0.0.0';
 
   server.initService();
 }
@@ -53,14 +53,14 @@ class WebService {
       var deviceName = deviceData.model.toString();
       var systemVersion = deviceData.version.release;
       var sdkVersion = deviceData.version.sdkInt;
-      return "$deviceName (Android $systemVersion SDK $sdkVersion)";
+      return '$deviceName (Android $systemVersion SDK $sdkVersion)';
     } else if (Platform.isIOS) {
       var deviceData = await _deviceInfoPlugin.iosInfo;
       var deviceName = deviceData.name.toString();
       var systemVersion = deviceData.systemVersion;
-      return "$deviceName (iOS $systemVersion)";
+      return '$deviceName (iOS $systemVersion)';
     } else {
-      return "Unknown";
+      return 'Unknown';
     }
   }
 
@@ -85,27 +85,27 @@ class WebService {
       _mac = value.toString();
     });
 
-    Log.info("Get network information. Ipv4: $_ipv4 Ipv6: $_ipv6 Mac: $_mac");
+    Log.info('Get network information. Ipv4: $_ipv4 Ipv6: $_ipv6 Mac: $_mac');
 
-    var logInfo = "";
+    var logInfo = '';
 
-    if (_ipv4 == "null") {
-      Log.error("Can not get IPv4. Try to restart the service in 5 seconds.");
+    if (_ipv4 == 'null') {
+      Log.error('Can not get IPv4. Try to restart the service in 5 seconds.');
       Future.delayed(const Duration(seconds: 5), () => initService());
       return null;
     }
 
-    if (_ipv6 == "null") {
-      logInfo += "Can not get IPv6, but WebService will still start.\n";
-      _ipv6 = "";
+    if (_ipv6 == 'null') {
+      logInfo += 'Can not get IPv6, but WebService will still start.\n';
+      _ipv6 = '';
     }
 
-    if (_mac == "null") {
-      logInfo += "Can not get MAC Address, but WebService will still start.\n";
-      _mac = "";
+    if (_mac == 'null') {
+      logInfo += 'Can not get MAC Address, but WebService will still start.\n';
+      _mac = '';
     }
 
-    if (logInfo != "") Log.warning(logInfo);
+    if (logInfo != '') Log.warning(logInfo);
 
     return [_ipv4, _ipv6, _mac];
   }
@@ -114,7 +114,7 @@ class WebService {
   Future<void> initService() async {
     try {
       if (kIsWeb) {
-        Log.info("This is a web application, WebService will not start.");
+        Log.info('This is a web application, WebService will not start.');
         return;
       }
 
@@ -150,7 +150,7 @@ class WebService {
           ..deviceOSType = Config.WebService_DeviceOSType),
       );
 
-      Log.info("Get device info: ${deviceInfo.toString()}");
+      Log.info('Get device info: ${deviceInfo.toString()}');
 
       // 启动 UDP 服务
 
@@ -164,20 +164,20 @@ class WebService {
             try {
               deviceInfo = deviceInfo.rebuild((b) => b..sendTime = DateTime.now().toUtc());
               var _data = deviceInfo.toString();
-              // Log.info("UDP send: $_data");
+              // Log.info('UDP send: $_data');
               socket.send(utf8.encode(_data), InternetAddress(_udpBroadcastAddress), _udpPortReceive);
             } catch (e, stack) {
               socket.close();
               timer.cancel();
-              Log.info("UDP send error: $e $stack. Try to restart the service in 5 seconds.");
+              Log.info('UDP send error: $e $stack. Try to restart the service in 5 seconds.');
               Future.delayed(const Duration(seconds: 5), () => initService());
             }
           });
-          Log.info("UDP send service started.");
+          Log.info('UDP send service started.');
         },
       ).catchError(
         (e, stack) {
-          Log.error("Catch an error: $e $stack");
+          Log.error('Catch an error: $e $stack');
         },
       );
 
@@ -192,24 +192,24 @@ class WebService {
               if (d == null) return;
 
               var _data = utf8.decode(d.data);
-              Log.info("UDP receive: $_data");
+              Log.info('UDP receive: $_data');
 
               try {
                 var _deviceInfo = DeviceInfoStruct.fromString(_data);
                 if (_deviceInfo != null) Global.devices.addDevice(_deviceInfo);
               } catch (e, stack) {
-                Log.error("Can not deserialize deviceinfopack: '$_data'. Error: $e $stack");
+                Log.error('Can not deserialize deviceinfopack: '$_data'. Error: $e $stack');
               }
             },
           );
         },
       ).catchError(
         (e, stack) {
-          Log.error("Catch an error: $e $stack");
+          Log.error('Catch an error: $e $stack');
         },
       );
     } catch (e, stack) {
-      Log.error("Catch an error: $e On: $stack");
+      Log.error('Catch an error: $e On: $stack');
       _networkInfo = NetworkInfo();
     }
   }

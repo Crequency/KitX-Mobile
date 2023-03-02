@@ -6,12 +6,12 @@ import 'package:f_logs/utils/timestamp/timestamp_format.dart';
 
 var config = LogsConfig()
   ..isDebuggable = true
-  ..customOpeningDivider = "["
-  ..customClosingDivider = "]"
-  ..csvDelimiter = ", "
+  ..customOpeningDivider = '['
+  ..customClosingDivider = ']'
+  ..csvDelimiter = ', '
   // ..isLogEnabled = true
   ..encryptionEnabled = false
-  ..encryptionKey = ""
+  ..encryptionKey = ''
   ..formatType = FormatType.FORMAT_CUSTOM
   ..logLevelsEnabled = [LogLevel.INFO, LogLevel.ERROR]
   ..timestampFormat = TimestampFormat.TIME_FORMAT_FULL_2;

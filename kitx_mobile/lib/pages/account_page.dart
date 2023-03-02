@@ -14,14 +14,14 @@ class _AccountPageState extends State<AccountPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("AccountPage_Title".tr),
+        title: Text('AccountPage_Title'.tr),
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
-              "Developing ...",
+              'Developing ...',
             ),
           ],
         ),

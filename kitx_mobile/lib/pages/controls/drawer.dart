@@ -23,13 +23,13 @@ class AppDrawer extends StatelessWidget {
               // color: Colors.blue,
               image: const DecorationImage(
                 alignment: Alignment.topCenter,
-                image: AssetImage("assets/KitX-Background.png"),
+                image: AssetImage('assets/KitX-Background.png'),
                 fit: BoxFit.cover,
               ),
             ),
             child: Text(
-              "",
-              // "Drawer_Title".tr,
+              '',
+              // 'Drawer_Title'.tr,
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 24,
@@ -38,7 +38,7 @@ class AppDrawer extends StatelessWidget {
           ),
           ListTile(
             leading: Icon(Icons.devices),
-            title: Text("Drawer_Devices".tr),
+            title: Text('Drawer_Devices'.tr),
             onTap: () => Global.delay(() {
               Get.back();
               Get.to(() => DevicePage());
@@ -46,7 +46,7 @@ class AppDrawer extends StatelessWidget {
           ),
           ListTile(
             leading: Icon(Icons.alternate_email),
-            title: Text("Drawer_Account".tr),
+            title: Text('Drawer_Account'.tr),
             onTap: () => Global.delay(() {
               Get.back();
               Get.to(() => AccountPage());
@@ -54,7 +54,7 @@ class AppDrawer extends StatelessWidget {
           ),
           ListTile(
             leading: Icon(Icons.bug_report),
-            title: Text("Drawer_Test".tr),
+            title: Text('Drawer_Test'.tr),
             onTap: () => Global.delay(() {
               Get.back();
               Get.to(() => TestPage());
@@ -62,7 +62,7 @@ class AppDrawer extends StatelessWidget {
           ),
           ListTile(
             leading: Icon(Icons.settings),
-            title: Text("Drawer_Setting".tr),
+            title: Text('Drawer_Setting'.tr),
             onTap: () => Global.delay(() {
               Get.back();
               Get.to(() => SettingsPage());
@@ -70,7 +70,7 @@ class AppDrawer extends StatelessWidget {
           ),
           ListTile(
             leading: Icon(Icons.info_outline_rounded),
-            title: Text("Drawer_About".tr),
+            title: Text('Drawer_About'.tr),
             onTap: () => Global.delay(() {
               Get.back();
               Get.to(() => AboutPage());

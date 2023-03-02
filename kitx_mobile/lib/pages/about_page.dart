@@ -39,7 +39,7 @@ class _AboutPageState extends State<AboutPage> {
   @override
   void initState() {
     _scrollController.addListener(() {
-      // print("Scroller offset: ${_scrollController.offset}");
+      // print('Scroller offset: ${_scrollController.offset}');
 
       var offset = _scrollController.offset;
 
@@ -76,7 +76,7 @@ class _AboutPageState extends State<AboutPage> {
 
   Widget getFlexibleSpaceControl(BuildContext context) {
     return FlexibleSpaceBar(
-      // title: Text("AboutPage_Title".tr),
+      // title: Text('AboutPage_Title'.tr),
       centerTitle: true,
       collapseMode: CollapseMode.parallax,
       background: ListView(
@@ -106,7 +106,7 @@ class _AboutPageState extends State<AboutPage> {
                   onTap: () async => await vibrate(),
                   child: const Image(
                     alignment: Alignment.center,
-                    image: AssetImage("assets/KitX-Icon-1920x-margin-2x.png"),
+                    image: AssetImage('assets/KitX-Icon-1920x-margin-2x.png'),
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -123,7 +123,7 @@ class _AboutPageState extends State<AboutPage> {
                     duration: Duration(milliseconds: 300),
                     curve: Curves.easeInCubic,
                     child: const Text(
-                      "KitX",
+                      'KitX',
                       style: TextStyle(
                         // color: Colors.white,
                         fontSize: 50,
@@ -137,7 +137,7 @@ class _AboutPageState extends State<AboutPage> {
                     duration: Duration(milliseconds: 500),
                     curve: Curves.easeInOutCubic,
                     child: Text(
-                      "${"AboutPage_Version".tr}: ${Global.versionString.value}",
+                      '${'AboutPage_Version'.tr}: ${Global.versionString.value}',
                       // style: TextStyle(color: Colors.white),
                     ),
                   ),
@@ -163,7 +163,7 @@ class _AboutPageState extends State<AboutPage> {
             floating: false,
             // expandedHeight: entered ? 380.0 : 380.0,
             expandedHeight: 345.0,
-            title: Text("AboutPage_Title".tr),
+            title: Text('AboutPage_Title'.tr),
             flexibleSpace: getFlexibleSpaceControl(context),
           ),
           SliverList(
@@ -187,7 +187,7 @@ class _AboutPageState extends State<AboutPage> {
                       child: Container(
                         alignment: Alignment.center,
                         child: Text(
-                          "AboutPage_Contributors".tr,
+                          'AboutPage_Contributors'.tr,
                           style: TextStyle(fontSize: 20),
                         ),
                       ),
@@ -227,23 +227,23 @@ class _AboutPageState extends State<AboutPage> {
                                   width: contentEntering ? 15 : 800,
                                 ),
                                 Chip(
-                                  label: const Text("Dynesshely"),
+                                  label: const Text('Dynesshely'),
                                   deleteIcon: const Icon(Icons.open_in_new),
-                                  onDeleted: () => Global.openUrl("https://github.com/Dynesshely"),
+                                  onDeleted: () => Global.openUrl('https://github.com/Dynesshely'),
                                   deleteButtonTooltipMessage: '',
                                 ),
                                 SizedBox(width: 10),
                                 Chip(
-                                  label: const Text("LYF511"),
+                                  label: const Text('LYF511'),
                                   deleteIcon: const Icon(Icons.open_in_new),
-                                  onDeleted: () => Global.openUrl("https://github.com/LYF511"),
+                                  onDeleted: () => Global.openUrl('https://github.com/LYF511'),
                                   deleteButtonTooltipMessage: '',
                                 ),
                                 SizedBox(width: 10),
                                 Chip(
-                                  label: const Text("orzMaster"),
+                                  label: const Text('orzMaster'),
                                   deleteIcon: const Icon(Icons.open_in_new),
-                                  onDeleted: () => Global.openUrl("https://github.com/orzMaster"),
+                                  onDeleted: () => Global.openUrl('https://github.com/orzMaster'),
                                   deleteButtonTooltipMessage: '',
                                 ),
                                 SizedBox(width: 15),
@@ -266,7 +266,7 @@ class _AboutPageState extends State<AboutPage> {
                       child: Container(
                         alignment: Alignment.center,
                         child: Text(
-                          "AboutPage_Repos".tr,
+                          'AboutPage_Repos'.tr,
                           style: TextStyle(fontSize: 20),
                         ),
                       ),
@@ -286,13 +286,13 @@ class _AboutPageState extends State<AboutPage> {
                             padding: EdgeInsets.all(10),
                             children: [
                               ElevatedButton(
-                                onPressed: () => Global.openUrl("https://github.com/Crequency/KitX"),
-                                child: Text("GitHub"),
+                                onPressed: () => Global.openUrl('https://github.com/Crequency/KitX'),
+                                child: Text('GitHub'),
                               ),
                               Container(width: 10),
                               ElevatedButton(
-                                onPressed: () => Global.openUrl("https://gitee.com/Crequency/KitX"),
-                                child: Text("Gitee"),
+                                onPressed: () => Global.openUrl('https://gitee.com/Crequency/KitX'),
+                                child: Text('Gitee'),
                               ),
                             ]),
                       ),
@@ -312,7 +312,7 @@ class _AboutPageState extends State<AboutPage> {
                       child: Container(
                         alignment: Alignment.center,
                         child: Text(
-                          "AboutPage_ThirdPartyLicenses".tr,
+                          'AboutPage_ThirdPartyLicenses'.tr,
                           style: TextStyle(fontSize: 20),
                         ),
                       ),
@@ -342,7 +342,7 @@ class _AboutPageState extends State<AboutPage> {
                                   thirdPartyDataDisplayCount.value = thirdPartyDataList.length;
                                 }),
                             200),
-                        child: Text("AboutPage_ThirdPartyLicenses_DisplayAll".tr),
+                        child: Text('AboutPage_ThirdPartyLicenses_DisplayAll'.tr),
                       ),
                     ),
                     SizedBox(height: 30),
@@ -356,14 +356,14 @@ class _AboutPageState extends State<AboutPage> {
                     Container(
                       alignment: Alignment.center,
                       child: Text(
-                        "AboutPage_JoinUS".tr,
+                        'AboutPage_JoinUS'.tr,
                         style: TextStyle(fontSize: 20),
                       ),
                     ),
                     Divider(),
                     Container(
                       padding: EdgeInsets.all(20),
-                      child: Text("AboutPage_JoinUS_Text".tr),
+                      child: Text('AboutPage_JoinUS_Text'.tr),
                     ),
                     Divider(),
                     SizedBox(height: 500),
@@ -389,7 +389,7 @@ class _AboutPageState extends State<AboutPage> {
         height: 50,
         child: InkWell(
           splashColor: context.iconColor?.withOpacity(0.3),
-          onTap: () => print("${thirdPartyData.ThirdPartyName} tapped."),
+          onTap: () => print('${thirdPartyData.ThirdPartyName} tapped.'),
           child: ListView(
             shrinkWrap: true,
             padding: EdgeInsets.all(10),
@@ -401,30 +401,30 @@ class _AboutPageState extends State<AboutPage> {
                 splashRadius: 20,
                 padding: const EdgeInsets.all(0),
                 iconSize: 24,
-                icon: url?.contains("pub.dev") ?? false
+                icon: url?.contains('pub.dev') ?? false
                     ? const Icon(CommunityMaterialIcons.link)
                     : const Icon(CommunityMaterialIcons.link),
-                onPressed: () => Global.openUrl(thirdPartyData.ThirdPartyUrl ?? ""),
+                onPressed: () => Global.openUrl(thirdPartyData.ThirdPartyUrl ?? ''),
               ),
               IconButton(
                 alignment: Alignment.center,
                 splashRadius: 20,
                 padding: const EdgeInsets.all(0),
                 iconSize: 24,
-                icon: repo?.contains("github.com") ?? false
+                icon: repo?.contains('github.com') ?? false
                     ? const Icon(CommunityMaterialIcons.github)
                     : const Icon(CommunityMaterialIcons.link),
-                onPressed: () => Global.openUrl(thirdPartyData.ThirdPartyRepo ?? ""),
+                onPressed: () => Global.openUrl(thirdPartyData.ThirdPartyRepo ?? ''),
               ),
               Container(
                 alignment: Alignment.center,
                 child: Text(
-                  thirdPartyData.ThirdPartyName ?? "null",
+                  thirdPartyData.ThirdPartyName ?? 'null',
                   style: TextStyle(fontSize: 20),
                 ),
               ),
               Text(
-                thirdPartyData.ThirdPartyVersion ?? "null",
+                thirdPartyData.ThirdPartyVersion ?? 'null',
                 style: TextStyle(fontSize: 12),
               ),
             ],

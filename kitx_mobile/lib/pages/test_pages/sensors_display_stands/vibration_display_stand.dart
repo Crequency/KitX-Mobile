@@ -30,9 +30,9 @@ class VibrationDisplayStandState extends State<VibrationDisplayStand> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text("Vibration Test", style: TextStyle(fontSize: 32)),
+          Text('Vibration Test', style: TextStyle(fontSize: 32)),
           TextField(
-            decoration: InputDecoration(labelText: "Vibration Duration (ms)"),
+            decoration: InputDecoration(labelText: 'Vibration Duration (ms)'),
             keyboardType: TextInputType.number,
             inputFormatters: <TextInputFormatter>[
               FilteringTextInputFormatter.allow(RegExp(r'\d')),
@@ -46,11 +46,11 @@ class VibrationDisplayStandState extends State<VibrationDisplayStand> {
             margin: EdgeInsets.fromLTRB(0, 20, 0, 0),
             child: Row(
               children: [
-                Expanded(flex: 65, child: ElevatedButton(onPressed: vibrate, child: Text("Vibrate"))),
+                Expanded(flex: 65, child: ElevatedButton(onPressed: vibrate, child: Text('Vibrate'))),
                 Spacer(
                   flex: 5,
                 ),
-                Expanded(flex: 30, child: OutlinedButton(onPressed: vibrate_cancel, child: Text("Cancel"))),
+                Expanded(flex: 30, child: OutlinedButton(onPressed: vibrate_cancel, child: Text('Cancel'))),
               ],
             ),
           ),

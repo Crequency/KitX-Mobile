@@ -22,14 +22,14 @@ class _DevicePage extends State<DevicePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("DevicePage_Title".tr),
+        title: Text('DevicePage_Title'.tr),
       ),
       body: ListView(
         children: [
           Obx(
             () => Container(
               margin: EdgeInsets.fromLTRB(30, 30, 30, 0),
-              child: Text("${Global.devices.length.obs} " + "HomePage_DevicesCount".tr),
+              child: Text('${Global.devices.length.obs} ' + 'HomePage_DevicesCount'.tr),
             ),
           ),
           Obx(
@@ -51,8 +51,8 @@ class _DevicePage extends State<DevicePage> {
   String GetDeviceDisplayName(DeviceInfoStruct info) {
     var result = info.deviceName;
 
-    if (info.deviceName == Global.deviceName) result += " " + "DevicePage_LocalDevice".tr;
-    if (info.isMainDevice) result += " " + "DevicePage_MainDevice".tr;
+    if (info.deviceName == Global.deviceName) result += ' ' + 'DevicePage_LocalDevice'.tr;
+    if (info.isMainDevice) result += ' ' + 'DevicePage_MainDevice'.tr;
 
     return result;
   }
@@ -131,7 +131,7 @@ class _DevicePage extends State<DevicePage> {
                     ),
                   ),
                   Text(
-                    "DevicePage_PluginsCountText".tr + info.pluginsCount.toString(),
+                    'DevicePage_PluginsCountText'.tr + info.pluginsCount.toString(),
                     style: TextStyle(
                       fontSize: 14,
                     ),
@@ -140,7 +140,7 @@ class _DevicePage extends State<DevicePage> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        "${info.iPv4}:${info.pluginServerPort}",
+                        '${info.iPv4}:${info.pluginServerPort}',
                         style: TextStyle(
                           fontSize: 10,
                         ),

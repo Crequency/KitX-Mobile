@@ -11,26 +11,26 @@ import 'package:kitx_mobile/themes/dark_theme.dart';
 class _Global {
   static final _Global _singleton = _Global._internal();
 
-  bool get isRelease => bool.fromEnvironment("dart.vm.product");
+  bool get isRelease => bool.fromEnvironment('dart.vm.product');
 
   bool get isDebug => !isRelease;
 
-  var deviceName = "";
+  var deviceName = '';
   var devices = Devices();
   var DeviceError = false;
 
   var themeNotifier = ValueNotifier(ThemeMode.system);
   var themeMode = ThemeMode.system;
 
-  final version = "".obs;
-  final versionString = "".obs;
+  final version = ''.obs;
+  final versionString = ''.obs;
 
   var packageInfo = PackageInfo.fromPlatform();
 
   Future<void> init() async {
     await packageInfo.then((value) => version.value = value.version);
 
-    versionString.value = "${version.value}${(isRelease ? " (Release)" : " (Debug)")}";
+    versionString.value = '${version.value}${(isRelease ? ' (Release)' : ' (Debug)')}';
   }
 
   void delay(Function func, int milliseconds) {

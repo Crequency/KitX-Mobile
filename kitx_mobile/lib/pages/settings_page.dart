@@ -26,7 +26,7 @@ class _SettingsPageState extends State<SettingsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("SettingsPage_Title".tr),
+        title: Text('SettingsPage_Title'.tr),
       ),
       body: ListView(
         children: [
@@ -35,7 +35,7 @@ class _SettingsPageState extends State<SettingsPage> {
             alignment: Alignment.center,
             margin: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
             child: Text(
-              "SettingsPage_Theme".tr,
+              'SettingsPage_Theme'.tr,
               style: TextStyle(fontSize: 24),
             ),
           ),
@@ -48,17 +48,17 @@ class _SettingsPageState extends State<SettingsPage> {
               segments: <ButtonSegment<ThemeMode>>[
                 ButtonSegment<ThemeMode>(
                   value: ThemeMode.light,
-                  label: Text("SettingsPage_Light".tr),
+                  label: Text('SettingsPage_Light'.tr),
                   icon: Icon(Icons.light_mode),
                 ),
                 ButtonSegment<ThemeMode>(
                   value: ThemeMode.dark,
-                  label: Text("SettingsPage_Dark".tr),
+                  label: Text('SettingsPage_Dark'.tr),
                   icon: Icon(Icons.dark_mode),
                 ),
                 ButtonSegment<ThemeMode>(
                   value: ThemeMode.system,
-                  label: Text("SettingsPage_FollowSystem".tr),
+                  label: Text('SettingsPage_FollowSystem'.tr),
                   icon: Icon(Icons.settings),
                 ),
               ],
@@ -88,7 +88,7 @@ class _SettingsPageState extends State<SettingsPage> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text('Public_Enable'.tr + " Material 3"),
+              Text('Public_Enable'.tr + ' Material 3'),
               Obx(
                 () => Checkbox(
                   value: useMaterial3.value,

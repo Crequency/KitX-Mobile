@@ -31,7 +31,7 @@ class _DeviceInfoTestPageState extends State<DeviceInfoTestPage> {
         deviceData = _readIosDeviceInfo(await deviceInfoPlugin.iosInfo);
       }
     } on PlatformException {
-      deviceData = <String, dynamic>{"Error:": "Failed to get platform version."};
+      deviceData = <String, dynamic>{'Error:': 'Failed to get platform version.'};
     }
 
     if (!mounted) return;
@@ -41,56 +41,56 @@ class _DeviceInfoTestPageState extends State<DeviceInfoTestPage> {
 
   Map<String, dynamic> _readAndroidDeviceInfo(AndroidDeviceInfo build) {
     return <String, dynamic>{
-      "Security Patch": build.version.securityPatch,
-      "SDK Version": build.version.sdkInt,
-      "Android Release": build.version.release,
-      "Preview SDK Version": build.version.previewSdkInt,
-      "Version Incremental": build.version.incremental,
-      "Version Codename": build.version.codename,
-      "Base OS": build.version.baseOS,
-      "Board": build.board,
-      "BootLoader": build.bootloader,
-      "Brand": build.brand,
-      "Device": build.device,
-      "Display": build.display,
-      "Fingerprint": build.fingerprint,
-      "Hardware": build.hardware,
-      "Host": build.host,
-      "ID": build.id,
-      "Manufacturer": build.manufacturer,
-      "Model": build.model,
-      "Product": build.product,
-      "Supported 32bit ABIs": build.supported32BitAbis,
-      "Supported 64bit ABIs": build.supported64BitAbis,
-      "Supported ABIs": build.supportedAbis,
-      "Build Tags": build.tags,
-      "Build Type": build.type,
-      "Is physical device": build.isPhysicalDevice,
-      "System Features": build.systemFeatures,
-      "Display Size Inches": ((build.displayMetrics.sizeInches * 10).roundToDouble() / 10),
-      "Display Width Pixels": build.displayMetrics.widthPx,
-      "Display Width Inches": build.displayMetrics.widthInches,
-      "Display Height Pixels": build.displayMetrics.heightPx,
-      "Display Height Inches": build.displayMetrics.heightInches,
-      "Display X DPI": build.displayMetrics.xDpi,
-      "Display Y DPI": build.displayMetrics.yDpi,
+      'Security Patch': build.version.securityPatch,
+      'SDK Version': build.version.sdkInt,
+      'Android Release': build.version.release,
+      'Preview SDK Version': build.version.previewSdkInt,
+      'Version Incremental': build.version.incremental,
+      'Version Codename': build.version.codename,
+      'Base OS': build.version.baseOS,
+      'Board': build.board,
+      'BootLoader': build.bootloader,
+      'Brand': build.brand,
+      'Device': build.device,
+      'Display': build.display,
+      'Fingerprint': build.fingerprint,
+      'Hardware': build.hardware,
+      'Host': build.host,
+      'ID': build.id,
+      'Manufacturer': build.manufacturer,
+      'Model': build.model,
+      'Product': build.product,
+      'Supported 32bit ABIs': build.supported32BitAbis,
+      'Supported 64bit ABIs': build.supported64BitAbis,
+      'Supported ABIs': build.supportedAbis,
+      'Build Tags': build.tags,
+      'Build Type': build.type,
+      'Is physical device': build.isPhysicalDevice,
+      'System Features': build.systemFeatures,
+      'Display Size Inches': ((build.displayMetrics.sizeInches * 10).roundToDouble() / 10),
+      'Display Width Pixels': build.displayMetrics.widthPx,
+      'Display Width Inches': build.displayMetrics.widthInches,
+      'Display Height Pixels': build.displayMetrics.heightPx,
+      'Display Height Inches': build.displayMetrics.heightInches,
+      'Display X DPI': build.displayMetrics.xDpi,
+      'Display Y DPI': build.displayMetrics.yDpi,
     };
   }
 
   Map<String, dynamic> _readIosDeviceInfo(IosDeviceInfo data) {
     return <String, dynamic>{
-      "Name": data.name,
-      "System Name": data.systemName,
-      "System Version": data.systemVersion,
-      "Model": data.model,
-      "Localized Model": data.localizedModel,
-      "Identifier for Vendor": data.identifierForVendor,
-      "Is physical device": data.isPhysicalDevice,
-      "[uts name] System Name": data.utsname.sysname,
-      "[uts name] Node Name": data.utsname.nodename,
-      "[uts name] Release": data.utsname.release,
-      "[uts name] Version": data.utsname.version,
-      "[uts name] Machine": data.utsname.machine,
+      'Name': data.name,
+      'System Name': data.systemName,
+      'System Version': data.systemVersion,
+      'Model': data.model,
+      'Localized Model': data.localizedModel,
+      'Identifier for Vendor': data.identifierForVendor,
+      'Is physical device': data.isPhysicalDevice,
+      '[uts name] System Name': data.utsname.sysname,
+      '[uts name] Node Name': data.utsname.nodename,
+      '[uts name] Release': data.utsname.release,
+      '[uts name] Version': data.utsname.version,
+      '[uts name] Machine': data.utsname.machine,
     };
   }
 
@@ -102,7 +102,7 @@ class _DeviceInfoTestPageState extends State<DeviceInfoTestPage> {
           Container(
             margin: EdgeInsets.all(30),
             child: Text(
-              "Device Info",
+              'Device Info',
               style: TextStyle(fontSize: 32),
             ),
           ),
