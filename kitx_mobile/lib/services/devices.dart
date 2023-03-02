@@ -22,7 +22,13 @@ class Devices {
       _tempList.forEach(
         (each) {
           if (each.iPv4 == info.iPv4 || each.deviceMacAddress == info.deviceMacAddress) {
-            deviceInfoList[deviceInfoList.indexOf(each)] = each.rebuild((b) => b..sendTime = info.sendTime);
+            deviceInfoList[deviceInfoList.indexOf(each)] = each.rebuild(
+              (b) {
+                b
+                  ..sendTime = info.sendTime
+                  ..isMainDevice = info.isMainDevice;
+              },
+            );
             deviceInfoList.refresh();
             _tag = false;
           }

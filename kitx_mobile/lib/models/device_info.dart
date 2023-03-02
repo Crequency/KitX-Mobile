@@ -47,6 +47,7 @@ abstract class DeviceInfoStruct implements Built<DeviceInfoStruct, DeviceInfoStr
   DeviceOSTypeEnum get deviceOSType;
 
   DeviceInfoStruct._();
+
   factory DeviceInfoStruct([void Function(DeviceInfoStructBuilder) updates]) = _$DeviceInfoStruct;
 
   Object? toJson() {
