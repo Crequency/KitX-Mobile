@@ -198,7 +198,7 @@ class WebService {
                 var _deviceInfo = DeviceInfoStruct.fromString(_data);
                 if (_deviceInfo != null) Global.devices.addDevice(_deviceInfo);
               } catch (e, stack) {
-                Log.error('Can not deserialize deviceinfopack: '$_data'. Error: $e $stack');
+                Log.error('Can not deserialize device info pack: `$_data`. Error: $e $stack');
               }
             },
           );
