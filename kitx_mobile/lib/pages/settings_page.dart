@@ -3,6 +3,7 @@
 import 'package:get/get.dart';
 
 import 'package:kitx_mobile/themes/light_theme.dart';
+import 'package:kitx_mobile/utils/config.dart';
 
 import 'package:kitx_mobile/utils/global.dart';
 
@@ -17,6 +18,10 @@ class _SettingsPageState extends State<SettingsPage> {
   var selectedModes = <ThemeMode>{Global.themeMode};
 
   var useMaterial3 = lightThemeData.value.useMaterial3.obs;
+
+  void saveChanges() {
+    Config.saveAsync();
+  }
 
   @override
   void initState() {
@@ -67,12 +72,12 @@ class _SettingsPageState extends State<SettingsPage> {
               // selectedIcon: Icon(Icons.check),
               showSelectedIcon: false,
               onSelectionChanged: (Set<ThemeMode> newSelection) => {
-                print(newSelection),
                 setState(() {
                   selectedModes = newSelection;
                 }),
                 Global.themeMode = newSelection.first,
                 Global.themeNotifier.value = Global.themeMode,
+                saveChanges(),
               },
             ),
           ),
@@ -97,6 +102,7 @@ class _SettingsPageState extends State<SettingsPage> {
                     if (selection != null) {
                       Global.updateTheme(useMaterial3: selection);
                       useMaterial3.value = selection;
+                      saveChanges();
                     }
                   },
                 ),
@@ -123,6 +129,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   onChanged: (selection) {
                     if (selection != null) {
                       Global.animationEnabled.value = selection;
+                      saveChanges();
                     }
                   },
                 ),

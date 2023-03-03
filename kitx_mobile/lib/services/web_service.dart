@@ -160,7 +160,7 @@ class WebService {
           socket.broadcastEnabled = true;
           socket.joinMulticast(InternetAddress(_udpBroadcastAddress));
 
-          Timer.periodic(const Duration(seconds: Config.WebService_UdpSendFrequency), (timer) {
+          Timer.periodic(Duration(seconds: Config.WebService_UdpSendFrequency), (timer) {
             try {
               deviceInfo = deviceInfo.rebuild((b) => b..sendTime = DateTime.now().toUtc());
               var _data = deviceInfo.toString();

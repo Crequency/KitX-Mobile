@@ -22,6 +22,8 @@ class _Global {
   var themeNotifier = ValueNotifier(ThemeMode.system);
   var themeMode = ThemeMode.system;
 
+  var material3enabled = true;
+
   var animationEnabled = true.obs;
 
   final version = ''.obs;
@@ -33,6 +35,8 @@ class _Global {
     await packageInfo.then((value) => version.value = value.version);
 
     versionString.value = '${version.value}${(isRelease ? ' (Release)' : ' (Debug)')}';
+
+    updateTheme(useMaterial3: material3enabled);
   }
 
   void delay(Function func, int milliseconds) {
@@ -44,6 +48,8 @@ class _Global {
   }
 
   void updateTheme({bool useMaterial3 = true}) {
+    material3enabled = useMaterial3;
+
     lightThemeData.value = ThemeData(
       useMaterial3: useMaterial3,
       primarySwatch: Colors.blue,

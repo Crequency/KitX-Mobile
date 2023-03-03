@@ -21,6 +21,9 @@ Future<void> main() async {
   // 提前初始化
   WidgetsFlutterBinding.ensureInitialized();
 
+  // 读取配置
+  await Config.loadAsync();
+
   // 初始化 WebService
   var webService = WebService()
     ..UdpPortSend = Config.WebService_UdpPortSend
