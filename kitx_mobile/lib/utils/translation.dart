@@ -6,6 +6,7 @@ class Translation extends Translations {
         'zh_CN': {
           'Public_Enable': '启用',
           'Public_Disable': '禁用',
+          'Public_Animation': '动画',
           'Drawer_Title': 'KitX',
           'Drawer_Devices': '设备管理',
           'Drawer_Account': '账户',
@@ -37,6 +38,7 @@ class Translation extends Translations {
         'en_US': {
           'Public_Enable': 'Enable',
           'Public_Disable': 'Disable',
+          'Public_Animation': 'Animation',
           'Drawer_Title': 'KitX',
           'Drawer_Devices': 'Devices',
           'Drawer_Account': 'Account',

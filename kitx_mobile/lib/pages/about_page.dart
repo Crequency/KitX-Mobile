@@ -15,14 +15,18 @@ class AboutPage extends StatefulWidget {
 }
 
 class _AboutPageState extends State<AboutPage> {
-  final iconEntering = false.obs;
-  final iconEntered = false.obs;
-  final titleEntered = false.obs;
+  // final iconEntering = false.obs;
+  // final iconEntered = false.obs;
+  // final titleEntered = false.obs;
+
+  final iconEntering = (!Global.animationEnabled.value).obs;
+  final iconEntered = (!Global.animationEnabled.value).obs;
+  final titleEntered = (!Global.animationEnabled.value).obs;
 
   final titleDisplay = true.obs;
   final versionDisplay = true.obs;
 
-  var contentEntering = false;
+  var contentEntering = !Global.animationEnabled.value;
 
   var _scrollController = ScrollController();
 
@@ -41,28 +45,32 @@ class _AboutPageState extends State<AboutPage> {
     _scrollController.addListener(() {
       // print('Scroller offset: ${_scrollController.offset}');
 
-      var offset = _scrollController.offset;
+      if (Global.animationEnabled.value) {
+        var offset = _scrollController.offset;
 
-      if (offset >= 50) {
-        if (titleDisplay.value) titleDisplay.value = false;
-      } else if (offset >= 5) {
-        if (!titleDisplay.value) titleDisplay.value = true;
-        if (versionDisplay.value) versionDisplay.value = false;
-      } else {
-        if (!titleDisplay.value) titleDisplay.value = true;
-        if (!versionDisplay.value) versionDisplay.value = true;
+        if (offset >= 50) {
+          if (titleDisplay.value) titleDisplay.value = false;
+        } else if (offset >= 5) {
+          if (!titleDisplay.value) titleDisplay.value = true;
+          if (versionDisplay.value) versionDisplay.value = false;
+        } else {
+          if (!titleDisplay.value) titleDisplay.value = true;
+          if (!versionDisplay.value) versionDisplay.value = true;
+        }
       }
     });
 
-    Future.delayed(Duration(milliseconds: 150)).then((value) => iconEntering.value = true);
+    if (Global.animationEnabled.value) {
+      Future.delayed(Duration(milliseconds: 150)).then((value) => iconEntering.value = true);
 
-    Future.delayed(Duration(milliseconds: 400)).then((value) => iconEntered.value = true);
+      Future.delayed(Duration(milliseconds: 400)).then((value) => iconEntered.value = true);
 
-    Future.delayed(Duration(milliseconds: 600)).then((value) => titleEntered.value = true);
+      Future.delayed(Duration(milliseconds: 600)).then((value) => titleEntered.value = true);
 
-    Future.delayed(Duration(milliseconds: 0)).then((value) => super.setState(() {
-          contentEntering = true;
-        }));
+      Future.delayed(Duration(milliseconds: 0)).then((value) => super.setState(() {
+            contentEntering = true;
+          }));
+    }
 
     super.initState();
   }

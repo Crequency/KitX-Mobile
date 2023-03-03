@@ -104,6 +104,32 @@ class _SettingsPageState extends State<SettingsPage> {
             ],
           ),
           SizedBox(height: 60),
+          Container(
+            alignment: Alignment.center,
+            margin: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+            child: Text(
+              'Public_Animation'.tr,
+              style: TextStyle(fontSize: 24),
+            ),
+          ),
+          SizedBox(height: 30),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text('Public_Enable'.tr),
+              Obx(
+                () => Checkbox(
+                  value: Global.animationEnabled.value,
+                  onChanged: (selection) {
+                    if (selection != null) {
+                      Global.animationEnabled.value = selection;
+                    }
+                  },
+                ),
+              ),
+            ],
+          ),
+          SizedBox(height: 60),
         ],
       ),
     );

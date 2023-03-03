@@ -22,6 +22,8 @@ class _Global {
   var themeNotifier = ValueNotifier(ThemeMode.system);
   var themeMode = ThemeMode.system;
 
+  var animationEnabled = true.obs;
+
   final version = ''.obs;
   final versionString = ''.obs;
 
