@@ -19,8 +19,19 @@ class _SettingsPageState extends State<SettingsPage> {
 
   var useMaterial3 = lightThemeData.value.useMaterial3.obs;
 
-  void saveChanges() {
+  void saveChanges(BuildContext context) {
     Config.saveAsync();
+
+    var snackBar = SnackBar(
+      content: Text('SettingsPage_Saved'.tr),
+      // margin: EdgeInsets.all(30),
+      // behavior: SnackBarBehavior.floating,
+      showCloseIcon: true,
+      duration: Duration(milliseconds: 1200),
+      // animation: Animation,
+    );
+
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
   @override
@@ -76,7 +87,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   selectedModes = newSelection;
                 }),
                 Global.themeModeNotifier.value = newSelection.first,
-                saveChanges(),
+                saveChanges(context),
               },
             ),
           ),
@@ -101,7 +112,7 @@ class _SettingsPageState extends State<SettingsPage> {
                     if (selection != null) {
                       Global.updateTheme(useMaterial3: selection);
                       useMaterial3.value = selection;
-                      saveChanges();
+                      saveChanges(context);
                     }
                   },
                 ),
@@ -128,7 +139,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   onChanged: (selection) {
                     if (selection != null) {
                       Global.animationEnabled.value = selection;
-                      saveChanges();
+                      saveChanges(context);
                     }
                   },
                 ),
