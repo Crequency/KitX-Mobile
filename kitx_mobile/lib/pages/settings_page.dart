@@ -116,7 +116,7 @@ class _SettingsPageState extends State<SettingsPage> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text('Public_Enable'.tr),
+              Text('Public_Enable'.tr + ' ' + 'Public_Additional'.tr + ' ' + 'Public_Animation'.tr),
               Obx(
                 () => Checkbox(
                   value: Global.animationEnabled.value,
