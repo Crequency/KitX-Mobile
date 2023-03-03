@@ -64,7 +64,7 @@ class MainApp extends StatelessWidget {
     // );
 
     return ValueListenableBuilder<ThemeMode>(
-      valueListenable: Global.themeNotifier,
+      valueListenable: Global.themeModeNotifier,
       builder: (_, mode, __) => Obx(
         () => GetMaterialApp(
           title: 'KitX Mobile',

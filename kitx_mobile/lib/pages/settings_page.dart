@@ -15,7 +15,7 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
-  var selectedModes = <ThemeMode>{Global.themeMode};
+  var selectedModes = <ThemeMode>{Global.themeModeNotifier.value};
 
   var useMaterial3 = lightThemeData.value.useMaterial3.obs;
 
@@ -75,8 +75,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 setState(() {
                   selectedModes = newSelection;
                 }),
-                Global.themeMode = newSelection.first,
-                Global.themeNotifier.value = Global.themeMode,
+                Global.themeModeNotifier.value = newSelection.first,
                 saveChanges(),
               },
             ),

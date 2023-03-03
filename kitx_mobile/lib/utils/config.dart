@@ -25,8 +25,7 @@ class _Config {
     WebService_DeviceInfoCheckTTLSeconds = prefs.getInt('WebService_DeviceInfoCheckTTLSeconds') ?? 1;
     WebService_DeviceInfoTTLSeconds = prefs.getInt('WebService_DeviceInfoTTLSeconds') ?? 7;
 
-    Global.themeMode = ConvertBack(prefs.getInt('AppThemeMode') ?? 0);
-    Global.themeNotifier.value = Global.themeMode;
+    Global.themeModeNotifier.value = ConvertBack(prefs.getInt('AppThemeMode') ?? 0);
     Global.material3enabled = prefs.getBool('Material3Enabled') ?? true;
     Global.animationEnabled.value = prefs.getBool('AnimationEnabled') ?? true;
   }
@@ -41,7 +40,7 @@ class _Config {
     await prefs.setInt('WebService_DeviceInfoCheckTTLSeconds', WebService_DeviceInfoCheckTTLSeconds);
     await prefs.setInt('WebService_DeviceInfoTTLSeconds', WebService_DeviceInfoTTLSeconds);
 
-    await prefs.setInt('AppThemeMode', Convert(Global.themeMode));
+    await prefs.setInt('AppThemeMode', Convert(Global.themeModeNotifier.value));
     await prefs.setBool('Material3Enabled', Global.material3enabled);
     await prefs.setBool('AnimationEnabled', Global.animationEnabled.value);
   }
