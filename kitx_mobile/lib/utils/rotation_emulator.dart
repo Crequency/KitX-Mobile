@@ -1,4 +1,6 @@
-﻿import 'dart:math';
+﻿// ignore_for_file: public_member_api_docs, non_constant_identifier_names
+
+import 'dart:math';
 
 const double pi = 3.1415926535897938324626433832795028841971;
 
@@ -45,9 +47,9 @@ Point? GetCrossPoint(Point p, Point camera, Point? n, Vector3D? plane) {
   var v1 = VL.x, v2 = VL.y, v3 = VL.z;
 
   var t_base = vp1 * v1 + vp2 * v2 + vp3 * v3;
-  if (t_base - 0 <= 0.00001)
+  if (t_base - 0 <= 0.00001) {
     return null;
-  else {
+  } else {
     n ??= Point(0, 0, 0);
 
     var n1 = n.x, n2 = n.y, n3 = n.z;

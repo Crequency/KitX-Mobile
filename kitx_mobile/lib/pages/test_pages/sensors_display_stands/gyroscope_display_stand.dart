@@ -1,8 +1,11 @@
-﻿import 'package:flutter/material.dart';
+﻿// ignore_for_file: non_constant_identifier_names, public_member_api_docs
+
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sensors_plus/sensors_plus.dart';
 
-import 'device_rotation_display_stand.dart';
+// ignore: directives_ordering
+import 'package:kitx_mobile/pages/test_pages/sensors_display_stands/device_rotation_display_stand.dart';
 
 class GyroscopeDisplayStand extends StatefulWidget {
   @override
@@ -24,20 +27,23 @@ class GyroscopeDisplayStandState extends State<GyroscopeDisplayStand> {
 
       //rough calculation, you can use
       //advance formula to calculate the orientation
-      if (dir_x >= 0)
+      if (dir_x >= 0) {
         direction_x.value = 'back';
-      else
+      } else {
         direction_x.value = 'forward';
+      }
 
-      if (dir_y >= 0)
+      if (dir_y >= 0) {
         direction_y.value = 'right';
-      else
+      } else {
         direction_y.value = 'left';
+      }
 
-      if (dir_z >= 0)
+      if (dir_z >= 0) {
         direction_z.value = '👈';
-      else
+      } else {
         direction_z.value = '👉';
+      }
     });
 
     super.initState();

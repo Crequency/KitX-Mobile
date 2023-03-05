@@ -12,7 +12,9 @@ import 'package:kitx_mobile/themes/light_theme.dart';
 import 'package:kitx_mobile/utils/config.dart';
 import 'package:kitx_mobile/utils/global.dart';
 
+/// Settings Page
 class SettingsPage extends StatefulWidget {
+  // ignore: public_member_api_docs
   const SettingsPage({Key? key}) : super(key: key);
 
   @override
@@ -130,7 +132,7 @@ class _SettingsPageState extends State<SettingsPage> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text('Public_Enable'.tr + ' Material 3'),
+              Text('${'Public_Enable'.tr} Material 3'),
               Obx(
                 () => Checkbox(
                   value: useMaterial3.value,
@@ -160,7 +162,7 @@ class _SettingsPageState extends State<SettingsPage> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text('Public_Enable'.tr + ' ' + 'Public_Additional'.tr + ' ' + 'Public_Animation'.tr),
+              Text('${'Public_Enable'.tr} ${'Public_Additional'.tr} ${'Public_Animation'.tr}'),
               Obx(
                 () => Checkbox(
                   value: Global.animationEnabled.value,

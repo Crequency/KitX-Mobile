@@ -1,12 +1,16 @@
-﻿import 'package:flutter/material.dart';
+﻿// ignore_for_file: non_constant_identifier_names, public_member_api_docs
+
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sensors_plus/sensors_plus.dart';
 
+/// AccelerationDisplayStand
 class AccelerationDisplayStand extends StatefulWidget {
   @override
   AccelerationDisplayStandState createState() => AccelerationDisplayStandState();
 }
 
+/// AccelerationDisplayStandState
 class AccelerationDisplayStandState extends State<AccelerationDisplayStand> {
   final acc_x = 0.0.obs, acc_y = 0.0.obs, acc_z = 0.0.obs;
 

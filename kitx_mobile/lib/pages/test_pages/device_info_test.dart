@@ -4,7 +4,9 @@ import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+/// DeviceInfoTestPage
 class DeviceInfoTestPage extends StatefulWidget {
+  // ignore: public_member_api_docs
   const DeviceInfoTestPage({Key? key}) : super(key: key);
 
   @override
@@ -21,7 +23,7 @@ class _DeviceInfoTestPageState extends State<DeviceInfoTestPage> {
     initPlatformState();
   }
 
-  void initPlatformState() async {
+  Future<void> initPlatformState() async {
     var deviceData = <String, dynamic>{};
 
     try {

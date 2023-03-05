@@ -1,10 +1,12 @@
+// ignore_for_file: non_constant_identifier_names
+
 library kitx_moblie.config;
 
-import 'package:shared_preferences/shared_preferences.dart';
-
+import 'package:kitx_mobile/converters/theme_mode_2_int.dart';
 import 'package:kitx_mobile/models/enums/device_os_type.dart';
 import 'package:kitx_mobile/utils/global.dart';
-import 'package:kitx_mobile/converters/theme_mode_2_int.dart';
+
+import 'package:shared_preferences/shared_preferences.dart';
 
 class _Config {
   var WebService_UdpBroadcastAddress = '224.0.0.0';
@@ -26,7 +28,7 @@ class _Config {
     WebService_DeviceInfoTTLSeconds = prefs.getInt('WebService_DeviceInfoTTLSeconds') ?? 7;
 
     Global.themeModeNotifier.value = ConvertBack(prefs.getInt('AppThemeMode') ?? 0);
-    Global.material3enabled = prefs.getBool('Material3Enabled') ?? true;
+    Global.material3Enabled = prefs.getBool('material3Enabled') ?? true;
     Global.animationEnabled.value = prefs.getBool('AnimationEnabled') ?? true;
   }
 
@@ -41,9 +43,10 @@ class _Config {
     await prefs.setInt('WebService_DeviceInfoTTLSeconds', WebService_DeviceInfoTTLSeconds);
 
     await prefs.setInt('AppThemeMode', Convert(Global.themeModeNotifier.value));
-    await prefs.setBool('Material3Enabled', Global.material3enabled);
+    await prefs.setBool('material3Enabled', Global.material3Enabled);
     await prefs.setBool('AnimationEnabled', Global.animationEnabled.value);
   }
 }
 
+/// Default Config
 var Config = _Config();

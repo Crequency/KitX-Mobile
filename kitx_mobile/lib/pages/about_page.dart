@@ -1,13 +1,15 @@
 import 'package:community_material_icon/community_material_icon.dart';
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
-import 'package:vibration/vibration.dart';
 
 import 'package:kitx_mobile/data/third_party_licenses_provider.dart';
 import 'package:kitx_mobile/utils/global.dart';
 
+import 'package:vibration/vibration.dart';
+
+/// about page
 class AboutPage extends StatefulWidget {
+  // ignore: public_member_api_docs
   const AboutPage({Key? key}) : super(key: key);
 
   @override
@@ -111,7 +113,7 @@ class _AboutPageState extends State<AboutPage> {
                 opacity: iconEntering.value ? 1 : 0,
                 child: InkWell(
                   borderRadius: BorderRadius.all(Radius.elliptical(15, 15)),
-                  onTap: () async => await vibrate(),
+                  onTap: () async => vibrate(),
                   child: const Image(
                     alignment: Alignment.center,
                     image: AssetImage('assets/KitX-Icon-1920x-margin-2x.png'),

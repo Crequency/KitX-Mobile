@@ -1,14 +1,20 @@
-﻿import 'package:flutter/material.dart';
+﻿// ignore_for_file: non_constant_identifier_names, public_member_api_docs
+
+import 'package:flutter/material.dart';
+
 import 'package:sensors_plus/sensors_plus.dart';
 
+// ignore: directives_ordering
 import 'package:kitx_mobile/utils/acceleration_emulator.dart';
 import 'package:kitx_mobile/utils/rotation_emulator.dart';
 
+/// DeviceRotationDisplayStand
 class DeviceRotationDisplayStand extends StatefulWidget {
   @override
   DeviceRotationDisplayStandState createState() => DeviceRotationDisplayStandState();
 }
 
+/// DeviceRotationDisplayStandState
 class DeviceRotationDisplayStandState extends State<DeviceRotationDisplayStand> {
   static double canvas_width = 400;
   static double canvas_height = 300;
@@ -18,7 +24,7 @@ class DeviceRotationDisplayStandState extends State<DeviceRotationDisplayStand> 
   void initState() {
     if (firstEnterPage) {
       gyroscopeEvents.listen((event) {
-        DeviceRotationHost.RotateWithAcceleration(event.x, event.y, event.z, 0.2);
+        DeviceRotationHost.rotateWithAcceleration(event.x, event.y, event.z, 0.2);
       });
       firstEnterPage = false;
     }
@@ -44,7 +50,7 @@ class DeviceRotationDisplayStandState extends State<DeviceRotationDisplayStand> 
               willChange: true,
               painter: Painter(),
             ),
-            onTap: () => DeviceRotationHost.Restore(),
+            onTap: () => DeviceRotationHost.restore(),
           ),
         )
       ],
@@ -60,7 +66,7 @@ class Painter extends CustomPainter {
   double abs(double num) => num >= 0 ? num : -num;
 
   //  yaw - pitch - roll
-  Doubles3D GetRotationAngles() => DeviceRotationHost.GetRotationAngles();
+  Doubles3D GetRotationAngles() => DeviceRotationHost.getRotationAngles();
 
   Point? GetLeftBarPoint() => GetCrossPoint(
       Rotate(Point(-object_width / 2 + object_width / 4, -object_height / 2 + object_height / 24, 0),

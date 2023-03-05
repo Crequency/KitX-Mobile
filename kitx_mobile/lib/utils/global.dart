@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import 'package:kitx_mobile/services/device_service.dart';
+import 'package:kitx_mobile/themes/dark_theme.dart';
+import 'package:kitx_mobile/themes/light_theme.dart';
+
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher_string.dart';
-
-import 'package:kitx_mobile/services/devices.dart';
-
-import 'package:kitx_mobile/themes/light_theme.dart';
-import 'package:kitx_mobile/themes/dark_theme.dart';
 
 class _Global {
   static final _Global _singleton = _Global._internal();
@@ -16,12 +16,12 @@ class _Global {
   bool get isDebug => !isRelease;
 
   var deviceName = '';
-  var devices = Devices();
-  var DeviceError = false;
+  var device = DeviceService();
+  var deviceError = false;
 
   var themeModeNotifier = ValueNotifier(ThemeMode.system);
 
-  var material3enabled = true;
+  var material3Enabled = true;
 
   var animationEnabled = true.obs;
 
@@ -35,7 +35,7 @@ class _Global {
 
     versionString.value = '${version.value}${(isRelease ? ' (Release)' : ' (Debug)')}';
 
-    updateTheme(useMaterial3: material3enabled);
+    updateTheme(useMaterial3: material3Enabled);
   }
 
   void delay(Function func, int milliseconds) {
@@ -47,7 +47,7 @@ class _Global {
   }
 
   void updateTheme({bool useMaterial3 = true}) {
-    material3enabled = useMaterial3;
+    material3Enabled = useMaterial3;
 
     lightThemeData.value = ThemeData(
       useMaterial3: useMaterial3,
@@ -68,4 +68,5 @@ class _Global {
   _Global._internal();
 }
 
+// ignore: non_constant_identifier_names, public_member_api_docs
 var Global = _Global();

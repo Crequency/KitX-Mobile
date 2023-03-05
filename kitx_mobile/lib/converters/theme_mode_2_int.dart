@@ -1,5 +1,8 @@
-﻿import 'package:flutter/material.dart';
+﻿// ignore_for_file: non_constant_identifier_names
 
+import 'package:flutter/material.dart';
+
+/// Convert [ThemeMode] to [int]
 int Convert(ThemeMode mode) {
   switch (mode) {
     case ThemeMode.system:
@@ -13,6 +16,7 @@ int Convert(ThemeMode mode) {
   }
 }
 
+/// Convert [int] to [ThemeMode]
 ThemeMode ConvertBack(int mode) {
   switch (mode) {
     case 0:

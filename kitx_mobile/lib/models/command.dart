@@ -4,10 +4,9 @@ import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 
-import 'serializers.dart';
-import 'device_locator.dart';
-
-import 'enums/command_type.dart';
+import 'package:kitx_mobile/models/device_locator.dart';
+import 'package:kitx_mobile/models/enums/command_type.dart';
+import 'package:kitx_mobile/models/serializers.dart';
 
 part 'command.g.dart';
 

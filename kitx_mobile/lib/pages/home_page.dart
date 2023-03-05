@@ -1,16 +1,18 @@
 ﻿import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'package:kitx_mobile/utils/global.dart';
-
+import 'package:kitx_mobile/pages/about_page.dart';
+import 'package:kitx_mobile/pages/account_page.dart';
 import 'package:kitx_mobile/pages/controls/drawer.dart';
 import 'package:kitx_mobile/pages/device_page.dart';
-import 'package:kitx_mobile/pages/account_page.dart';
-import 'package:kitx_mobile/pages/test_page.dart';
 import 'package:kitx_mobile/pages/settings_page.dart';
-import 'package:kitx_mobile/pages/about_page.dart';
+import 'package:kitx_mobile/pages/test_page.dart';
 
+import 'package:kitx_mobile/utils/global.dart';
+
+/// HomePage
 class HomePage extends StatefulWidget {
+  // ignore: public_member_api_docs
   const HomePage({Key? key}) : super(key: key);
 
   @override
@@ -47,7 +49,7 @@ class _HomePageState extends State<HomePage> {
                   () => ListTile(
                     leading: Icon(Icons.devices),
                     title: Text('Drawer_Devices'.tr),
-                    subtitle: Text('${Global.devices.length.obs} ' + 'HomePage_DevicesCount'.tr),
+                    subtitle: Text('${Global.device.length.obs} ${'HomePage_DevicesCount'.tr}'),
                     trailing: Icon(Icons.keyboard_arrow_right),
                     shape: tileRadius,
                     // tileColor: Colors.indigo,

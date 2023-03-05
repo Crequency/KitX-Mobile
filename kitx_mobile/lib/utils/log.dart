@@ -4,7 +4,7 @@ import 'package:f_logs/model/flog/log_level.dart';
 import 'package:f_logs/utils/formatter/formate_type.dart';
 import 'package:f_logs/utils/timestamp/timestamp_format.dart';
 
-var config = LogsConfig()
+var _config = LogsConfig()
   ..isDebuggable = true
   ..customOpeningDivider = '['
   ..customClosingDivider = ']'
@@ -16,10 +16,17 @@ var config = LogsConfig()
   ..logLevelsEnabled = [LogLevel.INFO, LogLevel.ERROR]
   ..timestampFormat = TimestampFormat.TIME_FORMAT_FULL_2;
 
-void InitLogger() => FLog.applyConfigurations(config);
+/// Initialize the logger.
+void initLogger() => FLog.applyConfigurations(_config);
 
+/// Log
 class Log {
+  /// Log a message at level [LogLevel.INFO].
   static void info(String message) => FLog.info(text: message);
+
+  /// Log a message at level [LogLevel.ERROR].
   static void error(String message) => FLog.error(text: message);
+
+  /// Log a message at level [LogLevel.WARNING].
   static void warning(String message) => FLog.warning(text: message);
 }
