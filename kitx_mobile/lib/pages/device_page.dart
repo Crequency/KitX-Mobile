@@ -6,7 +6,9 @@ import 'package:kitx_mobile/models/device_info.dart';
 import 'package:kitx_mobile/utils/datetime_format.dart' show datetimeToShortString;
 import 'package:kitx_mobile/utils/global.dart';
 
+/// Device Page
 class DevicePage extends StatefulWidget {
+  // ignore: public_member_api_docs
   const DevicePage({Key? key}) : super(key: key);
 
   @override
@@ -30,16 +32,16 @@ class _DevicePage extends State<DevicePage> {
           Obx(
             () => Container(
               margin: EdgeInsets.fromLTRB(30, 30, 30, 0),
-              child: Text('${Global.devices.length.obs} ' + 'HomePage_DevicesCount'.tr),
+              child: Text('${Global.device.length.obs} ${'HomePage_DevicesCount'.tr}'),
             ),
           ),
           Obx(
             () => ListView.builder(
               shrinkWrap: true,
               physics: NeverScrollableScrollPhysics(),
-              itemCount: Global.devices.length + 1,
+              itemCount: Global.device.length + 1,
               itemBuilder: (_, index) {
-                var info = index >= Global.devices.length ? null : Global.devices.deviceInfoList[index];
+                var info = index >= Global.device.length ? null : Global.device.deviceInfoList[index];
                 return createDeviceCard(context, info, index);
               },
             ),
@@ -49,16 +51,18 @@ class _DevicePage extends State<DevicePage> {
     );
   }
 
-  String GetDeviceDisplayName(DeviceInfoStruct info) {
+  /// Get device display name
+  String getDeviceDisplayName(DeviceInfoStruct info) {
     var result = info.deviceName;
 
-    if (info.deviceName == Global.deviceName) result += ' ' + 'DevicePage_LocalDevice'.tr;
-    if (info.isMainDevice) result += ' ' + 'DevicePage_MainDevice'.tr;
+    if (info.deviceName == Global.deviceName) result += ' ${'DevicePage_LocalDevice'.tr}';
+    if (info.isMainDevice) result += ' ${'DevicePage_MainDevice'.tr}';
 
     return result;
   }
 
-  Color GetDeviceCardColor(BuildContext context, DeviceInfoStruct info) {
+  /// Get device card color
+  Color getDeviceCardColor(BuildContext context, DeviceInfoStruct info) {
     var result = context.theme.cardColor;
 
     if (info.deviceName == Global.deviceName) result = context.isDarkMode ? Colors.indigo : Colors.limeAccent;
@@ -78,8 +82,8 @@ class _DevicePage extends State<DevicePage> {
       size: 36,
     );
 
-    var cardColor = GetDeviceCardColor(context, info);
-    var deviceName = GetDeviceDisplayName(info);
+    var cardColor = getDeviceCardColor(context, info);
+    var deviceName = getDeviceDisplayName(info);
 
     return FractionallySizedBox(
       widthFactor: 0.9,

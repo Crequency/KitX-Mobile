@@ -15,6 +15,7 @@ String _sixDigits(int n) {
   return '${sign}0$absN';
 }
 
+// ignore: unused_element
 String _threeDigits(int n) {
   if (n >= 100) return '$n';
   if (n >= 10) return '0$n';

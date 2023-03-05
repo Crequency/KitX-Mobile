@@ -1,10 +1,13 @@
-﻿import 'package:community_material_icon/community_material_icon.dart';
+﻿// ignore_for_file: non_constant_identifier_names
+
+import 'package:community_material_icon/community_material_icon.dart';
 import 'package:flutter/material.dart';
 
 import 'package:kitx_mobile/models/enums/device_os_type.dart';
 
-IconData Convert(DeviceOSTypeEnum os_type) {
-  switch (os_type) {
+/// Convert [DeviceOSTypeEnum] to [IconData]
+IconData Convert(DeviceOSTypeEnum osType) {
+  switch (osType) {
     case DeviceOSTypeEnum.Unknown:
       return Icons.help;
     case DeviceOSTypeEnum.Android:

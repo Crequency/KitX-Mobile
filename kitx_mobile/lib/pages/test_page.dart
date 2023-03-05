@@ -5,7 +5,9 @@ import 'package:kitx_mobile/pages/test_pages/device_info_test.dart';
 import 'package:kitx_mobile/pages/test_pages/device_sensors.dart';
 import 'package:kitx_mobile/pages/test_pages/network_info_test.dart';
 
+/// Test Page
 class TestPage extends StatefulWidget {
+  // ignore: public_member_api_docs
   const TestPage({Key? key}) : super(key: key);
 
   @override

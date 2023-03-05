@@ -1,5 +1,6 @@
 ﻿import 'package:kitx_mobile/models/third_party_data.dart';
 
+/// Third party licenses provider
 var thirdPartyDataList = [
   ThirdPartyData('flutter', 'v3.7.5', 'google', 'https://flutter.dev/', 'https://github.com/flutter/flutter'),
   ThirdPartyData(

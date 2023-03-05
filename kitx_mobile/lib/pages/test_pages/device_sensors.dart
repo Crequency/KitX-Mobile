@@ -1,9 +1,10 @@
 ﻿import 'package:flutter/material.dart';
 
-import 'package:kitx_mobile/pages/test_pages/sensors_display_stands/gyroscope_display_stand.dart';
 import 'package:kitx_mobile/pages/test_pages/sensors_display_stands/acceleration_display_stand.dart';
+import 'package:kitx_mobile/pages/test_pages/sensors_display_stands/gyroscope_display_stand.dart';
 import 'package:kitx_mobile/pages/test_pages/sensors_display_stands/vibration_display_stand.dart';
 
+/// DeviceSensors Page
 class DeviceSensorsPage extends StatefulWidget {
   @override
   _DeviceSensorsPage createState() => _DeviceSensorsPage();

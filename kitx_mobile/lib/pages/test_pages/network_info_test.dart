@@ -1,10 +1,14 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'dart:async';
 
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:network_info_plus/network_info_plus.dart';
-import 'package:flutter/material.dart';
 
+/// NetworkInfoTest Page
 class NetworkInfoTestPage extends StatefulWidget {
+  // ignore: public_member_api_docs
   const NetworkInfoTestPage({Key? key}) : super(key: key);
 
   @override

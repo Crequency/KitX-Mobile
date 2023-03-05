@@ -1,19 +1,20 @@
-import 'dart:io';
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
+
+import 'package:device_info_plus/device_info_plus.dart';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
-
-import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
-import 'package:network_info_plus/network_info_plus.dart';
-import 'package:mac_address/mac_address.dart';
 
 import 'package:kitx_mobile/models/device_info.dart';
-import 'package:kitx_mobile/utils/log.dart';
 import 'package:kitx_mobile/utils/config.dart';
 import 'package:kitx_mobile/utils/global.dart';
+import 'package:kitx_mobile/utils/log.dart';
+
+import 'package:mac_address/mac_address.dart';
+import 'package:network_info_plus/network_info_plus.dart';
 
 /// 本文件可单独运行
 /// 右键 -> 运行 'WebService.dart'
@@ -22,32 +23,38 @@ void main() {
   WidgetsFlutterBinding.ensureInitialized();
 
   var server = WebService()
-    ..UdpPortSend = 23404
-    ..UdpPortReceive = 24040
-    ..UdpBroadcastAddress = '224.0.0.0';
+    ..udpPortSend = 23404
+    ..udpPortReceive = 24040
+    ..udpBroadcastAddress = '224.0.0.0';
 
   server.initService();
 }
 
+/// WebService
 class WebService {
   var _udpPortSend = Config.WebService_UdpPortSend;
   var _udpPortReceive = Config.WebService_UdpPortReceive;
   var _udpBroadcastAddress = Config.WebService_UdpBroadcastAddress;
 
+  /// Socket Object
   late RawDatagramSocket socket;
   static final DeviceInfoPlugin _deviceInfoPlugin = DeviceInfoPlugin();
   static NetworkInfo _networkInfo = NetworkInfo();
   static final FlutterBluePlus _flutterBlue = FlutterBluePlus.instance;
 
-  set UdpPortSend(int value) => _udpPortSend = value;
+  /// Set UdpPortSend
+  set udpPortSend(int value) => _udpPortSend = value;
 
-  set UdpPortReceive(int value) => _udpPortReceive = value;
+  /// Set UdpPortReceive
+  set udpPortReceive(int value) => _udpPortReceive = value;
 
-  set UdpBroadcastAddress(String value) => _udpBroadcastAddress = value;
+  /// Set UdpBroadcastAddress
+  set udpBroadcastAddress(String value) => _udpBroadcastAddress = value;
 
   // WebService(this._udpPortReceive, this._udpPortSend, this._udpBroadcastAddress);
 
-  Future<String> GetDeviceVersionString() async {
+  /// Get Device Version String
+  Future<String> getDeviceVersionString() async {
     if (Platform.isAndroid) {
       var deviceData = await _deviceInfoPlugin.androidInfo;
       var deviceName = deviceData.model.toString();
@@ -64,7 +71,8 @@ class WebService {
     }
   }
 
-  Future<List<String>?> GetNetworkInfos() async {
+  /// Get Network Information
+  Future<List<String>?> getNetworkInfos() async {
     late String _ipv4, _ipv6, _mac;
 
     await _networkInfo.getWifiIP().then((value) {
@@ -121,17 +129,17 @@ class WebService {
       // 获取设备信息
       late String _ipv4, _ipv6, _mac, deviceOSVersion;
 
-      var networkInfos = await GetNetworkInfos();
+      var networkInfos = await getNetworkInfos();
 
-      if (networkInfos == null)
+      if (networkInfos == null) {
         return;
-      else {
+      } else {
         _ipv4 = networkInfos[0];
         _ipv6 = networkInfos[1];
         _mac = networkInfos[2];
       }
 
-      deviceOSVersion = await GetDeviceVersionString();
+      deviceOSVersion = await getDeviceVersionString();
 
       // deviceInfo 初始值
       var deviceInfo = DeviceInfoStruct(
@@ -196,7 +204,7 @@ class WebService {
 
               try {
                 var _deviceInfo = DeviceInfoStruct.fromString(_data);
-                if (_deviceInfo != null) Global.devices.addDevice(_deviceInfo);
+                if (_deviceInfo != null) Global.device.addDevice(_deviceInfo);
               } catch (e, stack) {
                 Log.error('Can not deserialize device info pack: `$_data`. Error: $e $stack');
               }

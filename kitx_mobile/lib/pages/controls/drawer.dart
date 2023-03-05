@@ -1,15 +1,17 @@
 ﻿import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import 'package:kitx_mobile/pages/about_page.dart';
+import 'package:kitx_mobile/pages/account_page.dart';
+import 'package:kitx_mobile/pages/device_page.dart';
+import 'package:kitx_mobile/pages/settings_page.dart';
+import 'package:kitx_mobile/pages/test_page.dart';
+
 import 'package:kitx_mobile/utils/global.dart';
 
-import 'package:kitx_mobile/pages/device_page.dart';
-import 'package:kitx_mobile/pages/account_page.dart';
-import 'package:kitx_mobile/pages/test_page.dart';
-import 'package:kitx_mobile/pages/settings_page.dart';
-import 'package:kitx_mobile/pages/about_page.dart';
-
+/// AppDrawer
 class AppDrawer extends StatelessWidget {
+  /// Delay time before open page
   final pageOpenDelay = 200;
 
   @override

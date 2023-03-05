@@ -1,5 +1,8 @@
-﻿import 'package:kitx_mobile/models/enums/device_os_type.dart';
+﻿// ignore_for_file: non_constant_identifier_names
 
+import 'package:kitx_mobile/models/enums/device_os_type.dart';
+
+/// Convert [DeviceOSTypeEnum] to [int]
 int Convert(DeviceOSTypeEnum type) {
   switch (type) {
     case DeviceOSTypeEnum.Unknown:
@@ -31,6 +34,7 @@ int Convert(DeviceOSTypeEnum type) {
   }
 }
 
+/// Convert [int] to [DeviceOSTypeEnum]
 DeviceOSTypeEnum ConvertBack(int type) {
   switch (type) {
     case 0:
