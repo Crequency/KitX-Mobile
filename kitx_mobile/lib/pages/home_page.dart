@@ -42,7 +42,7 @@ class _HomePageState extends State<HomePage> {
               shrinkWrap: true,
               physics: NeverScrollableScrollPhysics(),
               children: [
-                Container(height: tilesPadding),
+                SizedBox(height: tilesPadding),
                 Obx(
                   () => ListTile(
                     leading: Icon(Icons.devices),
@@ -56,7 +56,7 @@ class _HomePageState extends State<HomePage> {
                     onTap: () => Global.delay(() => Get.to(() => DevicePage()), pageOpenDelay),
                   ),
                 ),
-                Container(height: tilesPadding),
+                SizedBox(height: tilesPadding),
                 ListTile(
                   leading: Icon(Icons.alternate_email),
                   title: Text('Drawer_Account'.tr),
@@ -64,7 +64,7 @@ class _HomePageState extends State<HomePage> {
                   shape: tileRadius,
                   onTap: () => Global.delay(() => Get.to(() => AccountPage()), pageOpenDelay),
                 ),
-                Container(height: tilesPadding),
+                SizedBox(height: tilesPadding),
                 ListTile(
                   leading: Icon(Icons.bug_report),
                   title: Text('Drawer_Test'.tr),
@@ -72,7 +72,7 @@ class _HomePageState extends State<HomePage> {
                   shape: tileRadius,
                   onTap: () => Global.delay(() => Get.to(() => TestPage()), pageOpenDelay),
                 ),
-                Container(height: tilesPadding),
+                SizedBox(height: tilesPadding),
                 ListTile(
                   leading: Icon(Icons.settings),
                   title: Text('Drawer_Setting'.tr),
@@ -80,7 +80,7 @@ class _HomePageState extends State<HomePage> {
                   shape: tileRadius,
                   onTap: () => Global.delay(() => Get.to(() => SettingsPage()), pageOpenDelay),
                 ),
-                Container(height: tilesPadding),
+                SizedBox(height: tilesPadding),
                 Obx(
                   () => ListTile(
                     leading: Icon(Icons.info_outline_rounded),
@@ -91,7 +91,7 @@ class _HomePageState extends State<HomePage> {
                     onTap: () => Global.delay(() => Get.to(() => AboutPage()), pageOpenDelay),
                   ),
                 ),
-                Container(height: tilesPadding),
+                SizedBox(height: tilesPadding),
               ],
             ),
           ),
