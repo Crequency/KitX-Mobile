@@ -15,7 +15,7 @@ class DeviceRotationHost {
     pitch += x * time * perRadToDegrees;
     roll += y * time * perRadToDegrees;
 
-    // print("yaw: $yaw, pitch: $pitch, roll: $roll");
+    // print('yaw: $yaw, pitch: $pitch, roll: $roll');
   }
 
   static void Restore() {
@@ -24,5 +24,5 @@ class DeviceRotationHost {
     roll = 0;
   }
 
-  static Doubles3D GetRotationAngles() => new Doubles3D(yaw, pitch, roll);
+  static Doubles3D GetRotationAngles() => Doubles3D(yaw, pitch, roll);
 }

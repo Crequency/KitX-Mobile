@@ -1,39 +1,37 @@
 name: kitx_mobile
 description: Mobile Client for KitX
 
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
 # version: 1.0.0+1
 
 environment:
-  sdk: ">=2.17.6 <3.0.0"
-#  sdk: ">=2.7.0 <3.0.0"
+  sdk: ">=2.19.2 <3.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
-  #  flutter_localizations:
-  #    sdk: flutter
 
-  #  intl: ^0.17.0
-  #  flutter_i18n: ^0.32.4 # 国际化
+  # intl: ^0.17.0
+  # flutter_i18n: ^0.32.4 # 国际化
   get: ^4.6.5 # 路由管理
   network_info_plus: ^3.0.2 # 网络信息
   device_info_plus: ^8.0.0 # 设备信息
-  #flutter_logs: ^2.1.7 # 日志
-  #sms_receiver: ^0.4.1 # 短信接收
-  permission_handler: ^10.2.0 #权限管理
+  # flutter_logs: ^2.1.7 # 日志
+  # sms_receiver: ^0.4.1 # 短信接收
+  permission_handler: ^10.2.0 # 权限管理
   mac_address: ^1.0.0 # 获取 MAC  p.s. iOS 未实现
   community_material_icon: ^5.9.55 # Material Design Icons 社区贡献
   flutter_blue_plus: ^1.4.0
-  sensors_plus: ^2.0.1  # 传感器
+  sensors_plus: ^2.0.1 # 传感器
   vibration: ^1.7.6 # 手机震动
-  #battery_plus: ^3.0.2  # 电池数据
+  # battery_plus: ^3.0.2 # 电池数据
   built_value: ^8.4.3 # JSON 序列化
   built_collection: ^5.1.1
   package_info_plus: ^3.0.3 # 包信息
-  url_launcher: ^6.1.9 # 打开链接
-  f_logs: ^2.0.1
+  url_launcher: ^6.1.10 # 打开链接
+  f_logs: ^2.0.1 # 日志管理
+  shared_preferences: ^2.0.18
 
 dev_dependencies:
   flutter_test:
@@ -43,22 +41,12 @@ dev_dependencies:
   built_value_generator: ^8.4.2 # 生成工具
   # 使用 flutter packages pub run build_runner build 生成 g.dart 文件
 
+  # flutter_lints: ^2.0.0
+
 flutter:
   uses-material-design: true
 
   assets:
     - assets/
-
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
-  #       - asset: fonts/Schyler-Italic.ttf
-  #         style: italic
-  #   - family: Trajan Pro
-  #     fonts:
-  #       - asset: fonts/TrajanPro.ttf
-  #       - asset: fonts/TrajanPro_Bold.ttf
-  #         weight: 700
 
   generate: true #

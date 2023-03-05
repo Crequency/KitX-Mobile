@@ -10,6 +10,6 @@ class DevicesStatus extends StatefulWidget {
 class _DevicesStatusState extends State<DevicesStatus> {
   @override
   Widget build(BuildContext context) {
-    return Text("Hi");
+    return Text('Hi');
   }
 }

@@ -1,7 +1,7 @@
 ﻿import 'package:community_material_icon/community_material_icon.dart';
 import 'package:flutter/material.dart';
 
-import '../models/enums/device_os_type.dart';
+import 'package:kitx_mobile/models/enums/device_os_type.dart';
 
 IconData Convert(DeviceOSTypeEnum os_type) {
   switch (os_type) {

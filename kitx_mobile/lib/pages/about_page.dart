@@ -2,12 +2,10 @@ import 'package:community_material_icon/community_material_icon.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:package_info_plus/package_info_plus.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:vibration/vibration.dart';
 
-import '../data/third_party_licenses_provider.dart';
-import '../utils/global.dart';
+import 'package:kitx_mobile/data/third_party_licenses_provider.dart';
+import 'package:kitx_mobile/utils/global.dart';
 
 class AboutPage extends StatefulWidget {
   const AboutPage({Key? key}) : super(key: key);
@@ -17,12 +15,20 @@ class AboutPage extends StatefulWidget {
 }
 
 class _AboutPageState extends State<AboutPage> {
-  final version = "getting ...".obs;
-  final iconEntering = false.obs;
-  final iconEntered = false.obs;
-  final titleEntered = false.obs;
+  // final iconEntering = false.obs;
+  // final iconEntered = false.obs;
+  // final titleEntered = false.obs;
 
-  bool contentEntering = false;
+  final iconEntering = (!Global.animationEnabled.value).obs;
+  final iconEntered = (!Global.animationEnabled.value).obs;
+  final titleEntered = (!Global.animationEnabled.value).obs;
+
+  final titleDisplay = true.obs;
+  final versionDisplay = true.obs;
+
+  var contentEntering = !Global.animationEnabled.value;
+
+  var _scrollController = ScrollController();
 
   final thirdPartyDataDisplayCount = 1.obs;
 
@@ -36,35 +42,55 @@ class _AboutPageState extends State<AboutPage> {
 
   @override
   void initState() {
-    var packageInfo = PackageInfo.fromPlatform();
-    packageInfo.then((value) => version.value = value.version);
+    _scrollController.addListener(() {
+      // print('Scroller offset: ${_scrollController.offset}');
 
-    Future.delayed(Duration(milliseconds: 150))
-        .then((value) => iconEntering.value = true);
+      if (Global.animationEnabled.value) {
+        var offset = _scrollController.offset;
 
-    Future.delayed(Duration(milliseconds: 400))
-        .then((value) => iconEntered.value = true);
+        if (offset >= 50) {
+          if (titleDisplay.value) titleDisplay.value = false;
+        } else if (offset >= 5) {
+          if (!titleDisplay.value) titleDisplay.value = true;
+          if (versionDisplay.value) versionDisplay.value = false;
+        } else {
+          if (!titleDisplay.value) titleDisplay.value = true;
+          if (!versionDisplay.value) versionDisplay.value = true;
+        }
+      }
+    });
 
-    Future.delayed(Duration(milliseconds: 600))
-        .then((value) => titleEntered.value = true);
+    if (Global.animationEnabled.value) {
+      Future.delayed(Duration(milliseconds: 150)).then((value) => iconEntering.value = true);
 
-    Future.delayed(Duration(milliseconds: 0))
-        .then((value) => super.setState(() {
-              contentEntering = true;
-            }));
+      Future.delayed(Duration(milliseconds: 400)).then((value) => iconEntered.value = true);
+
+      Future.delayed(Duration(milliseconds: 600)).then((value) => titleEntered.value = true);
+
+      Future.delayed(Duration(milliseconds: 0)).then((value) => super.setState(() {
+            contentEntering = true;
+          }));
+    }
 
     super.initState();
   }
 
+  @override
+  void dispose() {
+    _scrollController.dispose();
+
+    super.dispose();
+  }
+
   Widget getFlexibleSpaceControl(BuildContext context) {
     return FlexibleSpaceBar(
-      // title: Text("AboutPage_Title".tr),
+      // title: Text('AboutPage_Title'.tr),
       centerTitle: true,
       collapseMode: CollapseMode.parallax,
       background: ListView(
         physics: NeverScrollableScrollPhysics(),
         children: [
-          Container(height: 30),
+          SizedBox(height: 30),
           Obx(
             () => AnimatedContainer(
               duration: const Duration(milliseconds: 800),
@@ -88,7 +114,7 @@ class _AboutPageState extends State<AboutPage> {
                   onTap: () async => await vibrate(),
                   child: const Image(
                     alignment: Alignment.center,
-                    image: AssetImage("assets/KitX-Icon-1920x-margin-2x.png"),
+                    image: AssetImage('assets/KitX-Icon-1920x-margin-2x.png'),
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -101,11 +127,11 @@ class _AboutPageState extends State<AboutPage> {
               children: [
                 Obx(
                   () => AnimatedOpacity(
-                    opacity: iconEntered.value ? 1 : 0,
+                    opacity: iconEntered.value && titleDisplay.value ? 1 : 0,
                     duration: Duration(milliseconds: 300),
                     curve: Curves.easeInCubic,
                     child: const Text(
-                      "KitX",
+                      'KitX',
                       style: TextStyle(
                         // color: Colors.white,
                         fontSize: 50,
@@ -115,11 +141,11 @@ class _AboutPageState extends State<AboutPage> {
                 ),
                 Obx(
                   () => AnimatedOpacity(
-                    opacity: titleEntered.value ? 1 : 0,
+                    opacity: titleEntered.value && versionDisplay.value ? 1 : 0,
                     duration: Duration(milliseconds: 500),
                     curve: Curves.easeInOutCubic,
                     child: Text(
-                      "${"AboutPage_Version".tr}: ${version.value}",
+                      '${'AboutPage_Version'.tr}: ${Global.versionString.value}',
                       // style: TextStyle(color: Colors.white),
                     ),
                   ),
@@ -137,6 +163,7 @@ class _AboutPageState extends State<AboutPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: CustomScrollView(
+        controller: _scrollController,
         slivers: [
           SliverAppBar(
             pinned: true,
@@ -144,12 +171,13 @@ class _AboutPageState extends State<AboutPage> {
             floating: false,
             // expandedHeight: entered ? 380.0 : 380.0,
             expandedHeight: 345.0,
-            title: Text("AboutPage_Title".tr),
+            title: Text('AboutPage_Title'.tr),
             flexibleSpace: getFlexibleSpaceControl(context),
           ),
           SliverList(
             delegate: SliverChildBuilderDelegate(
-              (BuildContext context, int index) {
+              childCount: 1,
+              (context, index) {
                 return ListView(
                   shrinkWrap: true,
                   physics: NeverScrollableScrollPhysics(),
@@ -159,16 +187,20 @@ class _AboutPageState extends State<AboutPage> {
                       curve: Curves.easeInOutCubicEmphasized,
                       height: contentEntering ? 0 : 800,
                     ),
+                    SizedBox(height: 30),
                     AnimatedOpacity(
                       duration: Duration(milliseconds: 800),
                       curve: Curves.easeInCubic,
                       opacity: contentEntering ? 1 : 0,
                       child: Container(
-                          alignment: Alignment.center,
-                          child: Text("AboutPage_Contributors".tr,
-                              style: TextStyle(fontSize: 20))),
+                        alignment: Alignment.center,
+                        child: Text(
+                          'AboutPage_Contributors'.tr,
+                          style: TextStyle(fontSize: 20),
+                        ),
+                      ),
                     ),
-                    Container(height: 30),
+                    SizedBox(height: 60),
                     AnimatedOpacity(
                       duration: Duration(milliseconds: 800),
                       curve: Curves.easeInCubic,
@@ -177,37 +209,77 @@ class _AboutPageState extends State<AboutPage> {
                         height: 40,
                         padding: EdgeInsets.symmetric(horizontal: 15),
                         alignment: Alignment.center,
-                        child: ListView(
-                            shrinkWrap: true,
-                            scrollDirection: Axis.horizontal,
-                            physics: BouncingScrollPhysics(),
-                            children: [
-                              Chip(label: const Text("Dynesshely")),
-                              Container(width: 10),
-                              Chip(label: const Text("LYF511")),
-                              Container(width: 10),
-                              Chip(label: const Text("orzMaster")),
-                            ]),
+                        child: ShaderMask(
+                          shaderCallback: (Rect rect) {
+                            return LinearGradient(
+                              begin: Alignment.centerLeft,
+                              end: Alignment.centerRight,
+                              colors: [
+                                Colors.indigo,
+                                Colors.transparent,
+                                Colors.transparent,
+                                Colors.indigo,
+                              ],
+                              stops: [0.0, 0.05, 0.95, 1.0], // 10% indigo, 80% transparent, 10% purple
+                            ).createShader(rect);
+                          },
+                          blendMode: BlendMode.dstOut,
+                          child: ListView(
+                              shrinkWrap: true,
+                              scrollDirection: Axis.horizontal,
+                              physics: BouncingScrollPhysics(),
+                              children: [
+                                AnimatedContainer(
+                                  duration: const Duration(milliseconds: 1200),
+                                  curve: Curves.easeInOutCubicEmphasized,
+                                  width: contentEntering ? 15 : 800,
+                                ),
+                                Chip(
+                                  label: const Text('Dynesshely'),
+                                  deleteIcon: const Icon(Icons.open_in_new),
+                                  onDeleted: () => Global.openUrl('https://github.com/Dynesshely'),
+                                  deleteButtonTooltipMessage: '',
+                                ),
+                                SizedBox(width: 10),
+                                Chip(
+                                  label: const Text('LYF511'),
+                                  deleteIcon: const Icon(Icons.open_in_new),
+                                  onDeleted: () => Global.openUrl('https://github.com/LYF511'),
+                                  deleteButtonTooltipMessage: '',
+                                ),
+                                SizedBox(width: 10),
+                                Chip(
+                                  label: const Text('orzMaster'),
+                                  deleteIcon: const Icon(Icons.open_in_new),
+                                  onDeleted: () => Global.openUrl('https://github.com/orzMaster'),
+                                  deleteButtonTooltipMessage: '',
+                                ),
+                                SizedBox(width: 15),
+                              ]),
+                        ),
                       ),
                     ),
-                    Container(height: 30),
+                    SizedBox(height: 30),
                     Divider(),
                     AnimatedContainer(
                       duration: Duration(milliseconds: 1000),
                       curve: Curves.easeInOutCubicEmphasized,
                       height: contentEntering ? 20 : 1600,
                     ),
-                    Container(height: 60),
+                    SizedBox(height: 60),
                     AnimatedOpacity(
                       duration: Duration(milliseconds: 1100),
                       curve: Curves.easeInCubic,
                       opacity: contentEntering ? 1 : 0,
                       child: Container(
-                          alignment: Alignment.center,
-                          child: Text("AboutPage_Repos".tr,
-                              style: TextStyle(fontSize: 20))),
+                        alignment: Alignment.center,
+                        child: Text(
+                          'AboutPage_Repos'.tr,
+                          style: TextStyle(fontSize: 20),
+                        ),
+                      ),
                     ),
-                    Container(height: 30),
+                    SizedBox(height: 30),
                     AnimatedOpacity(
                       duration: Duration(milliseconds: 1100),
                       curve: Curves.easeInCubic,
@@ -222,35 +294,38 @@ class _AboutPageState extends State<AboutPage> {
                             padding: EdgeInsets.all(10),
                             children: [
                               ElevatedButton(
-                                  onPressed: () => launchUrl(Uri.parse(
-                                      "https://github.com/Crequency/KitX")),
-                                  child: Text("GitHub")),
+                                onPressed: () => Global.openUrl('https://github.com/Crequency/KitX'),
+                                child: Text('GitHub'),
+                              ),
                               Container(width: 10),
                               ElevatedButton(
-                                  onPressed: () => launchUrl(Uri.parse(
-                                      "https://gitee.com/Crequency/KitX")),
-                                  child: Text("Gitee")),
+                                onPressed: () => Global.openUrl('https://gitee.com/Crequency/KitX'),
+                                child: Text('Gitee'),
+                              ),
                             ]),
                       ),
                     ),
-                    Container(height: 30),
+                    SizedBox(height: 30),
                     Divider(),
                     AnimatedContainer(
                       duration: Duration(milliseconds: 1000),
                       curve: Curves.easeInOutCubicEmphasized,
                       height: contentEntering ? 20 : 2400,
                     ),
-                    Container(height: 60),
+                    SizedBox(height: 60),
                     AnimatedOpacity(
                       duration: Duration(milliseconds: 1400),
                       curve: Curves.easeInCubic,
                       opacity: contentEntering ? 1 : 0,
                       child: Container(
-                          alignment: Alignment.center,
-                          child: Text("AboutPage_ThirdPartyLicenses".tr,
-                              style: TextStyle(fontSize: 20))),
+                        alignment: Alignment.center,
+                        child: Text(
+                          'AboutPage_ThirdPartyLicenses'.tr,
+                          style: TextStyle(fontSize: 20),
+                        ),
+                      ),
                     ),
-                    Container(height: 30),
+                    SizedBox(height: 30),
                     AnimatedOpacity(
                       duration: Duration(milliseconds: 1400),
                       curve: Curves.easeInCubic,
@@ -263,47 +338,46 @@ class _AboutPageState extends State<AboutPage> {
                           itemCount: thirdPartyDataDisplayCount.value,
                           itemBuilder: thirdPartyLicenseBuilder,
                         ),
-                        // child: Text("AboutPage_JoinUS_Text".tr),
                       ),
                     ),
                     AnimatedContainer(
-                        height: thirdPartyDataDisplayCount.value !=
-                                thirdPartyDataList.length
-                            ? 55
-                            : 0,
-                        duration: Duration(milliseconds: 1000),
-                        padding: EdgeInsets.fromLTRB(20, 0, 20, 15),
-                        child: ElevatedButton(
-                            onPressed: () => Global.delay(
-                                () => super.setState(() {
-                                      thirdPartyDataDisplayCount.value =
-                                          thirdPartyDataList.length;
-                                    }),
-                                200),
-                            child: Text(
-                                "AboutPage_ThirdPartyLicenses_DisplayAll".tr))),
-                    Container(height: 30),
+                      height: thirdPartyDataDisplayCount.value != thirdPartyDataList.length ? 55 : 0,
+                      duration: Duration(milliseconds: 1000),
+                      padding: EdgeInsets.fromLTRB(20, 0, 20, 15),
+                      child: ElevatedButton(
+                        onPressed: () => Global.delay(
+                            () => super.setState(() {
+                                  thirdPartyDataDisplayCount.value = thirdPartyDataList.length;
+                                }),
+                            200),
+                        child: Text('AboutPage_ThirdPartyLicenses_DisplayAll'.tr),
+                      ),
+                    ),
+                    SizedBox(height: 30),
                     Divider(),
                     AnimatedContainer(
                       duration: Duration(milliseconds: 1000),
                       curve: Curves.easeInOutCubicEmphasized,
                       height: contentEntering ? 20 : 3200,
                     ),
-                    Container(height: 60),
+                    SizedBox(height: 60),
                     Container(
-                        alignment: Alignment.center,
-                        child: Text("AboutPage_JoinUS".tr,
-                            style: TextStyle(fontSize: 20))),
+                      alignment: Alignment.center,
+                      child: Text(
+                        'AboutPage_JoinUS'.tr,
+                        style: TextStyle(fontSize: 20),
+                      ),
+                    ),
                     Divider(),
                     Container(
-                        padding: EdgeInsets.all(20),
-                        child: Text("AboutPage_JoinUS_Text".tr)),
+                      padding: EdgeInsets.all(20),
+                      child: Text('AboutPage_JoinUS_Text'.tr),
+                    ),
                     Divider(),
-                    Container(height: 500),
+                    SizedBox(height: 500),
                   ],
                 );
               },
-              childCount: 1,
             ),
           ),
         ],
@@ -315,52 +389,54 @@ class _AboutPageState extends State<AboutPage> {
     var thirdPartyData = thirdPartyDataList[index];
     var url = thirdPartyData.ThirdPartyUrl;
     var repo = thirdPartyData.ThirdPartyRepo;
+
     return Card(
+      clipBehavior: Clip.hardEdge,
       child: SizedBox(
         width: 300,
         height: 50,
         child: InkWell(
-          splashColor: Colors.blue.withAlpha(30),
-          onTap: () => print("${thirdPartyData.ThirdPartyName} tapped."),
+          splashColor: context.iconColor?.withOpacity(0.3),
+          onTap: () => print('${thirdPartyData.ThirdPartyName} tapped.'),
           child: ListView(
-              shrinkWrap: true,
-              padding: EdgeInsets.all(10),
-              scrollDirection: Axis.horizontal,
-              physics: BouncingScrollPhysics(),
-              children: [
-                IconButton(
-                  alignment: Alignment.center,
-                  splashRadius: 20,
-                  padding: const EdgeInsets.all(0),
-                  iconSize: 24,
-                  icon: url?.contains("pub.dev") ?? false
-                      ? const Icon(CommunityMaterialIcons.link)
-                      : const Icon(CommunityMaterialIcons.link),
-                  onPressed: () =>
-                      launchUrl(Uri.parse(thirdPartyData.ThirdPartyUrl ?? "")),
+            shrinkWrap: true,
+            padding: EdgeInsets.all(10),
+            scrollDirection: Axis.horizontal,
+            physics: BouncingScrollPhysics(),
+            children: [
+              IconButton(
+                alignment: Alignment.center,
+                splashRadius: 20,
+                padding: const EdgeInsets.all(0),
+                iconSize: 24,
+                icon: url?.contains('pub.dev') ?? false
+                    ? const Icon(CommunityMaterialIcons.link)
+                    : const Icon(CommunityMaterialIcons.link),
+                onPressed: () => Global.openUrl(thirdPartyData.ThirdPartyUrl ?? ''),
+              ),
+              IconButton(
+                alignment: Alignment.center,
+                splashRadius: 20,
+                padding: const EdgeInsets.all(0),
+                iconSize: 24,
+                icon: repo?.contains('github.com') ?? false
+                    ? const Icon(CommunityMaterialIcons.github)
+                    : const Icon(CommunityMaterialIcons.link),
+                onPressed: () => Global.openUrl(thirdPartyData.ThirdPartyRepo ?? ''),
+              ),
+              Container(
+                alignment: Alignment.center,
+                child: Text(
+                  thirdPartyData.ThirdPartyName ?? 'null',
+                  style: TextStyle(fontSize: 20),
                 ),
-                IconButton(
-                  alignment: Alignment.center,
-                  splashRadius: 20,
-                  padding: const EdgeInsets.all(0),
-                  iconSize: 24,
-                  icon: repo?.contains("github.com") ?? false
-                      ? const Icon(CommunityMaterialIcons.github)
-                      : const Icon(CommunityMaterialIcons.link),
-                  onPressed: () =>
-                      launchUrl(Uri.parse(thirdPartyData.ThirdPartyRepo ?? "")),
-                ),
-                Container(
-                    alignment: Alignment.center,
-                    child: Text(
-                      thirdPartyData.ThirdPartyName ?? "null",
-                      style: TextStyle(fontSize: 20),
-                    )),
-                Text(
-                  thirdPartyData.ThirdPartyVersion ?? "null",
-                  style: TextStyle(fontSize: 12),
-                ),
-              ]),
+              ),
+              Text(
+                thirdPartyData.ThirdPartyVersion ?? 'null',
+                style: TextStyle(fontSize: 12),
+              ),
+            ],
+          ),
         ),
       ),
     );

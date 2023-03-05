@@ -4,14 +4,14 @@ import 'package:f_logs/model/flog/log_level.dart';
 import 'package:f_logs/utils/formatter/formate_type.dart';
 import 'package:f_logs/utils/timestamp/timestamp_format.dart';
 
-LogsConfig config = LogsConfig()
+var config = LogsConfig()
   ..isDebuggable = true
-  ..customOpeningDivider = "["
-  ..customClosingDivider = "]"
-  ..csvDelimiter = ", "
+  ..customOpeningDivider = '['
+  ..customClosingDivider = ']'
+  ..csvDelimiter = ', '
   // ..isLogEnabled = true
   ..encryptionEnabled = false
-  ..encryptionKey = ""
+  ..encryptionKey = ''
   ..formatType = FormatType.FORMAT_CUSTOM
   ..logLevelsEnabled = [LogLevel.INFO, LogLevel.ERROR]
   ..timestampFormat = TimestampFormat.TIME_FORMAT_FULL_2;

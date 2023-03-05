@@ -5,5 +5,5 @@
 //   // Platform messages may fail, so we use a try/catch PlatformException.
 //   final receivedIntent = await ReceiveIntent.getInitialIntent();
 //     // Validate receivedIntent and warn the user, if it is not correct,
-//     // but keep in mind it could be `null` or "empty"(`receivedIntent.isNull`).
+//     // but keep in mind it could be `null` or 'empty'(`receivedIntent.isNull`).
 // }

@@ -1,8 +1,8 @@
 ﻿import 'package:flutter/material.dart';
 import 'package:sensors_plus/sensors_plus.dart';
 
-import '../../../utils/acceleration_emulator.dart';
-import '../../../utils/rotation_emulator.dart';
+import 'package:kitx_mobile/utils/acceleration_emulator.dart';
+import 'package:kitx_mobile/utils/rotation_emulator.dart';
 
 class DeviceRotationDisplayStand extends StatefulWidget {
   @override
@@ -35,11 +35,12 @@ class DeviceRotationDisplayStandState extends State<DeviceRotationDisplayStand> 
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Container(
-          padding: EdgeInsets.all(10),
+          padding: EdgeInsets.symmetric(vertical: 20),
           child: InkWell(
+            borderRadius: BorderRadius.all(Radius.elliptical(10, 10)),
             child: CustomPaint(
               isComplex: true,
-              size: new Size(canvas_width - 60, canvas_height),
+              size: Size(canvas_width - 60, canvas_height),
               willChange: true,
               painter: Painter(),
             ),
@@ -52,9 +53,9 @@ class DeviceRotationDisplayStandState extends State<DeviceRotationDisplayStand> 
 }
 
 class Painter extends CustomPainter {
-  double object_width = 135, object_height = 240;
+  var object_width = 135, object_height = 240;
 
-  Point Camera = new Point(0, 0, 800);
+  var Camera = Point(0, 0, 800);
 
   double abs(double num) => num >= 0 ? num : -num;
 
@@ -62,29 +63,29 @@ class Painter extends CustomPainter {
   Doubles3D GetRotationAngles() => DeviceRotationHost.GetRotationAngles();
 
   Point? GetLeftBarPoint() => GetCrossPoint(
-      Rotate(new Point(-object_width / 2 + object_width / 4, -object_height / 2 + object_height / 24, 0),
+      Rotate(Point(-object_width / 2 + object_width / 4, -object_height / 2 + object_height / 24, 0),
           GetRotationAngles()),
       Camera,
       null,
       null);
   Point? GetRightBarPoint() => GetCrossPoint(
-      Rotate(new Point(object_width / 2 - object_width / 4, -object_height / 2 + object_height / 24, 0),
+      Rotate(Point(object_width / 2 - object_width / 4, -object_height / 2 + object_height / 24, 0),
           GetRotationAngles()),
       Camera,
       null,
       null);
 
   Point? GetLeftTopPoint() => GetCrossPoint(
-      Rotate(new Point(-object_width / 2, object_height / 2, 0), GetRotationAngles()), Camera, null, null);
+      Rotate(Point(-object_width / 2, object_height / 2, 0), GetRotationAngles()), Camera, null, null);
   Point? GetRightTopPoint() => GetCrossPoint(
-      Rotate(new Point(object_width / 2, object_height / 2, 0), GetRotationAngles()), Camera, null, null);
+      Rotate(Point(object_width / 2, object_height / 2, 0), GetRotationAngles()), Camera, null, null);
   Point? GetRightBottomPoint() => GetCrossPoint(
-      Rotate(new Point(object_width / 2, -object_height / 2, 0), GetRotationAngles()), Camera, null, null);
+      Rotate(Point(object_width / 2, -object_height / 2, 0), GetRotationAngles()), Camera, null, null);
   Point? GetLeftBottomPoint() => GetCrossPoint(
-      Rotate(new Point(-object_width / 2, -object_height / 2, 0), GetRotationAngles()), Camera, null, null);
+      Rotate(Point(-object_width / 2, -object_height / 2, 0), GetRotationAngles()), Camera, null, null);
 
-  Offset ToOffset(Point p) => new Offset(p.x, p.y);
-  Offset ToCenter(Offset p, double width, double height) => new Offset(
+  Offset ToOffset(Point p) => Offset(p.x, p.y);
+  Offset ToCenter(Offset p, double width, double height) => Offset(
       p.dx > 0 ? width / 2 + p.dx : width / 2 - abs(p.dx),
       p.dy > 0 ? height / 2 - p.dy : height / 2 + abs(p.dy));
   Offset ToScreen(Point p, Size size) => ToCenter(ToOffset(p), size.width, size.height);
@@ -92,7 +93,7 @@ class Painter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     var angles = GetRotationAngles();
-    bool isBack = abs(angles.y) > 90 || abs(angles.z) > 90;
+    var isBack = abs(angles.y) > 90 || abs(angles.z) > 90;
     var paint = Paint()
       ..color = isBack ? Colors.blue : Colors.red
       ..strokeWidth = 1.0;

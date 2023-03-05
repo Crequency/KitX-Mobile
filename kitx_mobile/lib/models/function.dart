@@ -8,8 +8,7 @@ import 'serializers.dart';
 
 part 'function.g.dart';
 
-abstract class PluginFunction
-    implements Built<PluginFunction, PluginFunctionBuilder> {
+abstract class PluginFunction implements Built<PluginFunction, PluginFunctionBuilder> {
   @BuiltValueField(wireName: 'Name')
   String get Name;
 
@@ -29,8 +28,7 @@ abstract class PluginFunction
   String get returnValueType;
 
   PluginFunction._();
-  factory PluginFunction([void Function(PluginFunctionBuilder) updates]) =
-      _$PluginFunction;
+  factory PluginFunction([void Function(PluginFunctionBuilder) updates]) = _$PluginFunction;
 
   Object? toJson() {
     return serializers.serializeWith(PluginFunction.serializer, this);
@@ -38,8 +36,7 @@ abstract class PluginFunction
 
   @override
   String toString() {
-    return json
-        .encode(serializers.serializeWith(PluginFunction.serializer, this));
+    return json.encode(serializers.serializeWith(PluginFunction.serializer, this));
   }
 
   static PluginFunction? fromJson(Map<String, dynamic> json) {
@@ -47,10 +44,8 @@ abstract class PluginFunction
   }
 
   static PluginFunction? fromString(String jsonString) {
-    return serializers.deserializeWith(
-        PluginFunction.serializer, json.decode(jsonString));
+    return serializers.deserializeWith(PluginFunction.serializer, json.decode(jsonString));
   }
 
-  static Serializer<PluginFunction> get serializer =>
-      _$pluginFunctionSerializer;
+  static Serializer<PluginFunction> get serializer => _$pluginFunctionSerializer;
 }

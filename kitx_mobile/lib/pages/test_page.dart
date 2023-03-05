@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'test_pages/device_info_test.dart';
-import 'test_pages/device_sensors.dart';
-import 'test_pages/network_info_test.dart';
+import 'package:kitx_mobile/pages/test_pages/device_info_test.dart';
+import 'package:kitx_mobile/pages/test_pages/device_sensors.dart';
+import 'package:kitx_mobile/pages/test_pages/network_info_test.dart';
 
 class TestPage extends StatefulWidget {
   const TestPage({Key? key}) : super(key: key);
@@ -27,7 +27,7 @@ class _TestPageState extends State<TestPage> with SingleTickerProviderStateMixin
       body: NestedScrollView(
         headerSliverBuilder: (context, innerBoxIsScrolled) => [
           SliverAppBar(
-            title: Text("TestPage_Title".tr),
+            title: Text('TestPage_Title'.tr),
             pinned: true,
             snap: true,
             floating: true,
@@ -36,15 +36,15 @@ class _TestPageState extends State<TestPage> with SingleTickerProviderStateMixin
               controller: _tabController,
               tabs: <Tab>[
                 Tab(
-                  text: "Device Info",
+                  text: 'Device Info',
                   icon: Icon(Icons.devices),
                 ),
                 Tab(
-                  text: "Device Sensors",
+                  text: 'Device Sensors',
                   icon: Icon(Icons.sensors),
                 ),
                 Tab(
-                  text: "Network Info",
+                  text: 'Network Info',
                   icon: Icon(Icons.wifi),
                 ),
               ],
