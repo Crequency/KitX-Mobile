@@ -217,6 +217,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   var nowSize = file.lengthSync();
                   var nowSizeString = convert2string(nowSize);
 
+                  updateLogFileSizeString();
                   showSnackBar(Text('$beforeSizeString -> $nowSizeString'));
                 }, 200);
               },
