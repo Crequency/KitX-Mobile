@@ -32,6 +32,8 @@ class _SettingsPageState extends State<SettingsPage> {
     var file = File(logFilePath);
     if (file.existsSync()) {
       logFileSizeString.value = convert2string(file.lengthSync());
+    } else {
+      logFileSizeString.value = 'File $logFilePath don\'t exists';
     }
   }
 
@@ -193,7 +195,10 @@ class _SettingsPageState extends State<SettingsPage> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Obx(() => Text(logFileSizeString.value)),
+              Container(
+                width: MediaQuery.of(context).size.width / 3 * 2,
+                child: Obx(() => Text(logFileSizeString.value)),
+              ),
               SizedBox(width: 10),
               IconButton(
                 onPressed: updateLogFileSizeString,
