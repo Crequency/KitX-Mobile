@@ -23,10 +23,11 @@ class SettingsPage extends StatefulWidget {
 
 class _SettingsPageState extends State<SettingsPage> {
   var selectedModes = <ThemeMode>{Global.themeModeNotifier.value};
-  var logFilePath = '/data/data/com.crequency.kitx.kitx_mobile/app_flutter/flog.db';
+  var logFilePath = '/data/data/com.crequency.kitx.mobile/app_flutter/flog.db';
 
   var useMaterial3 = lightThemeData.value.useMaterial3.obs;
   var logFileSizeString = 'getting ...'.obs;
+  var logFileExists = false.obs;
 
   void updateLogFileSizeString() {
     var file = File(logFilePath);
@@ -195,9 +196,13 @@ class _SettingsPageState extends State<SettingsPage> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Container(
-                width: MediaQuery.of(context).size.width / 3 * 2,
-                child: Obx(() => Text(logFileSizeString.value)),
+              Obx(
+                () => AnimatedContainer(
+                  duration: Duration(milliseconds: 700),
+                  curve: Curves.easeInOutCubic,
+                  width: logFileExists.value ? null : MediaQuery.of(context).size.width / 3 * 2,
+                  child: Text(logFileSizeString.value),
+                ),
               ),
               SizedBox(width: 10),
               IconButton(
@@ -210,45 +215,42 @@ class _SettingsPageState extends State<SettingsPage> {
           Container(
             alignment: Alignment.center,
             child: ElevatedButton(
-              onPressed: () async {
-                Global.delay(() async {
-                  var beforeSize = 0;
-                  var beforeSizeString = convert2string(beforeSize);
-                  var nowSize = 0;
-                  var nowSizeString = convert2string(nowSize);
-                  var fileExist = false;
+              onPressed: () => Global.delay(() async {
+                var beforeSize = 0;
+                var beforeSizeString = convert2string(beforeSize);
+                var nowSize = 0;
+                var nowSizeString = convert2string(nowSize);
 
-                  var file = File(logFilePath);
+                var file = File(logFilePath);
 
-                  if (file.existsSync()) {
-                    fileExist = true;
+                if (file.existsSync()) {
+                  logFileExists.value = true;
 
-                    beforeSize = file.lengthSync();
-                    beforeSizeString = convert2string(beforeSize);
-                  }
+                  beforeSize = file.lengthSync();
+                  beforeSizeString = convert2string(beforeSize);
+                }
 
-                  if (fileExist) {
-                    await FLog.clearLogs();
-                  } else {
-                    FLog.clearLogs();
-                  }
+                if (logFileExists.value) {
+                  await FLog.clearLogs();
+                } else {
+                  FLog.clearLogs();
+                }
 
-                  file = File(logFilePath);
+                file = File(logFilePath);
 
-                  if (fileExist) {
-                    nowSize = file.lengthSync();
-                    nowSizeString = convert2string(nowSize);
-                  }
+                if (logFileExists.value) {
+                  nowSize = file.lengthSync();
+                  nowSizeString = convert2string(nowSize);
+                }
 
-                  updateLogFileSizeString();
+                updateLogFileSizeString();
 
-                  if (fileExist) {
-                    showSnackBar(Text('$beforeSizeString -> $nowSizeString'));
-                  } else {
-                    showSnackBar(Text('Log file clean action requested.'));
-                  }
-                }, 200);
-              },
+                if (logFileExists.value) {
+                  showSnackBar(Text('$beforeSizeString -> $nowSizeString'));
+                } else {
+                  showSnackBar(Text('Log file clean action requested.'));
+                }
+              }, 200),
               child: Text('SettingsPage_CleanLog'.tr),
             ),
           ),
