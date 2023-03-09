@@ -212,18 +212,41 @@ class _SettingsPageState extends State<SettingsPage> {
             child: ElevatedButton(
               onPressed: () async {
                 Global.delay(() async {
-                  var file = File(logFilePath);
-                  var beforeSize = file.lengthSync();
+                  var beforeSize = 0;
                   var beforeSizeString = convert2string(beforeSize);
+                  var nowSize = 0;
+                  var nowSizeString = convert2string(nowSize);
+                  var fileExist = false;
 
-                  await FLog.clearLogs();
+                  var file = File(logFilePath);
+
+                  if (file.existsSync()) {
+                    fileExist = true;
+
+                    beforeSize = file.lengthSync();
+                    beforeSizeString = convert2string(beforeSize);
+                  }
+
+                  if (fileExist) {
+                    await FLog.clearLogs();
+                  } else {
+                    FLog.clearLogs();
+                  }
 
                   file = File(logFilePath);
-                  var nowSize = file.lengthSync();
-                  var nowSizeString = convert2string(nowSize);
+
+                  if (fileExist) {
+                    nowSize = file.lengthSync();
+                    nowSizeString = convert2string(nowSize);
+                  }
 
                   updateLogFileSizeString();
-                  showSnackBar(Text('$beforeSizeString -> $nowSizeString'));
+
+                  if (fileExist) {
+                    showSnackBar(Text('$beforeSizeString -> $nowSizeString'));
+                  } else {
+                    showSnackBar(Text('Log file clean action requested.'));
+                  }
                 }, 200);
               },
               child: Text('SettingsPage_CleanLog'.tr),
