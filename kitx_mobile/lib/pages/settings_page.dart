@@ -33,8 +33,10 @@ class _SettingsPageState extends State<SettingsPage> {
     var file = File(logFilePath);
     if (file.existsSync()) {
       logFileSizeString.value = convert2string(file.lengthSync());
+      logFileExists.value = true;
     } else {
       logFileSizeString.value = 'File $logFilePath don\'t exists';
+      logFileExists.value = false;
     }
   }
 
