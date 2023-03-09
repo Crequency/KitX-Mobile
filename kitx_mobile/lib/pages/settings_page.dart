@@ -30,7 +30,9 @@ class _SettingsPageState extends State<SettingsPage> {
 
   void updateLogFileSizeString() {
     var file = File(logFilePath);
-    logFileSizeString.value = convert2string(file.lengthSync());
+    if (file.existsSync()) {
+      logFileSizeString.value = convert2string(file.lengthSync());
+    }
   }
 
   void showSnackBar(Widget content, {Duration? duration}) {
