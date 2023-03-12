@@ -23,14 +23,21 @@ class SettingsPage extends StatefulWidget {
 
 class _SettingsPageState extends State<SettingsPage> {
   var selectedModes = <ThemeMode>{Global.themeModeNotifier.value};
-  var logFilePath = '/data/data/com.crequency.kitx.kitx_mobile/app_flutter/flog.db';
+  var logFilePath = '/data/data/com.crequency.kitx.mobile/app_flutter/flog.db';
 
   var useMaterial3 = lightThemeData.value.useMaterial3.obs;
   var logFileSizeString = 'getting ...'.obs;
+  var logFileExists = false.obs;
 
   void updateLogFileSizeString() {
     var file = File(logFilePath);
-    logFileSizeString.value = convert2string(file.lengthSync());
+    if (file.existsSync()) {
+      logFileSizeString.value = convert2string(file.lengthSync());
+      logFileExists.value = true;
+    } else {
+      logFileSizeString.value = 'File $logFilePath don\'t exists';
+      logFileExists.value = false;
+    }
   }
 
   void showSnackBar(Widget content, {Duration? duration}) {
@@ -191,7 +198,14 @@ class _SettingsPageState extends State<SettingsPage> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Obx(() => Text(logFileSizeString.value)),
+              Obx(
+                () => AnimatedContainer(
+                  duration: Duration(milliseconds: 700),
+                  curve: Curves.easeInOutCubic,
+                  width: logFileExists.value ? null : MediaQuery.of(context).size.width / 3 * 2,
+                  child: Text(logFileSizeString.value),
+                ),
+              ),
               SizedBox(width: 10),
               IconButton(
                 onPressed: updateLogFileSizeString,
@@ -203,21 +217,42 @@ class _SettingsPageState extends State<SettingsPage> {
           Container(
             alignment: Alignment.center,
             child: ElevatedButton(
-              onPressed: () async {
-                Global.delay(() async {
-                  var file = File(logFilePath);
-                  var beforeSize = file.lengthSync();
-                  var beforeSizeString = convert2string(beforeSize);
+              onPressed: () => Global.delay(() async {
+                var beforeSize = 0;
+                var beforeSizeString = convert2string(beforeSize);
+                var nowSize = 0;
+                var nowSizeString = convert2string(nowSize);
 
+                var file = File(logFilePath);
+
+                if (file.existsSync()) {
+                  logFileExists.value = true;
+
+                  beforeSize = file.lengthSync();
+                  beforeSizeString = convert2string(beforeSize);
+                }
+
+                if (logFileExists.value) {
                   await FLog.clearLogs();
+                } else {
+                  FLog.clearLogs();
+                }
 
-                  file = File(logFilePath);
-                  var nowSize = file.lengthSync();
-                  var nowSizeString = convert2string(nowSize);
+                file = File(logFilePath);
 
+                if (logFileExists.value) {
+                  nowSize = file.lengthSync();
+                  nowSizeString = convert2string(nowSize);
+                }
+
+                updateLogFileSizeString();
+
+                if (logFileExists.value) {
                   showSnackBar(Text('$beforeSizeString -> $nowSizeString'));
-                }, 200);
-              },
+                } else {
+                  showSnackBar(Text('Log file clean action requested.'));
+                }
+              }, 200),
               child: Text('SettingsPage_CleanLog'.tr),
             ),
           ),

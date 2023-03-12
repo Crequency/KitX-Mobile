@@ -21,8 +21,9 @@ if (flutterVersionName == null) {
     flutterVersionName = '1.0'
 }
 
-def majorVersion = "1.0.0"
+def majorVersion = "3.23.04"
 def majorVersionCode = 100000
+def buildVersionCode = ((new Date().getTime() - new Date("6/6/2005").getTime()) / 86400000 - 9 as int)
 
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
@@ -46,14 +47,14 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.crequency.kitx.kitx_mobile"
+        applicationId "com.crequency.kitx.mobile"
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-build-configuration.
         minSdkVersion 21
         compileSdkVersion 33
         targetSdkVersion 33
-        versionCode majorVersionCode + (new Date (new Date().getTime() - new Date("1/1/2022").getTime()).getTime() / 86400000 as int)
-        versionName "v" + majorVersion + ".dev." + (new Date (new Date().getTime() - new Date("1/1/2022").getTime()).getTime() / 86400000 as int)
+        versionCode majorVersionCode + buildVersionCode
+        versionName "v" + majorVersion + "." + buildVersionCode
     }
 
     buildTypes {

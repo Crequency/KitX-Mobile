@@ -23,10 +23,10 @@ allprojects {
 //        mavenCentral()
     }
     gradle.projectsEvaluated {
-    tasks.withType(JavaCompile) {
-        options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
+        tasks.withType(JavaCompile) {
+            options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
+        }
     }
-}
 }
 
 rootProject.buildDir = '../build'
