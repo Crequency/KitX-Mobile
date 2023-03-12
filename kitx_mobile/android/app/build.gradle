@@ -1,3 +1,7 @@
+import java.time.Duration
+import java.time.LocalDateTime
+import java.time.ZoneOffset
+
 def localProperties = new Properties()
 def localPropertiesFile = rootProject.file('local.properties')
 if (localPropertiesFile.exists()) {
@@ -21,9 +25,13 @@ if (flutterVersionName == null) {
     flutterVersionName = '1.0'
 }
 
+def currentUTC = LocalDateTime.now(ZoneOffset.UTC)
+def specifiedTime = LocalDateTime.of(2005, 6, 6, 0, 0, 0)
+def deltaDays = Duration.between(specifiedTime, currentUTC).toDays()
+
 def majorVersion = "3.23.04"
 def majorVersionCode = 100000
-def buildVersionCode = ((new Date().getTime() - new Date("6/6/2005").getTime()) / 86400000 - 9 as int)
+def buildVersionCode = deltaDays % 65535 as int
 
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
