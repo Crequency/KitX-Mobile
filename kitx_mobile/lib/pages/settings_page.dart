@@ -22,7 +22,7 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
-  var selectedModes = <ThemeMode>{Global.themeModeNotifier.value};
+  var selectedModes = <ThemeMode>{Global.themeMode};
   var logFilePath = '/data/data/com.crequency.kitx.mobile/app_flutter/flog.db';
 
   var useMaterial3 = lightThemeData.value.useMaterial3.obs;
@@ -119,7 +119,8 @@ class _SettingsPageState extends State<SettingsPage> {
                 setState(() {
                   selectedModes = newSelection;
                 }),
-                Global.themeModeNotifier.value = newSelection.first,
+                Global.themeMode = newSelection.first,
+                Get.changeThemeMode(newSelection.first),
                 saveChanges(context),
               },
             ),
@@ -145,6 +146,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   value: useMaterial3.value,
                   onChanged: (selection) {
                     if (selection != null) {
+                      // Get.changeTheme(Get.theme.copyWith(useMaterial3: selection));
                       Global.updateTheme(useMaterial3: selection);
                       useMaterial3.value = selection;
                       saveChanges(context);

@@ -65,29 +65,26 @@ class MainApp extends StatelessWidget {
     //   ),
     // );
 
-    return ValueListenableBuilder<ThemeMode>(
-      valueListenable: Global.themeModeNotifier,
-      builder: (_, mode, __) => Obx(
-        () => GetMaterialApp(
-          title: 'KitX Mobile',
-          themeMode: mode,
-          theme: lightThemeData.value,
-          darkTheme: darkThemeData.value,
-          highContrastTheme: ThemeData(),
-          highContrastDarkTheme: ThemeData(),
-          translations: Translation(),
-          // 定义翻译 使用: 'Text'.tr
-          locale: ui.window.locale,
-          // 定义当前语言
-          fallbackLocale: Locale('en', 'US'),
-          // 定义默认语言
-          // supportedLocales: const [ // 定义支持的语言
-          //   Locale('en', 'US'),
-          //   Locale('zh', 'CN'),
-          // ],
-          getPages: GetPages(),
-          home: const HomePage(),
-        ),
+    return Obx(
+      () => GetMaterialApp(
+        title: 'KitX Mobile',
+        themeMode: Global.themeMode,
+        theme: lightThemeData.value,
+        darkTheme: darkThemeData.value,
+        highContrastTheme: ThemeData(),
+        highContrastDarkTheme: ThemeData(),
+        translations: Translation(),
+        // 定义翻译 使用: 'Text'.tr
+        locale: ui.window.locale,
+        // 定义当前语言
+        fallbackLocale: Locale('en', 'US'),
+        // 定义默认语言
+        // supportedLocales: const [ // 定义支持的语言
+        //   Locale('en', 'US'),
+        //   Locale('zh', 'CN'),
+        // ],
+        getPages: GetPages(),
+        home: const HomePage(),
       ),
     );
   }

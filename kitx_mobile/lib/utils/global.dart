@@ -19,7 +19,7 @@ class _Global {
   var device = DeviceService();
   var deviceError = false;
 
-  var themeModeNotifier = ValueNotifier(ThemeMode.system);
+  var themeMode = ThemeMode.system;
 
   var material3Enabled = true;
 
