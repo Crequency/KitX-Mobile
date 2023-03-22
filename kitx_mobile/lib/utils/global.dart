@@ -21,6 +21,13 @@ class _Global {
 
   var themeMode = ThemeMode.system;
 
+  ThemeMode get themeModeProperty => themeMode;
+
+  set themeModeProperty(ThemeMode mode) {
+    themeMode = mode;
+    Get.changeThemeMode(mode);
+  }
+
   var material3Enabled = true;
 
   var animationEnabled = true.obs;

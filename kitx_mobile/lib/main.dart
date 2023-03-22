@@ -73,16 +73,19 @@ class MainApp extends StatelessWidget {
         darkTheme: darkThemeData.value,
         highContrastTheme: ThemeData(),
         highContrastDarkTheme: ThemeData(),
-        translations: Translation(),
+
         // 定义翻译 使用: 'Text'.tr
-        locale: ui.window.locale,
-        // 定义当前语言
-        fallbackLocale: Locale('en', 'US'),
+        translations: Translation(),
         // 定义默认语言
-        // supportedLocales: const [ // 定义支持的语言
+        locale: ui.window.locale,
+        // 定义回退语言
+        fallbackLocale: Locale('en', 'US'),
+        // 定义支持的语言
+        // supportedLocales: const [
         //   Locale('en', 'US'),
         //   Locale('zh', 'CN'),
         // ],
+
         getPages: GetPages(),
         home: const HomePage(),
       ),

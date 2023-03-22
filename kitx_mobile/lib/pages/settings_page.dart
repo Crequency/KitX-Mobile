@@ -72,24 +72,61 @@ class _SettingsPageState extends State<SettingsPage> {
     super.initState();
   }
 
+  Widget settingsGroupTitle(String titleKey) {
+    return Column(
+      children: [
+        SizedBox(height: 60),
+        Container(
+          alignment: Alignment.center,
+          margin: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+          child: Text(
+            titleKey.tr,
+            style: TextStyle(fontSize: 28),
+          ),
+        ),
+        SizedBox(height: 30),
+      ],
+    );
+  }
+
+  Widget settingsGroupDivider() {
+    return Column(
+      children: [
+        SizedBox(height: 30),
+        Divider(),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('SettingsPage_Title'.tr),
+        actions: [
+          PopupMenuButton(
+            tooltip: '',
+            padding: EdgeInsets.all(0),
+            icon: const Icon(Icons.translate),
+            position: PopupMenuPosition.under,
+            itemBuilder: (context) => [
+              PopupMenuItem(
+                child: const Text('简体中文'),
+                onTap: () => Global.delay(() => Get.updateLocale(Locale('zh', 'CN')), 200),
+              ),
+              PopupMenuItem(
+                child: const Text('English (US)'),
+                onTap: () => Global.delay(() => Get.updateLocale(Locale('en', 'US')), 200),
+              ),
+            ],
+          ),
+          SizedBox(width: 10),
+        ],
       ),
       body: ListView(
         children: [
           SizedBox(height: 60 * 3),
-          Container(
-            alignment: Alignment.center,
-            margin: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-            child: Text(
-              'SettingsPage_Theme'.tr,
-              style: TextStyle(fontSize: 24),
-            ),
-          ),
-          SizedBox(height: 30),
+          settingsGroupTitle('SettingsPage_Theme'),
           Container(
             margin: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
             child: SegmentedButton<ThemeMode>(
@@ -119,21 +156,11 @@ class _SettingsPageState extends State<SettingsPage> {
                 setState(() {
                   selectedModes = newSelection;
                 }),
-                Global.themeMode = newSelection.first,
-                Get.changeThemeMode(newSelection.first),
+                Global.themeModeProperty = newSelection.first,
+                // Global.themeMode = newSelection.first,
+                // Get.changeThemeMode(newSelection.first),
                 saveChanges(context),
               },
-            ),
-          ),
-          SizedBox(height: 30),
-          Divider(),
-          SizedBox(height: 60),
-          Container(
-            alignment: Alignment.center,
-            margin: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-            child: const Text(
-              'Material Design',
-              style: TextStyle(fontSize: 24),
             ),
           ),
           SizedBox(height: 30),
@@ -156,18 +183,8 @@ class _SettingsPageState extends State<SettingsPage> {
               ),
             ],
           ),
-          SizedBox(height: 30),
-          Divider(),
-          SizedBox(height: 60),
-          Container(
-            alignment: Alignment.center,
-            margin: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-            child: Text(
-              'Public_Animation'.tr,
-              style: TextStyle(fontSize: 24),
-            ),
-          ),
-          SizedBox(height: 30),
+          settingsGroupDivider(),
+          settingsGroupTitle('Public_Animation'),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -185,18 +202,8 @@ class _SettingsPageState extends State<SettingsPage> {
               ),
             ],
           ),
-          SizedBox(height: 30),
-          Divider(),
-          SizedBox(height: 60),
-          Container(
-            alignment: Alignment.center,
-            margin: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-            child: Text(
-              'Public_Log'.tr,
-              style: TextStyle(fontSize: 24),
-            ),
-          ),
-          SizedBox(height: 30),
+          settingsGroupDivider(),
+          settingsGroupTitle('Public_Log'),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -258,9 +265,7 @@ class _SettingsPageState extends State<SettingsPage> {
               child: Text('SettingsPage_CleanLog'.tr),
             ),
           ),
-          SizedBox(height: 30),
-          Divider(),
-          SizedBox(height: 60),
+          settingsGroupDivider(),
           SizedBox(height: 300),
         ],
       ),
