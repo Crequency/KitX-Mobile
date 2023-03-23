@@ -72,7 +72,7 @@ class WebService {
   }
 
   /// Get Network Information
-  Future<List<String>?> getNetworkInfos() async {
+  Future<List<String>?> getNetworkInfo() async {
     late String _ipv4, _ipv6, _mac;
 
     await _networkInfo.getWifiIP().then((value) {
@@ -147,14 +147,14 @@ class WebService {
       // 获取设备信息
       late String _ipv4, _ipv6, _mac, deviceOSVersion;
 
-      var networkInfos = await getNetworkInfos();
+      var networkInfo = await getNetworkInfo();
 
-      if (networkInfos == null) {
+      if (networkInfo == null) {
         return;
       } else {
-        _ipv4 = networkInfos[0];
-        _ipv6 = networkInfos[1];
-        _mac = networkInfos[2];
+        _ipv4 = networkInfo[0];
+        _ipv6 = networkInfo[1];
+        _mac = networkInfo[2];
       }
 
       deviceOSVersion = await getDeviceVersionString();
