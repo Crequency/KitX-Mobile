@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'package:kitx_mobile/data/third_party_licenses_provider.dart';
+import 'package:kitx_mobile/utils/composer.dart';
 import 'package:kitx_mobile/utils/global.dart';
 
 import 'package:vibration/vibration.dart';
@@ -228,9 +229,6 @@ class _AboutPageState extends State<AboutPage> {
       ),
     );
   }
-
-  Widget group(Widget header, Widget content, Widget divider, {Widget spacer = const SizedBox(height: 30)}) =>
-      Column(children: [header, spacer, content, divider]);
 
   Widget getFlexibleHeader(BuildContext context) {
     return ListView(
