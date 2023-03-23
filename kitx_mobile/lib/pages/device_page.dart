@@ -1,3 +1,4 @@
+import 'package:community_material_icon/community_material_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -26,6 +27,25 @@ class _DevicePage extends State<DevicePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('DevicePage_Title'.tr),
+        actions: [
+          PopupMenuButton(
+            tooltip: '',
+            padding: EdgeInsets.all(0),
+            icon: const Icon(CommunityMaterialIcons.refresh),
+            position: PopupMenuPosition.under,
+            itemBuilder: (context) => [
+              PopupMenuItem(
+                child: Text('Option_RestartDevicesServer'.tr),
+                onTap: Global.restartDevicesServer,
+              ),
+              PopupMenuItem(
+                child: Text('Option_ShutdownDevicesServer'.tr),
+                onTap: Global.shutdownDevicesServer,
+              ),
+            ],
+          ),
+          SizedBox(width: 10),
+        ],
       ),
       body: ListView(
         children: [

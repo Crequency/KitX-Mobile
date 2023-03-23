@@ -68,6 +68,10 @@ class _Global {
     );
   }
 
+  void restartDevicesServer() {}
+
+  void shutdownDevicesServer() {}
+
   factory _Global() {
     return _singleton;
   }

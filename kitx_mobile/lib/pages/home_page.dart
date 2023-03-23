@@ -56,6 +56,23 @@ class _HomePageState extends State<HomePage> {
                     // textColor: Colors.white,
                     // iconColor: Colors.white,
                     onTap: () => Global.delay(() => Get.to(() => DevicePage()), pageOpenDelay),
+                    onLongPress: () {
+                      showMenu(
+                        context: context,
+                        position: RelativeRect.fromLTRB(100, 100, 0, 0),
+                        items: [
+                          PopupMenuItem(
+                            child: Text('Option_RestartDevicesServer'.tr),
+                            onTap: Global.restartDevicesServer,
+                          ),
+                          PopupMenuItem(
+                            child: Text('Option_ShutdownDevicesServer'.tr),
+                            onTap: Global.shutdownDevicesServer,
+                          ),
+                        ],
+                        elevation: 8.0,
+                      );
+                    },
                   ),
                 ),
                 SizedBox(height: tilesPadding),
@@ -94,6 +111,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
                 SizedBox(height: tilesPadding),
+                SizedBox(height: 300),
               ],
             ),
           ),
