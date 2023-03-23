@@ -11,22 +11,16 @@ import 'package:kitx_mobile/pages/test_page.dart';
 import 'package:kitx_mobile/utils/global.dart';
 
 /// HomePage
-class HomePage extends StatefulWidget {
-  // ignore: public_member_api_docs
-  const HomePage({Key? key}) : super(key: key);
-
-  @override
-  State<HomePage> createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
-  final pageOpenDelay = 200;
+class HomePage extends StatelessWidget {
+  /// Constructor
+  const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
     // imageCache.clear(); // 清除图片缓存
     var tileRadius = ContinuousRectangleBorder(borderRadius: BorderRadius.circular(10.0));
-    var tilesPadding = 15.0;
+    const tilesPadding = 15.0;
+    const pageOpenDelay = 200;
 
     return Scaffold(
       appBar: AppBar(
@@ -44,17 +38,14 @@ class _HomePageState extends State<HomePage> {
               shrinkWrap: true,
               physics: NeverScrollableScrollPhysics(),
               children: [
-                SizedBox(height: tilesPadding),
+                const SizedBox(height: tilesPadding),
                 Obx(
                   () => ListTile(
-                    leading: Icon(Icons.devices),
+                    leading: const Icon(Icons.devices),
                     title: Text('Drawer_Devices'.tr),
                     subtitle: Text('${Global.deviceService.length.obs} ${'HomePage_DevicesCount'.tr}'),
-                    trailing: Icon(Icons.keyboard_arrow_right),
+                    trailing: const Icon(Icons.keyboard_arrow_right),
                     shape: tileRadius,
-                    // tileColor: Colors.indigo,
-                    // textColor: Colors.white,
-                    // iconColor: Colors.white,
                     onTap: () => Global.delay(() => Get.to(() => DevicePage()), pageOpenDelay),
                     onLongPress: () {
                       showMenu(
@@ -75,43 +66,43 @@ class _HomePageState extends State<HomePage> {
                     },
                   ),
                 ),
-                SizedBox(height: tilesPadding),
+                const SizedBox(height: tilesPadding),
                 ListTile(
-                  leading: Icon(Icons.alternate_email),
+                  leading: const Icon(Icons.alternate_email),
                   title: Text('Drawer_Account'.tr),
-                  trailing: Icon(Icons.keyboard_arrow_right),
+                  trailing: const Icon(Icons.keyboard_arrow_right),
                   shape: tileRadius,
                   onTap: () => Global.delay(() => Get.to(() => AccountPage()), pageOpenDelay),
                 ),
-                SizedBox(height: tilesPadding),
+                const SizedBox(height: tilesPadding),
                 ListTile(
-                  leading: Icon(Icons.bug_report),
+                  leading: const Icon(Icons.bug_report),
                   title: Text('Drawer_Test'.tr),
-                  trailing: Icon(Icons.keyboard_arrow_right),
+                  trailing: const Icon(Icons.keyboard_arrow_right),
                   shape: tileRadius,
                   onTap: () => Global.delay(() => Get.to(() => TestPage()), pageOpenDelay),
                 ),
-                SizedBox(height: tilesPadding),
+                const SizedBox(height: tilesPadding),
                 ListTile(
-                  leading: Icon(Icons.settings),
+                  leading: const Icon(Icons.settings),
                   title: Text('Drawer_Setting'.tr),
-                  trailing: Icon(Icons.keyboard_arrow_right),
+                  trailing: const Icon(Icons.keyboard_arrow_right),
                   shape: tileRadius,
                   onTap: () => Global.delay(() => Get.to(() => SettingsPage()), pageOpenDelay),
                 ),
-                SizedBox(height: tilesPadding),
+                const SizedBox(height: tilesPadding),
                 Obx(
                   () => ListTile(
-                    leading: Icon(Icons.info_outline_rounded),
+                    leading: const Icon(Icons.info_outline_rounded),
                     title: Text('Drawer_About'.tr),
                     subtitle: Text(Global.versionString.value),
-                    trailing: Icon(Icons.keyboard_arrow_right),
+                    trailing: const Icon(Icons.keyboard_arrow_right),
                     shape: tileRadius,
                     onTap: () => Global.delay(() => Get.to(() => AboutPage()), pageOpenDelay),
                   ),
                 ),
-                SizedBox(height: tilesPadding),
-                SizedBox(height: 300),
+                const SizedBox(height: tilesPadding),
+                const SizedBox(height: 300),
               ],
             ),
           ),
