@@ -34,7 +34,7 @@ class _HomePageState extends State<HomePage> {
       ),
       drawer: AppDrawer(),
       drawerEnableOpenDragGesture: true,
-      drawerEdgeDragWidth: MediaQuery.of(context).size.width / 2 + 50,
+      drawerEdgeDragWidth: MediaQuery.of(context).size.width / 7 * 5,
       body: ListView(
         // mainAxisAlignment: MainAxisAlignment.center,
         children: [
