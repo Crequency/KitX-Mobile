@@ -22,44 +22,22 @@ Future<void> main() async {
   // 读取配置
   await Config.loadAsync();
 
-  // 初始化 WebService
-
-  Global.webService.initService();
-
-  //  初始化 log
+  // 初始化 log
   initLogger();
 
-  //  初始化 Global
+  // 初始化 Global
   await Global.init();
-
-  //  初始化 Devices
-  Global.deviceService.initService();
 
   runApp(MainApp());
 }
 
 /// MainApp
 class MainApp extends StatelessWidget {
-  // ignore: public_member_api_docs
-  MainApp({Key? key}) : super(key: key);
+  /// Constructor
+  const MainApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // return MaterialApp(
-    //   title: 'KitX Mobile',
-    //   themeMode: ThemeMode.system,
-    //   locale: ui.window.locale,
-    //   home: const HomePage(),
-    //   showPerformanceOverlay: true,
-    // );
-
-    // return GetCupertinoApp(
-    //   title: 'KitX Mobile',
-    //   home: CupertinoPageScaffold(
-    //       child: CupertinoSlider(value: 0.4, onChanged: (_) => print('a')),
-    //   ),
-    // );
-
     return Obx(
       () => GetMaterialApp(
         title: 'KitX Mobile',
@@ -75,11 +53,6 @@ class MainApp extends StatelessWidget {
         locale: ui.window.locale,
         // 定义回退语言
         fallbackLocale: Locale('en', 'US'),
-        // 定义支持的语言
-        // supportedLocales: const [
-        //   Locale('en', 'US'),
-        //   Locale('zh', 'CN'),
-        // ],
 
         getPages: GetPages(),
         home: const HomePage(),

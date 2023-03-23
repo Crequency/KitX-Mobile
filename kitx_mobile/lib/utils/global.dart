@@ -50,6 +50,12 @@ class _Global {
     versionString.value = '${version.value}${(isRelease ? ' (Release)' : ' (Debug)')}';
 
     updateTheme(useMaterial3: material3Enabled);
+
+    // 初始化 WebService
+    await webService.initService();
+
+    // 初始化 DeviceService
+    await deviceService.initService();
   }
 
   void delay(Function func, int milliseconds) {
