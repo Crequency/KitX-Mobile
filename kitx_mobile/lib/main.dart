@@ -6,8 +6,6 @@ import 'package:get/get.dart';
 import 'package:kitx_mobile/pages/home_page.dart';
 import 'package:kitx_mobile/pages/routes.dart';
 
-import 'package:kitx_mobile/services/web_service.dart';
-
 import 'package:kitx_mobile/themes/dark_theme.dart';
 import 'package:kitx_mobile/themes/light_theme.dart';
 
