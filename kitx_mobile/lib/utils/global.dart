@@ -23,7 +23,7 @@ class _Global {
     ..udpBroadcastAddress = Config.WebService_UdpBroadcastAddress;
 
   var deviceName = '';
-  var device = DeviceService();
+  var deviceService = DeviceService();
   var deviceError = false;
 
   var themeMode = ThemeMode.system;

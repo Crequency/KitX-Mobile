@@ -49,7 +49,7 @@ class _HomePageState extends State<HomePage> {
                   () => ListTile(
                     leading: Icon(Icons.devices),
                     title: Text('Drawer_Devices'.tr),
-                    subtitle: Text('${Global.device.length.obs} ${'HomePage_DevicesCount'.tr}'),
+                    subtitle: Text('${Global.deviceService.length.obs} ${'HomePage_DevicesCount'.tr}'),
                     trailing: Icon(Icons.keyboard_arrow_right),
                     shape: tileRadius,
                     // tileColor: Colors.indigo,

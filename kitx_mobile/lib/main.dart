@@ -35,7 +35,7 @@ Future<void> main() async {
   await Global.init();
 
   //  初始化 Devices
-  Global.device.initService();
+  Global.deviceService.initService();
 
   runApp(MainApp());
 }

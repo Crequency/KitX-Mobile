@@ -52,16 +52,16 @@ class _DevicePage extends State<DevicePage> {
           Obx(
             () => Container(
               margin: EdgeInsets.fromLTRB(30, 30, 30, 0),
-              child: Text('${Global.device.length.obs} ${'HomePage_DevicesCount'.tr}'),
+              child: Text('${Global.deviceService.length.obs} ${'HomePage_DevicesCount'.tr}'),
             ),
           ),
           Obx(
             () => ListView.builder(
               shrinkWrap: true,
               physics: NeverScrollableScrollPhysics(),
-              itemCount: Global.device.length + 1,
+              itemCount: Global.deviceService.length + 1,
               itemBuilder: (_, index) {
-                var info = index >= Global.device.length ? null : Global.device.deviceInfoList[index];
+                var info = index >= Global.deviceService.length ? null : Global.deviceService.deviceInfoList[index];
                 return createDeviceCard(context, info, index);
               },
             ),
