@@ -118,6 +118,24 @@ class WebService {
     return [_ipv4, _ipv6, _mac];
   }
 
+  /// 停止服务
+  Future<void> stopService() async {
+    sendTimer?.cancel();
+    sendTimer = null;
+
+    receiveSocket?.close();
+    sendSocket?.close();
+
+    receiveSocket = null;
+    sendSocket = null;
+  }
+
+  /// 发送及接收定时器的指针
+  late Timer? sendTimer;
+
+  /// 发送及接收套接字的指针
+  late RawDatagramSocket? sendSocket, receiveSocket;
+
   /// 初始化服务
   Future<void> initService() async {
     try {
@@ -165,18 +183,22 @@ class WebService {
       // UDP 发送
       await RawDatagramSocket.bind(InternetAddress.anyIPv4, _udpPortSend).then(
         (socket) {
+          sendSocket = socket;
+
           socket.broadcastEnabled = true;
           socket.joinMulticast(InternetAddress(_udpBroadcastAddress));
 
           Timer.periodic(Duration(seconds: Config.WebService_UdpSendFrequency), (timer) {
+            sendTimer = timer;
+
             try {
               deviceInfo = deviceInfo.rebuild((b) => b..sendTime = DateTime.now().toUtc());
               var _data = deviceInfo.toString();
               // Log.info('UDP send: $_data');
               socket.send(utf8.encode(_data), InternetAddress(_udpBroadcastAddress), _udpPortReceive);
             } catch (e, stack) {
-              socket.close();
               timer.cancel();
+              socket.close();
               Log.info('UDP send error: $e $stack. Try to restart the service in 5 seconds.');
               Future.delayed(const Duration(seconds: 5), () => initService());
             }
@@ -192,8 +214,11 @@ class WebService {
       // UDP 接收
       await RawDatagramSocket.bind(InternetAddress.anyIPv4, _udpPortReceive, ttl: 1).then(
         (socket) {
+          receiveSocket = socket;
+
           // socket.broadcastEnabled = true;
           socket.joinMulticast(InternetAddress(_udpBroadcastAddress));
+
           socket.listen(
             (event) {
               var d = socket.receive();
@@ -204,7 +229,7 @@ class WebService {
 
               try {
                 var _deviceInfo = DeviceInfoStruct.fromString(_data);
-                if (_deviceInfo != null) Global.device.addDevice(_deviceInfo);
+                if (_deviceInfo != null) Global.deviceService.addDevice(_deviceInfo);
               } catch (e, stack) {
                 Log.error('Can not deserialize device info pack: `$_data`. Error: $e $stack');
               }

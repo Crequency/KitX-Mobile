@@ -25,11 +25,8 @@ Future<void> main() async {
   await Config.loadAsync();
 
   // 初始化 WebService
-  var webService = WebService()
-    ..udpPortSend = Config.WebService_UdpPortSend
-    ..udpPortReceive = Config.WebService_UdpPortReceive
-    ..udpBroadcastAddress = Config.WebService_UdpBroadcastAddress;
-  webService.initService();
+
+  Global.webService.initService();
 
   //  初始化 log
   initLogger();

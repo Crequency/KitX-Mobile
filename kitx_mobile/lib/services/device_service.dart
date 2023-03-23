@@ -47,6 +47,11 @@ class DeviceService {
     }
   }
 
+  /// 停止服务
+  Future<void> stopService() async {
+    deviceInfoList.clear();
+  }
+
   /// Remove a device by [DeviceInfoStruct]
   Future<void> initService() async {
     Timer.periodic(Duration(seconds: Config.WebService_DeviceInfoCheckTTLSeconds), (_) {
