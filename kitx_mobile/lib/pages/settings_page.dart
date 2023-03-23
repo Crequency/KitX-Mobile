@@ -12,6 +12,49 @@ import 'package:kitx_mobile/themes/light_theme.dart';
 import 'package:kitx_mobile/utils/config.dart';
 import 'package:kitx_mobile/utils/global.dart';
 
+/// Settings Group Title
+class SettingsGroupTitle extends StatelessWidget {
+  /// Constructor
+  const SettingsGroupTitle({required this.titleKey, super.key});
+
+  /// Title Key
+  final String titleKey;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        SizedBox(height: 60),
+        Container(
+          alignment: Alignment.center,
+          margin: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+          child: Text(
+            titleKey.tr,
+            style: TextStyle(fontSize: 28),
+          ),
+        ),
+        SizedBox(height: 30),
+      ],
+    );
+  }
+}
+
+/// Settings Group Divider
+class SettingsGroupDivider extends StatelessWidget {
+  /// Constructor
+  const SettingsGroupDivider({super.key});
+  
+  @override
+  Widget build(BuildContext context){
+    return Column(
+      children: [
+        SizedBox(height: 30),
+        Divider(),
+      ],
+    );
+  }
+}
+
 /// Settings Page
 class SettingsPage extends StatefulWidget {
   // ignore: public_member_api_docs
@@ -72,32 +115,6 @@ class _SettingsPageState extends State<SettingsPage> {
     super.initState();
   }
 
-  Widget settingsGroupTitle(String titleKey) {
-    return Column(
-      children: [
-        SizedBox(height: 60),
-        Container(
-          alignment: Alignment.center,
-          margin: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-          child: Text(
-            titleKey.tr,
-            style: TextStyle(fontSize: 28),
-          ),
-        ),
-        SizedBox(height: 30),
-      ],
-    );
-  }
-
-  Widget settingsGroupDivider() {
-    return Column(
-      children: [
-        SizedBox(height: 30),
-        Divider(),
-      ],
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -120,13 +137,13 @@ class _SettingsPageState extends State<SettingsPage> {
               ),
             ],
           ),
-          SizedBox(width: 10),
+          const SizedBox(width: 10),
         ],
       ),
       body: ListView(
         children: [
-          SizedBox(height: 60 * 3),
-          settingsGroupTitle('SettingsPage_Theme'),
+          const SizedBox(height: 60 * 3),
+          SettingsGroupTitle(titleKey: 'SettingsPage_Theme'),
           Container(
             margin: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
             child: SegmentedButton<ThemeMode>(
@@ -163,7 +180,7 @@ class _SettingsPageState extends State<SettingsPage> {
               },
             ),
           ),
-          SizedBox(height: 30),
+          const SizedBox(height: 30),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -183,8 +200,8 @@ class _SettingsPageState extends State<SettingsPage> {
               ),
             ],
           ),
-          settingsGroupDivider(),
-          settingsGroupTitle('Public_Animation'),
+          const SettingsGroupDivider(),
+          SettingsGroupTitle(titleKey: 'Public_Animation'),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -202,8 +219,8 @@ class _SettingsPageState extends State<SettingsPage> {
               ),
             ],
           ),
-          settingsGroupDivider(),
-          settingsGroupTitle('Public_Log'),
+          const SettingsGroupDivider(),
+          SettingsGroupTitle(titleKey: 'Public_Log'),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -215,14 +232,14 @@ class _SettingsPageState extends State<SettingsPage> {
                   child: Text(logFileSizeString.value),
                 ),
               ),
-              SizedBox(width: 10),
+              const SizedBox(width: 10),
               IconButton(
                 onPressed: updateLogFileSizeString,
                 icon: Icon(Icons.refresh),
               )
             ],
           ),
-          SizedBox(height: 30),
+          const SizedBox(height: 30),
           Container(
             alignment: Alignment.center,
             child: ElevatedButton(
@@ -265,8 +282,8 @@ class _SettingsPageState extends State<SettingsPage> {
               child: Text('SettingsPage_CleanLog'.tr),
             ),
           ),
-          settingsGroupDivider(),
-          SizedBox(height: 300),
+          const SettingsGroupDivider(),
+          const SizedBox(height: 300),
         ],
       ),
     );
