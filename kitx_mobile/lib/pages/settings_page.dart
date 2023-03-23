@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 import 'package:kitx_mobile/converters/size_converter.dart';
 
 import 'package:kitx_mobile/themes/light_theme.dart';
+import 'package:kitx_mobile/utils/composer.dart';
 
 import 'package:kitx_mobile/utils/config.dart';
 import 'package:kitx_mobile/utils/global.dart';
@@ -43,9 +44,9 @@ class SettingsGroupTitle extends StatelessWidget {
 class SettingsGroupDivider extends StatelessWidget {
   /// Constructor
   const SettingsGroupDivider({super.key});
-  
+
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     return Column(
       children: [
         SizedBox(height: 30),
@@ -143,146 +144,164 @@ class _SettingsPageState extends State<SettingsPage> {
       body: ListView(
         children: [
           const SizedBox(height: 60 * 3),
-          SettingsGroupTitle(titleKey: 'SettingsPage_Theme'),
-          Container(
-            margin: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-            child: SegmentedButton<ThemeMode>(
-              emptySelectionAllowed: false,
-              multiSelectionEnabled: false,
-              segments: <ButtonSegment<ThemeMode>>[
-                ButtonSegment<ThemeMode>(
-                  value: ThemeMode.light,
-                  label: Text('SettingsPage_Light'.tr),
-                  icon: Icon(Icons.light_mode),
+          group(
+            SettingsGroupTitle(titleKey: 'SettingsPage_Theme'),
+            Column(
+              children: [
+                Container(
+                  width: double.infinity,
+                  margin: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+                  child: SegmentedButton<ThemeMode>(
+                    emptySelectionAllowed: false,
+                    multiSelectionEnabled: false,
+                    segments: <ButtonSegment<ThemeMode>>[
+                      ButtonSegment<ThemeMode>(
+                        value: ThemeMode.light,
+                        label: Text('SettingsPage_Light'.tr),
+                        icon: Icon(Icons.light_mode),
+                      ),
+                      ButtonSegment<ThemeMode>(
+                        value: ThemeMode.dark,
+                        label: Text('SettingsPage_Dark'.tr),
+                        icon: Icon(Icons.dark_mode),
+                      ),
+                      ButtonSegment<ThemeMode>(
+                        value: ThemeMode.system,
+                        label: Text('SettingsPage_FollowSystem'.tr),
+                        icon: Icon(Icons.settings),
+                      ),
+                    ],
+                    selected: selectedModes,
+                    // selectedIcon: Icon(Icons.check),
+                    showSelectedIcon: false,
+                    onSelectionChanged: (Set<ThemeMode> newSelection) => {
+                      setState(() {
+                        selectedModes = newSelection;
+                      }),
+                      Global.themeModeProperty = newSelection.first,
+                      // Global.themeMode = newSelection.first,
+                      // Get.changeThemeMode(newSelection.first),
+                      saveChanges(context),
+                    },
+                  ),
                 ),
-                ButtonSegment<ThemeMode>(
-                  value: ThemeMode.dark,
-                  label: Text('SettingsPage_Dark'.tr),
-                  icon: Icon(Icons.dark_mode),
-                ),
-                ButtonSegment<ThemeMode>(
-                  value: ThemeMode.system,
-                  label: Text('SettingsPage_FollowSystem'.tr),
-                  icon: Icon(Icons.settings),
+                const SizedBox(height: 30),
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 30),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text('${'Public_Enable'.tr} Material 3'),
+                      Obx(
+                        () => Switch.adaptive(
+                          value: useMaterial3.value,
+                          onChanged: (selection) {
+                            Global.updateTheme(useMaterial3: selection);
+                            useMaterial3.value = selection;
+                            saveChanges(context);
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ],
-              selected: selectedModes,
-              // selectedIcon: Icon(Icons.check),
-              showSelectedIcon: false,
-              onSelectionChanged: (Set<ThemeMode> newSelection) => {
-                setState(() {
-                  selectedModes = newSelection;
-                }),
-                Global.themeModeProperty = newSelection.first,
-                // Global.themeMode = newSelection.first,
-                // Get.changeThemeMode(newSelection.first),
-                saveChanges(context),
-              },
             ),
+            const SettingsGroupDivider(),
           ),
-          const SizedBox(height: 30),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text('${'Public_Enable'.tr} Material 3'),
-              Obx(
-                () => Checkbox(
-                  value: useMaterial3.value,
-                  onChanged: (selection) {
-                    if (selection != null) {
-                      // Get.changeTheme(Get.theme.copyWith(useMaterial3: selection));
-                      Global.updateTheme(useMaterial3: selection);
-                      useMaterial3.value = selection;
-                      saveChanges(context);
-                    }
-                  },
-                ),
+          group(
+            SettingsGroupTitle(titleKey: 'Public_Animation'),
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 30),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text('${'Public_Enable'.tr} ${'Public_Additional'.tr} ${'Public_Animation'.tr}'),
+                  Obx(
+                    () => Switch.adaptive(
+                      value: Global.animationEnabled.value,
+                      onChanged: (selection) {
+                        Global.animationEnabled.value = selection;
+                        saveChanges(context);
+                      },
+                    ),
+                  ),
+                ],
               ),
-            ],
-          ),
-          const SettingsGroupDivider(),
-          SettingsGroupTitle(titleKey: 'Public_Animation'),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text('${'Public_Enable'.tr} ${'Public_Additional'.tr} ${'Public_Animation'.tr}'),
-              Obx(
-                () => Checkbox(
-                  value: Global.animationEnabled.value,
-                  onChanged: (selection) {
-                    if (selection != null) {
-                      Global.animationEnabled.value = selection;
-                      saveChanges(context);
-                    }
-                  },
-                ),
-              ),
-            ],
-          ),
-          const SettingsGroupDivider(),
-          SettingsGroupTitle(titleKey: 'Public_Log'),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Obx(
-                () => AnimatedContainer(
-                  duration: Duration(milliseconds: 700),
-                  curve: Curves.easeInOutCubic,
-                  width: logFileExists.value ? null : MediaQuery.of(context).size.width / 3 * 2,
-                  child: Text(logFileSizeString.value),
-                ),
-              ),
-              const SizedBox(width: 10),
-              IconButton(
-                onPressed: updateLogFileSizeString,
-                icon: Icon(Icons.refresh),
-              )
-            ],
-          ),
-          const SizedBox(height: 30),
-          Container(
-            alignment: Alignment.center,
-            child: ElevatedButton(
-              onPressed: () => Global.delay(() async {
-                var beforeSize = 0;
-                var beforeSizeString = convert2string(beforeSize);
-                var nowSize = 0;
-                var nowSizeString = convert2string(nowSize);
-
-                var file = File(logFilePath);
-
-                if (file.existsSync()) {
-                  logFileExists.value = true;
-
-                  beforeSize = file.lengthSync();
-                  beforeSizeString = convert2string(beforeSize);
-                }
-
-                if (logFileExists.value) {
-                  await FLog.clearLogs();
-                } else {
-                  FLog.clearLogs();
-                }
-
-                file = File(logFilePath);
-
-                if (logFileExists.value) {
-                  nowSize = file.lengthSync();
-                  nowSizeString = convert2string(nowSize);
-                }
-
-                updateLogFileSizeString();
-
-                if (logFileExists.value) {
-                  showSnackBar(Text('$beforeSizeString -> $nowSizeString'));
-                } else {
-                  showSnackBar(Text('Log file clean action requested.'));
-                }
-              }, 200),
-              child: Text('SettingsPage_CleanLog'.tr),
             ),
+            const SettingsGroupDivider(),
+            spacer: null,
           ),
-          const SettingsGroupDivider(),
+          group(
+            SettingsGroupTitle(titleKey: 'Public_Log'),
+            Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Obx(
+                      () => AnimatedContainer(
+                        duration: Duration(milliseconds: 700),
+                        curve: Curves.easeInOutCubic,
+                        width: logFileExists.value ? null : MediaQuery.of(context).size.width / 3 * 2,
+                        child: Text(logFileSizeString.value),
+                      ),
+                    ),
+                    const SizedBox(width: 10),
+                    IconButton(
+                      onPressed: updateLogFileSizeString,
+                      icon: Icon(Icons.refresh),
+                    )
+                  ],
+                ),
+                const SizedBox(height: 30),
+                Container(
+                  alignment: Alignment.center,
+                  child: ElevatedButton(
+                    onPressed: () => Global.delay(() async {
+                      var beforeSize = 0;
+                      var beforeSizeString = convert2string(beforeSize);
+                      var nowSize = 0;
+                      var nowSizeString = convert2string(nowSize);
+
+                      var file = File(logFilePath);
+
+                      if (file.existsSync()) {
+                        logFileExists.value = true;
+
+                        beforeSize = file.lengthSync();
+                        beforeSizeString = convert2string(beforeSize);
+                      }
+
+                      if (logFileExists.value) {
+                        await FLog.clearLogs();
+                      } else {
+                        FLog.clearLogs();
+                      }
+
+                      file = File(logFilePath);
+
+                      if (logFileExists.value) {
+                        nowSize = file.lengthSync();
+                        nowSizeString = convert2string(nowSize);
+                      }
+
+                      updateLogFileSizeString();
+
+                      if (logFileExists.value) {
+                        showSnackBar(Text('$beforeSizeString -> $nowSizeString'));
+                      } else {
+                        showSnackBar(Text('Log file clean action requested.'));
+                      }
+                    }, 200),
+                    child: Text('SettingsPage_CleanLog'.tr),
+                  ),
+                ),
+              ],
+            ),
+            const SettingsGroupDivider(),
+            spacer: null,
+          ),
           const SizedBox(height: 300),
         ],
       ),
