@@ -370,10 +370,13 @@ class _AboutPageState extends State<AboutPage> {
                         style: TextStyle(fontSize: 20),
                       ),
                     ),
-                    Divider(),
+                    SizedBox(height: 30),
                     Container(
                       padding: EdgeInsets.all(20),
-                      child: Text('AboutPage_JoinUS_Text'.tr),
+                      child: Text(
+                        'AboutPage_JoinUS_Text'.tr,
+                        textAlign: TextAlign.center,
+                      ),
                     ),
                     Divider(),
                     SizedBox(height: 500),
