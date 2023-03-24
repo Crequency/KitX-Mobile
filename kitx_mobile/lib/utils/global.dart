@@ -82,7 +82,7 @@ class _Global {
   }
 
   void restartDevicesServer() {
-    webService.stopService();
+    webService.stopService(sendExitPackage: false);
     deviceService.stopService();
 
     webService.initService();
@@ -91,7 +91,7 @@ class _Global {
   void shutdownDevicesServer() {
     webService.stopService();
 
-    deviceService.stopService();
+    delay(deviceService.stopService, 2000);
   }
 
   factory _Global() {

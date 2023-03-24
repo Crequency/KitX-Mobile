@@ -36,6 +36,8 @@ class WebService {
   var _udpPortReceive = Config.WebService_UdpPortReceive;
   var _udpBroadcastAddress = Config.WebService_UdpBroadcastAddress;
 
+  var _sendExitPackage = false;
+
   /// Socket Object
   late RawDatagramSocket socket;
   static final DeviceInfoPlugin _deviceInfoPlugin = DeviceInfoPlugin();
@@ -119,15 +121,26 @@ class WebService {
   }
 
   /// 停止服务
-  Future<void> stopService() async {
-    sendTimer?.cancel();
-    sendTimer = null;
+  Future<void> stopService({bool sendExitPackage = true}) async {
+    void stopAction() {
+      sendTimer?.cancel();
+      sendTimer = null;
 
-    receiveSocket?.close();
-    sendSocket?.close();
+      receiveSocket?.close();
 
-    receiveSocket = null;
-    sendSocket = null;
+      sendSocket?.close();
+
+      receiveSocket = null;
+      sendSocket = null;
+    }
+
+    if (sendExitPackage) {
+      _sendExitPackage = true;
+
+      Global.delay(stopAction, 1500);
+    } else {
+      stopAction();
+    }
   }
 
   /// 发送及接收定时器的指针
@@ -138,6 +151,8 @@ class WebService {
 
   /// 初始化服务
   Future<void> initService() async {
+    _sendExitPackage = false;
+
     try {
       if (kIsWeb) {
         Log.info('This is a web application, WebService will not start.');
@@ -193,6 +208,13 @@ class WebService {
 
             try {
               deviceInfo = deviceInfo.rebuild((b) => b..sendTime = DateTime.now().toUtc());
+
+              if (_sendExitPackage) {
+                deviceInfo = deviceInfo.rebuild(
+                  (b) => b..sendTime = DateTime.now().add(Duration(seconds: -20)).toUtc(),
+                );
+              }
+
               var _data = deviceInfo.toString();
               // Log.info('UDP send: $_data');
               socket.send(utf8.encode(_data), InternetAddress(_udpBroadcastAddress), _udpPortReceive);
