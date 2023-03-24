@@ -1,5 +1,7 @@
 ﻿// ignore_for_file: non_constant_identifier_names, public_member_api_docs
 
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sensors_plus/sensors_plus.dart';
@@ -14,17 +16,23 @@ class AccelerationDisplayStand extends StatefulWidget {
 class AccelerationDisplayStandState extends State<AccelerationDisplayStand> {
   final acc_x = 0.0.obs, acc_y = 0.0.obs, acc_z = 0.0.obs;
 
+  StreamSubscription<UserAccelerometerEvent>? userAccelerometerDataListener;
+
   @override
   void initState() {
-    userAccelerometerEvents.listen((event) {
-      // print(event);
-
+    userAccelerometerDataListener = userAccelerometerEvents.listen((event) {
       acc_x.value = event.x;
       acc_y.value = event.y;
       acc_z.value = event.z;
     });
 
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    userAccelerometerDataListener?.cancel();
+    super.dispose();
   }
 
   @override
