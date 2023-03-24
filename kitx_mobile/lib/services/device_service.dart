@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:get/get.dart';
 
 import 'package:kitx_mobile/models/device_info.dart';
+import 'package:kitx_mobile/services/public/service_status.dart';
 import 'package:kitx_mobile/utils/config.dart';
 import 'package:kitx_mobile/utils/global.dart';
 
@@ -13,6 +14,9 @@ class DeviceService {
 
   /// Device Info List Lock
   var lock = true;
+
+  /// Device Service Status
+  var deviceServiceStatus = ServiceStatus.pending;
 
   /// Add a device by [DeviceInfoStruct]
   Future<void> addDevice(DeviceInfoStruct info) async {
@@ -49,11 +53,17 @@ class DeviceService {
 
   /// 停止服务
   Future<void> stopService() async {
+    deviceServiceStatus = ServiceStatus.stopping;
+
     deviceInfoList.clear();
+
+    deviceServiceStatus = ServiceStatus.pending;
   }
 
   /// Remove a device by [DeviceInfoStruct]
   Future<void> initService() async {
+    deviceServiceStatus = ServiceStatus.starting;
+
     Timer.periodic(Duration(seconds: Config.WebService_DeviceInfoCheckTTLSeconds), (_) {
       var _tempList = deviceInfoList.toList();
 
@@ -68,6 +78,8 @@ class DeviceService {
 
       deviceInfoList.refresh();
     });
+
+    deviceServiceStatus = ServiceStatus.running;
   }
 
   /// Get device info list length
