@@ -57,7 +57,7 @@ class DeviceRotationDisplayStandState extends State<DeviceRotationDisplayStand> 
           children: [
             Obx(
               () => AnimatedOpacity(
-                duration: const Duration(milliseconds: 300),
+                duration: const Duration(milliseconds: 400),
                 curve: Curves.easeInOutCubic,
                 opacity: rotationPaused.value ? 1 : 0,
                 child: const Icon(Icons.pause, size: 40),
