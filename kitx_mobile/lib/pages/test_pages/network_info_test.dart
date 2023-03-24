@@ -26,6 +26,8 @@ class _NetworkInfoTestPageState extends State<NetworkInfoTestPage> {
   final wifi_gateway = ''.obs;
   final wifi_subnetMask = ''.obs;
 
+  static const linePadding = 20.0;
+
   @override
   void initState() {
     super.initState();
@@ -40,20 +42,22 @@ class _NetworkInfoTestPageState extends State<NetworkInfoTestPage> {
         child: Obx(
           () => ListView(
             children: [
-              Text(
-                'Connection Status:',
-                style: TextStyle(fontSize: 32),
-              ),
+              Text('Connection Status', style: TextStyle(fontSize: 32)),
+              const SizedBox(height: linePadding * 2),
               Text('Wifi Name: ${wifi_name.value}'),
+              const SizedBox(height: linePadding),
               Text('Wifi BSSID: ${wifi_bssid.value}'),
+              const SizedBox(height: linePadding),
               Text('Wifi IPv4: ${wifi_ipv4.value}'),
+              const SizedBox(height: linePadding),
               Text('Wifi IPv6: ${wifi_ipv6.value}'),
+              const SizedBox(height: linePadding),
               Text('Wifi Broadcast: ${wifi_broadcast.value}'),
+              const SizedBox(height: linePadding),
               Text('Wifi Gateway: ${wifi_gateway.value}'),
+              const SizedBox(height: linePadding),
               Text('Wifi Subnet mask: ${wifi_subnetMask.value}'),
-              Container(
-                height: 300,
-              ),
+              const SizedBox(height: 300),
             ],
           ),
         ),
