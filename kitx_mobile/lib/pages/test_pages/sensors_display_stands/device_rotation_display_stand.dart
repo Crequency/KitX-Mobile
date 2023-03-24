@@ -22,11 +22,15 @@ class DeviceRotationDisplayStandState extends State<DeviceRotationDisplayStand> 
 
   StreamSubscription<GyroscopeEvent>? gyroscopeDataListener;
 
-  @override
-  void initState() {
+  void beginListenGyroscopeData() {
     gyroscopeDataListener = gyroscopeEvents.listen((event) {
       DeviceRotationHost.rotateWithAcceleration(event.x, event.y, event.z, 0.2);
     });
+  }
+
+  @override
+  void initState() {
+    beginListenGyroscopeData();
 
     super.initState();
   }
@@ -55,7 +59,18 @@ class DeviceRotationDisplayStandState extends State<DeviceRotationDisplayStand> 
               willChange: true,
               painter: Painter(),
             ),
-            onTap: () => DeviceRotationHost.restore(),
+            onTap: () {
+              if (gyroscopeDataListener != null) {
+                if (gyroscopeDataListener?.isPaused ?? true) {
+                  gyroscopeDataListener?.resume();
+                } else {
+                  gyroscopeDataListener?.pause();
+                }
+              } else {
+                beginListenGyroscopeData();
+              }
+            },
+            onLongPress: () => DeviceRotationHost.restore(),
           ),
         )
       ],
