@@ -1,12 +1,13 @@
 ﻿// ignore_for_file: non_constant_identifier_names, public_member_api_docs
 
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
-import 'package:sensors_plus/sensors_plus.dart';
-
-// ignore: directives_ordering
 import 'package:kitx_mobile/utils/acceleration_emulator.dart';
 import 'package:kitx_mobile/utils/rotation_emulator.dart';
+
+import 'package:sensors_plus/sensors_plus.dart';
 
 /// DeviceRotationDisplayStand
 class DeviceRotationDisplayStand extends StatefulWidget {
@@ -18,18 +19,22 @@ class DeviceRotationDisplayStand extends StatefulWidget {
 class DeviceRotationDisplayStandState extends State<DeviceRotationDisplayStand> {
   static double canvas_width = 400;
   static double canvas_height = 300;
-  static bool firstEnterPage = true;
+
+  StreamSubscription<GyroscopeEvent>? gyroscopeDataListener;
 
   @override
   void initState() {
-    if (firstEnterPage) {
-      gyroscopeEvents.listen((event) {
-        DeviceRotationHost.rotateWithAcceleration(event.x, event.y, event.z, 0.2);
-      });
-      firstEnterPage = false;
-    }
+    gyroscopeDataListener = gyroscopeEvents.listen((event) {
+      DeviceRotationHost.rotateWithAcceleration(event.x, event.y, event.z, 0.2);
+    });
 
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    gyroscopeDataListener?.cancel();
+    super.dispose();
   }
 
   @override
@@ -74,6 +79,7 @@ class Painter extends CustomPainter {
       Camera,
       null,
       null);
+
   Point? GetRightBarPoint() => GetCrossPoint(
       Rotate(Point(object_width / 2 - object_width / 4, -object_height / 2 + object_height / 24, 0),
           GetRotationAngles()),
@@ -83,17 +89,22 @@ class Painter extends CustomPainter {
 
   Point? GetLeftTopPoint() => GetCrossPoint(
       Rotate(Point(-object_width / 2, object_height / 2, 0), GetRotationAngles()), Camera, null, null);
+
   Point? GetRightTopPoint() => GetCrossPoint(
       Rotate(Point(object_width / 2, object_height / 2, 0), GetRotationAngles()), Camera, null, null);
+
   Point? GetRightBottomPoint() => GetCrossPoint(
       Rotate(Point(object_width / 2, -object_height / 2, 0), GetRotationAngles()), Camera, null, null);
+
   Point? GetLeftBottomPoint() => GetCrossPoint(
       Rotate(Point(-object_width / 2, -object_height / 2, 0), GetRotationAngles()), Camera, null, null);
 
   Offset ToOffset(Point p) => Offset(p.x, p.y);
+
   Offset ToCenter(Offset p, double width, double height) => Offset(
       p.dx > 0 ? width / 2 + p.dx : width / 2 - abs(p.dx),
       p.dy > 0 ? height / 2 - p.dy : height / 2 + abs(p.dy));
+
   Offset ToScreen(Point p, Size size) => ToCenter(ToOffset(p), size.width, size.height);
 
   @override
