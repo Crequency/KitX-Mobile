@@ -3,6 +3,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import 'package:kitx_mobile/utils/acceleration_emulator.dart';
 import 'package:kitx_mobile/utils/rotation_emulator.dart';
@@ -19,6 +20,8 @@ class DeviceRotationDisplayStand extends StatefulWidget {
 class DeviceRotationDisplayStandState extends State<DeviceRotationDisplayStand> {
   static double canvas_width = 400;
   static double canvas_height = 300;
+
+  var rotationPaused = false.obs;
 
   StreamSubscription<GyroscopeEvent>? gyroscopeDataListener;
 
@@ -49,30 +52,45 @@ class DeviceRotationDisplayStandState extends State<DeviceRotationDisplayStand> 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Container(
-          padding: EdgeInsets.symmetric(vertical: 20),
-          child: InkWell(
-            borderRadius: BorderRadius.all(Radius.elliptical(10, 10)),
-            child: CustomPaint(
-              isComplex: true,
-              size: Size(canvas_width - 60, canvas_height),
-              willChange: true,
-              painter: Painter(),
+        Stack(
+          alignment: AlignmentDirectional.center,
+          children: [
+            Obx(
+              () => AnimatedOpacity(
+                duration: const Duration(milliseconds: 300),
+                curve: Curves.easeInOutCubic,
+                opacity: rotationPaused.value ? 1 : 0,
+                child: const Icon(Icons.pause, size: 40),
+              ),
             ),
-            onTap: () {
-              if (gyroscopeDataListener != null) {
-                if (gyroscopeDataListener?.isPaused ?? true) {
-                  gyroscopeDataListener?.resume();
-                } else {
-                  gyroscopeDataListener?.pause();
-                }
-              } else {
-                beginListenGyroscopeData();
-              }
-            },
-            onLongPress: () => DeviceRotationHost.restore(),
-          ),
-        )
+            Container(
+              padding: EdgeInsets.symmetric(vertical: 20),
+              child: InkWell(
+                borderRadius: BorderRadius.all(Radius.elliptical(10, 10)),
+                child: CustomPaint(
+                  isComplex: true,
+                  size: Size(canvas_width - 60, canvas_height),
+                  willChange: true,
+                  painter: Painter(),
+                ),
+                onTap: () {
+                  if (gyroscopeDataListener != null) {
+                    if (gyroscopeDataListener?.isPaused ?? true) {
+                      gyroscopeDataListener?.resume();
+                    } else {
+                      gyroscopeDataListener?.pause();
+                    }
+                    rotationPaused.value = gyroscopeDataListener?.isPaused ?? true;
+                  } else {
+                    beginListenGyroscopeData();
+                  }
+                },
+                onLongPress: () => DeviceRotationHost.restore(),
+              ),
+            ),
+          ],
+        ),
+        // const SizedBox(height: 20),
       ],
     );
   }
