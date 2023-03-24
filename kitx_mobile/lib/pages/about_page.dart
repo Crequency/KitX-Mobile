@@ -285,6 +285,154 @@ class _AboutPageState extends State<AboutPage> {
     );
   }
 
+  Widget getContributors(BuildContext context) {
+    return group(
+      FadeInControl(
+        opacity: contentEntering ? 1 : 0,
+        duration: 800,
+        child: Container(
+          alignment: Alignment.center,
+          child: Text('AboutPage_Contributors'.tr, style: TextStyle(fontSize: 20)),
+        ),
+      ),
+      FadeInControl(
+        duration: 800,
+        opacity: contentEntering ? 1 : 0,
+        child: Container(
+          height: 40,
+          padding: EdgeInsets.symmetric(horizontal: 15),
+          alignment: Alignment.center,
+          child: ShaderMask(
+            shaderCallback: (Rect rect) {
+              return LinearGradient(
+                begin: Alignment.centerLeft,
+                end: Alignment.centerRight,
+                colors: [Colors.indigo, Colors.transparent, Colors.transparent, Colors.indigo],
+                stops: [0.0, 0.05, 0.95, 1.0], // 10% indigo, 80% transparent, 10% purple
+              ).createShader(rect);
+            },
+            blendMode: BlendMode.dstOut,
+            child: ListView(
+                shrinkWrap: true,
+                scrollDirection: Axis.horizontal,
+                physics: BouncingScrollPhysics(),
+                children: [
+                  GraduallySmallerSpacer(duration: 1200, width: contentEntering ? 15 : 800),
+                  const ContributorChip(name: 'Dynesshely', url: 'https://github.com/Dynesshely'),
+                  const SizedBox(width: 10),
+                  const ContributorChip(
+                    name: 'LYF511',
+                    url: 'https://github.com/LYF511',
+                  ),
+                  const SizedBox(width: 10),
+                  const ContributorChip(
+                    name: 'orzMaster',
+                    url: 'https://github.com/orzMaster',
+                  ),
+                  const SizedBox(width: 15),
+                ]),
+          ),
+        ),
+      ),
+      GroupDivider(duration: 1000, height: contentEntering ? 20 : 1600),
+      spacer: const SizedBox(height: 50),
+    );
+  }
+
+  Widget getRepos(BuildContext context) {
+    return group(
+      FadeInControl(
+        opacity: contentEntering ? 1 : 0,
+        duration: 1100,
+        child: Container(
+          alignment: Alignment.center,
+          child: Text('AboutPage_Repos'.tr, style: TextStyle(fontSize: 20)),
+        ),
+      ),
+      FadeInControl(
+        opacity: contentEntering ? 1 : 0,
+        duration: 1100,
+        child: Container(
+          height: 60,
+          alignment: Alignment.center,
+          child: ListView(
+            shrinkWrap: true,
+            scrollDirection: Axis.horizontal,
+            physics: BouncingScrollPhysics(),
+            padding: EdgeInsets.all(10),
+            children: [
+              const RepoButton(name: 'GitHub', url: 'https://github.com/Crequency/KitX'),
+              const SizedBox(width: 10),
+              const RepoButton(name: 'Gitee', url: 'https://gitee.com/Crequency/KitX'),
+            ],
+          ),
+        ),
+      ),
+      GroupDivider(duration: 1000, height: contentEntering ? 20 : 2400),
+    );
+  }
+
+  Widget getThirdPartyLicenses(BuildContext context) {
+    return group(
+      FadeInControl(
+        opacity: contentEntering ? 1 : 0,
+        duration: 1400,
+        child: Container(
+          alignment: Alignment.center,
+          child: Text('AboutPage_ThirdPartyLicenses'.tr, style: TextStyle(fontSize: 20)),
+        ),
+      ),
+      Column(
+        children: [
+          FadeInControl(
+            opacity: contentEntering ? 1 : 0,
+            duration: 1400,
+            child: Container(
+              padding: EdgeInsets.all(15),
+              child: ListView.builder(
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+                itemCount: thirdPartyDataDisplayCount.value,
+                itemBuilder: thirdPartyLicenseBuilder,
+              ),
+            ),
+          ),
+          Visibility(
+            visible: thirdPartyDataDisplayCount.value != thirdPartyDataList.length,
+            child: ElevatedButton(
+              onPressed: () => Global.delay(
+                  () => super.setState(() {
+                        thirdPartyDataDisplayCount.value = thirdPartyDataList.length;
+                      }),
+                  200),
+              child: Text('AboutPage_ThirdPartyLicenses_DisplayAll'.tr),
+            ),
+          ),
+        ],
+      ),
+      GroupDivider(duration: 1000, height: contentEntering ? 20 : 3200),
+    );
+  }
+
+  Widget getJoinUS(BuildContext context) {
+    return group(
+      Container(
+        alignment: Alignment.center,
+        child: Text('AboutPage_JoinUS'.tr, style: TextStyle(fontSize: 20)),
+      ),
+      Container(
+        padding: EdgeInsets.all(20),
+        child: Text('AboutPage_JoinUS_Text'.tr, textAlign: TextAlign.center),
+      ),
+      Column(
+        children: [
+          const SizedBox(height: 30),
+          const Divider(),
+        ],
+      ),
+    );
+  }
+
   Widget getMainContent(BuildContext context, int index) {
     return ListView(
       shrinkWrap: true,
@@ -292,142 +440,10 @@ class _AboutPageState extends State<AboutPage> {
       children: [
         GraduallySmallerSpacer(duration: 1000, height: contentEntering ? 0 : 800),
         const SizedBox(height: 30),
-        group(
-          FadeInControl(
-            opacity: contentEntering ? 1 : 0,
-            duration: 800,
-            child: Container(
-              alignment: Alignment.center,
-              child: Text('AboutPage_Contributors'.tr, style: TextStyle(fontSize: 20)),
-            ),
-          ),
-          FadeInControl(
-            duration: 800,
-            opacity: contentEntering ? 1 : 0,
-            child: Container(
-              height: 40,
-              padding: EdgeInsets.symmetric(horizontal: 15),
-              alignment: Alignment.center,
-              child: ShaderMask(
-                shaderCallback: (Rect rect) {
-                  return LinearGradient(
-                    begin: Alignment.centerLeft,
-                    end: Alignment.centerRight,
-                    colors: [Colors.indigo, Colors.transparent, Colors.transparent, Colors.indigo],
-                    stops: [0.0, 0.05, 0.95, 1.0], // 10% indigo, 80% transparent, 10% purple
-                  ).createShader(rect);
-                },
-                blendMode: BlendMode.dstOut,
-                child: ListView(
-                    shrinkWrap: true,
-                    scrollDirection: Axis.horizontal,
-                    physics: BouncingScrollPhysics(),
-                    children: [
-                      GraduallySmallerSpacer(duration: 1200, width: contentEntering ? 15 : 800),
-                      const ContributorChip(name: 'Dynesshely', url: 'https://github.com/Dynesshely'),
-                      const SizedBox(width: 10),
-                      const ContributorChip(
-                        name: 'LYF511',
-                        url: 'https://github.com/LYF511',
-                      ),
-                      const SizedBox(width: 10),
-                      const ContributorChip(
-                        name: 'orzMaster',
-                        url: 'https://github.com/orzMaster',
-                      ),
-                      const SizedBox(width: 15),
-                    ]),
-              ),
-            ),
-          ),
-          GroupDivider(duration: 1000, height: contentEntering ? 20 : 1600),
-          spacer: const SizedBox(height: 50),
-        ),
-        group(
-          FadeInControl(
-            opacity: contentEntering ? 1 : 0,
-            duration: 1100,
-            child: Container(
-              alignment: Alignment.center,
-              child: Text('AboutPage_Repos'.tr, style: TextStyle(fontSize: 20)),
-            ),
-          ),
-          FadeInControl(
-            opacity: contentEntering ? 1 : 0,
-            duration: 1100,
-            child: Container(
-              height: 60,
-              alignment: Alignment.center,
-              child: ListView(
-                shrinkWrap: true,
-                scrollDirection: Axis.horizontal,
-                physics: BouncingScrollPhysics(),
-                padding: EdgeInsets.all(10),
-                children: [
-                  const RepoButton(name: 'GitHub', url: 'https://github.com/Crequency/KitX'),
-                  const SizedBox(width: 10),
-                  const RepoButton(name: 'Gitee', url: 'https://gitee.com/Crequency/KitX'),
-                ],
-              ),
-            ),
-          ),
-          GroupDivider(duration: 1000, height: contentEntering ? 20 : 2400),
-        ),
-        group(
-          FadeInControl(
-            opacity: contentEntering ? 1 : 0,
-            duration: 1400,
-            child: Container(
-              alignment: Alignment.center,
-              child: Text('AboutPage_ThirdPartyLicenses'.tr, style: TextStyle(fontSize: 20)),
-            ),
-          ),
-          Column(
-            children: [
-              FadeInControl(
-                opacity: contentEntering ? 1 : 0,
-                duration: 1400,
-                child: Container(
-                  padding: EdgeInsets.all(15),
-                  child: ListView.builder(
-                    shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
-                    itemCount: thirdPartyDataDisplayCount.value,
-                    itemBuilder: thirdPartyLicenseBuilder,
-                  ),
-                ),
-              ),
-              Visibility(
-                visible: thirdPartyDataDisplayCount.value != thirdPartyDataList.length,
-                child: ElevatedButton(
-                  onPressed: () => Global.delay(
-                      () => super.setState(() {
-                            thirdPartyDataDisplayCount.value = thirdPartyDataList.length;
-                          }),
-                      200),
-                  child: Text('AboutPage_ThirdPartyLicenses_DisplayAll'.tr),
-                ),
-              ),
-            ],
-          ),
-          GroupDivider(duration: 1000, height: contentEntering ? 20 : 3200),
-        ),
-        group(
-          Container(
-            alignment: Alignment.center,
-            child: Text('AboutPage_JoinUS'.tr, style: TextStyle(fontSize: 20)),
-          ),
-          Container(
-            padding: EdgeInsets.all(20),
-            child: Text('AboutPage_JoinUS_Text'.tr, textAlign: TextAlign.center),
-          ),
-          Column(
-            children: [
-              const SizedBox(height: 30),
-              const Divider(),
-            ],
-          ),
-        ),
+        getContributors(context),
+        getRepos(context),
+        getThirdPartyLicenses(context),
+        getJoinUS(context),
         SizedBox(height: MediaQuery.of(context).size.height / 2),
       ],
     );
