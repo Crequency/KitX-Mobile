@@ -397,10 +397,8 @@ class _AboutPageState extends State<AboutPage> {
                   ),
                 ),
               ),
-              AnimatedContainer(
-                height: thirdPartyDataDisplayCount.value != thirdPartyDataList.length ? 55 : 0,
-                duration: Duration(milliseconds: 1000),
-                padding: EdgeInsets.fromLTRB(20, 0, 20, 15),
+              Visibility(
+                visible: thirdPartyDataDisplayCount.value != thirdPartyDataList.length,
                 child: ElevatedButton(
                   onPressed: () => Global.delay(
                       () => super.setState(() {
