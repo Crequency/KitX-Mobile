@@ -56,13 +56,19 @@ class _DevicePage extends State<DevicePage> {
             ),
           ),
           Obx(
-            () => ListView.builder(
+            () => ReorderableListView.builder(
               shrinkWrap: true,
               physics: NeverScrollableScrollPhysics(),
               itemCount: Global.deviceService.length + 1,
               itemBuilder: (_, index) {
-                var info = index >= Global.deviceService.length ? null : Global.deviceService.deviceInfoList[index];
+                var list = Global.deviceService.deviceInfoList;
+                var info = index >= Global.deviceService.length ? null : list[index];
                 return createDeviceCard(context, info, index);
+              },
+              onReorder: (int oldIndex, int newIndex) {
+                var list = Global.deviceService.deviceInfoList;
+                var moveBack = newIndex > oldIndex;
+                list.insert(moveBack ? newIndex - 1 : newIndex, list.removeAt(oldIndex));
               },
             ),
           ),
@@ -94,7 +100,7 @@ class _DevicePage extends State<DevicePage> {
   var mainDeviceUpdatedSignal = false.obs;
 
   Widget createDeviceCard(BuildContext context, DeviceInfoStruct? info, int index) {
-    if (info == null) return Container(height: 300);
+    if (info == null) return Container(height: 300, key: Key('spacer'));
 
     var _iconStyle = Convert(info.deviceOSType);
     var _icon = Icon(
@@ -106,6 +112,7 @@ class _DevicePage extends State<DevicePage> {
     var deviceName = getDeviceDisplayName(info);
 
     return FractionallySizedBox(
+      key: Key('${info.deviceName}${info.iPv4}'),
       widthFactor: 0.9,
       child: Padding(
         padding: EdgeInsets.fromLTRB(0, index == 0 ? 25 : 0, 0, 20),
