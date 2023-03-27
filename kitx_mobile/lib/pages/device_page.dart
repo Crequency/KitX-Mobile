@@ -44,33 +44,52 @@ class _DevicePage extends State<DevicePage> {
               ),
             ],
           ),
-          SizedBox(width: 10),
+          const SizedBox(width: 10),
         ],
       ),
       body: ListView(
         children: [
           Obx(
-            () => Container(
-              margin: EdgeInsets.fromLTRB(30, 30, 30, 0),
+            () => Padding(
+              padding: EdgeInsets.fromLTRB(30, 30, 30, 0),
               child: Text('${Global.deviceService.length.obs} ${'HomePage_DevicesCount'.tr}'),
             ),
           ),
-          Obx(
-            () => ReorderableListView.builder(
-              shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
-              itemCount: Global.deviceService.length + 1,
-              itemBuilder: (_, index) {
-                var list = Global.deviceService.deviceInfoList;
-                var info = index >= Global.deviceService.length ? null : list[index];
-                return createDeviceCard(context, info, index);
-              },
-              onReorder: (int oldIndex, int newIndex) {
-                var list = Global.deviceService.deviceInfoList;
-                var moveBack = newIndex > oldIndex;
-                list.insert(moveBack ? newIndex - 1 : newIndex, list.removeAt(oldIndex));
-              },
-            ),
+          const SizedBox(height: 25),
+          OrientationBuilder(
+            builder: (context, _) => MediaQuery.of(context).orientation == Orientation.portrait
+                ? Obx(
+                    () => ReorderableListView.builder(
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                      itemCount: Global.deviceService.length + 1,
+                      itemBuilder: (_, index) {
+                        var list = Global.deviceService.deviceInfoList;
+                        var info = index >= Global.deviceService.length ? null : list[index];
+                        return createDeviceCard(context, info, index);
+                      },
+                      onReorder: (int oldIndex, int newIndex) {
+                        var list = Global.deviceService.deviceInfoList;
+                        var moveBack = newIndex > oldIndex;
+                        list.insert(moveBack ? newIndex - 1 : newIndex, list.removeAt(oldIndex));
+                      },
+                    ),
+                  )
+                : Obx(
+                    () => Wrap(
+                      spacing: 0.0,
+                      runSpacing: 0.0,
+                      children: [
+                        for (var i = 0; i < Global.deviceService.length; ++i)
+                          createDeviceCard(
+                            context,
+                            Global.deviceService.deviceInfoList[i],
+                            i,
+                            width: MediaQuery.of(context).size.width * 0.5,
+                          )
+                      ],
+                    ),
+                  ),
           ),
         ],
       ),
@@ -99,99 +118,82 @@ class _DevicePage extends State<DevicePage> {
 
   var mainDeviceUpdatedSignal = false.obs;
 
-  Widget createDeviceCard(BuildContext context, DeviceInfoStruct? info, int index) {
-    if (info == null) return Container(height: 300, key: Key('spacer'));
+  Widget createDeviceCard(BuildContext context, DeviceInfoStruct? info, int index, {double? width}) {
+    if (info == null) return SizedBox(height: 300, width: width, key: Key('spacer'));
 
     var _iconStyle = Convert(info.deviceOSType);
-    var _icon = Icon(
-      _iconStyle,
-      size: 36,
-    );
+    var _icon = Icon(_iconStyle, size: 36);
 
     var cardColor = getDeviceCardColor(context, info);
     var deviceName = getDeviceDisplayName(info);
 
-    return FractionallySizedBox(
+    return SizedBox(
       key: Key('${info.deviceName}${info.iPv4}'),
-      widthFactor: 0.9,
-      child: Padding(
-        padding: EdgeInsets.fromLTRB(0, index == 0 ? 25 : 0, 0, 20),
-        child: Card(
-          color: cardColor,
-          clipBehavior: Clip.hardEdge,
-          child: InkWell(
-            splashColor: context.iconColor?.withOpacity(0.3),
-            onTap: () {},
-            child: Container(
-              margin: EdgeInsets.all(10),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Row(
-                    children: <Widget>[
-                      Container(
-                        margin: EdgeInsets.fromLTRB(5, 2, 0, 2),
-                        child: _icon,
-                      ),
-                      Expanded(
-                        child: Container(
-                          margin: EdgeInsets.fromLTRB(10, 3, 0, 3),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              SingleChildScrollView(
-                                scrollDirection: Axis.horizontal,
-                                child: Text(
-                                  deviceName,
-                                  style: TextStyle(fontSize: 18),
+      width: width,
+      child: FractionallySizedBox(
+        widthFactor: 0.9,
+        child: Padding(
+          padding: EdgeInsets.only(bottom: 20),
+          child: Card(
+            color: cardColor,
+            clipBehavior: Clip.hardEdge,
+            child: InkWell(
+              splashColor: context.iconColor?.withOpacity(0.3),
+              onTap: () {},
+              child: Padding(
+                padding: EdgeInsets.all(10),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Row(
+                      children: <Widget>[
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(5, 2, 0, 2),
+                          child: _icon,
+                        ),
+                        Expanded(
+                          child: Padding(
+                            padding: EdgeInsets.fromLTRB(10, 3, 0, 3),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                SingleChildScrollView(
+                                  scrollDirection: Axis.horizontal,
+                                  child: Text(deviceName, style: const TextStyle(fontSize: 18)),
                                 ),
-                              ),
-                              SingleChildScrollView(
-                                scrollDirection: Axis.horizontal,
-                                child: Text(info.deviceOSVersion),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  Text(
-                    datetimeToShortString(info.sendTime),
-                    style: TextStyle(
-                      fontSize: 14,
-                    ),
-                  ),
-                  Text(
-                    'DevicePage_PluginsCountText'.tr + info.pluginsCount.toString(),
-                    style: TextStyle(
-                      fontSize: 14,
-                    ),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        '${info.iPv4}:${info.pluginServerPort}',
-                        style: TextStyle(
-                          fontSize: 10,
-                        ),
-                      ),
-                      Flexible(
-                        child: SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
-                          child: Text(
-                            info.iPv6,
-                            textAlign: TextAlign.right,
-                            style: TextStyle(
-                              fontSize: 10,
+                                SingleChildScrollView(
+                                  scrollDirection: Axis.horizontal,
+                                  child: Text(info.deviceOSVersion),
+                                ),
+                              ],
                             ),
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                ],
+                      ],
+                    ),
+                    Text(datetimeToShortString(info.sendTime), style: const TextStyle(fontSize: 14)),
+                    Text(
+                      'DevicePage_PluginsCountText'.tr + info.pluginsCount.toString(),
+                      style: const TextStyle(fontSize: 14),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text('${info.iPv4}:${info.pluginServerPort}', style: const TextStyle(fontSize: 10)),
+                        Flexible(
+                          child: SingleChildScrollView(
+                            scrollDirection: Axis.horizontal,
+                            child: Text(
+                              info.iPv6,
+                              textAlign: TextAlign.right,
+                              style: const TextStyle(fontSize: 10),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
