@@ -3,14 +3,22 @@ import 'package:get/get.dart';
 
 import 'package:kitx_mobile/converters/os_type_2_icon.dart';
 import 'package:kitx_mobile/models/device_info.dart';
-import 'package:kitx_mobile/models/enums/device_os_type.dart';
 import 'package:kitx_mobile/utils/datetime_format.dart' show datetimeToShortString;
 import 'package:kitx_mobile/utils/global.dart';
 
 /// Device Card
 class DeviceCard extends StatefulWidget {
   /// Constructor
-  const DeviceCard(this.info, this.index, {super.key, this.width, this.shouldDelay});
+  const DeviceCard(
+    this.info,
+    this.index, {
+    super.key,
+    this.width,
+    this.shouldDelay,
+    this.shouldScaleIn,
+    this.onScale,
+    this.onScaleEnd,
+  });
 
   /// Device Info Struct
   final DeviceInfoStruct? info;
@@ -24,18 +32,20 @@ class DeviceCard extends StatefulWidget {
   /// Should delay for appear
   final bool? shouldDelay;
 
+  /// Should scale in
+  final bool? shouldScaleIn;
+
+  /// On scale function
+  final Function? onScale;
+
+  /// On scale end function
+  final Function? onScaleEnd;
+
   @override
-  State<DeviceCard> createState() => _DeviceCard(info, index, width: width, shouldDelay: shouldDelay);
+  State<DeviceCard> createState() => _DeviceCard();
 }
 
 class _DeviceCard extends State<DeviceCard> with TickerProviderStateMixin {
-  final DeviceInfoStruct? info;
-  final int index;
-  final double? width;
-  final bool? shouldDelay;
-
-  _DeviceCard(this.info, this.index, {this.width, this.shouldDelay});
-
   late final AnimationController _animationController = AnimationController(
     duration: const Duration(milliseconds: 700),
     vsync: this,
@@ -48,10 +58,24 @@ class _DeviceCard extends State<DeviceCard> with TickerProviderStateMixin {
 
   @override
   void initState() {
-    if (shouldDelay ?? true) {
-      Global.delay(() => _animationController.forward(), 150 * index);
+    var onScale = widget.onScale;
+    var onScaleEnd = widget.onScaleEnd;
+    var shouldScaleIn = widget.shouldScaleIn;
+    var shouldDelay = widget.shouldDelay;
+    var index = widget.index;
+
+    onScale?.call();
+
+    if (shouldScaleIn ?? true) {
+      if (shouldDelay ?? true) {
+        Global.delay(() => _animationController.forward().then((value) => onScaleEnd?.call()), 150 * index);
+      } else {
+        _animationController.forward().then((value) => onScaleEnd?.call());
+      }
     } else {
-      _animationController.forward();
+      _animationController
+        ..duration = const Duration(milliseconds: 0)
+        ..forward().then((value) => onScaleEnd?.call());
     }
 
     super.initState();
@@ -89,13 +113,16 @@ class _DeviceCard extends State<DeviceCard> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    if (info == null) return SizedBox(height: 300, width: width, key: Key('spacer'));
+    var info = widget.info;
+    var width = widget.width;
 
-    var _iconStyle = Convert(info?.deviceOSType ?? DeviceOSTypeEnum.Unknown);
+    if (info == null) return SizedBox(height: 300, width: widget.width, key: Key('spacer'));
+
+    var _iconStyle = Convert(info.deviceOSType);
     var _icon = Icon(_iconStyle, size: 36);
 
-    var cardColor = getDeviceCardColor(context, info ?? DeviceInfoStruct());
-    var deviceName = getDeviceDisplayName(info ?? DeviceInfoStruct());
+    var cardColor = getDeviceCardColor(context, info);
+    var deviceName = getDeviceDisplayName(info);
 
     return ScaleTransition(
       scale: _animation,
@@ -134,7 +161,7 @@ class _DeviceCard extends State<DeviceCard> with TickerProviderStateMixin {
                                   ),
                                   SingleChildScrollView(
                                     scrollDirection: Axis.horizontal,
-                                    child: Text(info?.deviceOSVersion ?? ''),
+                                    child: Text(info.deviceOSVersion),
                                   ),
                                 ],
                               ),
@@ -142,24 +169,20 @@ class _DeviceCard extends State<DeviceCard> with TickerProviderStateMixin {
                           ),
                         ],
                       ),
-                      Text(datetimeToShortString(info?.sendTime ?? DateTime.now()),
-                          style: const TextStyle(fontSize: 14)),
+                      Text(datetimeToShortString(info.sendTime), style: const TextStyle(fontSize: 14)),
                       Text(
-                        'DevicePage_PluginsCountText'.tr + (info?.pluginsCount ?? 0).toString(),
+                        'DevicePage_PluginsCountText'.tr + (info.pluginsCount).toString(),
                         style: const TextStyle(fontSize: 14),
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
-                            '${info?.iPv4 ?? ''}:${info?.pluginServerPort ?? ''}',
-                            style: const TextStyle(fontSize: 10),
-                          ),
+                          Text('${info.iPv4}:${info.pluginServerPort}', style: const TextStyle(fontSize: 10)),
                           Flexible(
                             child: SingleChildScrollView(
                               scrollDirection: Axis.horizontal,
                               child: Text(
-                                info?.iPv6 ?? '',
+                                info.iPv6,
                                 textAlign: TextAlign.right,
                                 style: const TextStyle(fontSize: 10),
                               ),
