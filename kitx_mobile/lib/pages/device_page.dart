@@ -10,7 +10,7 @@ import 'package:kitx_mobile/utils/global.dart';
 
 /// Device Page
 class DevicePage extends StatefulWidget {
-  // ignore: public_member_api_docs
+  /// Constructor
   const DevicePage({Key? key}) : super(key: key);
 
   @override
