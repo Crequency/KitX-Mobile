@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 
 import 'package:kitx_mobile/converters/os_type_2_icon.dart';
 import 'package:kitx_mobile/models/device_info.dart';
+import 'package:kitx_mobile/models/enums/device_os_type.dart';
 import 'package:kitx_mobile/utils/datetime_format.dart' show datetimeToShortString;
 import 'package:kitx_mobile/utils/global.dart';
 
@@ -123,7 +124,11 @@ class _DevicePage extends State<DevicePage> {
                       itemBuilder: (_, index) {
                         var list = Global.deviceService.deviceInfoList;
                         var info = index >= Global.deviceService.length ? null : list[index];
-                        return createDeviceCard(context, info, index);
+                        return DeviceCard(
+                          info,
+                          index,
+                          key: Key('${info?.deviceName ?? ''}${info?.iPv4 ?? ''}'),
+                        );
                       },
                       onReorder: (int oldIndex, int newIndex) {
                         var list = Global.deviceService.deviceInfoList;
@@ -140,11 +145,12 @@ class _DevicePage extends State<DevicePage> {
                         runSpacing: 0.0,
                         children: [
                           for (var i = 0; i < Global.deviceService.length; ++i)
-                            createDeviceCard(
-                              context,
+                            DeviceCard(
                               Global.deviceService.deviceInfoList[i],
                               i,
                               width: (MediaQuery.of(context).size.width - 20) * deviceCardHorizontalScale,
+                              key: Key('${Global.deviceService.deviceInfoList[i].deviceName}'
+                                  '${Global.deviceService.deviceInfoList[i].iPv4}'),
                             )
                         ],
                       ),
@@ -155,8 +161,38 @@ class _DevicePage extends State<DevicePage> {
       ),
     );
   }
+}
 
-  /// Get device display name
+/// Device Card
+class DeviceCard extends StatefulWidget {
+  /// Constructor
+  const DeviceCard(this.info, this.index, {super.key, this.width});
+
+  /// Device Info Struct
+  final DeviceInfoStruct? info;
+
+  /// Index in ListView
+  final int index;
+
+  /// If width specified
+  final double? width;
+
+  @override
+  State<DeviceCard> createState() => _DeviceCard(info, index, width: width);
+}
+
+class _DeviceCard extends State<DeviceCard> {
+  final DeviceInfoStruct? info;
+  final int index;
+  final double? width;
+
+  _DeviceCard(this.info, this.index, {this.width});
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   String getDeviceDisplayName(DeviceInfoStruct info) {
     var result = info.deviceName;
 
@@ -166,7 +202,6 @@ class _DevicePage extends State<DevicePage> {
     return result;
   }
 
-  /// Get device card color
   Color getDeviceCardColor(BuildContext context, DeviceInfoStruct info) {
     var result = context.theme.cardColor;
 
@@ -176,19 +211,18 @@ class _DevicePage extends State<DevicePage> {
     return result;
   }
 
-  var mainDeviceUpdatedSignal = false.obs;
-
-  Widget createDeviceCard(BuildContext context, DeviceInfoStruct? info, int index, {double? width}) {
+  @override
+  Widget build(BuildContext context) {
     if (info == null) return SizedBox(height: 300, width: width, key: Key('spacer'));
 
-    var _iconStyle = Convert(info.deviceOSType);
+    var _iconStyle = Convert(info?.deviceOSType ?? DeviceOSTypeEnum.Unknown);
     var _icon = Icon(_iconStyle, size: 36);
 
-    var cardColor = getDeviceCardColor(context, info);
-    var deviceName = getDeviceDisplayName(info);
+    var cardColor = getDeviceCardColor(context, info ?? DeviceInfoStruct());
+    var deviceName = getDeviceDisplayName(info ?? DeviceInfoStruct());
 
     return SizedBox(
-      key: Key('${info.deviceName}${info.iPv4}'),
+      key: Key('${info?.deviceName ?? ''}${info?.iPv4 ?? ''}'),
       width: width,
       child: FractionallySizedBox(
         widthFactor: width == null ? 0.9 : 0.98,
@@ -223,7 +257,7 @@ class _DevicePage extends State<DevicePage> {
                                 ),
                                 SingleChildScrollView(
                                   scrollDirection: Axis.horizontal,
-                                  child: Text(info.deviceOSVersion),
+                                  child: Text(info?.deviceOSVersion ?? ''),
                                 ),
                               ],
                             ),
@@ -231,20 +265,24 @@ class _DevicePage extends State<DevicePage> {
                         ),
                       ],
                     ),
-                    Text(datetimeToShortString(info.sendTime), style: const TextStyle(fontSize: 14)),
+                    Text(datetimeToShortString(info?.sendTime ?? DateTime.now()),
+                        style: const TextStyle(fontSize: 14)),
                     Text(
-                      'DevicePage_PluginsCountText'.tr + info.pluginsCount.toString(),
+                      'DevicePage_PluginsCountText'.tr + (info?.pluginsCount ?? 0).toString(),
                       style: const TextStyle(fontSize: 14),
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text('${info.iPv4}:${info.pluginServerPort}', style: const TextStyle(fontSize: 10)),
+                        Text(
+                          '${info?.iPv4 ?? ''}:${info?.pluginServerPort ?? ''}',
+                          style: const TextStyle(fontSize: 10),
+                        ),
                         Flexible(
                           child: SingleChildScrollView(
                             scrollDirection: Axis.horizontal,
                             child: Text(
-                              info.iPv6,
+                              info?.iPv6 ?? '',
                               textAlign: TextAlign.right,
                               style: const TextStyle(fontSize: 10),
                             ),
