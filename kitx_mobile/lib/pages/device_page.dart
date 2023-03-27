@@ -19,6 +19,7 @@ class _DevicePage extends State<DevicePage> {
 
   var deviceCardHorizontalScale = 0.5;
   var back2topButtonVisibility = false.obs;
+  var justEnteredPage = true;
 
   @override
   void initState() {
@@ -29,6 +30,9 @@ class _DevicePage extends State<DevicePage> {
         back2topButtonVisibility.value = false;
       }
     });
+
+    // Execute after all widgets built.
+    WidgetsBinding.instance.addPostFrameCallback((_) => justEnteredPage = false);
 
     super.initState();
   }
@@ -125,6 +129,7 @@ class _DevicePage extends State<DevicePage> {
                           info,
                           index,
                           key: Key('${info?.deviceName ?? ''}${info?.iPv4 ?? ''}'),
+                          shouldDelay: justEnteredPage,
                         );
                       },
                       onReorder: (int oldIndex, int newIndex) {
@@ -148,6 +153,7 @@ class _DevicePage extends State<DevicePage> {
                               width: (MediaQuery.of(context).size.width - 20) * deviceCardHorizontalScale,
                               key: Key('${Global.deviceService.deviceInfoList[i].deviceName}'
                                   '${Global.deviceService.deviceInfoList[i].iPv4}'),
+                              shouldDelay: justEnteredPage,
                             )
                         ],
                       ),
