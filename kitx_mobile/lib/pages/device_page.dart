@@ -181,16 +181,36 @@ class DeviceCard extends StatefulWidget {
   State<DeviceCard> createState() => _DeviceCard(info, index, width: width);
 }
 
-class _DeviceCard extends State<DeviceCard> {
+class _DeviceCard extends State<DeviceCard> with TickerProviderStateMixin {
   final DeviceInfoStruct? info;
   final int index;
   final double? width;
 
   _DeviceCard(this.info, this.index, {this.width});
 
+  late final AnimationController _animationController = AnimationController(
+    duration: const Duration(milliseconds: 500),
+    vsync: this,
+  )..forward();
+
+  late final Animation<double> _animation = CurvedAnimation(
+    parent: _animationController,
+    curve: Curves.easeInOutCubicEmphasized,
+  );
+
   @override
   void initState() {
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    // To check if this had been disposed.
+    if (context.mounted) {
+      _animationController.dispose();
+    }
+
+    super.dispose();
   }
 
   String getDeviceDisplayName(DeviceInfoStruct info) {
@@ -205,7 +225,9 @@ class _DeviceCard extends State<DeviceCard> {
   Color getDeviceCardColor(BuildContext context, DeviceInfoStruct info) {
     var result = context.theme.cardColor;
 
-    if (info.deviceName == Global.deviceName) result = context.isDarkMode ? Colors.indigo : Colors.limeAccent;
+    if (info.deviceName == Global.deviceName) {
+      result = context.isDarkMode ? Colors.indigo : Colors.limeAccent;
+    }
     if (info.isMainDevice) result = context.isDarkMode ? Colors.deepPurple : Colors.tealAccent;
 
     return result;
@@ -221,76 +243,78 @@ class _DeviceCard extends State<DeviceCard> {
     var cardColor = getDeviceCardColor(context, info ?? DeviceInfoStruct());
     var deviceName = getDeviceDisplayName(info ?? DeviceInfoStruct());
 
-    return SizedBox(
-      key: Key('${info?.deviceName ?? ''}${info?.iPv4 ?? ''}'),
-      width: width,
-      child: FractionallySizedBox(
-        widthFactor: width == null ? 0.9 : 0.98,
-        child: Padding(
-          padding: EdgeInsets.only(bottom: width == null ? 20 : 8),
-          child: Card(
-            color: cardColor,
-            clipBehavior: Clip.hardEdge,
-            child: InkWell(
-              splashColor: context.iconColor?.withOpacity(0.3),
-              onTap: () {},
-              child: Padding(
-                padding: EdgeInsets.all(10),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Row(
-                      children: <Widget>[
-                        Padding(
-                          padding: EdgeInsets.fromLTRB(5, 2, 0, 2),
-                          child: _icon,
-                        ),
-                        Expanded(
-                          child: Padding(
-                            padding: EdgeInsets.fromLTRB(10, 3, 0, 3),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                SingleChildScrollView(
-                                  scrollDirection: Axis.horizontal,
-                                  child: Text(deviceName, style: const TextStyle(fontSize: 18)),
-                                ),
-                                SingleChildScrollView(
-                                  scrollDirection: Axis.horizontal,
-                                  child: Text(info?.deviceOSVersion ?? ''),
-                                ),
-                              ],
+    return ScaleTransition(
+      scale: _animation,
+      child: SizedBox(
+        width: width,
+        child: FractionallySizedBox(
+          widthFactor: width == null ? 0.9 : 0.98,
+          child: Padding(
+            padding: EdgeInsets.only(bottom: width == null ? 20 : 8),
+            child: Card(
+              color: cardColor,
+              clipBehavior: Clip.hardEdge,
+              child: InkWell(
+                splashColor: context.iconColor?.withOpacity(0.3),
+                onTap: () {},
+                child: Padding(
+                  padding: EdgeInsets.all(10),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Row(
+                        children: <Widget>[
+                          Padding(
+                            padding: EdgeInsets.fromLTRB(5, 2, 0, 2),
+                            child: _icon,
+                          ),
+                          Expanded(
+                            child: Padding(
+                              padding: EdgeInsets.fromLTRB(10, 3, 0, 3),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  SingleChildScrollView(
+                                    scrollDirection: Axis.horizontal,
+                                    child: Text(deviceName, style: const TextStyle(fontSize: 18)),
+                                  ),
+                                  SingleChildScrollView(
+                                    scrollDirection: Axis.horizontal,
+                                    child: Text(info?.deviceOSVersion ?? ''),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
-                        ),
-                      ],
-                    ),
-                    Text(datetimeToShortString(info?.sendTime ?? DateTime.now()),
-                        style: const TextStyle(fontSize: 14)),
-                    Text(
-                      'DevicePage_PluginsCountText'.tr + (info?.pluginsCount ?? 0).toString(),
-                      style: const TextStyle(fontSize: 14),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          '${info?.iPv4 ?? ''}:${info?.pluginServerPort ?? ''}',
-                          style: const TextStyle(fontSize: 10),
-                        ),
-                        Flexible(
-                          child: SingleChildScrollView(
-                            scrollDirection: Axis.horizontal,
-                            child: Text(
-                              info?.iPv6 ?? '',
-                              textAlign: TextAlign.right,
-                              style: const TextStyle(fontSize: 10),
+                        ],
+                      ),
+                      Text(datetimeToShortString(info?.sendTime ?? DateTime.now()),
+                          style: const TextStyle(fontSize: 14)),
+                      Text(
+                        'DevicePage_PluginsCountText'.tr + (info?.pluginsCount ?? 0).toString(),
+                        style: const TextStyle(fontSize: 14),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            '${info?.iPv4 ?? ''}:${info?.pluginServerPort ?? ''}',
+                            style: const TextStyle(fontSize: 10),
+                          ),
+                          Flexible(
+                            child: SingleChildScrollView(
+                              scrollDirection: Axis.horizontal,
+                              child: Text(
+                                info?.iPv6 ?? '',
+                                textAlign: TextAlign.right,
+                                style: const TextStyle(fontSize: 10),
+                              ),
                             ),
                           ),
-                        ),
-                      ],
-                    ),
-                  ],
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
