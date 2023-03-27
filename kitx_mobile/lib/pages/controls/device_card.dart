@@ -10,7 +10,7 @@ import 'package:kitx_mobile/utils/global.dart';
 /// Device Card
 class DeviceCard extends StatefulWidget {
   /// Constructor
-  const DeviceCard(this.info, this.index, {super.key, this.width});
+  const DeviceCard(this.info, this.index, {super.key, this.width, this.shouldDelay});
 
   /// Device Info Struct
   final DeviceInfoStruct? info;
@@ -21,21 +21,25 @@ class DeviceCard extends StatefulWidget {
   /// If width specified
   final double? width;
 
+  /// Should delay for appear
+  final bool? shouldDelay;
+
   @override
-  State<DeviceCard> createState() => _DeviceCard(info, index, width: width);
+  State<DeviceCard> createState() => _DeviceCard(info, index, width: width, shouldDelay: shouldDelay);
 }
 
 class _DeviceCard extends State<DeviceCard> with TickerProviderStateMixin {
   final DeviceInfoStruct? info;
   final int index;
   final double? width;
+  final bool? shouldDelay;
 
-  _DeviceCard(this.info, this.index, {this.width});
+  _DeviceCard(this.info, this.index, {this.width, this.shouldDelay});
 
   late final AnimationController _animationController = AnimationController(
-    duration: const Duration(milliseconds: 500),
+    duration: const Duration(milliseconds: 700),
     vsync: this,
-  )..forward();
+  );
 
   late final Animation<double> _animation = CurvedAnimation(
     parent: _animationController,
@@ -44,6 +48,12 @@ class _DeviceCard extends State<DeviceCard> with TickerProviderStateMixin {
 
   @override
   void initState() {
+    if (shouldDelay ?? true) {
+      Global.delay(() => _animationController.forward(), 150 * index);
+    } else {
+      _animationController.forward();
+    }
+
     super.initState();
   }
 
