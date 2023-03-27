@@ -22,12 +22,34 @@ class _DevicePage extends State<DevicePage> {
     super.initState();
   }
 
+  var deviceCardHorizontalScale = 0.5;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('DevicePage_Title'.tr),
         actions: [
+          OrientationBuilder(
+            builder: (context, _) => MediaQuery.of(context).orientation == Orientation.landscape
+                ? PopupMenuButton(
+                    tooltip: '',
+                    padding: EdgeInsets.all(0),
+                    icon: const Icon(Icons.view_column_outlined),
+                    position: PopupMenuPosition.under,
+                    itemBuilder: (context) => [
+                      PopupMenuItem(
+                        child: const Text('2'),
+                        onTap: () => deviceCardHorizontalScale = 0.5,
+                      ),
+                      PopupMenuItem(
+                        child: const Text('3'),
+                        onTap: () => deviceCardHorizontalScale = 1.0 / 3,
+                      ),
+                    ],
+                  )
+                : const SizedBox(),
+          ),
           PopupMenuButton(
             tooltip: '',
             padding: EdgeInsets.all(0),
@@ -76,18 +98,21 @@ class _DevicePage extends State<DevicePage> {
                     ),
                   )
                 : Obx(
-                    () => Wrap(
-                      spacing: 0.0,
-                      runSpacing: 0.0,
-                      children: [
-                        for (var i = 0; i < Global.deviceService.length; ++i)
-                          createDeviceCard(
-                            context,
-                            Global.deviceService.deviceInfoList[i],
-                            i,
-                            width: MediaQuery.of(context).size.width * 0.5,
-                          )
-                      ],
+                    () => Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 10),
+                      child: Wrap(
+                        spacing: 0.0,
+                        runSpacing: 0.0,
+                        children: [
+                          for (var i = 0; i < Global.deviceService.length; ++i)
+                            createDeviceCard(
+                              context,
+                              Global.deviceService.deviceInfoList[i],
+                              i,
+                              width: (MediaQuery.of(context).size.width - 20) * deviceCardHorizontalScale,
+                            )
+                        ],
+                      ),
                     ),
                   ),
           ),
@@ -131,9 +156,9 @@ class _DevicePage extends State<DevicePage> {
       key: Key('${info.deviceName}${info.iPv4}'),
       width: width,
       child: FractionallySizedBox(
-        widthFactor: 0.9,
+        widthFactor: width == null ? 0.9 : 0.98,
         child: Padding(
-          padding: EdgeInsets.only(bottom: 20),
+          padding: EdgeInsets.only(bottom: width == null ? 20 : 8),
           child: Card(
             color: cardColor,
             clipBehavior: Clip.hardEdge,
