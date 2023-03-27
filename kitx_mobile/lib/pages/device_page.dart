@@ -17,12 +17,30 @@ class DevicePage extends StatefulWidget {
 }
 
 class _DevicePage extends State<DevicePage> {
+  var _scrollController = ScrollController();
+
+  var deviceCardHorizontalScale = 0.5;
+  var back2topButtonVisibility = false.obs;
+
   @override
   void initState() {
+    _scrollController.addListener(() {
+      if (_scrollController.offset >= MediaQuery.of(super.context).size.height * 0.3) {
+        back2topButtonVisibility.value = true;
+      } else {
+        back2topButtonVisibility.value = false;
+      }
+    });
+
     super.initState();
   }
 
-  var deviceCardHorizontalScale = 0.5;
+  @override
+  void dispose() {
+    _scrollController.dispose();
+
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +87,24 @@ class _DevicePage extends State<DevicePage> {
           const SizedBox(width: 10),
         ],
       ),
+      floatingActionButton: Obx(
+        () => AnimatedOpacity(
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.easeInOutCubicEmphasized,
+          opacity: back2topButtonVisibility.value ? 1 : 0,
+          child: FloatingActionButton(
+            onPressed: () => _scrollController.animateTo(
+              0.0,
+              duration: const Duration(milliseconds: 300),
+              curve: Curves.easeInOutCubicEmphasized,
+            ),
+            child: const Icon(Icons.arrow_upward),
+          ),
+        ),
+      ),
+      floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling,
       body: ListView(
+        controller: _scrollController,
         children: [
           Obx(
             () => Padding(
