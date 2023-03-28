@@ -111,7 +111,13 @@ class _DevicePage extends State<DevicePage> {
           Obx(
             () => Padding(
               padding: EdgeInsets.fromLTRB(30, 30, 30, 0),
-              child: Text('${Global.deviceService.length.obs} ${'HomePage_DevicesCount'.tr}'),
+              child: Hero(
+                tag: 'HeroTag_DevicesCount',
+                child: Text(
+                  '${Global.deviceService.length.obs} ${'HomePage_DevicesCount'.tr}',
+                  style: Theme.of(context).textTheme.bodyMedium,
+                ),
+              ),
             ),
           ),
           const SizedBox(height: 25),
