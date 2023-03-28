@@ -166,6 +166,7 @@ class _DevicePage extends State<DevicePage> {
                     ),
                   ),
           ),
+          const SizedBox(height: 300),
         ],
       ),
     );
