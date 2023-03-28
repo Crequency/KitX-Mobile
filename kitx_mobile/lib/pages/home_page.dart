@@ -43,7 +43,13 @@ class HomePage extends StatelessWidget {
                   () => ListTile(
                     leading: const Icon(Icons.devices),
                     title: Text('Drawer_Devices'.tr),
-                    subtitle: Text('${Global.deviceService.length.obs} ${'HomePage_DevicesCount'.tr}'),
+                    subtitle: Hero(
+                      tag: 'HeroTag_DevicesCount',
+                      child: Text(
+                        '${Global.deviceService.length.obs} ${'HomePage_DevicesCount'.tr}',
+                        style: Theme.of(context).textTheme.bodyMedium,
+                      ),
+                    ),
                     trailing: const Icon(Icons.keyboard_arrow_right),
                     shape: tileRadius,
                     onTap: () => Global.delay(() => Get.to(() => DevicePage()), pageOpenDelay),
