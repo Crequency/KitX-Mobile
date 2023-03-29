@@ -81,7 +81,7 @@ class WebService {
 
     _ipv4 = await _networkInfo.getWifiIP();
     _ipv6 = await _networkInfo.getWifiIPv6();
-    _mac = await Global.channel.invokeMethod('getMAC') ?? 'null';
+    _mac = Platform.isAndroid ? await Global.channel.invokeMethod('getMAC') ?? '' : '';
 
     await _flutterBlue.name.then((value) {
       Global.deviceName = value.toString();
