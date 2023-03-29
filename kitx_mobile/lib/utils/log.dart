@@ -9,11 +9,10 @@ var _config = LogsConfig()
   ..customOpeningDivider = '['
   ..customClosingDivider = ']'
   ..csvDelimiter = ', '
-  // ..isLogEnabled = true
   ..encryptionEnabled = false
   ..encryptionKey = ''
   ..formatType = FormatType.FORMAT_CUSTOM
-  ..logLevelsEnabled = [LogLevel.INFO, LogLevel.ERROR]
+  ..logLevelsEnabled = [LogLevel.INFO, LogLevel.WARNING, LogLevel.ERROR]
   ..timestampFormat = TimestampFormat.TIME_FORMAT_FULL_2;
 
 /// Initialize the logger.
