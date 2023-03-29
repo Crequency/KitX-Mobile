@@ -25,9 +25,9 @@ class MainActivity : FlutterActivity() {
             }
 
             if (call.method == "toastText") {
-                var text = call.argument("text")
-                Toast.makeText(this, mac, Toast.LENGTH_LONG).show()
-                result.success()
+                var text = call.argument("text") ?: ""
+                result.success(text)
+                Toast.makeText(this, text, Toast.LENGTH_LONG).show()
             }
         }
     }
