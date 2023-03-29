@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-
 import 'package:kitx_mobile/services/device_service.dart';
 import 'package:kitx_mobile/services/web_service.dart';
 import 'package:kitx_mobile/themes/dark_theme.dart';
 import 'package:kitx_mobile/themes/light_theme.dart';
 import 'package:kitx_mobile/utils/config.dart';
-
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
@@ -16,6 +15,8 @@ class _Global {
   bool get isRelease => bool.fromEnvironment('dart.vm.product');
 
   bool get isDebug => !isRelease;
+
+  var channel = MethodChannel('com.crequency.kitx.mobile/channel');
 
   var webService = WebService()
     ..udpPortSend = Config.WebService_UdpPortSend

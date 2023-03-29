@@ -1,6 +1,6 @@
-﻿import 'package:flutter/material.dart';
+﻿import 'package:badges/badges.dart' as badges;
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import 'package:kitx_mobile/converters/os_type_2_icon.dart';
 import 'package:kitx_mobile/models/device_info.dart';
 import 'package:kitx_mobile/utils/datetime_format.dart' show datetimeToShortString;
@@ -132,65 +132,80 @@ class _DeviceCard extends State<DeviceCard> with TickerProviderStateMixin {
           widthFactor: width == null ? 0.9 : 0.98,
           child: Padding(
             padding: EdgeInsets.only(bottom: width == null ? 20 : 8),
-            child: Card(
-              color: cardColor,
-              clipBehavior: Clip.hardEdge,
-              child: InkWell(
-                splashColor: context.iconColor?.withOpacity(0.3),
-                onTap: () {},
-                child: Padding(
-                  padding: EdgeInsets.all(10),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Row(
-                        children: <Widget>[
-                          Padding(
-                            padding: EdgeInsets.fromLTRB(5, 2, 0, 2),
-                            child: _icon,
-                          ),
-                          Expanded(
-                            child: Padding(
-                              padding: EdgeInsets.fromLTRB(10, 3, 0, 3),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  SingleChildScrollView(
-                                    scrollDirection: Axis.horizontal,
-                                    child: Text(deviceName, style: const TextStyle(fontSize: 18)),
-                                  ),
-                                  SingleChildScrollView(
-                                    scrollDirection: Axis.horizontal,
-                                    child: Text(info.deviceOSVersion),
-                                  ),
-                                ],
+            child: badges.Badge(
+              badgeContent: Text(
+                'DevicePage_PluginsCountText'.tr + (info.pluginsCount).toString(),
+                style: const TextStyle(color: Colors.white),
+              ),
+              position: badges.BadgePosition.topEnd(top: 70, end: 15),
+              badgeStyle: badges.BadgeStyle(
+                shape: badges.BadgeShape.square,
+                badgeColor: Get.isDarkMode ? Colors.white12 : Colors.black87,
+                padding: EdgeInsets.symmetric(vertical: 5, horizontal: 15),
+                borderRadius: BorderRadius.circular(45),
+                elevation: 0,
+              ),
+              child: Card(
+                color: cardColor,
+                clipBehavior: Clip.hardEdge,
+                child: InkWell(
+                  splashColor: context.iconColor?.withOpacity(0.3),
+                  onTap: () {},
+                  child: Padding(
+                    padding: EdgeInsets.all(10),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Row(
+                          children: <Widget>[
+                            Padding(
+                              padding: EdgeInsets.fromLTRB(5, 2, 0, 2),
+                              child: _icon,
+                            ),
+                            Expanded(
+                              child: Padding(
+                                padding: EdgeInsets.fromLTRB(10, 3, 0, 3),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    SingleChildScrollView(
+                                      scrollDirection: Axis.horizontal,
+                                      child: Text(deviceName, style: const TextStyle(fontSize: 18)),
+                                    ),
+                                    SingleChildScrollView(
+                                      scrollDirection: Axis.horizontal,
+                                      child: Text(info.deviceOSVersion),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
-                          ),
-                        ],
-                      ),
-                      Text(datetimeToShortString(info.sendTime), style: const TextStyle(fontSize: 14)),
-                      Text(
-                        'DevicePage_PluginsCountText'.tr + (info.pluginsCount).toString(),
-                        style: const TextStyle(fontSize: 14),
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text('${info.iPv4}:${info.pluginServerPort}', style: const TextStyle(fontSize: 10)),
-                          Flexible(
-                            child: SingleChildScrollView(
-                              scrollDirection: Axis.horizontal,
-                              child: Text(
-                                info.iPv6,
-                                textAlign: TextAlign.right,
-                                style: const TextStyle(fontSize: 10),
+                          ],
+                        ),
+                        Text(datetimeToShortString(info.sendTime)),
+                        Text(info.deviceMacAddress),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              '${info.iPv4}:${info.pluginServerPort}',
+                              style: const TextStyle(fontSize: 12),
+                            ),
+                            const SizedBox(width: 30),
+                            Flexible(
+                              child: SingleChildScrollView(
+                                scrollDirection: Axis.horizontal,
+                                child: Text(
+                                  info.iPv6,
+                                  textAlign: TextAlign.right,
+                                  style: const TextStyle(fontSize: 12),
+                                ),
                               ),
                             ),
-                          ),
-                        ],
-                      ),
-                    ],
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),

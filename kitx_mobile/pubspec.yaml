@@ -10,9 +10,11 @@ environment:
 
 dependencies:
   # battery_plus: ^3.0.2 # 电池数据
+  badges: ^3.0.3 # 徽章
   built_collection: ^5.1.1
   built_value: ^8.4.3 # JSON 序列化
   community_material_icon: ^5.9.55 # Material Design Icons 社区贡献
+  crypto: ^3.0.2
   device_info_plus: ^8.0.0 # 设备信息
   f_logs: ^2.0.1 # 日志管理
   flutter:
