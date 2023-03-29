@@ -14,7 +14,7 @@ import 'package:kitx_mobile/utils/config.dart';
 import 'package:kitx_mobile/utils/global.dart';
 import 'package:kitx_mobile/utils/log.dart';
 
-import 'package:mac_address/mac_address.dart';
+// import 'package:mac_address/mac_address.dart';
 import 'package:network_info_plus/network_info_plus.dart';
 
 /// 本文件可单独运行
@@ -79,7 +79,7 @@ class WebService {
 
   /// Get Network Information
   Future<List<String>?> getNetworkInfo() async {
-    late String _ipv4, _ipv6, _mac;
+    late String _ipv4, _ipv6;
 
     await _networkInfo.getWifiIP().then((value) {
       _ipv4 = value.toString();
@@ -95,11 +95,7 @@ class WebService {
 
     // await _networkInfo.getWifiBroadcast().then((value) {_udpBroadcastAddress = value.toString();});
 
-    await GetMac.macAddress.then((value) {
-      _mac = value.toString();
-    });
-
-    Log.info('Get network information. Ipv4: $_ipv4 Ipv6: $_ipv6 Mac: $_mac');
+    Log.info('Get network information. Ipv4: $_ipv4 Ipv6: $_ipv6');
 
     var logInfo = '';
 
@@ -114,14 +110,9 @@ class WebService {
       _ipv6 = '';
     }
 
-    if (_mac == 'null') {
-      logInfo += 'Can not get MAC Address, but WebService will still start.\n';
-      _mac = '';
-    }
-
     if (logInfo != '') Log.warning(logInfo);
 
-    return [_ipv4, _ipv6, _mac];
+    return [_ipv4, _ipv6];
   }
 
   /// 停止服务
@@ -170,7 +161,7 @@ class WebService {
       }
 
       // 获取设备信息
-      late String _ipv4, _ipv6, _mac, deviceOSVersion;
+      late String _ipv4, _ipv6, deviceOSVersion;
 
       var networkInfo = await getNetworkInfo();
 
@@ -179,7 +170,6 @@ class WebService {
       } else {
         _ipv4 = networkInfo[0];
         _ipv6 = networkInfo[1];
-        _mac = networkInfo[2];
       }
 
       deviceOSVersion = await getDeviceVersionString();
@@ -191,7 +181,7 @@ class WebService {
           ..deviceOSVersion = deviceOSVersion
           ..iPv4 = _ipv4
           ..iPv6 = _ipv6
-          ..deviceMacAddress = _mac
+          ..deviceMacAddress = ''
           ..pluginServerPort = 0
           ..pluginsCount = 0
           ..sendTime = DateTime.now().toUtc()

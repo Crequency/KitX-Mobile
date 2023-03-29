@@ -3,7 +3,7 @@ description: Mobile Client for KitX
 
 publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
-# version: 1.0.0+1
+version: 1.0.0+1
 
 environment:
   sdk: ">=2.19.2 <3.0.0"
@@ -22,7 +22,7 @@ dependencies:
   # flutter_logs: ^2.1.7 # 日志
   get: ^4.6.5 # 路由管理
   # intl: ^0.17.0
-  mac_address: ^1.0.0 # 获取 MAC  p.s. iOS 未实现
+  # mac_address: ^1.0.0 # 获取 MAC  p.s. iOS 未实现
   network_info_plus: ^3.0.2 # 网络信息
   package_info_plus: ^3.0.3 # 包信息
   permission_handler: ^10.2.0 # 权限管理
