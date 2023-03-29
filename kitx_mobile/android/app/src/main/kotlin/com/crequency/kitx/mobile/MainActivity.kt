@@ -20,9 +20,14 @@ class MainActivity : FlutterActivity() {
         channel = MethodChannel(flutterEngine.dartExecutor.binaryMessenger, CHANNEL)
         channel.setMethodCallHandler { call, result ->
             if (call.method == "getMAC") {
-                var mac = getMacAddress();
-                result.success(mac);
+                var mac = getMacAddress()
+                result.success(mac)
+            }
+
+            if (call.method == "toastText") {
+                var text = call.argument("text")
                 Toast.makeText(this, mac, Toast.LENGTH_LONG).show()
+                result.success()
             }
         }
     }
