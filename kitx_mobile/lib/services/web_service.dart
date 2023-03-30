@@ -73,6 +73,20 @@ class WebService {
     }
   }
 
+  /// Get Backup Device ID String
+  Future<String> getBackupDeviceIdString() async {
+    var androidInfo = await _deviceInfoPlugin.androidInfo;
+    var fingerPrint = androidInfo.fingerprint;
+    var display = androidInfo.display;
+
+    var deviceId = '$fingerPrint || $display';
+
+    var bytes = utf8.encode(deviceId);
+    var hexString = bytes.sublist(0, 5).map((b) => b.toRadixString(16).padLeft(2, '0')).join(':');
+
+    return 'FF:${hexString.toUpperCase()}';
+  }
+
   /// Get Network Information
   Future<List<String>?> getNetworkInfo() async {
     late String? _ipv4, _ipv6, _mac;
@@ -81,7 +95,14 @@ class WebService {
 
     _ipv4 = await _networkInfo.getWifiIP();
     _ipv6 = await _networkInfo.getWifiIPv6();
-    _mac = Platform.isAndroid ? await Global.channel.invokeMethod('getMAC') ?? '' : '';
+
+    if (Platform.isAndroid) {
+      _mac = (await Global.channel.invokeMethod('getMAC') ?? '') == '' ? await getBackupDeviceIdString() : '';
+    } else if (Platform.isIOS) {
+      _mac = (await _deviceInfoPlugin.iosInfo).identifierForVendor ?? '';
+    } else {
+      _mac = '';
+    }
 
     await _flutterBlue.name.then((value) {
       Global.deviceName = value.toString();
