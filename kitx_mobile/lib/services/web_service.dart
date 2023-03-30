@@ -96,12 +96,19 @@ class WebService {
     _ipv4 = await _networkInfo.getWifiIP();
     _ipv6 = await _networkInfo.getWifiIPv6();
 
-    if (Platform.isAndroid) {
-      _mac = (await Global.channel.invokeMethod('getMAC') ?? '') == '' ? await getBackupDeviceIdString() : '';
-    } else if (Platform.isIOS) {
-      _mac = (await _deviceInfoPlugin.iosInfo).identifierForVendor ?? '';
-    } else {
-      _mac = '';
+    var defaultMac = '00:20:00:00:00:00';
+    try {
+      if (Platform.isAndroid) {
+        var _actualMac = '${await Global.channel.invokeMethod('getMAC') ?? ''}';
+        _mac = _actualMac == '' ? await getBackupDeviceIdString() : _actualMac;
+      } else if (Platform.isIOS) {
+        var _actualMac = (await _deviceInfoPlugin.iosInfo).identifierForVendor ?? '';
+        _mac = _actualMac == '' ? defaultMac : _actualMac;
+      } else {
+        _mac = defaultMac;
+      }
+    } catch (e) {
+      _mac = defaultMac;
     }
 
     await _flutterBlue.name.then((value) {
