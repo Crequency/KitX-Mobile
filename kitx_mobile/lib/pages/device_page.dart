@@ -1,7 +1,6 @@
 import 'package:community_material_icon/community_material_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import 'package:kitx_mobile/pages/controls/device_card.dart';
 import 'package:kitx_mobile/utils/global.dart';
 
@@ -136,6 +135,7 @@ class _DevicePage extends State<DevicePage> {
                           index,
                           key: Key('${info?.deviceName ?? ''}${info?.iPv4 ?? ''}'),
                           shouldDelay: justEnteredPage,
+                          shouldScaleIn: Global.animationEnabled.value,
                         );
                       },
                       onReorder: (int oldIndex, int newIndex) {
@@ -160,6 +160,7 @@ class _DevicePage extends State<DevicePage> {
                               key: Key('${Global.deviceService.deviceInfoList[i].deviceName}'
                                   '${Global.deviceService.deviceInfoList[i].iPv4}'),
                               shouldDelay: justEnteredPage,
+                              shouldScaleIn: Global.animationEnabled.value,
                             )
                         ],
                       ),
