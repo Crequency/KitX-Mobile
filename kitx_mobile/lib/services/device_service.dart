@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:get/get.dart';
-
 import 'package:kitx_mobile/models/device_info.dart';
 import 'package:kitx_mobile/services/public/service_status.dart';
 import 'package:kitx_mobile/utils/config.dart';
@@ -32,7 +31,11 @@ class DeviceService {
             (b) {
               b
                 ..sendTime = info.sendTime
-                ..isMainDevice = info.isMainDevice;
+                ..isMainDevice = info.isMainDevice
+                ..deviceOSVersion = info.deviceOSVersion
+                ..deviceServerPort = info.deviceServerPort
+                ..pluginServerPort = info.pluginServerPort
+                ..pluginsCount = info.pluginsCount;
             },
           );
           deviceInfoList.refresh();
