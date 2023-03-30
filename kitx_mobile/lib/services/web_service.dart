@@ -84,7 +84,7 @@ class WebService {
     var bytes = utf8.encode(deviceId);
     var hexString = bytes.sublist(0, 5).map((b) => b.toRadixString(16).padLeft(2, '0')).join(':');
 
-    return 'FF:${hexString.toUpperCase()}';
+    return 'FO:${hexString.toUpperCase()}';
   }
 
   /// Get Network Information
