@@ -27,6 +27,21 @@ class _Global {
   var deviceService = DeviceService();
   var deviceError = false;
 
+  String? languageCode;
+
+  set languageCodeProperty(String? code) {
+    languageCode = code;
+    var codes = languageCode?.split('-') ?? ['en', 'US'];
+    Get.updateLocale(Locale(codes[0], codes[1]));
+  }
+
+  Locale? get getLanguageCode {
+    if (languageCode == null) return null;
+
+    var codes = languageCode?.split('-') ?? ['en', 'US'];
+    return Locale(codes[0], codes[1]);
+  }
+
   var themeMode = ThemeMode.system;
 
   ThemeMode get themeModeProperty => themeMode;

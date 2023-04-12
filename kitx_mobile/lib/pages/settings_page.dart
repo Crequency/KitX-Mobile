@@ -2,14 +2,10 @@
 
 import 'package:f_logs/f_logs.dart';
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
-
 import 'package:kitx_mobile/converters/size_converter.dart';
-
 import 'package:kitx_mobile/themes/light_theme.dart';
 import 'package:kitx_mobile/utils/composer.dart';
-
 import 'package:kitx_mobile/utils/config.dart';
 import 'package:kitx_mobile/utils/global.dart';
 
@@ -93,9 +89,9 @@ class _SettingsPageState extends State<SettingsPage> {
   }
 
   void saveChanges(BuildContext context) {
-    Config.saveAsync();
-
-    showSnackBar(Text('SettingsPage_Saved'.tr));
+    Config.saveAsync().then(
+      (value) => showSnackBar(Text('SettingsPage_Saved'.tr)),
+    );
 
     // var snackBar = SnackBar(
     //   content: Text('SettingsPage_Saved'.tr),
@@ -130,11 +126,21 @@ class _SettingsPageState extends State<SettingsPage> {
             itemBuilder: (context) => [
               PopupMenuItem(
                 child: const Text('简体中文'),
-                onTap: () => Global.delay(() => Get.updateLocale(Locale('zh', 'CN')), 200),
+                onTap: () {
+                  Global.delay(() {
+                    Global.languageCodeProperty = 'zh-CN';
+                    saveChanges(context);
+                  }, 200);
+                },
               ),
               PopupMenuItem(
                 child: const Text('English (US)'),
-                onTap: () => Global.delay(() => Get.updateLocale(Locale('en', 'US')), 200),
+                onTap: () {
+                  Global.delay(() {
+                    Global.languageCodeProperty = 'en-US';
+                    saveChanges(context);
+                  }, 200);
+                },
               ),
             ],
           ),
