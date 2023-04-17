@@ -1,4 +1,6 @@
-﻿import 'package:f_logs/model/flog/flog.dart';
+﻿import 'dart:async';
+
+import 'package:f_logs/model/flog/flog.dart';
 import 'package:f_logs/model/flog/flog_config.dart';
 import 'package:f_logs/model/flog/log_level.dart';
 import 'package:f_logs/utils/formatter/formate_type.dart';
@@ -17,7 +19,14 @@ var _config = LogsConfig()
   ..timestampFormat = TimestampFormat.TIME_FORMAT_FULL_2;
 
 /// Initialize the logger.
-void initLogger() => FLog.applyConfigurations(_config);
+void initLogger() {
+  FLog.applyConfigurations(_config);
+
+  Timer.periodic(const Duration(minutes: 10), (timer) async {
+    await FLog.exportLogs();
+    await FLog.clearLogs();
+  });
+}
 
 /// Log
 class Log {
