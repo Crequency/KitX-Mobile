@@ -91,7 +91,7 @@ class WebService {
   Future<List<String>?> getNetworkInfo() async {
     late String? _ipv4, _ipv6, _mac;
 
-    await requestLocationPermissions();
+    await requestNetworkRelatedPermissions();
 
     _ipv4 = await _networkInfo.getWifiIP();
     _ipv6 = await _networkInfo.getWifiIPv6();
