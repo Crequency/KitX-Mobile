@@ -118,6 +118,13 @@ var thirdPartyDataList = [
     'https://github.com/flutter/packages/tree/main/packages/shared_preferences/shared_preferences',
   ),
   ThirdPartyData(
+    'sliding_up_panel',
+    'v2.0.0+1',
+    'akshathjain',
+    'https://pub.dev/packages/sliding_up_panel',
+    'https://github.com/akshathjain/sliding_up_panel',
+  ),
+  ThirdPartyData(
     'url_launcher',
     'v6.1.10',
     'flutter',

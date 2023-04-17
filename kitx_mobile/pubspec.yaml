@@ -31,6 +31,7 @@ dependencies:
   permission_handler: ^10.2.0 # 权限管理
   sensors_plus: ^2.0.1 # 传感器
   shared_preferences: ^2.0.18
+  sliding_up_panel: ^2.0.0+1 # 向上滑动布局
   # sms_receiver: ^0.4.1 # 短信接收
   url_launcher: ^6.1.10 # 打开链接
   vibration: ^1.7.6 # 手机震动
