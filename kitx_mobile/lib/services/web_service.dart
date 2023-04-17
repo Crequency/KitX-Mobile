@@ -6,6 +6,7 @@ import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
+import 'package:get/get.dart';
 import 'package:kitx_mobile/models/device_info.dart';
 import 'package:kitx_mobile/services/public/service_status.dart';
 import 'package:kitx_mobile/utils/config.dart';
@@ -37,7 +38,7 @@ class WebService {
   var _sendExitPackage = false;
 
   /// Web Service Status
-  var webServiceStatus = ServiceStatus.pending;
+  var webServiceStatus = ServiceStatus.pending.obs;
 
   /// Socket Object
   late RawDatagramSocket socket;
@@ -148,10 +149,10 @@ class WebService {
       receiveSocket = null;
       sendSocket = null;
 
-      webServiceStatus = ServiceStatus.pending;
+      webServiceStatus.value = ServiceStatus.pending;
     }
 
-    webServiceStatus = ServiceStatus.stopping;
+    webServiceStatus.value = ServiceStatus.stopping;
 
     if (sendExitPackage) {
       _sendExitPackage = true;
@@ -170,7 +171,7 @@ class WebService {
 
   /// 初始化服务
   Future<void> initService() async {
-    webServiceStatus = ServiceStatus.starting;
+    webServiceStatus.value = ServiceStatus.starting;
 
     _sendExitPackage = false;
 
@@ -251,7 +252,7 @@ class WebService {
       ).catchError(
         (e, stack) {
           Log.error('Catch an error: $e $stack');
-          webServiceStatus = ServiceStatus.error;
+          webServiceStatus.value = ServiceStatus.error;
         },
       );
 
@@ -283,14 +284,14 @@ class WebService {
       ).catchError(
         (e, stack) {
           Log.error('Catch an error: $e $stack');
-          webServiceStatus = ServiceStatus.error;
+          webServiceStatus.value = ServiceStatus.error;
         },
       );
 
-      webServiceStatus = ServiceStatus.running;
+      Global.delay(() => webServiceStatus.value = ServiceStatus.running, 500);
     } catch (e, stack) {
       Log.error('Catch an error: $e On: $stack');
-      webServiceStatus = ServiceStatus.error;
+      webServiceStatus.value = ServiceStatus.error;
       _networkInfo = NetworkInfo();
     }
   }
