@@ -18,6 +18,7 @@ class DeviceCard extends StatefulWidget {
     this.shouldScaleIn,
     this.onScale,
     this.onScaleEnd,
+    this.onTap,
   });
 
   /// Device Info Struct
@@ -40,6 +41,9 @@ class DeviceCard extends StatefulWidget {
 
   /// On scale end function
   final Function? onScaleEnd;
+
+  /// On widget tapped
+  final VoidCallback? onTap;
 
   @override
   State<DeviceCard> createState() => _DeviceCard();
@@ -150,7 +154,7 @@ class _DeviceCard extends State<DeviceCard> with TickerProviderStateMixin {
                 clipBehavior: Clip.hardEdge,
                 child: InkWell(
                   splashColor: context.iconColor?.withOpacity(0.3),
-                  onTap: () {},
+                  onTap: widget.onTap,
                   child: Padding(
                     padding: EdgeInsets.all(10),
                     child: Column(
