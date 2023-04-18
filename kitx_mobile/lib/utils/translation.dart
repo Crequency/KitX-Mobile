@@ -10,21 +10,26 @@ class Translation extends Translations {
           'Public_Animation': '动画',
           'Public_Additional': '额外的',
           'Public_Log': '日志',
+          'Public_Reload': '重载',
+          'Public_Restart': '重启',
           'Drawer_Title': 'KitX',
           'Drawer_Devices': '设备管理',
           'Drawer_Account': '账户',
           'Drawer_Test': '测试',
           'Drawer_Setting': '设置',
           'Drawer_About': '关于',
+          'Option_RestartDevicesServer': '重启设备网络服务器',
+          'Option_ShutdownDevicesServer': '关闭设备网络服务器',
           'IndexPage_Title': 'KitX',
           'HomePage_DevicesCount': '设备在线',
           'DevicePage_Title': '设备管理',
-          'DevicePage_PluginsCountText': '在线插件数: ',
+          'DevicePage_PluginsCountText': '%count% 插件在线',
           'DevicePage_LocalDevice': '(本机)',
           'DevicePage_MainDevice': '(主控)',
           'AccountPage_Title': '账户',
           'TestPage_Title': '测试',
           'SettingsPage_Title': '设置',
+          'SettingsPage_Languages': '语言',
           'SettingsPage_Theme': '主题',
           'SettingsPage_Light': '浅',
           'SettingsPage_Dark': '深',
@@ -38,7 +43,11 @@ class Translation extends Translations {
           'AboutPage_ThirdPartyLicenses': '第三方许可',
           'AboutPage_ThirdPartyLicenses_DisplayAll': '显示全部',
           'AboutPage_JoinUS': '加入我们',
-          'AboutPage_JoinUS_Text': '我们的项目都托管在 https://github.com/Crequency/, 欢迎 Fork 并贡献您宝贵的意见',
+          'AboutPage_JoinUS_Text': '我们的项目都托管在 https://github.com/Crequency/, '
+              '欢迎 Fork 并贡献您宝贵的意见.\n\n'
+              'KitX Mobile 的源码全部位于 https://github.com/Crequency/KitX-Mobile/\n\n'
+              'KitX Mobile 是 KitX Project 一部分, '
+              'KitX Project 的主仓库是 https://github.com/Crequency/KitX',
         },
         'en_US': {
           'Public_Enable': 'Enable',
@@ -46,20 +55,26 @@ class Translation extends Translations {
           'Public_Animation': 'Animation',
           'Public_Additional': 'Additional',
           'Public_Log': 'Log',
+          'Public_Reload': 'Reload',
+          'Public_Restart': 'Restart',
           'Drawer_Title': 'KitX',
           'Drawer_Devices': 'Devices',
           'Drawer_Account': 'Account',
+          'Drawer_Test': 'Test',
           'Drawer_Setting': 'Setting',
           'Drawer_About': 'Home',
+          'Option_RestartDevicesServer': 'Restart Devices Server',
+          'Option_ShutdownDevicesServer': 'Shutdown Devices Server',
           'IndexPage_Title': 'KitX',
           'HomePage_DevicesCount': 'Devices found.',
           'DevicePage_Title': 'Devices',
-          'DevicePage_PluginsCountText': 'Enabled Plugins Count: ',
+          'DevicePage_PluginsCountText': '%count% Plugins Online',
           'DevicePage_LocalDevice': '(Local)',
           'DevicePage_MainDevice': '(Master)',
           'AccountPage_Title': 'Account',
           'TestPage_Title': 'Test',
           'SettingsPage_Title': 'Setting',
+          'SettingsPage_Languages': 'Languages',
           'SettingsPage_Theme': 'Theme',
           'SettingsPage_Light': 'Light',
           'SettingsPage_Dark': 'Dark',
@@ -73,8 +88,11 @@ class Translation extends Translations {
           'AboutPage_ThirdPartyLicenses': 'Third-Party Licenses',
           'AboutPage_ThirdPartyLicenses_DisplayAll': 'Display all',
           'AboutPage_JoinUS': 'Join US',
-          'AboutPage_JoinUS_Text': 'All our projects storage on https://github.com/Crequency/, ' +
-              'welcome to Fork and contribute to them.',
+          'AboutPage_JoinUS_Text': 'All our projects storage on https://github.com/Crequency/, '
+              'welcome to fork and contribute to them.\n\n'
+              'Source code of KitX Mobile located at https://github.com/Crequency/KitX-Mobile/\n\n'
+              'KitX Mobile belongs to KitX Project, '
+              'Main repo of KitX Project located at https://github.com/Crequency/KitX',
         }
       };
 }

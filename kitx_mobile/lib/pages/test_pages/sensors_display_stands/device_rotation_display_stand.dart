@@ -1,12 +1,14 @@
 ﻿// ignore_for_file: non_constant_identifier_names, public_member_api_docs
 
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
-import 'package:sensors_plus/sensors_plus.dart';
-
-// ignore: directives_ordering
 import 'package:kitx_mobile/utils/acceleration_emulator.dart';
 import 'package:kitx_mobile/utils/rotation_emulator.dart';
+
+import 'package:sensors_plus/sensors_plus.dart';
 
 /// DeviceRotationDisplayStand
 class DeviceRotationDisplayStand extends StatefulWidget {
@@ -18,18 +20,28 @@ class DeviceRotationDisplayStand extends StatefulWidget {
 class DeviceRotationDisplayStandState extends State<DeviceRotationDisplayStand> {
   static double canvas_width = 400;
   static double canvas_height = 300;
-  static bool firstEnterPage = true;
+
+  var rotationPaused = false.obs;
+
+  StreamSubscription<GyroscopeEvent>? gyroscopeDataListener;
+
+  void beginListenGyroscopeData() {
+    gyroscopeDataListener = gyroscopeEvents.listen((event) {
+      DeviceRotationHost.rotateWithAcceleration(event.x, event.y, event.z, 0.2);
+    });
+  }
 
   @override
   void initState() {
-    if (firstEnterPage) {
-      gyroscopeEvents.listen((event) {
-        DeviceRotationHost.rotateWithAcceleration(event.x, event.y, event.z, 0.2);
-      });
-      firstEnterPage = false;
-    }
+    beginListenGyroscopeData();
 
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    gyroscopeDataListener?.cancel();
+    super.dispose();
   }
 
   @override
@@ -40,19 +52,45 @@ class DeviceRotationDisplayStandState extends State<DeviceRotationDisplayStand> 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Container(
-          padding: EdgeInsets.symmetric(vertical: 20),
-          child: InkWell(
-            borderRadius: BorderRadius.all(Radius.elliptical(10, 10)),
-            child: CustomPaint(
-              isComplex: true,
-              size: Size(canvas_width - 60, canvas_height),
-              willChange: true,
-              painter: Painter(),
+        Stack(
+          alignment: AlignmentDirectional.center,
+          children: [
+            Obx(
+              () => AnimatedOpacity(
+                duration: const Duration(milliseconds: 400),
+                curve: Curves.easeInOutCubic,
+                opacity: rotationPaused.value ? 1 : 0,
+                child: const Icon(Icons.pause, size: 40),
+              ),
             ),
-            onTap: () => DeviceRotationHost.restore(),
-          ),
-        )
+            Container(
+              padding: EdgeInsets.symmetric(vertical: 20),
+              child: InkWell(
+                borderRadius: BorderRadius.all(Radius.elliptical(10, 10)),
+                child: CustomPaint(
+                  isComplex: true,
+                  size: Size(canvas_width - 60, canvas_height),
+                  willChange: true,
+                  painter: Painter(),
+                ),
+                onTap: () {
+                  if (gyroscopeDataListener != null) {
+                    if (gyroscopeDataListener?.isPaused ?? true) {
+                      gyroscopeDataListener?.resume();
+                    } else {
+                      gyroscopeDataListener?.pause();
+                    }
+                    rotationPaused.value = gyroscopeDataListener?.isPaused ?? true;
+                  } else {
+                    beginListenGyroscopeData();
+                  }
+                },
+                onLongPress: () => DeviceRotationHost.restore(),
+              ),
+            ),
+          ],
+        ),
+        // const SizedBox(height: 20),
       ],
     );
   }
@@ -74,6 +112,7 @@ class Painter extends CustomPainter {
       Camera,
       null,
       null);
+
   Point? GetRightBarPoint() => GetCrossPoint(
       Rotate(Point(object_width / 2 - object_width / 4, -object_height / 2 + object_height / 24, 0),
           GetRotationAngles()),
@@ -83,17 +122,22 @@ class Painter extends CustomPainter {
 
   Point? GetLeftTopPoint() => GetCrossPoint(
       Rotate(Point(-object_width / 2, object_height / 2, 0), GetRotationAngles()), Camera, null, null);
+
   Point? GetRightTopPoint() => GetCrossPoint(
       Rotate(Point(object_width / 2, object_height / 2, 0), GetRotationAngles()), Camera, null, null);
+
   Point? GetRightBottomPoint() => GetCrossPoint(
       Rotate(Point(object_width / 2, -object_height / 2, 0), GetRotationAngles()), Camera, null, null);
+
   Point? GetLeftBottomPoint() => GetCrossPoint(
       Rotate(Point(-object_width / 2, -object_height / 2, 0), GetRotationAngles()), Camera, null, null);
 
   Offset ToOffset(Point p) => Offset(p.x, p.y);
+
   Offset ToCenter(Offset p, double width, double height) => Offset(
       p.dx > 0 ? width / 2 + p.dx : width / 2 - abs(p.dx),
       p.dy > 0 ? height / 2 - p.dy : height / 2 + abs(p.dy));
+
   Offset ToScreen(Point p, Size size) => ToCenter(ToOffset(p), size.width, size.height);
 
   @override

@@ -1,17 +1,17 @@
 analyzer:
- strong-mode:
-  implicit-casts: false
- errors:
-  avoid_returning_null_for_future: warning
-  cancel_subscriptions: warning
-  dead_code: warning
-  override_on_non_overriding_method: warning
-  unused_element: warning
-  unused_import: warning
-  avoid_empty_else: warning
- exclude:
-  - test/**
-  - lib/models/**
+  strong-mode:
+    implicit-casts: false
+  errors:
+    avoid_returning_null_for_future: warning
+    cancel_subscriptions: warning
+    dead_code: warning
+    #  override_on_non_overriding_method: warning
+    unused_element: warning
+    unused_import: warning
+    avoid_empty_else: warning
+  exclude:
+    - test/**
+    - lib/models/**
 linter:
   rules:
     - always_use_package_imports
