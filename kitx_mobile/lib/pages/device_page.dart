@@ -16,6 +16,7 @@ class DevicePage extends StatefulWidget {
 
 class _DevicePage extends State<DevicePage> {
   var _scrollController = ScrollController();
+  var _paneController = PanelController();
 
   var deviceCardHorizontalScale = 0.5;
   var back2topButtonVisibility = false.obs;
@@ -152,6 +153,7 @@ class _DevicePage extends State<DevicePage> {
                               key: Key('${info?.deviceName ?? ''}${info?.iPv4 ?? ''}'),
                               shouldDelay: justEnteredPage,
                               shouldScaleIn: Global.animationEnabled.value,
+                              onTap: _paneController.open,
                             );
                           },
                           onReorder: (int oldIndex, int newIndex) {
@@ -177,6 +179,7 @@ class _DevicePage extends State<DevicePage> {
                                       '${Global.deviceService.deviceInfoList[i].iPv4}'),
                                   shouldDelay: justEnteredPage,
                                   shouldScaleIn: Global.animationEnabled.value,
+                                  onTap: _paneController.open,
                                 )
                             ],
                           ),
@@ -189,7 +192,9 @@ class _DevicePage extends State<DevicePage> {
           SlidingUpPanel(
             borderRadius: const BorderRadius.vertical(top: const Radius.circular(15)),
             color: Get.isDarkMode ? Colors.black : Colors.white,
+            controller: _paneController,
             maxHeight: MediaQuery.of(context).size.height - 160,
+            minHeight: 0,
             panel: Column(
               children: [
                 Container(
