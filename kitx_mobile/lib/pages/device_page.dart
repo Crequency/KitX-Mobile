@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:kitx_mobile/pages/controls/device_card.dart';
 import 'package:kitx_mobile/services/public/service_status.dart';
 import 'package:kitx_mobile/utils/global.dart';
+import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 /// Device Page
 class DevicePage extends StatefulWidget {
@@ -117,70 +118,92 @@ class _DevicePage extends State<DevicePage> {
         ),
       ),
       floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling,
-      body: ListView(
-        controller: _scrollController,
+      body: Stack(
         children: [
-          Obx(
-            () => Padding(
-              padding: EdgeInsets.fromLTRB(30, 30, 30, 0),
-              child: Hero(
-                tag: 'HeroTag_DevicesCount',
-                child: Text(
-                  '${Global.deviceService.length.obs} ${'HomePage_DevicesCount'.tr}',
-                  style: Theme.of(context).textTheme.bodyMedium,
-                ),
-              ),
-            ),
-          ),
-          const SizedBox(height: 25),
-          OrientationBuilder(
-            builder: (context, _) => MediaQuery.of(context).orientation == Orientation.portrait
-                ? Obx(
-                    () => ReorderableListView.builder(
-                      shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
-                      itemCount: Global.deviceService.length + 1,
-                      itemBuilder: (_, index) {
-                        var list = Global.deviceService.deviceInfoList;
-                        var info = index >= Global.deviceService.length ? null : list[index];
-                        return DeviceCard(
-                          info,
-                          index,
-                          key: Key('${info?.deviceName ?? ''}${info?.iPv4 ?? ''}'),
-                          shouldDelay: justEnteredPage,
-                          shouldScaleIn: Global.animationEnabled.value,
-                        );
-                      },
-                      onReorder: (int oldIndex, int newIndex) {
-                        var list = Global.deviceService.deviceInfoList;
-                        var moveBack = newIndex > oldIndex;
-                        list.insert(moveBack ? newIndex - 1 : newIndex, list.removeAt(oldIndex));
-                      },
-                    ),
-                  )
-                : Obx(
-                    () => Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 10),
-                      child: Wrap(
-                        spacing: 0.0,
-                        runSpacing: 0.0,
-                        children: [
-                          for (var i = 0; i < Global.deviceService.length; ++i)
-                            DeviceCard(
-                              Global.deviceService.deviceInfoList[i],
-                              i,
-                              width: (MediaQuery.of(context).size.width - 20) * deviceCardHorizontalScale,
-                              key: Key('${Global.deviceService.deviceInfoList[i].deviceName}'
-                                  '${Global.deviceService.deviceInfoList[i].iPv4}'),
-                              shouldDelay: justEnteredPage,
-                              shouldScaleIn: Global.animationEnabled.value,
-                            )
-                        ],
-                      ),
+          ListView(
+            controller: _scrollController,
+            children: [
+              Obx(
+                () => Padding(
+                  padding: EdgeInsets.fromLTRB(30, 30, 30, 0),
+                  child: Hero(
+                    tag: 'HeroTag_DevicesCount',
+                    child: Text(
+                      '${Global.deviceService.length.obs} ${'HomePage_DevicesCount'.tr}',
+                      style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ),
+                ),
+              ),
+              const SizedBox(height: 25),
+              OrientationBuilder(
+                builder: (context, _) => MediaQuery.of(context).orientation == Orientation.portrait
+                    ? Obx(
+                        () => ReorderableListView.builder(
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          itemCount: Global.deviceService.length + 1,
+                          itemBuilder: (_, index) {
+                            var list = Global.deviceService.deviceInfoList;
+                            var info = index >= Global.deviceService.length ? null : list[index];
+                            return DeviceCard(
+                              info,
+                              index,
+                              key: Key('${info?.deviceName ?? ''}${info?.iPv4 ?? ''}'),
+                              shouldDelay: justEnteredPage,
+                              shouldScaleIn: Global.animationEnabled.value,
+                            );
+                          },
+                          onReorder: (int oldIndex, int newIndex) {
+                            var list = Global.deviceService.deviceInfoList;
+                            var moveBack = newIndex > oldIndex;
+                            list.insert(moveBack ? newIndex - 1 : newIndex, list.removeAt(oldIndex));
+                          },
+                        ),
+                      )
+                    : Obx(
+                        () => Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 10),
+                          child: Wrap(
+                            spacing: 0.0,
+                            runSpacing: 0.0,
+                            children: [
+                              for (var i = 0; i < Global.deviceService.length; ++i)
+                                DeviceCard(
+                                  Global.deviceService.deviceInfoList[i],
+                                  i,
+                                  width: (MediaQuery.of(context).size.width - 20) * deviceCardHorizontalScale,
+                                  key: Key('${Global.deviceService.deviceInfoList[i].deviceName}'
+                                      '${Global.deviceService.deviceInfoList[i].iPv4}'),
+                                  shouldDelay: justEnteredPage,
+                                  shouldScaleIn: Global.animationEnabled.value,
+                                )
+                            ],
+                          ),
+                        ),
+                      ),
+              ),
+              const SizedBox(height: 300),
+            ],
           ),
-          const SizedBox(height: 300),
+          SlidingUpPanel(
+            borderRadius: const BorderRadius.vertical(top: const Radius.circular(15)),
+            color: Get.isDarkMode ? Colors.black : Colors.white,
+            maxHeight: MediaQuery.of(context).size.height - 160,
+            panel: Column(
+              children: [
+                Container(
+                  margin: const EdgeInsets.all(15),
+                  width: 80,
+                  height: 5,
+                  decoration: BoxDecoration(
+                    color: Get.isDarkMode ? Colors.white60 : Colors.black38,
+                    borderRadius: const BorderRadius.all(const Radius.circular(5)),
+                  ),
+                ),
+              ],
+            ),
+          ),
         ],
       ),
     );
