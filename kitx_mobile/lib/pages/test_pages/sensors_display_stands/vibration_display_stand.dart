@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:vibration/vibration.dart';
 
 class VibrationDisplayStand extends StatefulWidget {
@@ -14,6 +15,8 @@ class VibrationDisplayStandState extends State<VibrationDisplayStand> {
   void initState() => super.initState();
 
   var vibrate_duration = 200;
+
+  var vibrate_text = "Vibrate".obs;
 
   Future<void> vibrate() async {
     if (await Vibration.hasCustomVibrationsSupport() ?? false) {
@@ -41,14 +44,26 @@ class VibrationDisplayStandState extends State<VibrationDisplayStand> {
               FilteringTextInputFormatter.digitsOnly,
             ], // Only numbers can be entered
             onChanged: (val) {
-              vibrate_duration = int.parse(val);
+              vibrate_duration = int.tryParse(val) ?? 200;
+
+              if (vibrate_duration == 520) {
+                vibrate_text.value = "zzy";
+              } else if (vibrate_text.value == "zzy") {
+                vibrate_text.value = "Vibrate";
+              }
             },
           ),
           Container(
             margin: EdgeInsets.fromLTRB(0, 20, 0, 0),
             child: Row(
               children: [
-                Expanded(flex: 65, child: ElevatedButton(onPressed: vibrate, child: Text('Vibrate'))),
+                Expanded(
+                  flex: 65,
+                  child: ElevatedButton(
+                    onPressed: vibrate,
+                    child: Obx(() => Text(vibrate_text.value)),
+                  ),
+                ),
                 Spacer(
                   flex: 5,
                 ),
