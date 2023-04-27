@@ -44,8 +44,8 @@ class DeviceService {
                 ..pluginsCount = info.pluginsCount;
             },
           );
-          deviceInfoList.refresh();
           _tag = false;
+          break;
         }
       }
 
@@ -63,9 +63,10 @@ class DeviceService {
         } else {
           deviceInfoList.add(info);
         }
-        deviceInfoList.refresh();
       }
     }
+
+    deviceInfoList.refresh();
   }
 
   /// 停止服务
