@@ -31,10 +31,18 @@ class HomePage extends StatelessWidget {
                   ? ListView(
                       shrinkWrap: true,
                       physics: NeverScrollableScrollPhysics(),
-                      children: getContent(context, MediaQuery.of(context).size.width - 40),
+                      children: getContent(
+                        context,
+                        MediaQuery.of(context).size.width - 40,
+                        isLandscape: false,
+                      ),
                     )
                   : Wrap(
-                      children: getContent(context, (MediaQuery.of(context).size.width - 40) / 2),
+                      children: getContent(
+                        context,
+                        (MediaQuery.of(context).size.width - 40) / 2,
+                        isLandscape: true,
+                      ),
                     ),
             ),
             const SizedBox(height: 300),
@@ -45,7 +53,7 @@ class HomePage extends StatelessWidget {
   }
 
   /// Get Content
-  List<Widget> getContent(BuildContext context, double tileWidth) {
+  List<Widget> getContent(BuildContext context, double tileWidth, {bool isLandscape = false}) {
     var tileRadius = ContinuousRectangleBorder(borderRadius: BorderRadius.circular(10.0));
 
     const tilesPadding = 15.0;
@@ -95,7 +103,7 @@ class HomePage extends StatelessWidget {
         child: ListTile(
           leading: const Icon(Icons.alternate_email),
           title: Text('Drawer_Account'.tr),
-          subtitle: const Text('developing ...'),
+          subtitle: isLandscape ? const Text('developing ...') : null,
           trailing: const Icon(Icons.keyboard_arrow_right),
           shape: tileRadius,
           onTap: () => Global.delay(() => Get.to(() => AccountPage()), pageOpenDelay),
@@ -107,7 +115,7 @@ class HomePage extends StatelessWidget {
         child: ListTile(
           leading: const Icon(Icons.bug_report),
           title: Text('Drawer_Test'.tr),
-          subtitle: const Text('no new tests'),
+          subtitle: isLandscape ? const Text('no new tests') : null,
           trailing: const Icon(Icons.keyboard_arrow_right),
           shape: tileRadius,
           onTap: () => Global.delay(() => Get.to(() => TestPage()), pageOpenDelay),
@@ -119,7 +127,7 @@ class HomePage extends StatelessWidget {
         child: ListTile(
           leading: const Icon(Icons.settings),
           title: Text('Drawer_Setting'.tr),
-          subtitle: const Text('no notifications'),
+          subtitle: isLandscape ? const Text('no notifications') : null,
           trailing: const Icon(Icons.keyboard_arrow_right),
           shape: tileRadius,
           onTap: () => Global.delay(() => Get.to(() => SettingsPage()), pageOpenDelay),
