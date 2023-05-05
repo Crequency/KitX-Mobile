@@ -1,5 +1,7 @@
+import 'package:community_material_icon/community_material_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:kitx_mobile/models/device_info.dart';
 import 'package:kitx_mobile/pages/controls/device_card.dart';
 import 'package:kitx_mobile/services/public/service_status.dart';
 import 'package:kitx_mobile/utils/global.dart';
@@ -21,6 +23,8 @@ class _DevicePage extends State<DevicePage> {
   var deviceCardHorizontalScale = 0.5;
   var back2topButtonVisibility = false.obs;
   var justEnteredPage = true;
+
+  var selectedDeviceInfo = Rx<DeviceInfoStruct?>(null);
 
   @override
   void initState() {
@@ -153,7 +157,10 @@ class _DevicePage extends State<DevicePage> {
                               key: Key('${info?.deviceName ?? ''}${info?.iPv4 ?? ''}'),
                               shouldDelay: justEnteredPage,
                               shouldScaleIn: Global.animationEnabled.value,
-                              onTap: _paneController.open,
+                              onTap: () => {
+                                if (info != null) selectedDeviceInfo.value = info,
+                                _paneController.open(),
+                              },
                             );
                           },
                           onReorder: (int oldIndex, int newIndex) {
@@ -179,7 +186,10 @@ class _DevicePage extends State<DevicePage> {
                                       '${Global.deviceService.deviceInfoList[i].iPv4}'),
                                   shouldDelay: justEnteredPage,
                                   shouldScaleIn: Global.animationEnabled.value,
-                                  onTap: _paneController.open,
+                                  onTap: () => {
+                                    selectedDeviceInfo.value = Global.deviceService.deviceInfoList[i],
+                                    _paneController.open(),
+                                  },
                                 )
                             ],
                           ),
@@ -193,12 +203,12 @@ class _DevicePage extends State<DevicePage> {
             borderRadius: const BorderRadius.vertical(top: const Radius.circular(15)),
             color: Get.isDarkMode ? Colors.black : Colors.white,
             controller: _paneController,
-            maxHeight: MediaQuery.of(context).size.height - 160,
+            maxHeight: MediaQuery.of(context).size.height * 0.8,
             minHeight: 0,
             panel: Column(
               children: [
                 Container(
-                  margin: const EdgeInsets.all(15),
+                  margin: const EdgeInsets.all(20),
                   width: 80,
                   height: 5,
                   decoration: BoxDecoration(
@@ -206,6 +216,22 @@ class _DevicePage extends State<DevicePage> {
                     borderRadius: const BorderRadius.all(const Radius.circular(5)),
                   ),
                 ),
+                Obx(
+                  () => Text(
+                    selectedDeviceInfo.value?.deviceName ?? '',
+                    style: const TextStyle(fontSize: 20),
+                  ),
+                ),
+                const Spacer(),
+                SizedBox(
+                  width: 130,
+                  child: FilledButton.tonalIcon(
+                    onPressed: () => {},
+                    icon: const Icon(CommunityMaterialIcons.telegram),
+                    label: const Text('Chat'),
+                  ),
+                ),
+                const SizedBox(height: 20),
               ],
             ),
           ),
