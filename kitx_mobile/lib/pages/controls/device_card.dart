@@ -19,6 +19,7 @@ class DeviceCard extends StatefulWidget {
     this.onScale,
     this.onScaleEnd,
     this.onTap,
+    this.onLongPress,
   });
 
   /// Device Info Struct
@@ -44,6 +45,9 @@ class DeviceCard extends StatefulWidget {
 
   /// On widget tapped
   final VoidCallback? onTap;
+
+  /// On widget long pressed
+  final VoidCallback? onLongPress;
 
   @override
   State<DeviceCard> createState() => _DeviceCard();
@@ -155,6 +159,7 @@ class _DeviceCard extends State<DeviceCard> with TickerProviderStateMixin {
                 child: InkWell(
                   splashColor: context.iconColor?.withOpacity(0.3),
                   onTap: widget.onTap,
+                  onLongPress: widget.onLongPress,
                   child: Padding(
                     padding: EdgeInsets.all(10),
                     child: Column(
