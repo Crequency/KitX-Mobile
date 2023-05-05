@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kitx_mobile/models/device_info.dart';
 import 'package:kitx_mobile/pages/controls/device_card.dart';
+import 'package:kitx_mobile/pages/sub_pages/device_chat_page.dart';
 import 'package:kitx_mobile/services/public/service_status.dart';
 import 'package:kitx_mobile/utils/global.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
@@ -226,9 +227,9 @@ class _DevicePage extends State<DevicePage> {
                 SizedBox(
                   width: 130,
                   child: FilledButton.tonalIcon(
-                    onPressed: () => {},
+                    onPressed: () => Get.to(() => DeviceChatPage()),
                     icon: const Icon(CommunityMaterialIcons.telegram),
-                    label: const Text('Chat'),
+                    label: Text('Public_Chat'.tr),
                   ),
                 ),
                 const SizedBox(height: 20),
