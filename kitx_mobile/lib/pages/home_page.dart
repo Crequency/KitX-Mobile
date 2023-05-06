@@ -15,11 +15,6 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // imageCache.clear(); // 清除图片缓存
-    var tileRadius = ContinuousRectangleBorder(borderRadius: BorderRadius.circular(10.0));
-    const tilesPadding = 15.0;
-    const pageOpenDelay = 200;
-
     return Scaffold(
       appBar: AppBar(
         title: Text('IndexPage_Title'.tr),
@@ -27,91 +22,132 @@ class HomePage extends StatelessWidget {
       drawer: AppDrawer(),
       drawerEnableOpenDragGesture: true,
       drawerEdgeDragWidth: MediaQuery.of(context).size.width / 7 * 5,
-      body: ListView(
-        // mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Container(
-            padding: EdgeInsets.all(20),
-            child: ListView(
-              shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
-              children: [
-                const SizedBox(height: tilesPadding),
-                Obx(
-                  () => ListTile(
-                    leading: const Icon(Icons.devices),
-                    title: Text('Drawer_Devices'.tr),
-                    subtitle: Hero(
-                      tag: 'HeroTag_DevicesCount',
-                      child: Text(
-                        '${Global.deviceService.length.obs} ${'HomePage_DevicesCount'.tr}',
-                        style: Theme.of(context).textTheme.bodyMedium,
+      body: Padding(
+        padding: EdgeInsets.all(20),
+        child: ListView(
+          children: [
+            OrientationBuilder(
+              builder: (context, _) => MediaQuery.of(context).orientation == Orientation.portrait
+                  ? ListView(
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                      children: getContent(
+                        context,
+                        MediaQuery.of(context).size.width - 40,
+                        isLandscape: false,
+                      ),
+                    )
+                  : Wrap(
+                      children: getContent(
+                        context,
+                        (MediaQuery.of(context).size.width - 40) / 2,
+                        isLandscape: true,
                       ),
                     ),
-                    trailing: const Icon(Icons.keyboard_arrow_right),
-                    shape: tileRadius,
-                    onTap: () => Global.delay(() => Get.to(() => DevicePage()), pageOpenDelay),
-                    onLongPress: () {
-                      showMenu(
-                        context: context,
-                        position: RelativeRect.fromLTRB(100, 100, 0, 0),
-                        items: [
-                          PopupMenuItem(
-                            child: Text('Option_RestartDevicesServer'.tr),
-                            onTap: Global.restartDevicesServer,
-                          ),
-                          PopupMenuItem(
-                            child: Text('Option_ShutdownDevicesServer'.tr),
-                            onTap: Global.shutdownDevicesServer,
-                          ),
-                        ],
-                        elevation: 8.0,
-                      );
-                    },
-                  ),
-                ),
-                const SizedBox(height: tilesPadding),
-                ListTile(
-                  leading: const Icon(Icons.alternate_email),
-                  title: Text('Drawer_Account'.tr),
-                  trailing: const Icon(Icons.keyboard_arrow_right),
-                  shape: tileRadius,
-                  onTap: () => Global.delay(() => Get.to(() => AccountPage()), pageOpenDelay),
-                ),
-                const SizedBox(height: tilesPadding),
-                ListTile(
-                  leading: const Icon(Icons.bug_report),
-                  title: Text('Drawer_Test'.tr),
-                  trailing: const Icon(Icons.keyboard_arrow_right),
-                  shape: tileRadius,
-                  onTap: () => Global.delay(() => Get.to(() => TestPage()), pageOpenDelay),
-                ),
-                const SizedBox(height: tilesPadding),
-                ListTile(
-                  leading: const Icon(Icons.settings),
-                  title: Text('Drawer_Setting'.tr),
-                  trailing: const Icon(Icons.keyboard_arrow_right),
-                  shape: tileRadius,
-                  onTap: () => Global.delay(() => Get.to(() => SettingsPage()), pageOpenDelay),
-                ),
-                const SizedBox(height: tilesPadding),
-                Obx(
-                  () => ListTile(
-                    leading: const Icon(Icons.info_outline_rounded),
-                    title: Text('Drawer_About'.tr),
-                    subtitle: Text(Global.versionString.value),
-                    trailing: const Icon(Icons.keyboard_arrow_right),
-                    shape: tileRadius,
-                    onTap: () => Global.delay(() => Get.to(() => AboutPage()), pageOpenDelay),
-                  ),
-                ),
-                const SizedBox(height: tilesPadding),
-                const SizedBox(height: 300),
-              ],
             ),
-          ),
-        ],
+            const SizedBox(height: 300),
+          ],
+        ),
       ),
     );
+  }
+
+  /// Get Content
+  List<Widget> getContent(BuildContext context, double tileWidth, {bool isLandscape = false}) {
+    var tileRadius = ContinuousRectangleBorder(borderRadius: BorderRadius.circular(10.0));
+
+    const tilesPadding = 15.0;
+    const pageOpenDelay = 200;
+
+    return [
+      const SizedBox(height: tilesPadding),
+      SizedBox(
+        width: tileWidth,
+        child: Obx(
+          () => ListTile(
+            leading: const Icon(Icons.devices),
+            title: Text('Drawer_Devices'.tr),
+            subtitle: Hero(
+              tag: 'HeroTag_DevicesCount',
+              child: Text(
+                '${Global.deviceService.length.obs} ${'HomePage_DevicesCount'.tr}',
+                style: Theme.of(context).textTheme.bodyMedium,
+              ),
+            ),
+            trailing: const Icon(Icons.keyboard_arrow_right),
+            shape: tileRadius,
+            onTap: () => Global.delay(() => Get.to(() => DevicePage()), pageOpenDelay),
+            onLongPress: () {
+              showMenu(
+                context: context,
+                position: RelativeRect.fromLTRB(100, 0, 0, 100),
+                items: [
+                  PopupMenuItem(
+                    child: Text('Option_RestartDevicesServer'.tr),
+                    onTap: Global.restartDevicesServer,
+                  ),
+                  PopupMenuItem(
+                    child: Text('Option_ShutdownDevicesServer'.tr),
+                    onTap: Global.shutdownDevicesServer,
+                  ),
+                ],
+                elevation: 8.0,
+              );
+            },
+          ),
+        ),
+      ),
+      const SizedBox(height: tilesPadding),
+      SizedBox(
+        width: tileWidth,
+        child: ListTile(
+          leading: const Icon(Icons.alternate_email),
+          title: Text('Drawer_Account'.tr),
+          subtitle: isLandscape ? const Text('developing ...') : null,
+          trailing: const Icon(Icons.keyboard_arrow_right),
+          shape: tileRadius,
+          onTap: () => Global.delay(() => Get.to(() => AccountPage()), pageOpenDelay),
+        ),
+      ),
+      const SizedBox(height: tilesPadding),
+      SizedBox(
+        width: tileWidth,
+        child: ListTile(
+          leading: const Icon(Icons.bug_report),
+          title: Text('Drawer_Test'.tr),
+          subtitle: isLandscape ? const Text('no new tests') : null,
+          trailing: const Icon(Icons.keyboard_arrow_right),
+          shape: tileRadius,
+          onTap: () => Global.delay(() => Get.to(() => TestPage()), pageOpenDelay),
+        ),
+      ),
+      const SizedBox(height: tilesPadding),
+      SizedBox(
+        width: tileWidth,
+        child: ListTile(
+          leading: const Icon(Icons.settings),
+          title: Text('Drawer_Setting'.tr),
+          subtitle: isLandscape ? const Text('no notifications') : null,
+          trailing: const Icon(Icons.keyboard_arrow_right),
+          shape: tileRadius,
+          onTap: () => Global.delay(() => Get.to(() => SettingsPage()), pageOpenDelay),
+        ),
+      ),
+      const SizedBox(height: tilesPadding),
+      SizedBox(
+        width: tileWidth,
+        child: Obx(
+          () => ListTile(
+            leading: const Icon(Icons.info_outline_rounded),
+            title: Text('Drawer_About'.tr),
+            subtitle: Text(Global.versionString.value),
+            trailing: const Icon(Icons.keyboard_arrow_right),
+            shape: tileRadius,
+            onTap: () => Global.delay(() => Get.to(() => AboutPage()), pageOpenDelay),
+          ),
+        ),
+      ),
+      const SizedBox(height: tilesPadding),
+    ];
   }
 }

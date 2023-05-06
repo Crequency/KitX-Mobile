@@ -17,6 +17,12 @@ class DeviceService {
   /// Device Service Status
   var deviceServiceStatus = ServiceStatus.pending;
 
+  /// Local Device Card Added
+  var localDeviceCardAdded = false;
+
+  /// Main Device Card Added
+  var mainDeviceCardAdded = false;
+
   /// Add a device by [DeviceInfoStruct]
   Future<void> addDevice(DeviceInfoStruct info) async {
     if (deviceInfoList.isEmpty) {
@@ -38,20 +44,29 @@ class DeviceService {
                 ..pluginsCount = info.pluginsCount;
             },
           );
-          deviceInfoList.refresh();
           _tag = false;
+          break;
         }
       }
 
       if (_tag) {
         if (info.deviceName == Global.deviceName) {
           deviceInfoList.insert(0, info);
+          localDeviceCardAdded = true;
+        } else if (info.isMainDevice) {
+          if (localDeviceCardAdded) {
+            deviceInfoList.insert(1, info);
+          } else {
+            deviceInfoList.insert(0, info);
+          }
+          mainDeviceCardAdded = true;
         } else {
           deviceInfoList.add(info);
         }
-        deviceInfoList.refresh();
       }
     }
+
+    deviceInfoList.refresh();
   }
 
   /// 停止服务
@@ -60,12 +75,20 @@ class DeviceService {
 
     deviceInfoList.clear();
 
+    localDeviceCardAdded = false;
+
+    mainDeviceCardAdded = false;
+
     deviceServiceStatus = ServiceStatus.pending;
   }
 
   /// Remove a device by [DeviceInfoStruct]
   Future<void> initService() async {
     deviceServiceStatus = ServiceStatus.starting;
+
+    localDeviceCardAdded = false;
+
+    mainDeviceCardAdded = false;
 
     Timer.periodic(Duration(seconds: Config.WebService_DeviceInfoCheckTTLSeconds), (_) {
       var _tempList = deviceInfoList.toList();

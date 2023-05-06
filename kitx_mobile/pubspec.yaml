@@ -23,6 +23,7 @@ dependencies:
   flutter_blue_plus: ^1.4.0
   # flutter_i18n: ^0.32.4 # 国际化
   # flutter_logs: ^2.1.7 # 日志
+  flutter_chat_ui: ^1.6.6
   get: ^4.6.5 # 路由管理
   # intl: ^0.17.0
   # mac_address: ^1.0.0 # 获取 MAC  p.s. iOS 未实现
