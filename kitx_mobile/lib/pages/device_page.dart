@@ -134,10 +134,20 @@ class _DevicePage extends State<DevicePage> {
                   padding: EdgeInsets.fromLTRB(30, 30, 30, 0),
                   child: Hero(
                     tag: 'HeroTag_DevicesCount',
-                    child: Text(
-                      '${Global.deviceService.length.obs} ${'HomePage_DevicesCount'.tr}',
-                      style: Theme.of(context).textTheme.bodyMedium,
-                    ),
+                    child: () {
+                      switch (Global.webService.webServiceStatus.value) {
+                        case ServiceStatus.running:
+                          return Text(
+                            '${Global.deviceService.length.obs} ${'HomePage_DevicesCount'.tr}',
+                            style: Theme.of(context).textTheme.bodyMedium,
+                          );
+                        default:
+                          return Text(
+                            'Public_Closed'.tr,
+                            style: Theme.of(context).textTheme.bodyMedium,
+                          );
+                      }
+                    }(),
                   ),
                 ),
               ),

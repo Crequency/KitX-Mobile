@@ -6,6 +6,7 @@ import 'package:kitx_mobile/pages/controls/drawer.dart';
 import 'package:kitx_mobile/pages/device_page.dart';
 import 'package:kitx_mobile/pages/settings_page.dart';
 import 'package:kitx_mobile/pages/test_page.dart';
+import 'package:kitx_mobile/services/public/service_status.dart';
 import 'package:kitx_mobile/utils/global.dart';
 
 /// HomePage
@@ -69,10 +70,20 @@ class HomePage extends StatelessWidget {
             title: Text('Drawer_Devices'.tr),
             subtitle: Hero(
               tag: 'HeroTag_DevicesCount',
-              child: Text(
-                '${Global.deviceService.length.obs} ${'HomePage_DevicesCount'.tr}',
-                style: Theme.of(context).textTheme.bodyMedium,
-              ),
+              child: () {
+                switch (Global.webService.webServiceStatus.value) {
+                  case ServiceStatus.running:
+                    return Text(
+                      '${Global.deviceService.length.obs} ${'HomePage_DevicesCount'.tr}',
+                      style: Theme.of(context).textTheme.bodyMedium,
+                    );
+                  default:
+                    return Text(
+                      'Public_Closed'.tr,
+                      style: Theme.of(context).textTheme.bodyMedium,
+                    );
+                }
+              }(),
             ),
             trailing: const Icon(Icons.keyboard_arrow_right),
             shape: tileRadius,
