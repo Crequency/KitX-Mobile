@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:kitx_mobile/models/device_info.dart';
 import 'package:kitx_mobile/pages/controls/device_card.dart';
 import 'package:kitx_mobile/pages/controls/device_status_icon.dart';
+import 'package:kitx_mobile/pages/controls/device_status_label.dart';
 import 'package:kitx_mobile/pages/sub_pages/device_chat_page.dart';
 import 'package:kitx_mobile/utils/global.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
@@ -116,26 +117,11 @@ class _DevicePage extends State<DevicePage> {
           ListView(
             controller: _scrollController,
             children: [
-              Obx(
-                () => Padding(
-                  padding: EdgeInsets.fromLTRB(30, 30, 30, 0),
-                  child: Hero(
-                    tag: 'HeroTag_DevicesCount',
-                    child: () {
-                      switch (Global.webService.webServiceStatus.value) {
-                        case ServiceStatus.running:
-                          return Text(
-                            '${Global.deviceService.length.obs} ${'HomePage_DevicesCount'.tr}',
-                            style: Theme.of(context).textTheme.bodyMedium,
-                          );
-                        default:
-                          return Text(
-                            'Public_Closed'.tr,
-                            style: Theme.of(context).textTheme.bodyMedium,
-                          );
-                      }
-                    }(),
-                  ),
+              Padding(
+                padding: EdgeInsets.fromLTRB(30, 30, 30, 0),
+                child: Hero(
+                  tag: 'HeroTag_DevicesCount',
+                  child: const DeviceStatusLabel(),
                 ),
               ),
               const SizedBox(height: 25),

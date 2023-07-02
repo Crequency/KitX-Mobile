@@ -2,11 +2,11 @@
 import 'package:get/get.dart';
 import 'package:kitx_mobile/pages/about_page.dart';
 import 'package:kitx_mobile/pages/account_page.dart';
+import 'package:kitx_mobile/pages/controls/device_status_label.dart';
 import 'package:kitx_mobile/pages/controls/drawer.dart';
 import 'package:kitx_mobile/pages/device_page.dart';
 import 'package:kitx_mobile/pages/settings_page.dart';
 import 'package:kitx_mobile/pages/test_page.dart';
-import 'package:kitx_mobile/services/public/service_status.dart';
 import 'package:kitx_mobile/utils/global.dart';
 
 /// HomePage
@@ -64,48 +64,33 @@ class HomePage extends StatelessWidget {
       const SizedBox(height: tilesPadding),
       SizedBox(
         width: tileWidth,
-        child: Obx(
-          () => ListTile(
-            leading: const Icon(Icons.devices),
-            title: Text('Drawer_Devices'.tr),
-            subtitle: Hero(
-              tag: 'HeroTag_DevicesCount',
-              child: () {
-                switch (Global.webService.webServiceStatus.value) {
-                  case ServiceStatus.running:
-                    return Text(
-                      '${Global.deviceService.length.obs} ${'HomePage_DevicesCount'.tr}',
-                      style: Theme.of(context).textTheme.bodyMedium,
-                    );
-                  default:
-                    return Text(
-                      'Public_Closed'.tr,
-                      style: Theme.of(context).textTheme.bodyMedium,
-                    );
-                }
-              }(),
-            ),
-            trailing: const Icon(Icons.keyboard_arrow_right),
-            shape: tileRadius,
-            onTap: () => Global.delay(() => Get.to(() => DevicePage()), pageOpenDelay),
-            onLongPress: () {
-              showMenu(
-                context: context,
-                position: RelativeRect.fromLTRB(100, 0, 0, 100),
-                items: [
-                  PopupMenuItem(
-                    child: Text('Option_RestartDevicesServer'.tr),
-                    onTap: Global.restartDevicesServer,
-                  ),
-                  PopupMenuItem(
-                    child: Text('Option_ShutdownDevicesServer'.tr),
-                    onTap: Global.shutdownDevicesServer,
-                  ),
-                ],
-                elevation: 8.0,
-              );
-            },
+        child: ListTile(
+          leading: const Icon(Icons.devices),
+          title: Text('Drawer_Devices'.tr),
+          subtitle: Hero(
+            tag: 'HeroTag_DevicesCount',
+            child: const DeviceStatusLabel(),
           ),
+          trailing: const Icon(Icons.keyboard_arrow_right),
+          shape: tileRadius,
+          onTap: () => Global.delay(() => Get.to(() => DevicePage()), pageOpenDelay),
+          onLongPress: () {
+            showMenu(
+              context: context,
+              position: RelativeRect.fromLTRB(100, 0, 0, 100),
+              items: [
+                PopupMenuItem(
+                  child: Text('Option_RestartDevicesServer'.tr),
+                  onTap: Global.restartDevicesServer,
+                ),
+                PopupMenuItem(
+                  child: Text('Option_ShutdownDevicesServer'.tr),
+                  onTap: Global.shutdownDevicesServer,
+                ),
+              ],
+              elevation: 8.0,
+            );
+          },
         ),
       ),
       const SizedBox(height: tilesPadding),
