@@ -152,6 +152,9 @@ class WebService {
       webServiceStatus.value = ServiceStatus.pending;
     }
 
+    Global.deviceService.deviceServiceStatus = ServiceStatus.pending;
+    Global.deviceService.deviceInfoList.clear();
+
     webServiceStatus.value = ServiceStatus.stopping;
 
     if (sendExitPackage) {
@@ -174,6 +177,8 @@ class WebService {
     webServiceStatus.value = ServiceStatus.starting;
 
     _sendExitPackage = false;
+
+    Global.deviceService.deviceServiceStatus = ServiceStatus.running;
 
     try {
       if (kIsWeb) {
@@ -270,7 +275,7 @@ class WebService {
               if (d == null) return;
 
               var _data = utf8.decode(d.data);
-              Log.info('UDP receive: $_data');
+              // Log.info('UDP receive: $_data');
 
               try {
                 var _deviceInfo = DeviceInfoStruct.fromString(_data);
