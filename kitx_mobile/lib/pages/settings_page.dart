@@ -149,7 +149,6 @@ class _SettingsPageState extends State<SettingsPage> {
       ),
       body: ListView(
         children: [
-          const SizedBox(height: 60 * 3),
           group(
             SettingsGroupTitle(titleKey: 'SettingsPage_Theme'),
             Column(
