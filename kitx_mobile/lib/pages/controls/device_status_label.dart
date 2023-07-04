@@ -11,17 +11,24 @@ class DeviceStatusLabel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Obx(() {
+      var textStyle = Theme.of(context).textTheme.bodyMedium;
       switch (Global.webService.webServiceStatus.value) {
         case ServiceStatus.running:
           return Text(
             '${Global.deviceService.length.obs} ${'HomePage_DevicesCount'.tr}',
-            style: Theme.of(context).textTheme.bodyMedium,
+            style: textStyle,
+          );
+        case ServiceStatus.starting:
+          return Text('Public_Launching'.tr, style: textStyle);
+        case ServiceStatus.stopping:
+          return Text('Public_Stopping'.tr, style: textStyle);
+        case ServiceStatus.error:
+          return Text(
+            '${'Public_Error'.tr}: ${Global.webService.webServiceErrorMessage}',
+            style: textStyle,
           );
         default:
-          return Text(
-            'Public_Closed'.tr,
-            style: Theme.of(context).textTheme.bodyMedium,
-          );
+          return Text('Public_Closed'.tr, style: textStyle);
       }
     });
   }

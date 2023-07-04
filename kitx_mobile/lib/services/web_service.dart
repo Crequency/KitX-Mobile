@@ -40,6 +40,9 @@ class WebService {
   /// Web Service Status
   var webServiceStatus = ServiceStatus.pending.obs;
 
+  /// Web Service Error Message
+  String? webServiceErrorMessage;
+
   /// Socket Object
   late RawDatagramSocket socket;
 
@@ -297,6 +300,7 @@ class WebService {
     } catch (e, stack) {
       Log.error('Catch an error: $e On: $stack');
       webServiceStatus.value = ServiceStatus.error;
+      webServiceErrorMessage = e.toString();
       _networkInfo = NetworkInfo();
     }
   }
