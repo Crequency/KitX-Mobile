@@ -61,77 +61,40 @@ class DeviceService {
         // Other device.
 
         var fixedCardsCount = (localDeviceCardAdded ? 1 : 0) + (mainDeviceCardAdded ? 1 : 0);
-        var windowsCardsCount = _tempList
-            .where(
-              (element) => element.deviceOSType == DeviceOSTypeEnum.Windows,
-            )
-            .length;
-        var linuxCardsCount = _tempList
-            .where(
-              (element) => element.deviceOSType == DeviceOSTypeEnum.Linux,
-            )
-            .length;
-        var macosCardsCount = _tempList
-            .where(
-              (element) => element.deviceOSType == DeviceOSTypeEnum.MacOS,
-            )
-            .length;
-        var androidCardsCount = _tempList
-            .where(
-              (element) => element.deviceOSType == DeviceOSTypeEnum.Android,
-            )
-            .length;
-        var iosCardsCount = _tempList
-            .where(
-              (element) => element.deviceOSType == DeviceOSTypeEnum.iOS,
-            )
-            .length;
+
+        var countDevices = (osType) => _tempList.where((element) => element.deviceOSType == osType).length;
+
+        var devicesCountPerOS = <DeviceOSTypeEnum, int>{};
+        for (var osType in DeviceOSTypeEnum.values) {
+          devicesCountPerOS[osType] = countDevices(osType);
+        }
 
         var localDeviceOS = _tempList.firstWhereOrNull((element) => element.deviceName == Global.deviceName);
         var mainDeviceOS = _tempList.firstWhereOrNull((element) => element.isMainDevice);
 
-        var decreaseSpecialCardCount = (DeviceInfoStruct? info) {
-          var osType = info?.deviceOSType;
-          if (osType == null) return;
-          switch (osType) {
-            case DeviceOSTypeEnum.Windows:
-              --windowsCardsCount;
-            case DeviceOSTypeEnum.Linux:
-              --linuxCardsCount;
-            case DeviceOSTypeEnum.MacOS:
-              --macosCardsCount;
-            case DeviceOSTypeEnum.Android:
-              --androidCardsCount;
-            case DeviceOSTypeEnum.iOS:
-              --iosCardsCount;
-          }
-        };
-
-        decreaseSpecialCardCount(localDeviceOS);
-        decreaseSpecialCardCount(mainDeviceOS);
+        if (localDeviceOS != null) {
+          devicesCountPerOS[localDeviceOS.deviceOSType] = devicesCountPerOS[localDeviceOS.deviceOSType]! - 1;
+        }
+        if (mainDeviceOS != null) {
+          devicesCountPerOS[mainDeviceOS.deviceOSType] = devicesCountPerOS[mainDeviceOS.deviceOSType]! - 1;
+        }
 
         var instIndex = fixedCardsCount;
 
-        switch (info.deviceOSType) {
-          case DeviceOSTypeEnum.Windows:
-            instIndex += windowsCardsCount;
-          case DeviceOSTypeEnum.Linux:
-            instIndex += windowsCardsCount + linuxCardsCount;
-          case DeviceOSTypeEnum.MacOS:
-            instIndex += windowsCardsCount + linuxCardsCount + macosCardsCount;
-          case DeviceOSTypeEnum.Android:
-            instIndex += windowsCardsCount + linuxCardsCount + macosCardsCount + androidCardsCount;
-          case DeviceOSTypeEnum.iOS:
-            instIndex +=
-                windowsCardsCount + linuxCardsCount + macosCardsCount + androidCardsCount + iosCardsCount;
+        var sortList = [
+          DeviceOSTypeEnum.Windows,
+          DeviceOSTypeEnum.Linux,
+          DeviceOSTypeEnum.MacOS,
+          DeviceOSTypeEnum.Android,
+          DeviceOSTypeEnum.iOS,
+        ];
+
+        for (var element in sortList) {
+          instIndex += devicesCountPerOS[element]!;
+          if (element == info.deviceOSType) break;
         }
 
         var targetIndex = instIndex > deviceInfoList.length ? deviceInfoList.length : instIndex;
-
-        Log.info(
-          'Insert ${info.deviceOSType} to $targetIndex, '
-          'win: $windowsCardsCount, linux: $linuxCardsCount, macos: $macosCardsCount, android: $androidCardsCount, ios: $iosCardsCount',
-        );
 
         deviceInfoList.insert(targetIndex, info);
       }
