@@ -270,16 +270,16 @@ class WebService {
           socket.joinMulticast(InternetAddress(_udpBroadcastAddress));
 
           socket.listen(
-            (event) {
+            (event) async {
               var d = socket.receive();
               if (d == null) return;
 
               var _data = utf8.decode(d.data);
-              // Log.info('UDP receive: $_data');
+              Log.info('UDP receive: $_data');
 
               try {
                 var _deviceInfo = DeviceInfoStruct.fromString(_data);
-                if (_deviceInfo != null) Global.deviceService.addDevice(_deviceInfo);
+                if (_deviceInfo != null) await Global.deviceService.addDevice(_deviceInfo);
               } catch (e, stack) {
                 Log.error('Can not deserialize device info pack: `$_data`. Error: $e $stack');
               }

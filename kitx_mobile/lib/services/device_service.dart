@@ -29,153 +29,111 @@ class DeviceService {
   Future<void> addDevice(DeviceInfoStruct info) async {
     if (deviceServiceStatus != ServiceStatus.running) return;
 
-    if (deviceInfoList.isEmpty) {
-      Log.info('Add ${info.deviceOSType} device to first.');
+    var _tempList = deviceInfoList.toList();
 
-      deviceInfoList.add(info);
+    var findIndex = _tempList.indexWhere(
+      (element) => element.iPv4 == info.iPv4 || element.deviceMacAddress == info.deviceMacAddress,
+    );
+
+    if (findIndex != -1) {
+      // Update existing device.
+
+      deviceInfoList[findIndex] = info;
     } else {
-      var _tempList = deviceInfoList.toList();
+      // Add new device.
 
-      var findIndex = _tempList.indexWhere(
-        (element) => element.iPv4 == info.iPv4 || element.deviceMacAddress == info.deviceMacAddress,
-      );
+      if (info.deviceName == Global.deviceName) {
+        // Local device.
 
-      if (findIndex != -1) {
-        // Update existing device.
+        deviceInfoList.insert(0, info);
+        localDeviceCardAdded = true;
 
-        deviceInfoList[findIndex] = info;
+        Log.info('Insert local device to 0.');
+      } else if (info.isMainDevice) {
+        // Main device.
+
+        var index = localDeviceCardAdded ? 1 : 0;
+        deviceInfoList.insert(index, info);
+        mainDeviceCardAdded = true;
+
+        Log.info('Insert main device to $index.');
       } else {
-        // Add new device.
+        // Other device.
 
-        if (info.deviceName == Global.deviceName) {
-          // Local device.
+        var fixedCardsCount = (localDeviceCardAdded ? 1 : 0) + (mainDeviceCardAdded ? 1 : 0);
+        var windowsCardsCount = _tempList
+            .where(
+              (element) => element.deviceOSType == DeviceOSTypeEnum.Windows,
+            )
+            .length;
+        var linuxCardsCount = _tempList
+            .where(
+              (element) => element.deviceOSType == DeviceOSTypeEnum.Linux,
+            )
+            .length;
+        var macosCardsCount = _tempList
+            .where(
+              (element) => element.deviceOSType == DeviceOSTypeEnum.MacOS,
+            )
+            .length;
+        var androidCardsCount = _tempList
+            .where(
+              (element) => element.deviceOSType == DeviceOSTypeEnum.Android,
+            )
+            .length;
+        var iosCardsCount = _tempList
+            .where(
+              (element) => element.deviceOSType == DeviceOSTypeEnum.iOS,
+            )
+            .length;
 
-          Log.info('Insert local device to 0.');
+        var localDeviceOS = _tempList.firstWhereOrNull((element) => element.deviceName == Global.deviceName);
+        var mainDeviceOS = _tempList.firstWhereOrNull((element) => element.isMainDevice);
 
-          deviceInfoList.insert(0, info);
-          localDeviceCardAdded = true;
-        } else if (info.isMainDevice) {
-          // Main device.
-
-          if (localDeviceCardAdded) {
-            Log.info('Insert main device to 1.');
-
-            deviceInfoList.insert(1, info);
-          } else {
-            Log.info('Insert main device to 0.');
-
-            deviceInfoList.insert(0, info);
+        var decreaseSpecialCardCount = (DeviceInfoStruct? info) {
+          var osType = info?.deviceOSType;
+          if (osType == null) return;
+          switch (osType) {
+            case DeviceOSTypeEnum.Windows:
+              --windowsCardsCount;
+            case DeviceOSTypeEnum.Linux:
+              --linuxCardsCount;
+            case DeviceOSTypeEnum.MacOS:
+              --macosCardsCount;
+            case DeviceOSTypeEnum.Android:
+              --androidCardsCount;
+            case DeviceOSTypeEnum.iOS:
+              --iosCardsCount;
           }
-          mainDeviceCardAdded = true;
-        } else {
-          // Other device.
+        };
 
-          var previousOS = (DeviceOSTypeEnum source) {
-            switch (source) {
-              case DeviceOSTypeEnum.iOS:
-                return DeviceOSTypeEnum.Android;
-              case DeviceOSTypeEnum.Android:
-                return DeviceOSTypeEnum.MacOS;
-              case DeviceOSTypeEnum.MacOS:
-                return DeviceOSTypeEnum.Linux;
-              case DeviceOSTypeEnum.Linux:
-                return DeviceOSTypeEnum.Windows;
-              default:
-                return DeviceOSTypeEnum.Windows;
-            }
-          };
+        decreaseSpecialCardCount(localDeviceOS);
+        decreaseSpecialCardCount(mainDeviceOS);
 
-          var nextOS = (DeviceOSTypeEnum source) {
-            switch (source) {
-              case DeviceOSTypeEnum.Windows:
-                return DeviceOSTypeEnum.Linux;
-              case DeviceOSTypeEnum.Linux:
-                return DeviceOSTypeEnum.MacOS;
-              case DeviceOSTypeEnum.MacOS:
-                return DeviceOSTypeEnum.Android;
-              case DeviceOSTypeEnum.Android:
-                return DeviceOSTypeEnum.iOS;
-              default:
-                return DeviceOSTypeEnum.iOS;
-            }
-          };
+        var instIndex = fixedCardsCount;
 
-          var preOS = previousOS(info.deviceOSType);
-          var nxtOS = nextOS(info.deviceOSType);
-          var fixedCardsCount = (localDeviceCardAdded ? 1 : 0) + (mainDeviceCardAdded ? 1 : 0);
-
-          var sameIndex = _tempList.lastIndexWhere(
-            (element) => element.deviceOSType == info.deviceOSType,
-            fixedCardsCount,
-          ); // Same OS last item index.
-          var lastIndex = _tempList.lastIndexWhere(
-            (element) => element.deviceOSType == preOS,
-            fixedCardsCount,
-          ); // Previous OS last item index.
-          var instIndex = _tempList.indexWhere(
-            (element) => element.deviceOSType == nxtOS,
-            fixedCardsCount,
-          ); // Next OS first item index.
-
-          var ttlLast = 5;
-          while (lastIndex == -1) {
-            lastIndex = _tempList.lastIndexWhere(
-              (element) => element.deviceOSType == previousOS(preOS),
-              fixedCardsCount,
-            );
-            --ttlLast;
-            if (ttlLast <= 0) {
-              break;
-            }
-          }
-
-          var ttlInst = 5;
-          while (instIndex == -1) {
-            instIndex = _tempList.indexWhere(
-              (element) => element.deviceOSType == nextOS(nxtOS),
-              fixedCardsCount,
-            );
-            --ttlInst;
-            if (ttlInst <= 0) {
-              break;
-            }
-          }
-
-          if (sameIndex != -1) {
-            var index = sameIndex + 1;
-
-            Log.info(
-                'Insert ${info.deviceOSType} device to $index, sameIndex = $sameIndex, lastIndex = $lastIndex, instIndex = $instIndex');
-
-            deviceInfoList.insert(index, info);
-          } else if (lastIndex != -1) {
-            var index = lastIndex + 1;
-
-            Log.info(
-                'Insert ${info.deviceOSType} device to $index, sameIndex = $sameIndex, lastIndex = $lastIndex, instIndex = $instIndex');
-
-            deviceInfoList.insert(index, info);
-          } else if (instIndex != -1) {
-            Log.info(
-                'Insert ${info.deviceOSType} device to $instIndex, sameIndex = $sameIndex, lastIndex = $lastIndex, instIndex = $instIndex');
-
-            deviceInfoList.insert(instIndex, info);
-          } else {
-            if (info.deviceOSType == DeviceOSTypeEnum.Windows) {
-              var index = (localDeviceCardAdded ? 1 : 0) + (mainDeviceCardAdded ? 1 : 0) + 1;
-
-              Log.info(
-                  'Insert ${info.deviceOSType} device to $index, sameIndex = $sameIndex, lastIndex = $lastIndex, instIndex = $instIndex');
-
-              deviceInfoList.insert(index, info);
-            } else {
-              Log.info(
-                  'Append ${info.deviceOSType} device to last, sameIndex = $sameIndex, lastIndex = $lastIndex, instIndex = $instIndex');
-
-              deviceInfoList.add(info);
-            }
-          }
+        switch (info.deviceOSType) {
+          case DeviceOSTypeEnum.Windows:
+            instIndex += windowsCardsCount;
+          case DeviceOSTypeEnum.Linux:
+            instIndex += windowsCardsCount + linuxCardsCount;
+          case DeviceOSTypeEnum.MacOS:
+            instIndex += windowsCardsCount + linuxCardsCount + macosCardsCount;
+          case DeviceOSTypeEnum.Android:
+            instIndex += windowsCardsCount + linuxCardsCount + macosCardsCount + androidCardsCount;
+          case DeviceOSTypeEnum.iOS:
+            instIndex +=
+                windowsCardsCount + linuxCardsCount + macosCardsCount + androidCardsCount + iosCardsCount;
         }
+
+        var targetIndex = instIndex > deviceInfoList.length ? deviceInfoList.length : instIndex;
+
+        Log.info(
+          'Insert ${info.deviceOSType} to $targetIndex, '
+          'win: $windowsCardsCount, linux: $linuxCardsCount, macos: $macosCardsCount, android: $androidCardsCount, ios: $iosCardsCount',
+        );
+
+        deviceInfoList.insert(targetIndex, info);
       }
     }
 
@@ -185,11 +143,9 @@ class DeviceService {
   /// 停止服务
   Future<void> stopService() async {
     deviceServiceStatus = ServiceStatus.stopping;
-
     deviceInfoList.clear();
 
     localDeviceCardAdded = false;
-
     mainDeviceCardAdded = false;
 
     deviceServiceStatus = ServiceStatus.pending;
@@ -200,7 +156,6 @@ class DeviceService {
     deviceServiceStatus = ServiceStatus.starting;
 
     localDeviceCardAdded = false;
-
     mainDeviceCardAdded = false;
 
     Timer.periodic(Duration(seconds: Config.WebService_DeviceInfoCheckTTLSeconds), (_) {
