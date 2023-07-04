@@ -40,6 +40,9 @@ class WebService {
   /// Web Service Status
   var webServiceStatus = ServiceStatus.pending.obs;
 
+  /// Web Service Error Message
+  String? webServiceErrorMessage;
+
   /// Socket Object
   late RawDatagramSocket socket;
 
@@ -152,6 +155,9 @@ class WebService {
       webServiceStatus.value = ServiceStatus.pending;
     }
 
+    Global.deviceService.deviceServiceStatus = ServiceStatus.pending;
+    Global.deviceService.deviceInfoList.clear();
+
     webServiceStatus.value = ServiceStatus.stopping;
 
     if (sendExitPackage) {
@@ -174,6 +180,8 @@ class WebService {
     webServiceStatus.value = ServiceStatus.starting;
 
     _sendExitPackage = false;
+
+    Global.deviceService.deviceServiceStatus = ServiceStatus.running;
 
     try {
       if (kIsWeb) {
@@ -265,7 +273,7 @@ class WebService {
           socket.joinMulticast(InternetAddress(_udpBroadcastAddress));
 
           socket.listen(
-            (event) {
+            (event) async {
               var d = socket.receive();
               if (d == null) return;
 
@@ -274,7 +282,7 @@ class WebService {
 
               try {
                 var _deviceInfo = DeviceInfoStruct.fromString(_data);
-                if (_deviceInfo != null) Global.deviceService.addDevice(_deviceInfo);
+                if (_deviceInfo != null) await Global.deviceService.addDevice(_deviceInfo);
               } catch (e, stack) {
                 Log.error('Can not deserialize device info pack: `$_data`. Error: $e $stack');
               }
@@ -292,6 +300,7 @@ class WebService {
     } catch (e, stack) {
       Log.error('Catch an error: $e On: $stack');
       webServiceStatus.value = ServiceStatus.error;
+      webServiceErrorMessage = e.toString();
       _networkInfo = NetworkInfo();
     }
   }

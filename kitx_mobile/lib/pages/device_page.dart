@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kitx_mobile/models/device_info.dart';
 import 'package:kitx_mobile/pages/controls/device_card.dart';
+import 'package:kitx_mobile/pages/controls/device_status_icon.dart';
+import 'package:kitx_mobile/pages/controls/device_status_label.dart';
 import 'package:kitx_mobile/pages/sub_pages/device_chat_page.dart';
-import 'package:kitx_mobile/services/public/service_status.dart';
 import 'package:kitx_mobile/utils/global.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
@@ -79,20 +80,7 @@ class _DevicePage extends State<DevicePage> {
           PopupMenuButton(
             tooltip: '',
             padding: EdgeInsets.all(0),
-            icon: Obx(() {
-              switch (Global.webService.webServiceStatus.value) {
-                case ServiceStatus.running:
-                  return const Icon(Icons.circle, color: Colors.greenAccent);
-                case ServiceStatus.pending:
-                  return const Icon(Icons.timer);
-                case ServiceStatus.error:
-                  return const Icon(Icons.error, color: Colors.redAccent);
-                case ServiceStatus.starting:
-                  return const Icon(Icons.rocket_launch, color: Colors.lightBlueAccent);
-                case ServiceStatus.stopping:
-                  return const Icon(Icons.square, color: Colors.yellowAccent);
-              }
-            }),
+            icon: DeviceStatusIcon(),
             position: PopupMenuPosition.under,
             itemBuilder: (context) => [
               PopupMenuItem(
@@ -129,16 +117,11 @@ class _DevicePage extends State<DevicePage> {
           ListView(
             controller: _scrollController,
             children: [
-              Obx(
-                () => Padding(
-                  padding: EdgeInsets.fromLTRB(30, 30, 30, 0),
-                  child: Hero(
-                    tag: 'HeroTag_DevicesCount',
-                    child: Text(
-                      '${Global.deviceService.length.obs} ${'HomePage_DevicesCount'.tr}',
-                      style: Theme.of(context).textTheme.bodyMedium,
-                    ),
-                  ),
+              Padding(
+                padding: EdgeInsets.fromLTRB(30, 30, 30, 0),
+                child: Hero(
+                  tag: 'HeroTag_DevicesCount',
+                  child: const DeviceStatusLabel(),
                 ),
               ),
               const SizedBox(height: 25),
