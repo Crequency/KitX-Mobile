@@ -195,7 +195,7 @@ class WebService {
       var networkInfo = await getNetworkInfo();
 
       if (networkInfo == null) {
-        return;
+        throw Exception('Fetching network info failed.');
       } else {
         _ipv4 = networkInfo[0];
         _ipv6 = networkInfo[1];
@@ -253,14 +253,10 @@ class WebService {
               socket.close();
               Log.info('UDP send error: $e $stack. Try to restart the service in 5 seconds.');
               Future.delayed(const Duration(seconds: 5), () => initService());
+              throw e;
             }
           });
           Log.info('UDP send service started.');
-        },
-      ).catchError(
-        (e, stack) {
-          Log.error('Catch an error: $e $stack');
-          webServiceStatus.value = ServiceStatus.error;
         },
       );
 
@@ -269,9 +265,7 @@ class WebService {
         (socket) {
           receiveSocket = socket;
 
-          // socket.broadcastEnabled = true;
           socket.joinMulticast(InternetAddress(_udpBroadcastAddress));
-
           socket.listen(
             (event) async {
               var d = socket.receive();
@@ -288,11 +282,6 @@ class WebService {
               }
             },
           );
-        },
-      ).catchError(
-        (e, stack) {
-          Log.error('Catch an error: $e $stack');
-          webServiceStatus.value = ServiceStatus.error;
         },
       );
 
