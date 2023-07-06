@@ -1,5 +1,6 @@
 ﻿import 'package:flutter/material.dart';
 
+/// Group items
 Widget group(
   Widget header,
   Widget content,

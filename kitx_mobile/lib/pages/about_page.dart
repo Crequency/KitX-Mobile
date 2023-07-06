@@ -1,128 +1,15 @@
 import 'package:community_material_icon/community_material_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import 'package:kitx_mobile/data/third_party_licenses_provider.dart';
+import 'package:kitx_mobile/pages/controls/contributor_chip.dart';
+import 'package:kitx_mobile/pages/controls/fade_in_control.dart';
+import 'package:kitx_mobile/pages/controls/gradually_smaller_spacer.dart';
+import 'package:kitx_mobile/pages/controls/group_divider.dart';
+import 'package:kitx_mobile/pages/controls/repo_button.dart';
 import 'package:kitx_mobile/utils/composer.dart';
 import 'package:kitx_mobile/utils/global.dart';
-
 import 'package:vibration/vibration.dart';
-
-/// Contributor Chip
-class ContributorChip extends StatelessWidget {
-  /// Constructor
-  const ContributorChip({required this.name, required this.url, super.key});
-
-  /// Name and URL
-  final String name, url;
-
-  @override
-  Widget build(BuildContext context) {
-    return Chip(
-      label: Text(name),
-      deleteIcon: const Icon(Icons.open_in_new),
-      onDeleted: () => Global.openUrl(url),
-      deleteButtonTooltipMessage: '',
-    );
-  }
-}
-
-/// Repo Button
-class RepoButton extends StatelessWidget {
-  /// Constructor
-  const RepoButton({required this.name, required this.url, super.key});
-
-  /// Display Name and URL
-  final String name, url;
-
-  @override
-  Widget build(BuildContext context) {
-    return ElevatedButton(onPressed: () => Global.openUrl(url), child: Text(name));
-  }
-}
-
-/// Fade In Control
-class FadeInControl extends StatelessWidget {
-  /// Constructor
-  const FadeInControl({
-    required this.opacity,
-    this.duration = 300,
-    this.child = const SizedBox(),
-    this.curve = Curves.easeInCubic,
-    super.key,
-  });
-
-  /// Duration
-  final int duration;
-
-  /// Opacity Target
-  final double opacity;
-
-  /// Child Widget
-  final Widget child;
-
-  /// Curve
-  final Curve curve;
-
-  @override
-  Widget build(BuildContext context) {
-    return AnimatedOpacity(
-      duration: Duration(milliseconds: duration),
-      opacity: opacity,
-      curve: Curves.easeInCubic,
-      child: child,
-    );
-  }
-}
-
-/// Gradually Smaller Spacer
-class GraduallySmallerSpacer extends StatelessWidget {
-  /// Constructor
-  const GraduallySmallerSpacer({
-    required this.duration,
-    this.curve = Curves.easeInOutCubicEmphasized,
-    this.height,
-    this.width,
-    super.key,
-  });
-
-  /// Duration
-  final int duration;
-
-  /// Curve
-  final Curve curve;
-
-  /// Height
-  final double? width, height;
-
-  @override
-  Widget build(BuildContext context) {
-    return AnimatedContainer(
-      duration: Duration(milliseconds: duration),
-      curve: curve,
-      width: width,
-      height: height,
-    );
-  }
-}
-
-/// Group Divider
-class GroupDivider extends GraduallySmallerSpacer {
-  /// Constructor
-  const GroupDivider({required super.duration, super.curve, super.height, super.width, super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        const SizedBox(height: 30),
-        const Divider(),
-        GraduallySmallerSpacer(duration: duration, curve: curve, height: height, width: width),
-        const SizedBox(height: 60),
-      ],
-    );
-  }
-}
 
 /// About Page
 class AboutPage extends StatefulWidget {
@@ -177,9 +64,7 @@ class _AboutPageState extends State<AboutPage> {
 
     if (Global.animationEnabled.value) {
       Future.delayed(Duration(milliseconds: 150)).then((value) => iconEntering.value = true);
-
       Future.delayed(Duration(milliseconds: 400)).then((value) => iconEntered.value = true);
-
       Future.delayed(Duration(milliseconds: 600)).then((value) => titleEntered.value = true);
 
       Future.delayed(Duration(milliseconds: 0)).then(
@@ -244,7 +129,7 @@ class _AboutPageState extends State<AboutPage> {
             width: iconEntering.value ? 184 : 384,
             height: iconEntering.value ? 184 : 384,
             child: AnimatedOpacity(
-              duration: Duration(milliseconds: 500),
+              duration: const Duration(milliseconds: 500),
               curve: Curves.easeInCirc,
               opacity: iconEntering.value ? 1 : 0,
               child: InkWell(
@@ -252,7 +137,7 @@ class _AboutPageState extends State<AboutPage> {
                 onTap: () async => vibrate(),
                 child: const Image(
                   alignment: Alignment.center,
-                  image: AssetImage('assets/KitX-Icon-1920x-margin-2x.png'),
+                  image: const AssetImage('assets/KitX-Icon-1920x-margin-2x.png'),
                   fit: BoxFit.cover,
                 ),
               ),

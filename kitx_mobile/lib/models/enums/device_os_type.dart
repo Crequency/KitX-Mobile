@@ -1,7 +1,8 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
-import 'package:flutter/widgets.dart';
+import 'package:community_material_icon/community_material_icon.dart';
+import 'package:flutter/material.dart';
 
 part 'device_os_type.g.dart';
 
@@ -45,6 +46,7 @@ class DeviceOSTypeEnum extends EnumClass {
   const DeviceOSTypeEnum._(String name) : super(name);
 
   static BuiltSet<DeviceOSTypeEnum> get values => _$deviceOSTypeEnumValues;
+
   static DeviceOSTypeEnum valueOf(String name) => _$deviceOSTypeEnumValueOf(name);
 
   static Serializer<DeviceOSTypeEnum> get serializer => _$deviceOSTypeEnumSerializer;
