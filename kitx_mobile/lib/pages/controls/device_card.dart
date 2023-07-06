@@ -1,8 +1,8 @@
 ﻿import 'package:badges/badges.dart' as badges;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:kitx_mobile/converters/os_type_2_icon.dart';
 import 'package:kitx_mobile/models/device_info.dart';
+import 'package:kitx_mobile/models/enums/device_os_type.dart';
 import 'package:kitx_mobile/utils/datetime_format.dart' show datetimeToShortString;
 import 'package:kitx_mobile/utils/global.dart';
 
@@ -126,7 +126,7 @@ class _DeviceCard extends State<DeviceCard> with TickerProviderStateMixin {
 
     if (info == null) return SizedBox(height: 300, width: widget.width, key: Key('spacer'));
 
-    var _iconStyle = Convert(info.deviceOSType);
+    var _iconStyle = info.deviceOSType.toIconData();
     var _icon = Icon(_iconStyle, size: 36);
 
     var cardColor = getDeviceCardColor(context, info);
