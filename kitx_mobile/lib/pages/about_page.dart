@@ -21,14 +21,14 @@ class AboutPage extends StatefulWidget {
 }
 
 class _AboutPageState extends State<AboutPage> {
-  final iconEntering = (!Global.animationEnabled.value).obs;
-  final iconEntered = (!Global.animationEnabled.value).obs;
-  final titleEntered = (!Global.animationEnabled.value).obs;
+  final iconEntering = (!Global.appInfo.animationEnabled.value).obs;
+  final iconEntered = (!Global.appInfo.animationEnabled.value).obs;
+  final titleEntered = (!Global.appInfo.animationEnabled.value).obs;
 
   final titleDisplay = true.obs;
   final versionDisplay = true.obs;
 
-  var contentEntering = !Global.animationEnabled.value;
+  var contentEntering = !Global.appInfo.animationEnabled.value;
 
   var _scrollController = ScrollController();
 
@@ -47,7 +47,7 @@ class _AboutPageState extends State<AboutPage> {
     _scrollController.addListener(() {
       // print('Scroller offset: ${_scrollController.offset}');
 
-      if (Global.animationEnabled.value) {
+      if (Global.appInfo.animationEnabled.value) {
         var offset = _scrollController.offset;
 
         if (offset >= 50) {
@@ -62,7 +62,7 @@ class _AboutPageState extends State<AboutPage> {
       }
     });
 
-    if (Global.animationEnabled.value) {
+    if (Global.appInfo.animationEnabled.value) {
       Future.delayed(Duration(milliseconds: 150)).then((value) => iconEntering.value = true);
       Future.delayed(Duration(milliseconds: 400)).then((value) => iconEntered.value = true);
       Future.delayed(Duration(milliseconds: 600)).then((value) => titleEntered.value = true);
@@ -159,7 +159,7 @@ class _AboutPageState extends State<AboutPage> {
                   duration: 500,
                   opacity: titleEntered.value && versionDisplay.value ? 1 : 0,
                   curve: Curves.easeInOutCubic,
-                  child: Text('${'AboutPage_Version'.tr}: ${Global.versionString.value}'),
+                  child: Text('${'AboutPage_Version'.tr}: ${Global.appInfo.versionString.value}'),
                 ),
               ),
               // Divider(),

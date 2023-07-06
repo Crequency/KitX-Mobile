@@ -42,7 +42,7 @@ class DeviceService {
     } else {
       // Add new device.
 
-      if (info.deviceName == Global.deviceName) {
+      if (info.deviceName == Global.appInfo.deviceName) {
         // Local device.
 
         deviceInfoList.insert(0, info);
@@ -69,7 +69,8 @@ class DeviceService {
           devicesCountPerOS[osType] = countDevices(osType);
         }
 
-        var localDeviceOS = _tempList.firstWhereOrNull((element) => element.deviceName == Global.deviceName);
+        var localDeviceOS =
+            _tempList.firstWhereOrNull((element) => element.deviceName == Global.appInfo.deviceName);
         var mainDeviceOS = _tempList.firstWhereOrNull((element) => element.isMainDevice);
 
         if (localDeviceOS != null) {
@@ -131,7 +132,7 @@ class DeviceService {
         if (now.difference(time).inSeconds > Config.WebService_DeviceInfoTTLSeconds) {
           deviceInfoList.remove(each);
 
-          if (each.deviceName == Global.deviceName) {
+          if (each.deviceName == Global.appInfo.deviceName) {
             localDeviceCardAdded = false;
 
             // If local device removed, restart devices server.

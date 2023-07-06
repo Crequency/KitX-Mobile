@@ -29,10 +29,10 @@ class _Config {
 
     var langCode = prefs.getString('AppLanguageCode') ?? 'null';
 
-    Global.languageCode = langCode == 'null' ? null : langCode;
-    Global.themeMode = (prefs.getInt('AppThemeMode') ?? 0).toThemeMode();
-    Global.material3Enabled = prefs.getBool('material3Enabled') ?? true;
-    Global.animationEnabled.value = prefs.getBool('AnimationEnabled') ?? true;
+    Global.appInfo.languageCode = langCode == 'null' ? null : langCode;
+    Global.appInfo.themeMode = (prefs.getInt('AppThemeMode') ?? 0).toThemeMode();
+    Global.appInfo.material3Enabled = prefs.getBool('material3Enabled') ?? true;
+    Global.appInfo.animationEnabled.value = prefs.getBool('AnimationEnabled') ?? true;
   }
 
   Future<void> saveAsync() async {
@@ -45,10 +45,10 @@ class _Config {
     await prefs.setInt('WebService_DeviceInfoCheckTTLSeconds', WebService_DeviceInfoCheckTTLSeconds);
     await prefs.setInt('WebService_DeviceInfoTTLSeconds', WebService_DeviceInfoTTLSeconds);
 
-    await prefs.setString('AppLanguageCode', Global.languageCode ?? 'null');
-    await prefs.setInt('AppThemeMode', Global.themeMode.toInt());
-    await prefs.setBool('material3Enabled', Global.material3Enabled);
-    await prefs.setBool('AnimationEnabled', Global.animationEnabled.value);
+    await prefs.setString('AppLanguageCode', Global.appInfo.languageCode ?? 'null');
+    await prefs.setInt('AppThemeMode', Global.appInfo.themeMode.toInt());
+    await prefs.setBool('material3Enabled', Global.appInfo.material3Enabled);
+    await prefs.setBool('AnimationEnabled', Global.appInfo.animationEnabled.value);
   }
 }
 

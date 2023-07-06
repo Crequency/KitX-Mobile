@@ -29,13 +29,13 @@ class MainApp extends StatelessWidget {
     return Obx(
       () => GetMaterialApp(
         title: 'KitX Mobile',
-        themeMode: Global.themeMode,
+        themeMode: Global.appInfo.themeMode,
         theme: lightThemeData.value,
         darkTheme: darkThemeData.value,
         highContrastTheme: ThemeData(),
         highContrastDarkTheme: ThemeData(),
         translations: Translation(),
-        locale: Global.getLanguageCode ?? Localizations.localeOf(context),
+        locale: Global.appInfo.getLanguageCode ?? Localizations.localeOf(context),
         fallbackLocale: Locale('en', 'US'),
         getPages: getPages(),
         home: const HomePage(),

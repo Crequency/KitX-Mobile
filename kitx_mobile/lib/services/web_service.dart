@@ -116,7 +116,7 @@ class WebService {
     }
 
     await _flutterBlue.name.then((value) {
-      Global.deviceName = value.toString();
+      Global.appInfo.deviceName = value.toString();
     });
 
     Log.info('Get network information: IPv4: $_ipv4, IPv6: $_ipv6, MAC: $_mac');
@@ -207,7 +207,7 @@ class WebService {
       // deviceInfo 初始值
       var deviceInfo = DeviceInfoStruct(
         ((b) => b
-          ..deviceName = Global.deviceName
+          ..deviceName = Global.appInfo.deviceName
           ..deviceOSVersion = deviceOSVersion
           ..iPv4 = _ipv4
           ..iPv6 = _ipv6

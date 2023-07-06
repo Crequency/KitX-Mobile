@@ -62,7 +62,7 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
-  var selectedModes = <ThemeMode>{Global.themeMode};
+  var selectedModes = <ThemeMode>{Global.appInfo.themeMode};
   var logFilePath = '/data/data/com.crequency.kitx.mobile/app_flutter/flog.db';
 
   var useMaterial3 = lightThemeData.value.useMaterial3.obs;
@@ -92,17 +92,6 @@ class _SettingsPageState extends State<SettingsPage> {
     Config.saveAsync().then(
       (value) => showSnackBar(Text('SettingsPage_Saved'.tr)),
     );
-
-    // var snackBar = SnackBar(
-    //   content: Text('SettingsPage_Saved'.tr),
-    //   // margin: EdgeInsets.all(30),
-    //   // behavior: SnackBarBehavior.floating,
-    //   showCloseIcon: true,
-    //   duration: Duration(milliseconds: 1200),
-    //   // animation: Animation,
-    // );
-    //
-    // ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
   @override
@@ -128,7 +117,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 child: const Text('简体中文'),
                 onTap: () {
                   Global.taskHandler.delay(() {
-                    Global.languageCodeProperty = 'zh-CN';
+                    Global.appInfo.languageCodeProperty = 'zh-CN';
                     saveChanges(context);
                   }, 200);
                 },
@@ -137,7 +126,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 child: const Text('English (US)'),
                 onTap: () {
                   Global.taskHandler.delay(() {
-                    Global.languageCodeProperty = 'en-US';
+                    Global.appInfo.languageCodeProperty = 'en-US';
                     saveChanges(context);
                   }, 200);
                 },
@@ -183,7 +172,7 @@ class _SettingsPageState extends State<SettingsPage> {
                       setState(() {
                         selectedModes = newSelection;
                       }),
-                      Global.themeModeProperty = newSelection.first,
+                      Global.appInfo.themeModeProperty = newSelection.first,
                       // Global.themeMode = newSelection.first,
                       // Get.changeThemeMode(newSelection.first),
                       saveChanges(context),
@@ -224,9 +213,9 @@ class _SettingsPageState extends State<SettingsPage> {
                   Text('${'Public_Enable'.tr} ${'Public_Additional'.tr} ${'Public_Animation'.tr}'),
                   Obx(
                     () => Switch.adaptive(
-                      value: Global.animationEnabled.value,
+                      value: Global.appInfo.animationEnabled.value,
                       onChanged: (selection) {
-                        Global.animationEnabled.value = selection;
+                        Global.appInfo.animationEnabled.value = selection;
                         saveChanges(context);
                       },
                     ),

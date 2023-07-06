@@ -136,7 +136,7 @@ class HomePage extends StatelessWidget {
           () => ListTile(
             leading: const Icon(Icons.info_outline_rounded),
             title: Text('Drawer_About'.tr),
-            subtitle: Text(Global.versionString.value),
+            subtitle: Text(Global.appInfo.versionString.value),
             trailing: const Icon(Icons.keyboard_arrow_right),
             shape: tileRadius,
             onTap: () => Global.taskHandler.delay(() => Get.to(() => AboutPage()), pageOpenDelay),

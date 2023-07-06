@@ -140,7 +140,7 @@ class _DevicePage extends State<DevicePage> {
                               index,
                               key: Key('${info?.deviceName ?? ''}${info?.iPv4 ?? ''}'),
                               shouldDelay: justEnteredPage,
-                              shouldScaleIn: Global.animationEnabled.value,
+                              shouldScaleIn: Global.appInfo.animationEnabled.value,
                               onTap: () => {
                                 if (info != null) selectedDeviceInfo.value = info,
                                 _paneController.open(),
@@ -169,7 +169,7 @@ class _DevicePage extends State<DevicePage> {
                                   key: Key('${Global.deviceService.deviceInfoList[i].deviceName}'
                                       '${Global.deviceService.deviceInfoList[i].iPv4}'),
                                   shouldDelay: justEnteredPage,
-                                  shouldScaleIn: Global.animationEnabled.value,
+                                  shouldScaleIn: Global.appInfo.animationEnabled.value,
                                   onTap: () => {
                                     selectedDeviceInfo.value = Global.deviceService.deviceInfoList[i],
                                     _paneController.open(),
