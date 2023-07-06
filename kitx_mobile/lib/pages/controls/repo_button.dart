@@ -11,6 +11,6 @@ class RepoButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(onPressed: () => Global.openUrl(url), child: Text(name));
+    return ElevatedButton(onPressed: () => Global.urlHandler.open(url), child: Text(name));
   }
 }

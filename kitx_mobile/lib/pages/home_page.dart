@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:kitx_mobile/pages/about_page.dart';
 import 'package:kitx_mobile/pages/account_page.dart';
 import 'package:kitx_mobile/pages/controls/device_status_label.dart';
-import 'package:kitx_mobile/pages/controls/drawer.dart';
+import 'package:kitx_mobile/pages/controls/home_page_drawer.dart';
 import 'package:kitx_mobile/pages/device_page.dart';
 import 'package:kitx_mobile/pages/settings_page.dart';
 import 'package:kitx_mobile/pages/test_page.dart';
@@ -73,7 +73,7 @@ class HomePage extends StatelessWidget {
           ),
           trailing: const Icon(Icons.keyboard_arrow_right),
           shape: tileRadius,
-          onTap: () => Global.delay(() => Get.to(() => DevicePage()), pageOpenDelay),
+          onTap: () => Global.taskHandler.delay(() => Get.to(() => DevicePage()), pageOpenDelay),
           onLongPress: () {
             showMenu(
               context: context,
@@ -102,7 +102,7 @@ class HomePage extends StatelessWidget {
           subtitle: isLandscape ? const Text('developing ...') : null,
           trailing: const Icon(Icons.keyboard_arrow_right),
           shape: tileRadius,
-          onTap: () => Global.delay(() => Get.to(() => AccountPage()), pageOpenDelay),
+          onTap: () => Global.taskHandler.delay(() => Get.to(() => AccountPage()), pageOpenDelay),
         ),
       ),
       const SizedBox(height: tilesPadding),
@@ -114,7 +114,7 @@ class HomePage extends StatelessWidget {
           subtitle: isLandscape ? const Text('no new tests') : null,
           trailing: const Icon(Icons.keyboard_arrow_right),
           shape: tileRadius,
-          onTap: () => Global.delay(() => Get.to(() => TestPage()), pageOpenDelay),
+          onTap: () => Global.taskHandler.delay(() => Get.to(() => TestPage()), pageOpenDelay),
         ),
       ),
       const SizedBox(height: tilesPadding),
@@ -126,7 +126,7 @@ class HomePage extends StatelessWidget {
           subtitle: isLandscape ? const Text('no notifications') : null,
           trailing: const Icon(Icons.keyboard_arrow_right),
           shape: tileRadius,
-          onTap: () => Global.delay(() => Get.to(() => SettingsPage()), pageOpenDelay),
+          onTap: () => Global.taskHandler.delay(() => Get.to(() => SettingsPage()), pageOpenDelay),
         ),
       ),
       const SizedBox(height: tilesPadding),
@@ -139,7 +139,7 @@ class HomePage extends StatelessWidget {
             subtitle: Text(Global.versionString.value),
             trailing: const Icon(Icons.keyboard_arrow_right),
             shape: tileRadius,
-            onTap: () => Global.delay(() => Get.to(() => AboutPage()), pageOpenDelay),
+            onTap: () => Global.taskHandler.delay(() => Get.to(() => AboutPage()), pageOpenDelay),
           ),
         ),
       ),

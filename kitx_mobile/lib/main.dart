@@ -1,5 +1,3 @@
-import 'dart:ui' as ui;
-
 import 'package:flutter/material.dart' hide Intent;
 import 'package:get/get.dart';
 import 'package:kitx_mobile/pages/home_page.dart';
@@ -11,26 +9,19 @@ import 'package:kitx_mobile/utils/global.dart';
 import 'package:kitx_mobile/utils/log.dart';
 import 'package:kitx_mobile/utils/translation.dart';
 
-/// 程序入口
 Future<void> main() async {
-  // 提前初始化
   WidgetsFlutterBinding.ensureInitialized();
 
-  // 读取配置
   await Config.loadAsync();
-
-  // 初始化 log
-  initLogger();
-
-  // 初始化 Global
-  await Global.init();
+  await Log.initAsync();
+  await Global.initAsync();
 
   runApp(MainApp());
 }
 
-/// MainApp
+/// [MainApp] Class
 class MainApp extends StatelessWidget {
-  /// Constructor
+  /// Constructor for [MainApp]
   const MainApp({super.key});
 
   @override
@@ -43,15 +34,10 @@ class MainApp extends StatelessWidget {
         darkTheme: darkThemeData.value,
         highContrastTheme: ThemeData(),
         highContrastDarkTheme: ThemeData(),
-
-        // 定义翻译 使用: 'Text'.tr
         translations: Translation(),
-        // 定义默认语言
-        locale: Global.getLanguageCode ?? ui.window.locale,
-        // 定义回退语言
+        locale: Global.getLanguageCode ?? Localizations.localeOf(context),
         fallbackLocale: Locale('en', 'US'),
-
-        getPages: GetPages(),
+        getPages: getPages(),
         home: const HomePage(),
       ),
     );

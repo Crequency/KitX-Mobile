@@ -127,7 +127,7 @@ class _SettingsPageState extends State<SettingsPage> {
               PopupMenuItem(
                 child: const Text('简体中文'),
                 onTap: () {
-                  Global.delay(() {
+                  Global.taskHandler.delay(() {
                     Global.languageCodeProperty = 'zh-CN';
                     saveChanges(context);
                   }, 200);
@@ -136,7 +136,7 @@ class _SettingsPageState extends State<SettingsPage> {
               PopupMenuItem(
                 child: const Text('English (US)'),
                 onTap: () {
-                  Global.delay(() {
+                  Global.taskHandler.delay(() {
                     Global.languageCodeProperty = 'en-US';
                     saveChanges(context);
                   }, 200);
@@ -263,7 +263,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 Container(
                   alignment: Alignment.center,
                   child: ElevatedButton(
-                    onPressed: () => Global.delay(() async {
+                    onPressed: () => Global.taskHandler.delay(() async {
                       var beforeSize = 0;
                       var beforeSizeString = convert2string(beforeSize);
                       var nowSize = 0;

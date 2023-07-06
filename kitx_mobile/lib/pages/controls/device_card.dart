@@ -76,7 +76,10 @@ class _DeviceCard extends State<DeviceCard> with TickerProviderStateMixin {
 
     if (shouldScaleIn ?? true) {
       if (shouldDelay ?? true) {
-        Global.delay(() => _animationController.forward().then((value) => onScaleEnd?.call()), 150 * index);
+        Global.taskHandler.delay(
+          () => _animationController.forward().then((value) => onScaleEnd?.call()),
+          150 * index,
+        );
       } else {
         _animationController.forward().then((value) => onScaleEnd?.call());
       }

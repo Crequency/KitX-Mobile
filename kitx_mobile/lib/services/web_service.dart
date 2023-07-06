@@ -163,7 +163,7 @@ class WebService {
     if (sendExitPackage) {
       _sendExitPackage = true;
 
-      Global.delay(stopAction, 1500);
+      Global.taskHandler.delay(stopAction, 1500);
     } else {
       stopAction();
     }
@@ -285,7 +285,7 @@ class WebService {
         },
       );
 
-      Global.delay(() => webServiceStatus.value = ServiceStatus.running, 500);
+      Global.taskHandler.delay(() => webServiceStatus.value = ServiceStatus.running, 500);
     } catch (e, stack) {
       Log.error('Catch an error: $e On: $stack');
       webServiceStatus.value = ServiceStatus.error;

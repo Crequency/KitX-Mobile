@@ -11,22 +11,12 @@ var _config = LogsConfig()
   ..customOpeningDivider = '['
   ..customClosingDivider = ']'
   ..csvDelimiter = ', '
-  // ..isLogEnabled = true
+// ..isLogEnabled = true
   ..encryptionEnabled = false
   ..encryptionKey = ''
   ..formatType = FormatType.FORMAT_CUSTOM
   ..logLevelsEnabled = [LogLevel.INFO, LogLevel.ERROR]
   ..timestampFormat = TimestampFormat.TIME_FORMAT_FULL_2;
-
-/// Initialize the logger.
-void initLogger() {
-  FLog.applyConfigurations(_config);
-
-  Timer.periodic(const Duration(minutes: 10), (timer) async {
-    await FLog.exportLogs();
-    await FLog.clearLogs();
-  });
-}
 
 /// Log
 class Log {
@@ -38,4 +28,14 @@ class Log {
 
   /// Log a message at level [LogLevel.WARNING].
   static void warning(String message) => FLog.warning(text: message);
+
+  /// Initialize the logger.
+  static Future<void> initAsync() async {
+    FLog.applyConfigurations(_config);
+
+    Timer.periodic(const Duration(minutes: 10), (timer) async {
+      await FLog.exportLogs();
+      await FLog.clearLogs();
+    });
+  }
 }

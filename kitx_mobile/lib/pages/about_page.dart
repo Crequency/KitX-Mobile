@@ -285,7 +285,7 @@ class _AboutPageState extends State<AboutPage> {
           Visibility(
             visible: thirdPartyDataDisplayCount.value != thirdPartyDataList.length,
             child: ElevatedButton(
-              onPressed: () => Global.delay(
+              onPressed: () => Global.taskHandler.delay(
                   () => super.setState(() {
                         thirdPartyDataDisplayCount.value = thirdPartyDataList.length;
                       }),
@@ -361,7 +361,7 @@ class _AboutPageState extends State<AboutPage> {
                 icon: url?.contains('pub.dev') ?? false
                     ? const Icon(CommunityMaterialIcons.link)
                     : const Icon(CommunityMaterialIcons.link),
-                onPressed: () => Global.openUrl(thirdPartyData.ThirdPartyUrl ?? ''),
+                onPressed: () => Global.urlHandler.open(thirdPartyData.ThirdPartyUrl ?? ''),
               ),
               IconButton(
                 alignment: Alignment.center,
@@ -371,7 +371,7 @@ class _AboutPageState extends State<AboutPage> {
                 icon: repo?.contains('github.com') ?? false
                     ? const Icon(CommunityMaterialIcons.github)
                     : const Icon(CommunityMaterialIcons.link),
-                onPressed: () => Global.openUrl(thirdPartyData.ThirdPartyRepo ?? ''),
+                onPressed: () => Global.urlHandler.open(thirdPartyData.ThirdPartyRepo ?? ''),
               ),
               Container(
                 alignment: Alignment.center,

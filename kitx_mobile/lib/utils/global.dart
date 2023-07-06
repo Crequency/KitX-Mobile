@@ -1,20 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:kitx_mobile/app_info.dart';
 import 'package:kitx_mobile/services/device_service.dart';
 import 'package:kitx_mobile/services/web_service.dart';
 import 'package:kitx_mobile/themes/dark_theme.dart';
 import 'package:kitx_mobile/themes/light_theme.dart';
 import 'package:kitx_mobile/utils/config.dart';
+import 'package:kitx_mobile/utils/task_handler.dart';
+import 'package:kitx_mobile/utils/url_handler.dart';
 import 'package:package_info_plus/package_info_plus.dart';
-import 'package:url_launcher/url_launcher_string.dart';
 
 class _Global {
   static final _Global _singleton = _Global._internal();
 
-  bool get isRelease => bool.fromEnvironment('dart.vm.product');
-
-  bool get isDebug => !isRelease;
+  var appInfo = AppInfo();
+  var taskHandler = TaskHandler();
+  var urlHandler = UrlHandler();
 
   var channel = MethodChannel('com.crequency.kitx.mobile/channel');
 
@@ -60,10 +62,10 @@ class _Global {
 
   var packageInfo = PackageInfo.fromPlatform();
 
-  Future<void> init() async {
+  Future<void> initAsync() async {
     await packageInfo.then((value) => version.value = value.version);
 
-    versionString.value = '${version.value}${(isRelease ? ' (Release)' : ' (Debug)')}';
+    versionString.value = '${version.value}${(appInfo.isRelease ? ' (Release)' : ' (Debug)')}';
 
     updateTheme(useMaterial3: material3Enabled);
 
@@ -72,14 +74,6 @@ class _Global {
 
     // 初始化 DeviceService
     await deviceService.initService();
-  }
-
-  void delay(Function func, int milliseconds) {
-    Future.delayed(Duration(milliseconds: milliseconds)).then((value) => func.call());
-  }
-
-  void openUrl(String url, {int delayMilliseconds = 0, LaunchMode mode = LaunchMode.externalApplication}) {
-    delay(() => launchUrlString(url, mode: mode), delayMilliseconds);
   }
 
   void updateTheme({bool useMaterial3 = true}) {
@@ -107,7 +101,7 @@ class _Global {
   void shutdownDevicesServer() {
     webService.stopService();
 
-    delay(deviceService.stopService, 2000);
+    taskHandler.delay(deviceService.stopService, 2000);
   }
 
   factory _Global() {

@@ -14,7 +14,7 @@ class ContributorChip extends StatelessWidget {
     return Chip(
       label: Text(name),
       deleteIcon: const Icon(Icons.open_in_new),
-      onDeleted: () => Global.openUrl(url),
+      onDeleted: () => Global.urlHandler.open(url),
       deleteButtonTooltipMessage: '',
     );
   }
