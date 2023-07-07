@@ -5,9 +5,6 @@ import 'package:kitx_mobile/utils/themes/themes.dart';
 
 /// [AppInfo] Class
 class AppInfo {
-  /// Device name
-  String? deviceName;
-
   /// Language code
   String? languageCode;
 

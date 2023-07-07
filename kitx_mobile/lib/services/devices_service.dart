@@ -37,7 +37,7 @@ class DeviceService implements Service {
     } else {
       // Add new device.
 
-      if (info.deviceName == instances.appInfo.deviceName) {
+      if (info.deviceName == instances.deviceInfo.deviceName) {
         // Local device.
 
         deviceInfoList.insert(0, info);
@@ -65,7 +65,7 @@ class DeviceService implements Service {
         }
 
         var localDeviceOS = _tempList
-            .firstWhereOrNull((element) => element.deviceName == instances.appInfo.deviceName)
+            .firstWhereOrNull((element) => element.deviceName == instances.deviceInfo.deviceName)
             ?.deviceOSType;
         var mainDeviceOS = _tempList.firstWhereOrNull((element) => element.isMainDevice)?.deviceOSType;
 
@@ -122,7 +122,7 @@ class DeviceService implements Service {
         if (now.difference(time).inSeconds > config.webServiceDeviceInfoTTLSeconds) {
           deviceInfoList.remove(each);
 
-          if (each.deviceName == instances.appInfo.deviceName) {
+          if (each.deviceName == instances.deviceInfo.deviceName) {
             localDeviceCardAdded = false;
 
             // If local device removed, restart devices server.

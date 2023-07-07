@@ -1,5 +1,7 @@
 import 'package:flutter/services.dart';
-import 'package:kitx_mobile/app_info.dart';
+import 'package:kitx_mobile/data/app_info.dart';
+import 'package:kitx_mobile/data/local_device_info.dart';
+import 'package:kitx_mobile/data/local_network_info.dart';
 import 'package:kitx_mobile/services/devices_discovery_service.dart';
 import 'package:kitx_mobile/services/devices_service.dart';
 import 'package:kitx_mobile/utils/config.dart';
@@ -24,6 +26,12 @@ class Instances {
   /// Instance for [AppInfo] class
   var appInfo = AppInfo();
 
+  /// Instance for [LocalDeviceInfo] class
+  var deviceInfo = LocalDeviceInfo();
+
+  /// Instance for [LocalNetworkInfo] class
+  var networkInfo = LocalNetworkInfo();
+
   /// Instance for [PackageInfo] class
   var packageInfo = PackageInfo.fromPlatform();
 
@@ -45,6 +53,8 @@ class Instances {
   /// Init [Instances] class
   Future<void> initAsync() async {
     appInfo = (await appInfo.init()).updateTheme(useMaterial3: appInfo.material3Enabled);
+    deviceInfo = await LocalDeviceInfo.get();
+    networkInfo = await LocalNetworkInfo.get();
 
     // Init WebService
     await devicesDiscoveryService.init();

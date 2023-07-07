@@ -105,7 +105,7 @@ class _DeviceCard extends State<DeviceCard> with TickerProviderStateMixin {
   String getDeviceDisplayName(DeviceInfoStruct info) {
     var result = info.deviceName;
 
-    if (info.deviceName == instances.appInfo.deviceName) result += ' ${'DevicePage_LocalDevice'.tr}';
+    if (info.deviceName == instances.deviceInfo.deviceName) result += ' ${'DevicePage_LocalDevice'.tr}';
     if (info.isMainDevice) result += ' ${'DevicePage_MainDevice'.tr}';
 
     return result;
@@ -114,7 +114,7 @@ class _DeviceCard extends State<DeviceCard> with TickerProviderStateMixin {
   Color getDeviceCardColor(BuildContext context, DeviceInfoStruct info) {
     var result = context.theme.cardColor;
 
-    if (info.deviceName == instances.appInfo.deviceName) {
+    if (info.deviceName == instances.deviceInfo.deviceName) {
       result = context.isDarkMode ? Colors.indigo : Colors.limeAccent;
     }
     if (info.isMainDevice) result = context.isDarkMode ? Colors.deepPurple : Colors.tealAccent;
