@@ -1,11 +1,11 @@
 ﻿import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:kitx_mobile/instances.dart';
 import 'package:kitx_mobile/pages/about_page.dart';
 import 'package:kitx_mobile/pages/account_page.dart';
 import 'package:kitx_mobile/pages/device_page.dart';
 import 'package:kitx_mobile/pages/settings_page.dart';
 import 'package:kitx_mobile/pages/test_page.dart';
-import 'package:kitx_mobile/utils/global.dart';
 
 /// AppDrawer
 class AppDrawer extends StatelessWidget {
@@ -39,7 +39,7 @@ class AppDrawer extends StatelessWidget {
           ListTile(
             leading: Icon(Icons.devices),
             title: Text('Drawer_Devices'.tr),
-            onTap: () => Global.taskHandler.delay(() {
+            onTap: () => instances.taskHandler.delay(() {
               Get.back();
               Get.to(() => DevicePage());
             }, pageOpenDelay),
@@ -47,7 +47,7 @@ class AppDrawer extends StatelessWidget {
           ListTile(
             leading: Icon(Icons.alternate_email),
             title: Text('Drawer_Account'.tr),
-            onTap: () => Global.taskHandler.delay(() {
+            onTap: () => instances.taskHandler.delay(() {
               Get.back();
               Get.to(() => AccountPage());
             }, pageOpenDelay),
@@ -55,7 +55,7 @@ class AppDrawer extends StatelessWidget {
           ListTile(
             leading: Icon(Icons.bug_report),
             title: Text('Drawer_Test'.tr),
-            onTap: () => Global.taskHandler.delay(() {
+            onTap: () => instances.taskHandler.delay(() {
               Get.back();
               Get.to(() => TestPage());
             }, pageOpenDelay),
@@ -63,7 +63,7 @@ class AppDrawer extends StatelessWidget {
           ListTile(
             leading: Icon(Icons.settings),
             title: Text('Drawer_Setting'.tr),
-            onTap: () => Global.taskHandler.delay(() {
+            onTap: () => instances.taskHandler.delay(() {
               Get.back();
               Get.to(() => SettingsPage());
             }, pageOpenDelay),
@@ -71,7 +71,7 @@ class AppDrawer extends StatelessWidget {
           ListTile(
             leading: Icon(Icons.info_outline_rounded),
             title: Text('Drawer_About'.tr),
-            onTap: () => Global.taskHandler.delay(() {
+            onTap: () => instances.taskHandler.delay(() {
               Get.back();
               Get.to(() => AboutPage());
             }, pageOpenDelay),

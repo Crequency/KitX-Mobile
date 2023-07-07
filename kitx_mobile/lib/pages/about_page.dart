@@ -2,13 +2,13 @@ import 'package:community_material_icon/community_material_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kitx_mobile/data/third_party_licenses_provider.dart';
+import 'package:kitx_mobile/instances.dart';
 import 'package:kitx_mobile/pages/controls/contributor_chip.dart';
 import 'package:kitx_mobile/pages/controls/fade_in_control.dart';
 import 'package:kitx_mobile/pages/controls/gradually_smaller_spacer.dart';
 import 'package:kitx_mobile/pages/controls/group_divider.dart';
 import 'package:kitx_mobile/pages/controls/repo_button.dart';
 import 'package:kitx_mobile/utils/composer.dart';
-import 'package:kitx_mobile/utils/global.dart';
 import 'package:vibration/vibration.dart';
 
 /// About Page
@@ -21,14 +21,14 @@ class AboutPage extends StatefulWidget {
 }
 
 class _AboutPageState extends State<AboutPage> {
-  final iconEntering = (!Global.appInfo.animationEnabled.value).obs;
-  final iconEntered = (!Global.appInfo.animationEnabled.value).obs;
-  final titleEntered = (!Global.appInfo.animationEnabled.value).obs;
+  final iconEntering = (!instances.appInfo.animationEnabled.value).obs;
+  final iconEntered = (!instances.appInfo.animationEnabled.value).obs;
+  final titleEntered = (!instances.appInfo.animationEnabled.value).obs;
 
   final titleDisplay = true.obs;
   final versionDisplay = true.obs;
 
-  var contentEntering = !Global.appInfo.animationEnabled.value;
+  var contentEntering = !instances.appInfo.animationEnabled.value;
 
   var _scrollController = ScrollController();
 
@@ -47,7 +47,7 @@ class _AboutPageState extends State<AboutPage> {
     _scrollController.addListener(() {
       // print('Scroller offset: ${_scrollController.offset}');
 
-      if (Global.appInfo.animationEnabled.value) {
+      if (instances.appInfo.animationEnabled.value) {
         var offset = _scrollController.offset;
 
         if (offset >= 50) {
@@ -62,7 +62,7 @@ class _AboutPageState extends State<AboutPage> {
       }
     });
 
-    if (Global.appInfo.animationEnabled.value) {
+    if (instances.appInfo.animationEnabled.value) {
       Future.delayed(Duration(milliseconds: 150)).then((value) => iconEntering.value = true);
       Future.delayed(Duration(milliseconds: 400)).then((value) => iconEntered.value = true);
       Future.delayed(Duration(milliseconds: 600)).then((value) => titleEntered.value = true);
@@ -159,7 +159,7 @@ class _AboutPageState extends State<AboutPage> {
                   duration: 500,
                   opacity: titleEntered.value && versionDisplay.value ? 1 : 0,
                   curve: Curves.easeInOutCubic,
-                  child: Text('${'AboutPage_Version'.tr}: ${Global.appInfo.versionString.value}'),
+                  child: Text('${'AboutPage_Version'.tr}: ${instances.appInfo.versionString.value}'),
                 ),
               ),
               // Divider(),
@@ -285,7 +285,7 @@ class _AboutPageState extends State<AboutPage> {
           Visibility(
             visible: thirdPartyDataDisplayCount.value != thirdPartyDataList.length,
             child: ElevatedButton(
-              onPressed: () => Global.taskHandler.delay(
+              onPressed: () => instances.taskHandler.delay(
                   () => super.setState(() {
                         thirdPartyDataDisplayCount.value = thirdPartyDataList.length;
                       }),
@@ -361,7 +361,7 @@ class _AboutPageState extends State<AboutPage> {
                 icon: url?.contains('pub.dev') ?? false
                     ? const Icon(CommunityMaterialIcons.link)
                     : const Icon(CommunityMaterialIcons.link),
-                onPressed: () => Global.urlHandler.open(thirdPartyData.ThirdPartyUrl ?? ''),
+                onPressed: () => instances.urlHandler.open(thirdPartyData.ThirdPartyUrl ?? ''),
               ),
               IconButton(
                 alignment: Alignment.center,
@@ -371,7 +371,7 @@ class _AboutPageState extends State<AboutPage> {
                 icon: repo?.contains('github.com') ?? false
                     ? const Icon(CommunityMaterialIcons.github)
                     : const Icon(CommunityMaterialIcons.link),
-                onPressed: () => Global.urlHandler.open(thirdPartyData.ThirdPartyRepo ?? ''),
+                onPressed: () => instances.urlHandler.open(thirdPartyData.ThirdPartyRepo ?? ''),
               ),
               Container(
                 alignment: Alignment.center,

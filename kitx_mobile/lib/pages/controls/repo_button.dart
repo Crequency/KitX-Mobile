@@ -1,5 +1,5 @@
 ﻿import 'package:flutter/material.dart';
-import 'package:kitx_mobile/utils/global.dart';
+import 'package:kitx_mobile/instances.dart';
 
 /// Repo Button
 class RepoButton extends StatelessWidget {
@@ -11,6 +11,6 @@ class RepoButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(onPressed: () => Global.urlHandler.open(url), child: Text(name));
+    return ElevatedButton(onPressed: () => instances.urlHandler.open(url), child: Text(name));
   }
 }

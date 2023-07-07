@@ -4,8 +4,8 @@ library kitx_moblie.config;
 
 import 'package:kitx_mobile/extensions/int_ext.dart';
 import 'package:kitx_mobile/extensions/theme_mode_ext.dart';
+import 'package:kitx_mobile/instances.dart';
 import 'package:kitx_mobile/models/enums/device_os_type.dart';
-import 'package:kitx_mobile/utils/global.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class _Config {
@@ -29,10 +29,10 @@ class _Config {
 
     var langCode = prefs.getString('AppLanguageCode') ?? 'null';
 
-    Global.appInfo.languageCode = langCode == 'null' ? null : langCode;
-    Global.appInfo.themeMode = (prefs.getInt('AppThemeMode') ?? 0).toThemeMode();
-    Global.appInfo.material3Enabled = prefs.getBool('material3Enabled') ?? true;
-    Global.appInfo.animationEnabled.value = prefs.getBool('AnimationEnabled') ?? true;
+    instances.appInfo.languageCode = langCode == 'null' ? null : langCode;
+    instances.appInfo.themeMode = (prefs.getInt('AppThemeMode') ?? 0).toThemeMode();
+    instances.appInfo.material3Enabled = prefs.getBool('material3Enabled') ?? true;
+    instances.appInfo.animationEnabled.value = prefs.getBool('AnimationEnabled') ?? true;
   }
 
   Future<void> saveAsync() async {
@@ -45,10 +45,10 @@ class _Config {
     await prefs.setInt('WebService_DeviceInfoCheckTTLSeconds', WebService_DeviceInfoCheckTTLSeconds);
     await prefs.setInt('WebService_DeviceInfoTTLSeconds', WebService_DeviceInfoTTLSeconds);
 
-    await prefs.setString('AppLanguageCode', Global.appInfo.languageCode ?? 'null');
-    await prefs.setInt('AppThemeMode', Global.appInfo.themeMode.toInt());
-    await prefs.setBool('material3Enabled', Global.appInfo.material3Enabled);
-    await prefs.setBool('AnimationEnabled', Global.appInfo.animationEnabled.value);
+    await prefs.setString('AppLanguageCode', instances.appInfo.languageCode ?? 'null');
+    await prefs.setInt('AppThemeMode', instances.appInfo.themeMode.toInt());
+    await prefs.setBool('material3Enabled', instances.appInfo.material3Enabled);
+    await prefs.setBool('AnimationEnabled', instances.appInfo.animationEnabled.value);
   }
 }
 

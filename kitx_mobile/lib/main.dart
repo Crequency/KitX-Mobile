@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart' hide Intent;
 import 'package:get/get.dart';
+import 'package:kitx_mobile/instances.dart';
 import 'package:kitx_mobile/pages/home_page.dart';
 import 'package:kitx_mobile/pages/routes.dart';
 import 'package:kitx_mobile/themes/dark_theme.dart';
 import 'package:kitx_mobile/themes/light_theme.dart';
 import 'package:kitx_mobile/utils/config.dart';
-import 'package:kitx_mobile/utils/global.dart';
 import 'package:kitx_mobile/utils/log.dart';
 import 'package:kitx_mobile/utils/translation.dart';
 
@@ -14,7 +14,7 @@ Future<void> main() async {
 
   await Config.loadAsync();
   await Log.initAsync();
-  await Global.initAsync();
+  await instances.initAsync();
 
   runApp(MainApp());
 }
@@ -29,13 +29,13 @@ class MainApp extends StatelessWidget {
     return Obx(
       () => GetMaterialApp(
         title: 'KitX Mobile',
-        themeMode: Global.appInfo.themeMode,
+        themeMode: instances.appInfo.themeMode,
         theme: lightThemeData.value,
         darkTheme: darkThemeData.value,
         highContrastTheme: ThemeData(),
         highContrastDarkTheme: ThemeData(),
         translations: Translation(),
-        locale: Global.appInfo.getLanguageCode ?? Localizations.localeOf(context),
+        locale: instances.appInfo.getLanguageCode ?? Localizations.localeOf(context),
         fallbackLocale: Locale('en', 'US'),
         getPages: getPages(),
         home: const HomePage(),

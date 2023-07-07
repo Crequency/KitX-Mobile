@@ -1,5 +1,5 @@
 ﻿import 'package:flutter/material.dart';
-import 'package:kitx_mobile/utils/global.dart';
+import 'package:kitx_mobile/instances.dart';
 
 /// Contributor Chip
 class ContributorChip extends StatelessWidget {
@@ -14,7 +14,7 @@ class ContributorChip extends StatelessWidget {
     return Chip(
       label: Text(name),
       deleteIcon: const Icon(Icons.open_in_new),
-      onDeleted: () => Global.urlHandler.open(url),
+      onDeleted: () => instances.urlHandler.open(url),
       deleteButtonTooltipMessage: '',
     );
   }

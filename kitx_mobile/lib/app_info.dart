@@ -1,6 +1,8 @@
 ﻿import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:kitx_mobile/utils/global.dart';
+import 'package:kitx_mobile/instances.dart';
+import 'package:kitx_mobile/themes/dark_theme.dart';
+import 'package:kitx_mobile/themes/light_theme.dart';
 
 /// [AppInfo] Class
 class AppInfo {
@@ -54,8 +56,28 @@ class AppInfo {
   var versionString = ''.obs;
 
   /// Init [AppInfo] class
-  Future<void> init() async {
-    await Global.packageInfo.then((value) => version.value = value.version);
+  Future<AppInfo> init() async {
+    await instances.packageInfo.then((value) => version.value = value.version);
     versionString.value = '${version.value}${(isRelease ? ' (Release)' : ' (Debug)')}';
+
+    return this;
+  }
+
+  /// Update Theme
+  AppInfo updateTheme({bool useMaterial3 = true}) {
+    material3Enabled = useMaterial3;
+
+    lightThemeData.value = ThemeData(
+      useMaterial3: useMaterial3,
+      primarySwatch: Colors.blue,
+      brightness: Brightness.light,
+    );
+    darkThemeData.value = ThemeData(
+      useMaterial3: useMaterial3,
+      primarySwatch: Colors.blueGrey,
+      brightness: Brightness.dark,
+    );
+
+    return this;
   }
 }

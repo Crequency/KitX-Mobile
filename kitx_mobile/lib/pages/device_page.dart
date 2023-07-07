@@ -1,12 +1,12 @@
 import 'package:community_material_icon/community_material_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:kitx_mobile/instances.dart';
 import 'package:kitx_mobile/models/device_info.dart';
 import 'package:kitx_mobile/pages/controls/device_card.dart';
 import 'package:kitx_mobile/pages/controls/device_status_icon.dart';
 import 'package:kitx_mobile/pages/controls/device_status_label.dart';
 import 'package:kitx_mobile/pages/sub_pages/device_chat_page.dart';
-import 'package:kitx_mobile/utils/global.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 /// Device Page
@@ -85,11 +85,11 @@ class _DevicePage extends State<DevicePage> {
             itemBuilder: (context) => [
               PopupMenuItem(
                 child: Text('Option_RestartDevicesServer'.tr),
-                onTap: Global.restartDevicesServer,
+                onTap: instances.restartDevicesServer,
               ),
               PopupMenuItem(
                 child: Text('Option_ShutdownDevicesServer'.tr),
-                onTap: Global.shutdownDevicesServer,
+                onTap: instances.shutdownDevicesServer,
               ),
             ],
           ),
@@ -131,16 +131,16 @@ class _DevicePage extends State<DevicePage> {
                         () => ReorderableListView.builder(
                           shrinkWrap: true,
                           physics: NeverScrollableScrollPhysics(),
-                          itemCount: Global.deviceService.length + 1,
+                          itemCount: instances.deviceService.length + 1,
                           itemBuilder: (_, index) {
-                            var list = Global.deviceService.deviceInfoList;
-                            var info = index >= Global.deviceService.length ? null : list[index];
+                            var list = instances.deviceService.deviceInfoList;
+                            var info = index >= instances.deviceService.length ? null : list[index];
                             return DeviceCard(
                               info,
                               index,
                               key: Key('${info?.deviceName ?? ''}${info?.iPv4 ?? ''}'),
                               shouldDelay: justEnteredPage,
-                              shouldScaleIn: Global.appInfo.animationEnabled.value,
+                              shouldScaleIn: instances.appInfo.animationEnabled.value,
                               onTap: () => {
                                 if (info != null) selectedDeviceInfo.value = info,
                                 _paneController.open(),
@@ -148,7 +148,7 @@ class _DevicePage extends State<DevicePage> {
                             );
                           },
                           onReorder: (int oldIndex, int newIndex) {
-                            var list = Global.deviceService.deviceInfoList;
+                            var list = instances.deviceService.deviceInfoList;
                             var moveBack = newIndex > oldIndex;
                             list.insert(moveBack ? newIndex - 1 : newIndex, list.removeAt(oldIndex));
                           },
@@ -161,17 +161,17 @@ class _DevicePage extends State<DevicePage> {
                             spacing: 0.0,
                             runSpacing: 0.0,
                             children: [
-                              for (var i = 0; i < Global.deviceService.length; ++i)
+                              for (var i = 0; i < instances.deviceService.length; ++i)
                                 DeviceCard(
-                                  Global.deviceService.deviceInfoList[i],
+                                  instances.deviceService.deviceInfoList[i],
                                   i,
                                   width: (MediaQuery.of(context).size.width - 20) * deviceCardHorizontalScale,
-                                  key: Key('${Global.deviceService.deviceInfoList[i].deviceName}'
-                                      '${Global.deviceService.deviceInfoList[i].iPv4}'),
+                                  key: Key('${instances.deviceService.deviceInfoList[i].deviceName}'
+                                      '${instances.deviceService.deviceInfoList[i].iPv4}'),
                                   shouldDelay: justEnteredPage,
-                                  shouldScaleIn: Global.appInfo.animationEnabled.value,
+                                  shouldScaleIn: instances.appInfo.animationEnabled.value,
                                   onTap: () => {
-                                    selectedDeviceInfo.value = Global.deviceService.deviceInfoList[i],
+                                    selectedDeviceInfo.value = instances.deviceService.deviceInfoList[i],
                                     _paneController.open(),
                                   },
                                 )

@@ -1,11 +1,11 @@
 import 'dart:async';
 
 import 'package:get/get.dart';
+import 'package:kitx_mobile/instances.dart';
 import 'package:kitx_mobile/models/device_info.dart';
 import 'package:kitx_mobile/models/enums/device_os_type.dart';
 import 'package:kitx_mobile/services/public/service_status.dart';
 import 'package:kitx_mobile/utils/config.dart';
-import 'package:kitx_mobile/utils/global.dart';
 import 'package:kitx_mobile/utils/log.dart';
 
 /// Device Service
@@ -42,7 +42,7 @@ class DeviceService {
     } else {
       // Add new device.
 
-      if (info.deviceName == Global.appInfo.deviceName) {
+      if (info.deviceName == instances.appInfo.deviceName) {
         // Local device.
 
         deviceInfoList.insert(0, info);
@@ -70,7 +70,7 @@ class DeviceService {
         }
 
         var localDeviceOS =
-            _tempList.firstWhereOrNull((element) => element.deviceName == Global.appInfo.deviceName);
+            _tempList.firstWhereOrNull((element) => element.deviceName == instances.appInfo.deviceName);
         var mainDeviceOS = _tempList.firstWhereOrNull((element) => element.isMainDevice);
 
         if (localDeviceOS != null) {
@@ -132,11 +132,11 @@ class DeviceService {
         if (now.difference(time).inSeconds > Config.WebService_DeviceInfoTTLSeconds) {
           deviceInfoList.remove(each);
 
-          if (each.deviceName == Global.appInfo.deviceName) {
+          if (each.deviceName == instances.appInfo.deviceName) {
             localDeviceCardAdded = false;
 
             // If local device removed, restart devices server.
-            Global.restartDevicesServer();
+            instances.restartDevicesServer();
           } else if (each.isMainDevice) {
             mainDeviceCardAdded = false;
           }

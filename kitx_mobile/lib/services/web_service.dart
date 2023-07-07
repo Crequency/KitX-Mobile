@@ -7,10 +7,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 import 'package:get/get.dart';
+import 'package:kitx_mobile/instances.dart';
 import 'package:kitx_mobile/models/device_info.dart';
 import 'package:kitx_mobile/services/public/service_status.dart';
 import 'package:kitx_mobile/utils/config.dart';
-import 'package:kitx_mobile/utils/global.dart';
 import 'package:kitx_mobile/utils/log.dart';
 import 'package:kitx_mobile/utils/permissions_helper.dart';
 import 'package:network_info_plus/network_info_plus.dart';
@@ -103,7 +103,7 @@ class WebService {
     var defaultMac = '00:20:00:00:00:00';
     try {
       if (Platform.isAndroid) {
-        var _actualMac = '${await Global.channel.invokeMethod('getMAC') ?? ''}';
+        var _actualMac = '${await instances.channel.invokeMethod('getMAC') ?? ''}';
         _mac = _actualMac == '' ? await getBackupDeviceIdString() : _actualMac;
       } else if (Platform.isIOS) {
         var _actualMac = (await _deviceInfoPlugin.iosInfo).identifierForVendor ?? '';
@@ -116,7 +116,7 @@ class WebService {
     }
 
     await _flutterBlue.name.then((value) {
-      Global.appInfo.deviceName = value.toString();
+      instances.appInfo.deviceName = value.toString();
     });
 
     Log.info('Get network information: IPv4: $_ipv4, IPv6: $_ipv6, MAC: $_mac');
@@ -155,15 +155,15 @@ class WebService {
       webServiceStatus.value = ServiceStatus.pending;
     }
 
-    Global.deviceService.deviceServiceStatus = ServiceStatus.pending;
-    Global.deviceService.deviceInfoList.clear();
+    instances.deviceService.deviceServiceStatus = ServiceStatus.pending;
+    instances.deviceService.deviceInfoList.clear();
 
     webServiceStatus.value = ServiceStatus.stopping;
 
     if (sendExitPackage) {
       _sendExitPackage = true;
 
-      Global.taskHandler.delay(stopAction, 1500);
+      instances.taskHandler.delay(stopAction, 1500);
     } else {
       stopAction();
     }
@@ -181,7 +181,7 @@ class WebService {
 
     _sendExitPackage = false;
 
-    Global.deviceService.deviceServiceStatus = ServiceStatus.running;
+    instances.deviceService.deviceServiceStatus = ServiceStatus.running;
 
     try {
       if (kIsWeb) {
@@ -207,7 +207,7 @@ class WebService {
       // deviceInfo 初始值
       var deviceInfo = DeviceInfoStruct(
         ((b) => b
-          ..deviceName = Global.appInfo.deviceName
+          ..deviceName = instances.appInfo.deviceName
           ..deviceOSVersion = deviceOSVersion
           ..iPv4 = _ipv4
           ..iPv6 = _ipv6
@@ -276,7 +276,7 @@ class WebService {
 
               try {
                 var _deviceInfo = DeviceInfoStruct.fromString(_data);
-                if (_deviceInfo != null) await Global.deviceService.addDevice(_deviceInfo);
+                if (_deviceInfo != null) await instances.deviceService.addDevice(_deviceInfo);
               } catch (e, stack) {
                 Log.error('Can not deserialize device info pack: `$_data`. Error: $e $stack');
               }
@@ -285,7 +285,7 @@ class WebService {
         },
       );
 
-      Global.taskHandler.delay(() => webServiceStatus.value = ServiceStatus.running, 500);
+      instances.taskHandler.delay(() => webServiceStatus.value = ServiceStatus.running, 500);
     } catch (e, stack) {
       Log.error('Catch an error: $e On: $stack');
       webServiceStatus.value = ServiceStatus.error;

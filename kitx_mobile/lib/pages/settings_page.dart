@@ -4,10 +4,10 @@ import 'package:f_logs/f_logs.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kitx_mobile/converters/size_converter.dart';
+import 'package:kitx_mobile/instances.dart';
 import 'package:kitx_mobile/themes/light_theme.dart';
 import 'package:kitx_mobile/utils/composer.dart';
 import 'package:kitx_mobile/utils/config.dart';
-import 'package:kitx_mobile/utils/global.dart';
 
 /// Settings Group Title
 class SettingsGroupTitle extends StatelessWidget {
@@ -62,7 +62,7 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
-  var selectedModes = <ThemeMode>{Global.appInfo.themeMode};
+  var selectedModes = <ThemeMode>{instances.appInfo.themeMode};
   var logFilePath = '/data/data/com.crequency.kitx.mobile/app_flutter/flog.db';
 
   var useMaterial3 = lightThemeData.value.useMaterial3.obs;
@@ -116,8 +116,8 @@ class _SettingsPageState extends State<SettingsPage> {
               PopupMenuItem(
                 child: const Text('简体中文'),
                 onTap: () {
-                  Global.taskHandler.delay(() {
-                    Global.appInfo.languageCodeProperty = 'zh-CN';
+                  instances.taskHandler.delay(() {
+                    instances.appInfo.languageCodeProperty = 'zh-CN';
                     saveChanges(context);
                   }, 200);
                 },
@@ -125,8 +125,8 @@ class _SettingsPageState extends State<SettingsPage> {
               PopupMenuItem(
                 child: const Text('English (US)'),
                 onTap: () {
-                  Global.taskHandler.delay(() {
-                    Global.appInfo.languageCodeProperty = 'en-US';
+                  instances.taskHandler.delay(() {
+                    instances.appInfo.languageCodeProperty = 'en-US';
                     saveChanges(context);
                   }, 200);
                 },
@@ -172,7 +172,7 @@ class _SettingsPageState extends State<SettingsPage> {
                       setState(() {
                         selectedModes = newSelection;
                       }),
-                      Global.appInfo.themeModeProperty = newSelection.first,
+                      instances.appInfo.themeModeProperty = newSelection.first,
                       // Global.themeMode = newSelection.first,
                       // Get.changeThemeMode(newSelection.first),
                       saveChanges(context),
@@ -190,7 +190,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         () => Switch.adaptive(
                           value: useMaterial3.value,
                           onChanged: (selection) {
-                            Global.updateTheme(useMaterial3: selection);
+                            instances.appInfo.updateTheme(useMaterial3: selection);
                             useMaterial3.value = selection;
                             saveChanges(context);
                           },
@@ -213,9 +213,9 @@ class _SettingsPageState extends State<SettingsPage> {
                   Text('${'Public_Enable'.tr} ${'Public_Additional'.tr} ${'Public_Animation'.tr}'),
                   Obx(
                     () => Switch.adaptive(
-                      value: Global.appInfo.animationEnabled.value,
+                      value: instances.appInfo.animationEnabled.value,
                       onChanged: (selection) {
-                        Global.appInfo.animationEnabled.value = selection;
+                        instances.appInfo.animationEnabled.value = selection;
                         saveChanges(context);
                       },
                     ),
@@ -252,7 +252,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 Container(
                   alignment: Alignment.center,
                   child: ElevatedButton(
-                    onPressed: () => Global.taskHandler.delay(() async {
+                    onPressed: () => instances.taskHandler.delay(() async {
                       var beforeSize = 0;
                       var beforeSizeString = convert2string(beforeSize);
                       var nowSize = 0;
