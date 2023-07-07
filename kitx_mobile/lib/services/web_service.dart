@@ -10,6 +10,7 @@ import 'package:get/get.dart';
 import 'package:kitx_mobile/instances.dart';
 import 'package:kitx_mobile/models/device_info.dart';
 import 'package:kitx_mobile/services/public/service_status.dart';
+import 'package:kitx_mobile/services/service.dart';
 import 'package:kitx_mobile/utils/config.dart';
 import 'package:kitx_mobile/utils/handlers/permissions_handlers.dart';
 import 'package:kitx_mobile/utils/log.dart';
@@ -26,11 +27,11 @@ void main() {
     ..udpPortReceive = 24040
     ..udpBroadcastAddress = '224.0.0.0';
 
-  server.initService();
+  server.init();
 }
 
 /// WebService
-class WebService {
+class WebService implements Service {
   var _udpPortSend = config.webServiceUdpPortSend;
   var _udpPortReceive = config.webServiceUdpPortReceive;
   var _udpBroadcastAddress = config.webServiceUdpBroadcastAddress;
@@ -125,7 +126,7 @@ class WebService {
 
     if (_ipv4 == null) {
       log.error('Can not get IPv4. Try to restart the service in 5 seconds.');
-      Future.delayed(const Duration(seconds: 5), () => initService());
+      Future.delayed(const Duration(seconds: 5), () => init());
       return null;
     }
 
@@ -139,44 +140,14 @@ class WebService {
     return [_ipv4, _ipv6, _mac];
   }
 
-  /// 停止服务
-  Future<void> stopService({bool sendExitPackage = true}) async {
-    void stopAction() {
-      sendTimer?.cancel();
-      sendTimer = null;
-
-      receiveSocket?.close();
-
-      sendSocket?.close();
-
-      receiveSocket = null;
-      sendSocket = null;
-
-      webServiceStatus.value = ServiceStatus.pending;
-    }
-
-    instances.deviceService.deviceServiceStatus = ServiceStatus.pending;
-    instances.deviceService.deviceInfoList.clear();
-
-    webServiceStatus.value = ServiceStatus.stopping;
-
-    if (sendExitPackage) {
-      _sendExitPackage = true;
-
-      instances.taskHandler.delay(stopAction, 1500);
-    } else {
-      stopAction();
-    }
-  }
-
   /// 发送及接收定时器的指针
   late Timer? sendTimer;
 
   /// 发送及接收套接字的指针
   late RawDatagramSocket? sendSocket, receiveSocket;
 
-  /// 初始化服务
-  Future<void> initService() async {
+  @override
+  Future<WebService> init() async {
     webServiceStatus.value = ServiceStatus.starting;
 
     _sendExitPackage = false;
@@ -186,7 +157,7 @@ class WebService {
     try {
       if (kIsWeb) {
         log.info('This is a web application, WebService will not start.');
-        return;
+        return this;
       }
 
       // 获取设备信息
@@ -252,7 +223,7 @@ class WebService {
               timer.cancel();
               socket.close();
               log.info('UDP send error: $e $stack. Try to restart the service in 5 seconds.');
-              Future.delayed(const Duration(seconds: 5), () => initService());
+              Future.delayed(const Duration(seconds: 5), () => init());
               throw e;
             }
           });
@@ -292,5 +263,45 @@ class WebService {
       webServiceErrorMessage = e.toString();
       _networkInfo = NetworkInfo();
     }
+
+    return this;
+  }
+
+  @override
+  Future<WebService> restart() async {
+    // TODO: implement restart
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<WebService> stop({bool sendExitPackage = true}) async {
+    void stopAction() {
+      sendTimer?.cancel();
+      sendTimer = null;
+
+      receiveSocket?.close();
+
+      sendSocket?.close();
+
+      receiveSocket = null;
+      sendSocket = null;
+
+      webServiceStatus.value = ServiceStatus.pending;
+    }
+
+    instances.deviceService.deviceServiceStatus = ServiceStatus.pending;
+    instances.deviceService.deviceInfoList.clear();
+
+    webServiceStatus.value = ServiceStatus.stopping;
+
+    if (sendExitPackage) {
+      _sendExitPackage = true;
+
+      instances.taskHandler.delay(stopAction, 1500);
+    } else {
+      stopAction();
+    }
+
+    return this;
   }
 }

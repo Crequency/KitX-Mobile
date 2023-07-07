@@ -5,16 +5,14 @@ import 'package:kitx_mobile/instances.dart';
 import 'package:kitx_mobile/models/device_info.dart';
 import 'package:kitx_mobile/models/enums/device_os_type.dart';
 import 'package:kitx_mobile/services/public/service_status.dart';
+import 'package:kitx_mobile/services/service.dart';
 import 'package:kitx_mobile/utils/config.dart';
 import 'package:kitx_mobile/utils/log.dart';
 
 /// Device Service
-class DeviceService {
+class DeviceService implements Service {
   /// Device Info List
   final deviceInfoList = RxList<DeviceInfoStruct>([]);
-
-  /// Device Info List Lock
-  var lock = true;
 
   /// Device Service Status
   var deviceServiceStatus = ServiceStatus.pending;
@@ -69,16 +67,13 @@ class DeviceService {
           devicesCountPerOS[osType] = countDevices(osType);
         }
 
-        var localDeviceOS =
-            _tempList.firstWhereOrNull((element) => element.deviceName == instances.appInfo.deviceName);
-        var mainDeviceOS = _tempList.firstWhereOrNull((element) => element.isMainDevice);
+        var localDeviceOS = _tempList
+            .firstWhereOrNull((element) => element.deviceName == instances.appInfo.deviceName)
+            ?.deviceOSType;
+        var mainDeviceOS = _tempList.firstWhereOrNull((element) => element.isMainDevice)?.deviceOSType;
 
-        if (localDeviceOS != null) {
-          devicesCountPerOS[localDeviceOS.deviceOSType] = devicesCountPerOS[localDeviceOS.deviceOSType]! - 1;
-        }
-        if (mainDeviceOS != null) {
-          devicesCountPerOS[mainDeviceOS.deviceOSType] = devicesCountPerOS[mainDeviceOS.deviceOSType]! - 1;
-        }
+        if (localDeviceOS != null) devicesCountPerOS[localDeviceOS] = devicesCountPerOS[localDeviceOS]! - 1;
+        if (mainDeviceOS != null) devicesCountPerOS[mainDeviceOS] = devicesCountPerOS[mainDeviceOS]! - 1;
 
         var instIndex = fixedCardsCount;
 
@@ -104,19 +99,11 @@ class DeviceService {
     deviceInfoList.refresh();
   }
 
-  /// 停止服务
-  Future<void> stopService() async {
-    deviceServiceStatus = ServiceStatus.stopping;
-    deviceInfoList.clear();
+  /// Get device info list length
+  int get length => deviceInfoList.length;
 
-    localDeviceCardAdded = false;
-    mainDeviceCardAdded = false;
-
-    deviceServiceStatus = ServiceStatus.pending;
-  }
-
-  /// Remove a device by [DeviceInfoStruct]
-  Future<void> initService() async {
+  @override
+  Future<DeviceService> init() async {
     deviceServiceStatus = ServiceStatus.starting;
 
     localDeviceCardAdded = false;
@@ -147,8 +134,25 @@ class DeviceService {
     });
 
     deviceServiceStatus = ServiceStatus.running;
+
+    return this;
   }
 
-  /// Get device info list length
-  int get length => deviceInfoList.length;
+  @override
+  Future<DeviceService> restart() async {
+    return this;
+  }
+
+  @override
+  Future<DeviceService> stop() async {
+    deviceServiceStatus = ServiceStatus.stopping;
+    deviceInfoList.clear();
+
+    localDeviceCardAdded = false;
+    mainDeviceCardAdded = false;
+
+    deviceServiceStatus = ServiceStatus.pending;
+
+    return this;
+  }
 }

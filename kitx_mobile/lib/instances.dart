@@ -47,25 +47,25 @@ class Instances {
     appInfo = (await appInfo.init()).updateTheme(useMaterial3: appInfo.material3Enabled);
 
     // Init WebService
-    await webService.initService();
+    await webService.init();
 
     // Init DeviceService
-    await deviceService.initService();
+    await deviceService.init();
   }
 
   /// Restart [deviceService] and [webService]
   void restartDevicesServer() {
-    webService.stopService(sendExitPackage: false);
-    deviceService.stopService();
+    webService.stop(sendExitPackage: false);
+    deviceService.stop();
 
-    webService.initService();
+    webService.init();
   }
 
   /// Shutdown [deviceService] and [webService]
   void shutdownDevicesServer() {
-    webService.stopService();
+    webService.stop();
 
-    taskHandler.delay(deviceService.stopService, 2000);
+    taskHandler.delay(deviceService.stop, 2000);
   }
 }
 
