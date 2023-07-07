@@ -18,18 +18,17 @@ class AppDrawer extends StatelessWidget {
       child: ListView(
         padding: EdgeInsets.zero,
         children: <Widget>[
-          DrawerHeader(
-            decoration: BoxDecoration(
+          const DrawerHeader(
+            decoration: const BoxDecoration(
               // color: Colors.blue,
               image: const DecorationImage(
                 alignment: Alignment.topCenter,
-                image: AssetImage('assets/KitX-Background.png'),
+                image: const AssetImage('assets/KitX-Background.png'),
                 fit: BoxFit.cover,
               ),
             ),
-            child: Text(
+            child: const Text(
               '',
-              // 'Drawer_Title'.tr,
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 24,
@@ -37,43 +36,43 @@ class AppDrawer extends StatelessWidget {
             ),
           ),
           ListTile(
-            leading: Icon(Icons.devices),
+            leading: const Icon(Icons.devices),
             title: Text('Drawer_Devices'.tr),
             onTap: () => instances.taskHandler.delay(() {
               Get.back();
-              Get.to(() => DevicePage());
+              Get.to(() => const DevicePage());
             }, pageOpenDelay),
           ),
           ListTile(
-            leading: Icon(Icons.alternate_email),
+            leading: const Icon(Icons.alternate_email),
             title: Text('Drawer_Account'.tr),
             onTap: () => instances.taskHandler.delay(() {
               Get.back();
-              Get.to(() => AccountPage());
+              Get.to(() => const AccountPage());
             }, pageOpenDelay),
           ),
           ListTile(
-            leading: Icon(Icons.bug_report),
+            leading: const Icon(Icons.bug_report),
             title: Text('Drawer_Test'.tr),
             onTap: () => instances.taskHandler.delay(() {
               Get.back();
-              Get.to(() => TestPage());
+              Get.to(() => const TestPage());
             }, pageOpenDelay),
           ),
           ListTile(
-            leading: Icon(Icons.settings),
+            leading: const Icon(Icons.settings),
             title: Text('Drawer_Setting'.tr),
             onTap: () => instances.taskHandler.delay(() {
               Get.back();
-              Get.to(() => SettingsPage());
+              Get.to(() => const SettingsPage());
             }, pageOpenDelay),
           ),
           ListTile(
-            leading: Icon(Icons.info_outline_rounded),
+            leading: const Icon(Icons.info_outline_rounded),
             title: Text('Drawer_About'.tr),
             onTap: () => instances.taskHandler.delay(() {
               Get.back();
-              Get.to(() => AboutPage());
+              Get.to(() => const AboutPage());
             }, pageOpenDelay),
           ),
         ],

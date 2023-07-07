@@ -119,7 +119,7 @@ class _DevicePage extends State<DevicePage> {
             children: [
               Padding(
                 padding: EdgeInsets.fromLTRB(30, 30, 30, 0),
-                child: Hero(
+                child: const Hero(
                   tag: 'HeroTag_DevicesCount',
                   child: const DeviceStatusLabel(),
                 ),
