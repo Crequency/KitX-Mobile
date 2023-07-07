@@ -12,7 +12,7 @@ import 'package:kitx_mobile/utils/translation.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  await Config.loadAsync();
+  await config.loadAsync();
   await Log.initAsync();
   await instances.initAsync();
 

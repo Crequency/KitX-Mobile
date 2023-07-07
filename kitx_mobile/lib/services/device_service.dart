@@ -122,14 +122,14 @@ class DeviceService {
     localDeviceCardAdded = false;
     mainDeviceCardAdded = false;
 
-    Timer.periodic(Duration(seconds: Config.WebService_DeviceInfoCheckTTLSeconds), (_) {
+    Timer.periodic(Duration(seconds: config.webServiceDeviceInfoCheckTTLSeconds), (_) {
       var _tempList = deviceInfoList.toList();
 
       for (var each in _tempList) {
         var now = DateTime.now();
         var time = each.sendTime;
 
-        if (now.difference(time).inSeconds > Config.WebService_DeviceInfoTTLSeconds) {
+        if (now.difference(time).inSeconds > config.webServiceDeviceInfoTTLSeconds) {
           deviceInfoList.remove(each);
 
           if (each.deviceName == instances.appInfo.deviceName) {

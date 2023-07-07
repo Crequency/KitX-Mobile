@@ -31,9 +31,9 @@ void main() {
 
 /// WebService
 class WebService {
-  var _udpPortSend = Config.WebService_UdpPortSend;
-  var _udpPortReceive = Config.WebService_UdpPortReceive;
-  var _udpBroadcastAddress = Config.WebService_UdpBroadcastAddress;
+  var _udpPortSend = config.webServiceUdpPortSend;
+  var _udpPortReceive = config.webServiceUdpPortReceive;
+  var _udpBroadcastAddress = config.webServiceUdpBroadcastAddress;
 
   var _sendExitPackage = false;
 
@@ -218,7 +218,7 @@ class WebService {
           ..isMainDevice = false
           ..deviceServerPort = 0
           ..deviceServerBuildTime = DateTime.now().toUtc()
-          ..deviceOSType = Config.WebService_DeviceOSType),
+          ..deviceOSType = config.webServiceDeviceOSType),
       );
 
       Log.info('Get device info: ${deviceInfo.toString()}');
@@ -233,7 +233,7 @@ class WebService {
           socket.broadcastEnabled = true;
           socket.joinMulticast(InternetAddress(_udpBroadcastAddress));
 
-          Timer.periodic(Duration(seconds: Config.WebService_UdpSendFrequency), (timer) {
+          Timer.periodic(Duration(seconds: config.webServiceUdpSendFrequency), (timer) {
             sendTimer = timer;
 
             try {

@@ -89,9 +89,9 @@ class _SettingsPageState extends State<SettingsPage> {
   }
 
   void saveChanges(BuildContext context) {
-    Config.saveAsync().then(
-      (value) => showSnackBar(Text('SettingsPage_Saved'.tr)),
-    );
+    config.saveAsync().then(
+          (value) => showSnackBar(Text('SettingsPage_Saved'.tr)),
+        );
   }
 
   @override

@@ -35,9 +35,9 @@ class Instances {
 
   /// Instance for [WebService] class
   var webService = WebService()
-    ..udpPortSend = Config.WebService_UdpPortSend
-    ..udpPortReceive = Config.WebService_UdpPortReceive
-    ..udpBroadcastAddress = Config.WebService_UdpBroadcastAddress;
+    ..udpPortSend = config.webServiceUdpPortSend
+    ..udpPortReceive = config.webServiceUdpPortReceive
+    ..udpBroadcastAddress = config.webServiceUdpBroadcastAddress;
 
   /// Instance for [DeviceService] class
   var deviceService = DeviceService();
