@@ -13,7 +13,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await config.loadAsync();
-  await Log.initAsync();
+  await log.initAsync();
   await instances.initAsync();
 
   runApp(MainApp());

@@ -119,12 +119,12 @@ class WebService {
       instances.appInfo.deviceName = value.toString();
     });
 
-    Log.info('Get network information: IPv4: $_ipv4, IPv6: $_ipv6, MAC: $_mac');
+    log.info('Get network information: IPv4: $_ipv4, IPv6: $_ipv6, MAC: $_mac');
 
     var logInfo = '';
 
     if (_ipv4 == null) {
-      Log.error('Can not get IPv4. Try to restart the service in 5 seconds.');
+      log.error('Can not get IPv4. Try to restart the service in 5 seconds.');
       Future.delayed(const Duration(seconds: 5), () => initService());
       return null;
     }
@@ -134,7 +134,7 @@ class WebService {
       _ipv6 = '';
     }
 
-    if (logInfo != '') Log.warning(logInfo);
+    if (logInfo != '') log.warning(logInfo);
 
     return [_ipv4, _ipv6, _mac];
   }
@@ -185,7 +185,7 @@ class WebService {
 
     try {
       if (kIsWeb) {
-        Log.info('This is a web application, WebService will not start.');
+        log.info('This is a web application, WebService will not start.');
         return;
       }
 
@@ -221,7 +221,7 @@ class WebService {
           ..deviceOSType = config.webServiceDeviceOSType),
       );
 
-      Log.info('Get device info: ${deviceInfo.toString()}');
+      log.info('Get device info: ${deviceInfo.toString()}');
 
       // 启动 UDP 服务
 
@@ -251,12 +251,12 @@ class WebService {
             } catch (e, stack) {
               timer.cancel();
               socket.close();
-              Log.info('UDP send error: $e $stack. Try to restart the service in 5 seconds.');
+              log.info('UDP send error: $e $stack. Try to restart the service in 5 seconds.');
               Future.delayed(const Duration(seconds: 5), () => initService());
               throw e;
             }
           });
-          Log.info('UDP send service started.');
+          log.info('UDP send service started.');
         },
       );
 
@@ -272,13 +272,13 @@ class WebService {
               if (d == null) return;
 
               var _data = utf8.decode(d.data);
-              Log.info('UDP receive: $_data');
+              log.info('UDP receive: $_data');
 
               try {
                 var _deviceInfo = DeviceInfoStruct.fromString(_data);
                 if (_deviceInfo != null) await instances.deviceService.addDevice(_deviceInfo);
               } catch (e, stack) {
-                Log.error('Can not deserialize device info pack: `$_data`. Error: $e $stack');
+                log.error('Can not deserialize device info pack: `$_data`. Error: $e $stack');
               }
             },
           );
@@ -287,7 +287,7 @@ class WebService {
 
       instances.taskHandler.delay(() => webServiceStatus.value = ServiceStatus.running, 500);
     } catch (e, stack) {
-      Log.error('Catch an error: $e On: $stack');
+      log.error('Catch an error: $e On: $stack');
       webServiceStatus.value = ServiceStatus.error;
       webServiceErrorMessage = e.toString();
       _networkInfo = NetworkInfo();

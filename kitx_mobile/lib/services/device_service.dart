@@ -48,7 +48,7 @@ class DeviceService {
         deviceInfoList.insert(0, info);
         localDeviceCardAdded = true;
 
-        Log.info('Insert local device to 0.');
+        log.info('Insert local device to 0.');
       } else if (info.isMainDevice) {
         // Main device.
 
@@ -56,7 +56,7 @@ class DeviceService {
         deviceInfoList.insert(index, info);
         mainDeviceCardAdded = true;
 
-        Log.info('Insert main device to $index.');
+        log.info('Insert main device to $index.');
       } else {
         // Other device.
 
