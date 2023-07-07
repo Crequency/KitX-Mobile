@@ -11,8 +11,8 @@ import 'package:kitx_mobile/instances.dart';
 import 'package:kitx_mobile/models/device_info.dart';
 import 'package:kitx_mobile/services/public/service_status.dart';
 import 'package:kitx_mobile/utils/config.dart';
+import 'package:kitx_mobile/utils/handlers/permissions_handlers.dart';
 import 'package:kitx_mobile/utils/log.dart';
-import 'package:kitx_mobile/utils/permissions_helper.dart';
 import 'package:network_info_plus/network_info_plus.dart';
 
 /// 本文件可单独运行

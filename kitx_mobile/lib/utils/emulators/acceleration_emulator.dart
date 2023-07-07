@@ -1,4 +1,4 @@
-import 'package:kitx_mobile/utils/rotation_emulator.dart';
+import 'package:kitx_mobile/utils/emulators/rotation_emulator.dart';
 
 /// DeviceRotationHost
 class DeviceRotationHost {

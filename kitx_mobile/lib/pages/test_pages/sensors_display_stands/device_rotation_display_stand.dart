@@ -4,8 +4,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:kitx_mobile/utils/acceleration_emulator.dart';
-import 'package:kitx_mobile/utils/rotation_emulator.dart';
+import 'package:kitx_mobile/utils/emulators/acceleration_emulator.dart';
+import 'package:kitx_mobile/utils/emulators/rotation_emulator.dart';
 import 'package:sensors_plus/sensors_plus.dart';
 
 /// DeviceRotationDisplayStand
