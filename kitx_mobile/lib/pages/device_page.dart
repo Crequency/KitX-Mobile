@@ -23,7 +23,7 @@ class _DevicePage extends State<DevicePage> {
   var _paneController = PanelController();
 
   var deviceCardHorizontalScale = 0.5;
-  var back2topButtonVisibility = false.obs;
+  var backToTopButtonVisibility = false.obs;
   var justEnteredPage = true;
 
   var selectedDeviceInfo = Rx<DeviceInfoStruct?>(null);
@@ -32,9 +32,9 @@ class _DevicePage extends State<DevicePage> {
   void initState() {
     _scrollController.addListener(() {
       if (_scrollController.offset >= MediaQuery.of(super.context).size.height * 0.3) {
-        back2topButtonVisibility.value = true;
+        backToTopButtonVisibility.value = true;
       } else {
-        back2topButtonVisibility.value = false;
+        backToTopButtonVisibility.value = false;
       }
     });
 
@@ -42,13 +42,6 @@ class _DevicePage extends State<DevicePage> {
     WidgetsBinding.instance.addPostFrameCallback((_) => justEnteredPage = false);
 
     super.initState();
-  }
-
-  @override
-  void dispose() {
-    _scrollController.dispose();
-
-    super.dispose();
   }
 
   @override
@@ -80,7 +73,7 @@ class _DevicePage extends State<DevicePage> {
           PopupMenuButton(
             tooltip: '',
             padding: EdgeInsets.all(0),
-            icon: DeviceStatusIcon(),
+            icon: const DeviceStatusIcon(),
             position: PopupMenuPosition.under,
             itemBuilder: (context) => [
               PopupMenuItem(
@@ -100,7 +93,7 @@ class _DevicePage extends State<DevicePage> {
         () => AnimatedOpacity(
           duration: const Duration(milliseconds: 300),
           curve: Curves.easeInOutCubicEmphasized,
-          opacity: back2topButtonVisibility.value ? 1 : 0,
+          opacity: backToTopButtonVisibility.value ? 1 : 0,
           child: FloatingActionButton(
             onPressed: () => _scrollController.animateTo(
               0.0,
@@ -222,5 +215,12 @@ class _DevicePage extends State<DevicePage> {
         ],
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+
+    super.dispose();
   }
 }

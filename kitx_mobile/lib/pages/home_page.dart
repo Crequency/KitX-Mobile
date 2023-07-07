@@ -16,7 +16,7 @@ class HomePage extends StatelessWidget {
       appBar: AppBar(
         title: Text('IndexPage_Title'.tr),
       ),
-      drawer: AppDrawer(),
+      drawer: HomePageDrawer(),
       drawerEnableOpenDragGesture: true,
       drawerEdgeDragWidth: MediaQuery.of(context).size.width / 7 * 5,
       body: Padding(
@@ -27,7 +27,7 @@ class HomePage extends StatelessWidget {
               builder: (context, _) => MediaQuery.of(context).orientation == Orientation.portrait
                   ? ListView(
                       shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
+                      physics: const NeverScrollableScrollPhysics(),
                       children: getContent(
                         context,
                         MediaQuery.of(context).size.width - 40,
