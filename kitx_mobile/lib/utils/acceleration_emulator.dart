@@ -1,11 +1,11 @@
-// ignore_for_file: public_member_api_docs
-
 import 'package:kitx_mobile/utils/rotation_emulator.dart';
 
 /// DeviceRotationHost
 class DeviceRotationHost {
+  /// Rotation degrees
   static double yaw = 0, pitch = 0, roll = 0;
 
+  /// Per rad equals 57.29 degrees
   static double perRadToDegrees = 57.29577951308232;
 
   ///  显式调用此方法来计算加速度之后的旋转角
@@ -17,15 +17,15 @@ class DeviceRotationHost {
     yaw += z * time * perRadToDegrees;
     pitch += x * time * perRadToDegrees;
     roll += y * time * perRadToDegrees;
-
-    // print('yaw: $yaw, pitch: $pitch, roll: $roll');
   }
 
+  /// Restore rotation
   static void restore() {
     yaw = 0;
     pitch = 0;
     roll = 0;
   }
 
+  /// Get rotation angles
   static Doubles3D getRotationAngles() => Doubles3D(yaw, pitch, roll);
 }

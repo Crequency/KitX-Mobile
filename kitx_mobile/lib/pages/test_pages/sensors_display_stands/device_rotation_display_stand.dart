@@ -4,10 +4,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import 'package:kitx_mobile/utils/acceleration_emulator.dart';
 import 'package:kitx_mobile/utils/rotation_emulator.dart';
-
 import 'package:sensors_plus/sensors_plus.dart';
 
 /// DeviceRotationDisplayStand
@@ -106,31 +104,31 @@ class Painter extends CustomPainter {
   //  yaw - pitch - roll
   Doubles3D GetRotationAngles() => DeviceRotationHost.getRotationAngles();
 
-  Point? GetLeftBarPoint() => GetCrossPoint(
-      Rotate(Point(-object_width / 2 + object_width / 4, -object_height / 2 + object_height / 24, 0),
+  Point? GetLeftBarPoint() => getCrossPoint(
+      rotate(Point(-object_width / 2 + object_width / 4, -object_height / 2 + object_height / 24, 0),
           GetRotationAngles()),
       Camera,
       null,
       null);
 
-  Point? GetRightBarPoint() => GetCrossPoint(
-      Rotate(Point(object_width / 2 - object_width / 4, -object_height / 2 + object_height / 24, 0),
+  Point? GetRightBarPoint() => getCrossPoint(
+      rotate(Point(object_width / 2 - object_width / 4, -object_height / 2 + object_height / 24, 0),
           GetRotationAngles()),
       Camera,
       null,
       null);
 
-  Point? GetLeftTopPoint() => GetCrossPoint(
-      Rotate(Point(-object_width / 2, object_height / 2, 0), GetRotationAngles()), Camera, null, null);
+  Point? GetLeftTopPoint() => getCrossPoint(
+      rotate(Point(-object_width / 2, object_height / 2, 0), GetRotationAngles()), Camera, null, null);
 
-  Point? GetRightTopPoint() => GetCrossPoint(
-      Rotate(Point(object_width / 2, object_height / 2, 0), GetRotationAngles()), Camera, null, null);
+  Point? GetRightTopPoint() => getCrossPoint(
+      rotate(Point(object_width / 2, object_height / 2, 0), GetRotationAngles()), Camera, null, null);
 
-  Point? GetRightBottomPoint() => GetCrossPoint(
-      Rotate(Point(object_width / 2, -object_height / 2, 0), GetRotationAngles()), Camera, null, null);
+  Point? GetRightBottomPoint() => getCrossPoint(
+      rotate(Point(object_width / 2, -object_height / 2, 0), GetRotationAngles()), Camera, null, null);
 
-  Point? GetLeftBottomPoint() => GetCrossPoint(
-      Rotate(Point(-object_width / 2, -object_height / 2, 0), GetRotationAngles()), Camera, null, null);
+  Point? GetLeftBottomPoint() => getCrossPoint(
+      rotate(Point(-object_width / 2, -object_height / 2, 0), GetRotationAngles()), Camera, null, null);
 
   Offset ToOffset(Point p) => Offset(p.x, p.y);
 
