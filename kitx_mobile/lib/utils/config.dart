@@ -1,9 +1,9 @@
 library kitx_moblie.config;
 
-import 'package:kitx_mobile/extensions/int_ext.dart';
-import 'package:kitx_mobile/extensions/theme_mode_ext.dart';
 import 'package:kitx_mobile/instances.dart';
 import 'package:kitx_mobile/models/enums/device_os_type.dart';
+import 'package:kitx_mobile/utils/extensions/int_ext.dart';
+import 'package:kitx_mobile/utils/extensions/theme_mode_ext.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 /// [Config] class

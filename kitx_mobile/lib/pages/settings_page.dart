@@ -3,11 +3,11 @@
 import 'package:f_logs/f_logs.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:kitx_mobile/converters/size_converter.dart';
 import 'package:kitx_mobile/instances.dart';
-import 'package:kitx_mobile/themes/light_theme.dart';
 import 'package:kitx_mobile/utils/composer.dart';
 import 'package:kitx_mobile/utils/config.dart';
+import 'package:kitx_mobile/utils/converters/size_converter.dart';
+import 'package:kitx_mobile/utils/themes/themes.dart';
 
 /// Settings Group Title
 class SettingsGroupTitle extends StatelessWidget {

@@ -1,8 +1,7 @@
 ﻿import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kitx_mobile/instances.dart';
-import 'package:kitx_mobile/themes/dark_theme.dart';
-import 'package:kitx_mobile/themes/light_theme.dart';
+import 'package:kitx_mobile/utils/themes/themes.dart';
 
 /// [AppInfo] Class
 class AppInfo {

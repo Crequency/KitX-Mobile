@@ -6,6 +6,13 @@ import 'package:kitx_mobile/pages/home_page.dart';
 import 'package:kitx_mobile/pages/settings_page.dart';
 import 'package:kitx_mobile/pages/test_page.dart';
 
+export 'about_page.dart';
+export 'account_page.dart';
+export 'device_page.dart';
+export 'home_page.dart';
+export 'settings_page.dart';
+export 'test_page.dart';
+
 /// Get Pages
 List<GetPage<dynamic>> getPages() => [
       GetPage(name: '/', page: () => HomePage()),
