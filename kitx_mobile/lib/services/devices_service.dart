@@ -14,9 +14,6 @@ class DeviceService implements Service {
   /// Device Info List
   final deviceInfoList = RxList<DeviceInfoStruct>([]);
 
-  /// Device Service Status
-  var deviceServiceStatus = ServiceStatus.pending;
-
   /// Local Device Card Added
   var localDeviceCardAdded = false;
 
@@ -25,7 +22,7 @@ class DeviceService implements Service {
 
   /// Add a device by [DeviceInfoStruct]
   Future<void> addDevice(DeviceInfoStruct info) async {
-    if (deviceServiceStatus != ServiceStatus.running) return;
+    if (serviceStatus != ServiceStatus.running) return;
 
     var _tempList = deviceInfoList.toList();
 
@@ -103,8 +100,14 @@ class DeviceService implements Service {
   int get length => deviceInfoList.length;
 
   @override
+  var serviceStatus = ServiceStatus.pending.obs;
+
+  @override
+  var serviceException;
+
+  @override
   Future<DeviceService> init() async {
-    deviceServiceStatus = ServiceStatus.starting;
+    serviceStatus.value = ServiceStatus.starting;
 
     localDeviceCardAdded = false;
     mainDeviceCardAdded = false;
@@ -133,7 +136,7 @@ class DeviceService implements Service {
       deviceInfoList.refresh();
     });
 
-    deviceServiceStatus = ServiceStatus.running;
+    serviceStatus.value = ServiceStatus.running;
 
     return this;
   }
@@ -145,13 +148,13 @@ class DeviceService implements Service {
 
   @override
   Future<DeviceService> stop() async {
-    deviceServiceStatus = ServiceStatus.stopping;
+    serviceStatus.value = ServiceStatus.stopping;
     deviceInfoList.clear();
 
     localDeviceCardAdded = false;
     mainDeviceCardAdded = false;
 
-    deviceServiceStatus = ServiceStatus.pending;
+    serviceStatus.value = ServiceStatus.pending;
 
     return this;
   }

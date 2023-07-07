@@ -11,7 +11,7 @@ class DeviceStatusIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Obx(() {
-      switch (instances.webService.webServiceStatus.value) {
+      switch (instances.devicesDiscoveryService.serviceStatus.value) {
         case ServiceStatus.running:
           return const Icon(Icons.circle, color: Colors.greenAccent);
         case ServiceStatus.pending:

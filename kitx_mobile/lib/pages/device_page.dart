@@ -131,10 +131,10 @@ class _DevicePage extends State<DevicePage> {
                         () => ReorderableListView.builder(
                           shrinkWrap: true,
                           physics: NeverScrollableScrollPhysics(),
-                          itemCount: instances.deviceService.length + 1,
+                          itemCount: instances.devicesService.length + 1,
                           itemBuilder: (_, index) {
-                            var list = instances.deviceService.deviceInfoList;
-                            var info = index >= instances.deviceService.length ? null : list[index];
+                            var list = instances.devicesService.deviceInfoList;
+                            var info = index >= instances.devicesService.length ? null : list[index];
                             return DeviceCard(
                               info,
                               index,
@@ -148,7 +148,7 @@ class _DevicePage extends State<DevicePage> {
                             );
                           },
                           onReorder: (int oldIndex, int newIndex) {
-                            var list = instances.deviceService.deviceInfoList;
+                            var list = instances.devicesService.deviceInfoList;
                             var moveBack = newIndex > oldIndex;
                             list.insert(moveBack ? newIndex - 1 : newIndex, list.removeAt(oldIndex));
                           },
@@ -161,17 +161,17 @@ class _DevicePage extends State<DevicePage> {
                             spacing: 0.0,
                             runSpacing: 0.0,
                             children: [
-                              for (var i = 0; i < instances.deviceService.length; ++i)
+                              for (var i = 0; i < instances.devicesService.length; ++i)
                                 DeviceCard(
-                                  instances.deviceService.deviceInfoList[i],
+                                  instances.devicesService.deviceInfoList[i],
                                   i,
                                   width: (MediaQuery.of(context).size.width - 20) * deviceCardHorizontalScale,
-                                  key: Key('${instances.deviceService.deviceInfoList[i].deviceName}'
-                                      '${instances.deviceService.deviceInfoList[i].iPv4}'),
+                                  key: Key('${instances.devicesService.deviceInfoList[i].deviceName}'
+                                      '${instances.devicesService.deviceInfoList[i].iPv4}'),
                                   shouldDelay: justEnteredPage,
                                   shouldScaleIn: instances.appInfo.animationEnabled.value,
                                   onTap: () => {
-                                    selectedDeviceInfo.value = instances.deviceService.deviceInfoList[i],
+                                    selectedDeviceInfo.value = instances.devicesService.deviceInfoList[i],
                                     _paneController.open(),
                                   },
                                 )

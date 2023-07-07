@@ -16,13 +16,10 @@ import 'package:kitx_mobile/utils/handlers/permissions_handlers.dart';
 import 'package:kitx_mobile/utils/log.dart';
 import 'package:network_info_plus/network_info_plus.dart';
 
-/// 本文件可单独运行
-/// 右键 -> 运行 'WebService.dart'
-
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
 
-  var server = WebService()
+  var server = DevicesDiscoveryService()
     ..udpPortSend = 23404
     ..udpPortReceive = 24040
     ..udpBroadcastAddress = '224.0.0.0';
@@ -30,19 +27,13 @@ void main() {
   server.init();
 }
 
-/// WebService
-class WebService implements Service {
+/// [DevicesDiscoveryService] class
+class DevicesDiscoveryService implements Service {
   var _udpPortSend = config.webServiceUdpPortSend;
   var _udpPortReceive = config.webServiceUdpPortReceive;
   var _udpBroadcastAddress = config.webServiceUdpBroadcastAddress;
 
   var _sendExitPackage = false;
-
-  /// Web Service Status
-  var webServiceStatus = ServiceStatus.pending.obs;
-
-  /// Web Service Error Message
-  String? webServiceErrorMessage;
 
   /// Socket Object
   late RawDatagramSocket socket;
@@ -147,12 +138,18 @@ class WebService implements Service {
   late RawDatagramSocket? sendSocket, receiveSocket;
 
   @override
-  Future<WebService> init() async {
-    webServiceStatus.value = ServiceStatus.starting;
+  var serviceStatus = ServiceStatus.pending.obs;
+
+  @override
+  var serviceException;
+
+  @override
+  Future<DevicesDiscoveryService> init() async {
+    serviceStatus.value = ServiceStatus.starting;
 
     _sendExitPackage = false;
 
-    instances.deviceService.deviceServiceStatus = ServiceStatus.running;
+    instances.devicesService.serviceStatus.value = ServiceStatus.running;
 
     try {
       if (kIsWeb) {
@@ -247,7 +244,7 @@ class WebService implements Service {
 
               try {
                 var _deviceInfo = DeviceInfoStruct.fromString(_data);
-                if (_deviceInfo != null) await instances.deviceService.addDevice(_deviceInfo);
+                if (_deviceInfo != null) await instances.devicesService.addDevice(_deviceInfo);
               } catch (e, stack) {
                 log.error('Can not deserialize device info pack: `$_data`. Error: $e $stack');
               }
@@ -256,11 +253,11 @@ class WebService implements Service {
         },
       );
 
-      instances.taskHandler.delay(() => webServiceStatus.value = ServiceStatus.running, 500);
+      instances.taskHandler.delay(() => serviceStatus.value = ServiceStatus.running, 500);
     } catch (e, stack) {
       log.error('Catch an error: $e On: $stack');
-      webServiceStatus.value = ServiceStatus.error;
-      webServiceErrorMessage = e.toString();
+      serviceStatus.value = ServiceStatus.error;
+      serviceException = e as Exception;
       _networkInfo = NetworkInfo();
     }
 
@@ -268,13 +265,13 @@ class WebService implements Service {
   }
 
   @override
-  Future<WebService> restart() async {
+  Future<DevicesDiscoveryService> restart() async {
     // TODO: implement restart
     throw UnimplementedError();
   }
 
   @override
-  Future<WebService> stop({bool sendExitPackage = true}) async {
+  Future<DevicesDiscoveryService> stop({bool sendExitPackage = true}) async {
     void stopAction() {
       sendTimer?.cancel();
       sendTimer = null;
@@ -286,13 +283,13 @@ class WebService implements Service {
       receiveSocket = null;
       sendSocket = null;
 
-      webServiceStatus.value = ServiceStatus.pending;
+      serviceStatus.value = ServiceStatus.pending;
     }
 
-    instances.deviceService.deviceServiceStatus = ServiceStatus.pending;
-    instances.deviceService.deviceInfoList.clear();
+    instances.devicesService.serviceStatus.value = ServiceStatus.pending;
+    instances.devicesService.deviceInfoList.clear();
 
-    webServiceStatus.value = ServiceStatus.stopping;
+    serviceStatus.value = ServiceStatus.stopping;
 
     if (sendExitPackage) {
       _sendExitPackage = true;

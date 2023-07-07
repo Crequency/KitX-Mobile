@@ -1,7 +1,7 @@
 import 'package:flutter/services.dart';
 import 'package:kitx_mobile/app_info.dart';
-import 'package:kitx_mobile/services/device_service.dart';
-import 'package:kitx_mobile/services/web_service.dart';
+import 'package:kitx_mobile/services/devices_discovery_service.dart';
+import 'package:kitx_mobile/services/devices_service.dart';
 import 'package:kitx_mobile/utils/config.dart';
 import 'package:kitx_mobile/utils/handlers/task_handler.dart';
 import 'package:kitx_mobile/utils/handlers/url_handler.dart';
@@ -33,39 +33,39 @@ class Instances {
   /// Instance for [UrlHandler] class
   var urlHandler = UrlHandler();
 
-  /// Instance for [WebService] class
-  var webService = WebService()
+  /// Instance for [DevicesDiscoveryService] class
+  var devicesDiscoveryService = DevicesDiscoveryService()
     ..udpPortSend = config.webServiceUdpPortSend
     ..udpPortReceive = config.webServiceUdpPortReceive
     ..udpBroadcastAddress = config.webServiceUdpBroadcastAddress;
 
   /// Instance for [DeviceService] class
-  var deviceService = DeviceService();
+  var devicesService = DeviceService();
 
   /// Init [Instances] class
   Future<void> initAsync() async {
     appInfo = (await appInfo.init()).updateTheme(useMaterial3: appInfo.material3Enabled);
 
     // Init WebService
-    await webService.init();
+    await devicesDiscoveryService.init();
 
     // Init DeviceService
-    await deviceService.init();
+    await devicesService.init();
   }
 
-  /// Restart [deviceService] and [webService]
+  /// Restart [devicesService] and [devicesDiscoveryService]
   void restartDevicesServer() {
-    webService.stop(sendExitPackage: false);
-    deviceService.stop();
+    devicesDiscoveryService.stop(sendExitPackage: false);
+    devicesService.stop();
 
-    webService.init();
+    devicesDiscoveryService.init();
   }
 
-  /// Shutdown [deviceService] and [webService]
+  /// Shutdown [devicesService] and [devicesDiscoveryService]
   void shutdownDevicesServer() {
-    webService.stop();
+    devicesDiscoveryService.stop();
 
-    taskHandler.delay(deviceService.stop, 2000);
+    taskHandler.delay(devicesService.stop, 2000);
   }
 }
 
