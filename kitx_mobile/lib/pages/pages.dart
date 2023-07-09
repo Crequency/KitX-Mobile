@@ -15,10 +15,10 @@ export 'test_page.dart';
 
 /// Get Pages
 List<GetPage<dynamic>> getPages() => [
-      GetPage(name: '/', page: () => HomePage()),
-      GetPage(name: '/DevicePage/', page: () => DevicePage()),
-      GetPage(name: '/AccountPage/', page: () => AccountPage()),
-      GetPage(name: '/TestPage/', page: () => TestPage()),
-      GetPage(name: '/SettingsPage/', page: () => SettingsPage()),
-      GetPage(name: '/AboutPage/', page: () => AboutPage()),
+      GetPage(name: '/', page: () => const HomePage()),
+      GetPage(name: '/DevicePage/', page: () => const DevicePage()),
+      GetPage(name: '/AccountPage/', page: () => const AccountPage()),
+      GetPage(name: '/TestPage/', page: () => const TestPage()),
+      GetPage(name: '/SettingsPage/', page: () => const SettingsPage()),
+      GetPage(name: '/AboutPage/', page: () => const AboutPage()),
     ];
