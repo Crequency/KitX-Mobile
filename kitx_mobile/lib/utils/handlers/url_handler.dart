@@ -1,4 +1,4 @@
-﻿import 'package:kitx_mobile/instances.dart';
+﻿import 'package:kitx_mobile/utils/handlers/tasks/delayed_task.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 /// [UrlHandler] Class
@@ -9,7 +9,7 @@ class UrlHandler {
     int delayMilliseconds = 0,
     LaunchMode mode = LaunchMode.externalApplication,
   }) {
-    instances.taskHandler.delay(() => launchUrlString(url, mode: mode), delayMilliseconds);
+    (() => launchUrlString(url, mode: mode)).delay(milliseconds: delayMilliseconds).execute();
     return this;
   }
 }

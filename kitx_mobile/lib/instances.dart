@@ -5,7 +5,7 @@ import 'package:kitx_mobile/data/local_network_info.dart';
 import 'package:kitx_mobile/services/devices_discovery_service.dart';
 import 'package:kitx_mobile/services/devices_service.dart';
 import 'package:kitx_mobile/utils/config.dart';
-import 'package:kitx_mobile/utils/handlers/task_handler.dart';
+import 'package:kitx_mobile/utils/handlers/tasks/delayed_task.dart';
 import 'package:kitx_mobile/utils/handlers/url_handler.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
@@ -34,9 +34,6 @@ class Instances {
 
   /// Instance for [PackageInfo] class
   var packageInfo = PackageInfo.fromPlatform();
-
-  /// Instance for [TaskHandler] class
-  var taskHandler = TaskHandler();
 
   /// Instance for [UrlHandler] class
   var urlHandler = UrlHandler();
@@ -75,7 +72,7 @@ class Instances {
   void shutdownDevicesServer() {
     devicesDiscoveryService.stop();
 
-    taskHandler.delay(devicesService.stop, 2000);
+    devicesService.stop.delay(milliseconds: 2000).execute();
   }
 }
 

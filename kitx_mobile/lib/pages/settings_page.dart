@@ -7,6 +7,7 @@ import 'package:kitx_mobile/instances.dart';
 import 'package:kitx_mobile/utils/composer.dart';
 import 'package:kitx_mobile/utils/config.dart';
 import 'package:kitx_mobile/utils/converters/size_converter.dart';
+import 'package:kitx_mobile/utils/handlers/tasks/delayed_task.dart';
 import 'package:kitx_mobile/utils/themes/themes.dart';
 
 /// Settings Group Title
@@ -115,21 +116,17 @@ class _SettingsPageState extends State<SettingsPage> {
             itemBuilder: (context) => [
               PopupMenuItem(
                 child: const Text('简体中文'),
-                onTap: () {
-                  instances.taskHandler.delay(() {
-                    instances.appInfo.languageCodeProperty = 'zh-CN';
-                    saveChanges(context);
-                  }, 200);
-                },
+                onTap: () => () {
+                  instances.appInfo.languageCodeProperty = 'zh-CN';
+                  saveChanges(context);
+                }.delay(milliseconds: 200).execute(),
               ),
               PopupMenuItem(
                 child: const Text('English (US)'),
-                onTap: () {
-                  instances.taskHandler.delay(() {
-                    instances.appInfo.languageCodeProperty = 'en-US';
-                    saveChanges(context);
-                  }, 200);
-                },
+                onTap: () => () {
+                  instances.appInfo.languageCodeProperty = 'en-US';
+                  saveChanges(context);
+                }.delay(milliseconds: 200).execute(),
               ),
             ],
           ),
@@ -252,7 +249,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 Container(
                   alignment: Alignment.center,
                   child: ElevatedButton(
-                    onPressed: () => instances.taskHandler.delay(() async {
+                    onPressed: () async {
                       var beforeSize = 0;
                       var beforeSizeString = convert2string(beforeSize);
                       var nowSize = 0;
@@ -287,7 +284,7 @@ class _SettingsPageState extends State<SettingsPage> {
                       } else {
                         showSnackBar(Text('Log file clean action requested.'));
                       }
-                    }, 200),
+                    }.delay(milliseconds: 200).execute,
                     child: Text('SettingsPage_CleanLog'.tr),
                   ),
                 ),

@@ -10,6 +10,7 @@ import 'package:kitx_mobile/models/device_info.dart';
 import 'package:kitx_mobile/services/public/service_status.dart';
 import 'package:kitx_mobile/services/service.dart';
 import 'package:kitx_mobile/utils/config.dart';
+import 'package:kitx_mobile/utils/handlers/tasks/delayed_task.dart';
 import 'package:kitx_mobile/utils/log.dart';
 
 void main() {
@@ -150,7 +151,7 @@ class DevicesDiscoveryService implements Service {
         },
       );
 
-      instances.taskHandler.delay(() => serviceStatus.value = ServiceStatus.running, 500);
+      (() => serviceStatus.value = ServiceStatus.running).delay(milliseconds: 500).execute();
     } catch (e, stack) {
       log.error('Catch an error: $e On: $stack');
       serviceStatus.value = ServiceStatus.error;
@@ -190,7 +191,7 @@ class DevicesDiscoveryService implements Service {
     if (sendExitPackage) {
       _isExitPackageSent = true;
 
-      instances.taskHandler.delay(stopAction, 1500);
+      stopAction.delay(milliseconds: 1500).execute();
     } else {
       stopAction();
     }

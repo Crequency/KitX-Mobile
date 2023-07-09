@@ -5,6 +5,7 @@ import 'package:kitx_mobile/instances.dart';
 import 'package:kitx_mobile/models/device_info.dart';
 import 'package:kitx_mobile/models/enums/device_os_type.dart';
 import 'package:kitx_mobile/utils/datetime_format.dart' show datetimeToShortString;
+import 'package:kitx_mobile/utils/handlers/tasks/delayed_task.dart';
 
 /// Device Card
 class DeviceCard extends StatefulWidget {
@@ -76,10 +77,9 @@ class _DeviceCard extends State<DeviceCard> with TickerProviderStateMixin {
 
     if (shouldScaleIn ?? true) {
       if (shouldDelay ?? true) {
-        instances.taskHandler.delay(
-          () => _animationController.forward().then((value) => onScaleEnd?.call()),
-          150 * index,
-        );
+        (() => _animationController.forward().then((value) => onScaleEnd?.call()))
+            .delay(milliseconds: 150 * index)
+            .execute();
       } else {
         _animationController.forward().then((value) => onScaleEnd?.call());
       }

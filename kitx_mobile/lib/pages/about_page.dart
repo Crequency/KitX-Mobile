@@ -9,6 +9,7 @@ import 'package:kitx_mobile/pages/controls/gradually_smaller_spacer.dart';
 import 'package:kitx_mobile/pages/controls/group_divider.dart';
 import 'package:kitx_mobile/pages/controls/repo_button.dart';
 import 'package:kitx_mobile/utils/composer.dart';
+import 'package:kitx_mobile/utils/handlers/tasks/delayed_task.dart';
 import 'package:vibration/vibration.dart';
 
 /// About Page
@@ -285,11 +286,9 @@ class _AboutPageState extends State<AboutPage> {
           Visibility(
             visible: thirdPartyDataDisplayCount.value != thirdPartyDataList.length,
             child: ElevatedButton(
-              onPressed: () => instances.taskHandler.delay(
-                  () => super.setState(() {
-                        thirdPartyDataDisplayCount.value = thirdPartyDataList.length;
-                      }),
-                  200),
+              onPressed: (() => super.setState(() {
+                    thirdPartyDataDisplayCount.value = thirdPartyDataList.length;
+                  })).delay(milliseconds: 200).execute,
               child: Text('AboutPage_ThirdPartyLicenses_DisplayAll'.tr),
             ),
           ),

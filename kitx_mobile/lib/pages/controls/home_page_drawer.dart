@@ -1,7 +1,7 @@
 ﻿import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:kitx_mobile/instances.dart';
 import 'package:kitx_mobile/pages/pages.dart';
+import 'package:kitx_mobile/utils/handlers/tasks/delayed_task.dart';
 
 /// [HomePageDrawer] class
 class HomePageDrawer extends StatelessWidget {
@@ -34,42 +34,42 @@ class HomePageDrawer extends StatelessWidget {
           ListTile(
             leading: const Icon(Icons.devices),
             title: Text('Drawer_Devices'.tr),
-            onTap: () => instances.taskHandler.delay(() {
+            onTap: () {
               Get.back();
               Get.to(() => const DevicePage());
-            }, pageOpenDelay),
+            }.delay(milliseconds: pageOpenDelay).execute,
           ),
           ListTile(
             leading: const Icon(Icons.alternate_email),
             title: Text('Drawer_Account'.tr),
-            onTap: () => instances.taskHandler.delay(() {
+            onTap: () {
               Get.back();
               Get.to(() => const AccountPage());
-            }, pageOpenDelay),
+            }.delay(milliseconds: pageOpenDelay).execute,
           ),
           ListTile(
             leading: const Icon(Icons.bug_report),
             title: Text('Drawer_Test'.tr),
-            onTap: () => instances.taskHandler.delay(() {
+            onTap: () {
               Get.back();
               Get.to(() => const TestPage());
-            }, pageOpenDelay),
+            }.delay(milliseconds: pageOpenDelay).execute,
           ),
           ListTile(
             leading: const Icon(Icons.settings),
             title: Text('Drawer_Setting'.tr),
-            onTap: () => instances.taskHandler.delay(() {
+            onTap: () {
               Get.back();
               Get.to(() => const SettingsPage());
-            }, pageOpenDelay),
+            }.delay(milliseconds: pageOpenDelay).execute,
           ),
           ListTile(
             leading: const Icon(Icons.info_outline_rounded),
             title: Text('Drawer_About'.tr),
-            onTap: () => instances.taskHandler.delay(() {
+            onTap: () {
               Get.back();
               Get.to(() => const AboutPage());
-            }, pageOpenDelay),
+            }.delay(milliseconds: pageOpenDelay).execute,
           ),
         ],
       ),
