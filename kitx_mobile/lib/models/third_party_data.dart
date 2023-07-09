@@ -10,6 +10,11 @@
 
   String? ThirdPartyRepo;
 
-  ThirdPartyData(this.ThirdPartyName, this.ThirdPartyVersion, this.ThirdPartyCopyright, this.ThirdPartyUrl,
-      this.ThirdPartyRepo);
+  ThirdPartyData(
+    this.ThirdPartyName,
+    this.ThirdPartyVersion,
+    this.ThirdPartyCopyright,
+    this.ThirdPartyUrl,
+    this.ThirdPartyRepo,
+  );
 }
