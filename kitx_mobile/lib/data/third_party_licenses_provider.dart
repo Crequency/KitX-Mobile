@@ -69,7 +69,7 @@ var thirdPartyDataList = [
   ),
   ThirdPartyData(
     'flutter',
-    '^3',
+    '^3.0.0',
     '',
     'https://pub.dev/packages/flutter',
     '',
