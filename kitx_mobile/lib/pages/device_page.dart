@@ -1,12 +1,12 @@
 import 'package:community_material_icon/community_material_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:kitx_mobile/instances.dart';
 import 'package:kitx_mobile/models/device_info.dart';
 import 'package:kitx_mobile/pages/controls/device_card.dart';
 import 'package:kitx_mobile/pages/controls/device_status_icon.dart';
 import 'package:kitx_mobile/pages/controls/device_status_label.dart';
 import 'package:kitx_mobile/pages/sub_pages/device_chat_page.dart';
-import 'package:kitx_mobile/utils/global.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 /// Device Page
@@ -23,7 +23,7 @@ class _DevicePage extends State<DevicePage> {
   var _paneController = PanelController();
 
   var deviceCardHorizontalScale = 0.5;
-  var back2topButtonVisibility = false.obs;
+  var backToTopButtonVisibility = false.obs;
   var justEnteredPage = true;
 
   var selectedDeviceInfo = Rx<DeviceInfoStruct?>(null);
@@ -32,9 +32,9 @@ class _DevicePage extends State<DevicePage> {
   void initState() {
     _scrollController.addListener(() {
       if (_scrollController.offset >= MediaQuery.of(super.context).size.height * 0.3) {
-        back2topButtonVisibility.value = true;
+        backToTopButtonVisibility.value = true;
       } else {
-        back2topButtonVisibility.value = false;
+        backToTopButtonVisibility.value = false;
       }
     });
 
@@ -42,13 +42,6 @@ class _DevicePage extends State<DevicePage> {
     WidgetsBinding.instance.addPostFrameCallback((_) => justEnteredPage = false);
 
     super.initState();
-  }
-
-  @override
-  void dispose() {
-    _scrollController.dispose();
-
-    super.dispose();
   }
 
   @override
@@ -80,16 +73,16 @@ class _DevicePage extends State<DevicePage> {
           PopupMenuButton(
             tooltip: '',
             padding: EdgeInsets.all(0),
-            icon: DeviceStatusIcon(),
+            icon: const DeviceStatusIcon(),
             position: PopupMenuPosition.under,
             itemBuilder: (context) => [
               PopupMenuItem(
                 child: Text('Option_RestartDevicesServer'.tr),
-                onTap: Global.restartDevicesServer,
+                onTap: instances.restartDevicesServer,
               ),
               PopupMenuItem(
                 child: Text('Option_ShutdownDevicesServer'.tr),
-                onTap: Global.shutdownDevicesServer,
+                onTap: instances.shutdownDevicesServer,
               ),
             ],
           ),
@@ -100,7 +93,7 @@ class _DevicePage extends State<DevicePage> {
         () => AnimatedOpacity(
           duration: const Duration(milliseconds: 300),
           curve: Curves.easeInOutCubicEmphasized,
-          opacity: back2topButtonVisibility.value ? 1 : 0,
+          opacity: backToTopButtonVisibility.value ? 1 : 0,
           child: FloatingActionButton(
             onPressed: () => _scrollController.animateTo(
               0.0,
@@ -119,7 +112,7 @@ class _DevicePage extends State<DevicePage> {
             children: [
               Padding(
                 padding: EdgeInsets.fromLTRB(30, 30, 30, 0),
-                child: Hero(
+                child: const Hero(
                   tag: 'HeroTag_DevicesCount',
                   child: const DeviceStatusLabel(),
                 ),
@@ -131,16 +124,16 @@ class _DevicePage extends State<DevicePage> {
                         () => ReorderableListView.builder(
                           shrinkWrap: true,
                           physics: NeverScrollableScrollPhysics(),
-                          itemCount: Global.deviceService.length + 1,
+                          itemCount: instances.devicesService.length + 1,
                           itemBuilder: (_, index) {
-                            var list = Global.deviceService.deviceInfoList;
-                            var info = index >= Global.deviceService.length ? null : list[index];
+                            var list = instances.devicesService.deviceInfoList;
+                            var info = index >= instances.devicesService.length ? null : list[index];
                             return DeviceCard(
                               info,
                               index,
                               key: Key('${info?.deviceName ?? ''}${info?.iPv4 ?? ''}'),
                               shouldDelay: justEnteredPage,
-                              shouldScaleIn: Global.animationEnabled.value,
+                              shouldScaleIn: instances.appInfo.animationEnabled.value,
                               onTap: () => {
                                 if (info != null) selectedDeviceInfo.value = info,
                                 _paneController.open(),
@@ -148,7 +141,7 @@ class _DevicePage extends State<DevicePage> {
                             );
                           },
                           onReorder: (int oldIndex, int newIndex) {
-                            var list = Global.deviceService.deviceInfoList;
+                            var list = instances.devicesService.deviceInfoList;
                             var moveBack = newIndex > oldIndex;
                             list.insert(moveBack ? newIndex - 1 : newIndex, list.removeAt(oldIndex));
                           },
@@ -161,17 +154,17 @@ class _DevicePage extends State<DevicePage> {
                             spacing: 0.0,
                             runSpacing: 0.0,
                             children: [
-                              for (var i = 0; i < Global.deviceService.length; ++i)
+                              for (var i = 0; i < instances.devicesService.length; ++i)
                                 DeviceCard(
-                                  Global.deviceService.deviceInfoList[i],
+                                  instances.devicesService.deviceInfoList[i],
                                   i,
                                   width: (MediaQuery.of(context).size.width - 20) * deviceCardHorizontalScale,
-                                  key: Key('${Global.deviceService.deviceInfoList[i].deviceName}'
-                                      '${Global.deviceService.deviceInfoList[i].iPv4}'),
+                                  key: Key('${instances.devicesService.deviceInfoList[i].deviceName}'
+                                      '${instances.devicesService.deviceInfoList[i].iPv4}'),
                                   shouldDelay: justEnteredPage,
-                                  shouldScaleIn: Global.animationEnabled.value,
+                                  shouldScaleIn: instances.appInfo.animationEnabled.value,
                                   onTap: () => {
-                                    selectedDeviceInfo.value = Global.deviceService.deviceInfoList[i],
+                                    selectedDeviceInfo.value = instances.devicesService.deviceInfoList[i],
                                     _paneController.open(),
                                   },
                                 )
@@ -222,5 +215,12 @@ class _DevicePage extends State<DevicePage> {
         ],
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+
+    super.dispose();
   }
 }

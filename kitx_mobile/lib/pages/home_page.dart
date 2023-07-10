@@ -1,13 +1,10 @@
 ﻿import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:kitx_mobile/pages/about_page.dart';
-import 'package:kitx_mobile/pages/account_page.dart';
+import 'package:kitx_mobile/instances.dart';
 import 'package:kitx_mobile/pages/controls/device_status_label.dart';
-import 'package:kitx_mobile/pages/controls/drawer.dart';
-import 'package:kitx_mobile/pages/device_page.dart';
-import 'package:kitx_mobile/pages/settings_page.dart';
-import 'package:kitx_mobile/pages/test_page.dart';
-import 'package:kitx_mobile/utils/global.dart';
+import 'package:kitx_mobile/pages/controls/home_page_drawer.dart';
+import 'package:kitx_mobile/pages/pages.dart';
+import 'package:kitx_mobile/utils/handlers/tasks/delayed_task.dart';
 
 /// HomePage
 class HomePage extends StatelessWidget {
@@ -20,7 +17,7 @@ class HomePage extends StatelessWidget {
       appBar: AppBar(
         title: Text('IndexPage_Title'.tr),
       ),
-      drawer: AppDrawer(),
+      drawer: HomePageDrawer(),
       drawerEnableOpenDragGesture: true,
       drawerEdgeDragWidth: MediaQuery.of(context).size.width / 7 * 5,
       body: Padding(
@@ -31,7 +28,7 @@ class HomePage extends StatelessWidget {
               builder: (context, _) => MediaQuery.of(context).orientation == Orientation.portrait
                   ? ListView(
                       shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
+                      physics: const NeverScrollableScrollPhysics(),
                       children: getContent(
                         context,
                         MediaQuery.of(context).size.width - 40,
@@ -67,13 +64,13 @@ class HomePage extends StatelessWidget {
         child: ListTile(
           leading: const Icon(Icons.devices),
           title: Text('Drawer_Devices'.tr),
-          subtitle: Hero(
+          subtitle: const Hero(
             tag: 'HeroTag_DevicesCount',
             child: const DeviceStatusLabel(),
           ),
           trailing: const Icon(Icons.keyboard_arrow_right),
           shape: tileRadius,
-          onTap: () => Global.delay(() => Get.to(() => DevicePage()), pageOpenDelay),
+          onTap: () => (() => Get.to(() => const DevicePage())).delay(milliseconds: pageOpenDelay).execute(),
           onLongPress: () {
             showMenu(
               context: context,
@@ -81,11 +78,11 @@ class HomePage extends StatelessWidget {
               items: [
                 PopupMenuItem(
                   child: Text('Option_RestartDevicesServer'.tr),
-                  onTap: Global.restartDevicesServer,
+                  onTap: instances.restartDevicesServer,
                 ),
                 PopupMenuItem(
                   child: Text('Option_ShutdownDevicesServer'.tr),
-                  onTap: Global.shutdownDevicesServer,
+                  onTap: instances.shutdownDevicesServer,
                 ),
               ],
               elevation: 8.0,
@@ -102,7 +99,7 @@ class HomePage extends StatelessWidget {
           subtitle: isLandscape ? const Text('developing ...') : null,
           trailing: const Icon(Icons.keyboard_arrow_right),
           shape: tileRadius,
-          onTap: () => Global.delay(() => Get.to(() => AccountPage()), pageOpenDelay),
+          onTap: () => (() => Get.to(() => const AccountPage())).delay(milliseconds: pageOpenDelay).execute(),
         ),
       ),
       const SizedBox(height: tilesPadding),
@@ -114,7 +111,7 @@ class HomePage extends StatelessWidget {
           subtitle: isLandscape ? const Text('no new tests') : null,
           trailing: const Icon(Icons.keyboard_arrow_right),
           shape: tileRadius,
-          onTap: () => Global.delay(() => Get.to(() => TestPage()), pageOpenDelay),
+          onTap: () => (() => Get.to(() => const TestPage())).delay(milliseconds: pageOpenDelay).execute(),
         ),
       ),
       const SizedBox(height: tilesPadding),
@@ -126,7 +123,8 @@ class HomePage extends StatelessWidget {
           subtitle: isLandscape ? const Text('no notifications') : null,
           trailing: const Icon(Icons.keyboard_arrow_right),
           shape: tileRadius,
-          onTap: () => Global.delay(() => Get.to(() => SettingsPage()), pageOpenDelay),
+          onTap: () =>
+              (() => Get.to(() => const SettingsPage())).delay(milliseconds: pageOpenDelay).execute(),
         ),
       ),
       const SizedBox(height: tilesPadding),
@@ -136,10 +134,10 @@ class HomePage extends StatelessWidget {
           () => ListTile(
             leading: const Icon(Icons.info_outline_rounded),
             title: Text('Drawer_About'.tr),
-            subtitle: Text(Global.versionString.value),
+            subtitle: Text(instances.appInfo.versionString.value),
             trailing: const Icon(Icons.keyboard_arrow_right),
             shape: tileRadius,
-            onTap: () => Global.delay(() => Get.to(() => AboutPage()), pageOpenDelay),
+            onTap: () => (() => Get.to(() => const AboutPage())).delay(milliseconds: pageOpenDelay).execute(),
           ),
         ),
       ),

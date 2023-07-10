@@ -1,10 +1,11 @@
 ﻿import 'package:badges/badges.dart' as badges;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:kitx_mobile/converters/os_type_2_icon.dart';
+import 'package:kitx_mobile/instances.dart';
 import 'package:kitx_mobile/models/device_info.dart';
+import 'package:kitx_mobile/models/enums/device_os_type.dart';
 import 'package:kitx_mobile/utils/datetime_format.dart' show datetimeToShortString;
-import 'package:kitx_mobile/utils/global.dart';
+import 'package:kitx_mobile/utils/handlers/tasks/delayed_task.dart';
 
 /// Device Card
 class DeviceCard extends StatefulWidget {
@@ -76,7 +77,9 @@ class _DeviceCard extends State<DeviceCard> with TickerProviderStateMixin {
 
     if (shouldScaleIn ?? true) {
       if (shouldDelay ?? true) {
-        Global.delay(() => _animationController.forward().then((value) => onScaleEnd?.call()), 150 * index);
+        (() => _animationController.forward().then((value) => onScaleEnd?.call()))
+            .delay(milliseconds: 150 * index)
+            .execute();
       } else {
         _animationController.forward().then((value) => onScaleEnd?.call());
       }
@@ -102,7 +105,7 @@ class _DeviceCard extends State<DeviceCard> with TickerProviderStateMixin {
   String getDeviceDisplayName(DeviceInfoStruct info) {
     var result = info.deviceName;
 
-    if (info.deviceName == Global.deviceName) result += ' ${'DevicePage_LocalDevice'.tr}';
+    if (info.deviceName == instances.deviceInfo.deviceName) result += ' ${'DevicePage_LocalDevice'.tr}';
     if (info.isMainDevice) result += ' ${'DevicePage_MainDevice'.tr}';
 
     return result;
@@ -111,7 +114,7 @@ class _DeviceCard extends State<DeviceCard> with TickerProviderStateMixin {
   Color getDeviceCardColor(BuildContext context, DeviceInfoStruct info) {
     var result = context.theme.cardColor;
 
-    if (info.deviceName == Global.deviceName) {
+    if (info.deviceName == instances.deviceInfo.deviceName) {
       result = context.isDarkMode ? Colors.indigo : Colors.limeAccent;
     }
     if (info.isMainDevice) result = context.isDarkMode ? Colors.deepPurple : Colors.tealAccent;
@@ -126,7 +129,7 @@ class _DeviceCard extends State<DeviceCard> with TickerProviderStateMixin {
 
     if (info == null) return SizedBox(height: 300, width: widget.width, key: Key('spacer'));
 
-    var _iconStyle = Convert(info.deviceOSType);
+    var _iconStyle = info.deviceOSType.toIconData();
     var _icon = Icon(_iconStyle, size: 36);
 
     var cardColor = getDeviceCardColor(context, info);

@@ -5,9 +5,9 @@ import 'package:kitx_mobile/pages/test_pages/device_info_test.dart';
 import 'package:kitx_mobile/pages/test_pages/device_sensors.dart';
 import 'package:kitx_mobile/pages/test_pages/network_info_test.dart';
 
-/// Test Page
+/// [TestPage] Class
 class TestPage extends StatefulWidget {
-  // ignore: public_member_api_docs
+  /// Constructor for [TestPage]
   const TestPage({Key? key}) : super(key: key);
 
   @override
@@ -37,29 +37,16 @@ class _TestPageState extends State<TestPage> with SingleTickerProviderStateMixin
             bottom: TabBar(
               controller: _tabController,
               tabs: <Tab>[
-                Tab(
-                  text: 'Device Info',
-                  icon: Icon(Icons.devices),
-                ),
-                Tab(
-                  text: 'Device Sensors',
-                  icon: Icon(Icons.sensors),
-                ),
-                Tab(
-                  text: 'Network Info',
-                  icon: Icon(Icons.wifi),
-                ),
+                Tab(text: 'Device Info', icon: Icon(Icons.devices)),
+                Tab(text: 'Device Sensors', icon: Icon(Icons.sensors)),
+                Tab(text: 'Network Info', icon: Icon(Icons.wifi)),
               ],
             ),
           ),
         ],
         body: TabBarView(
           controller: _tabController,
-          children: [
-            DeviceInfoTestPage(),
-            DeviceSensorsPage(),
-            NetworkInfoTestPage(),
-          ],
+          children: [DeviceInfoTestPage(), DeviceSensorsPage(), NetworkInfoTestPage()],
         ),
       ),
     );

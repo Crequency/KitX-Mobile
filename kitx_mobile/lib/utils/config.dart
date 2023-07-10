@@ -1,55 +1,70 @@
-// ignore_for_file: non_constant_identifier_names
-
 library kitx_moblie.config;
 
-import 'package:kitx_mobile/converters/theme_mode_2_int.dart';
+import 'package:kitx_mobile/instances.dart';
 import 'package:kitx_mobile/models/enums/device_os_type.dart';
-import 'package:kitx_mobile/utils/global.dart';
+import 'package:kitx_mobile/utils/extensions/int_ext.dart';
+import 'package:kitx_mobile/utils/extensions/theme_mode_ext.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class _Config {
-  var WebService_UdpBroadcastAddress = '224.0.0.0';
-  var WebService_UdpPortReceive = 24040;
-  var WebService_UdpPortSend = 23404;
-  var WebService_UdpSendFrequency = 1;
-  var WebService_DeviceInfoCheckTTLSeconds = 1;
-  var WebService_DeviceInfoTTLSeconds = 7;
-  var WebService_DeviceOSType = DeviceOSTypeEnum.Android;
+/// [Config] class
+class Config {
+  /// WebService udp broadcast address
+  var webServiceUdpBroadcastAddress = '224.0.0.0';
 
+  /// WebService udp port for receiving
+  var webServiceUdpPortReceive = 24040;
+
+  /// WebService udp port for sending
+  var webServiceUdpPortSend = 23404;
+
+  /// WebService udp send seconds per package
+  var webServiceUdpSendFrequency = 1;
+
+  /// WebService device info check timer
+  var webServiceDeviceInfoCheckTTLSeconds = 1;
+
+  /// WebService device info TTL seconds
+  var webServiceDeviceInfoTTLSeconds = 7;
+
+  /// WebService local device os type
+  var webServiceDeviceOSType = DeviceOSTypeEnum.Android;
+
+  /// Load all configurations
   Future<void> loadAsync() async {
     final prefs = await SharedPreferences.getInstance();
 
-    WebService_UdpBroadcastAddress = prefs.getString('WebService_UdpBroadcastAddress') ?? '224.0.0.0';
-    WebService_UdpPortReceive = prefs.getInt('WebService_UdpPortReceive') ?? 24040;
-    WebService_UdpPortSend = prefs.getInt('WebService_UdpPortSend') ?? 23404;
-    WebService_UdpSendFrequency = prefs.getInt('WebService_UdpSendFrequency') ?? 1;
-    WebService_DeviceInfoCheckTTLSeconds = prefs.getInt('WebService_DeviceInfoCheckTTLSeconds') ?? 1;
-    WebService_DeviceInfoTTLSeconds = prefs.getInt('WebService_DeviceInfoTTLSeconds') ?? 7;
+    webServiceUdpBroadcastAddress = prefs.getString('WebService_UdpBroadcastAddress') ?? '224.0.0.0';
+    webServiceUdpPortReceive = prefs.getInt('WebService_UdpPortReceive') ?? 24040;
+    webServiceUdpPortSend = prefs.getInt('WebService_UdpPortSend') ?? 23404;
+    webServiceUdpSendFrequency = prefs.getInt('WebService_UdpSendFrequency') ?? 1;
+    webServiceDeviceInfoCheckTTLSeconds = prefs.getInt('WebService_DeviceInfoCheckTTLSeconds') ?? 1;
+    webServiceDeviceInfoTTLSeconds = prefs.getInt('WebService_DeviceInfoTTLSeconds') ?? 7;
 
     var langCode = prefs.getString('AppLanguageCode') ?? 'null';
 
-    Global.languageCode = langCode == 'null' ? null : langCode;
-    Global.themeMode = ConvertBack(prefs.getInt('AppThemeMode') ?? 0);
-    Global.material3Enabled = prefs.getBool('material3Enabled') ?? true;
-    Global.animationEnabled.value = prefs.getBool('AnimationEnabled') ?? true;
+    instances.appInfo.languageCode = langCode == 'null' ? null : langCode;
+    instances.appInfo.themeMode = (prefs.getInt('AppThemeMode') ?? 0).toThemeMode();
+    instances.appInfo.material3Enabled = prefs.getBool('material3Enabled') ?? true;
+    instances.appInfo.animationEnabled.value = prefs.getBool('AnimationEnabled') ?? true;
   }
 
+  /// Save all configurations
   Future<void> saveAsync() async {
     final prefs = await SharedPreferences.getInstance();
 
-    await prefs.setString('WebService_UdpBroadcastAddress', WebService_UdpBroadcastAddress);
-    await prefs.setInt('WebService_UdpPortReceive', WebService_UdpPortReceive);
-    await prefs.setInt('WebService_UdpPortSend', WebService_UdpPortSend);
-    await prefs.setInt('WebService_UdpSendFrequency', WebService_UdpSendFrequency);
-    await prefs.setInt('WebService_DeviceInfoCheckTTLSeconds', WebService_DeviceInfoCheckTTLSeconds);
-    await prefs.setInt('WebService_DeviceInfoTTLSeconds', WebService_DeviceInfoTTLSeconds);
+    await prefs.setString('WebService_UdpBroadcastAddress', webServiceUdpBroadcastAddress);
+    await prefs.setInt('WebService_UdpPortReceive', webServiceUdpPortReceive);
+    await prefs.setInt('WebService_UdpPortSend', webServiceUdpPortSend);
+    await prefs.setInt('WebService_UdpSendFrequency', webServiceUdpSendFrequency);
+    await prefs.setInt('WebService_DeviceInfoCheckTTLSeconds', webServiceDeviceInfoCheckTTLSeconds);
+    await prefs.setInt('WebService_DeviceInfoTTLSeconds', webServiceDeviceInfoTTLSeconds);
 
-    await prefs.setString('AppLanguageCode', Global.languageCode ?? 'null');
-    await prefs.setInt('AppThemeMode', Convert(Global.themeMode));
-    await prefs.setBool('material3Enabled', Global.material3Enabled);
-    await prefs.setBool('AnimationEnabled', Global.animationEnabled.value);
+    await prefs.setString('AppLanguageCode', instances.appInfo.languageCode ?? 'null');
+    await prefs.setInt('AppThemeMode', instances.appInfo.themeMode.toInt());
+    await prefs.setBool('material3Enabled', instances.appInfo.material3Enabled);
+    await prefs.setBool('AnimationEnabled', instances.appInfo.animationEnabled.value);
   }
 }
 
 /// Default Config
-var Config = _Config();
+var config = Config();

@@ -1,23 +1,18 @@
 import 'dart:async';
 
 import 'package:get/get.dart';
+import 'package:kitx_mobile/instances.dart';
 import 'package:kitx_mobile/models/device_info.dart';
 import 'package:kitx_mobile/models/enums/device_os_type.dart';
 import 'package:kitx_mobile/services/public/service_status.dart';
+import 'package:kitx_mobile/services/service.dart';
 import 'package:kitx_mobile/utils/config.dart';
-import 'package:kitx_mobile/utils/global.dart';
 import 'package:kitx_mobile/utils/log.dart';
 
 /// Device Service
-class DeviceService {
+class DeviceService implements Service {
   /// Device Info List
   final deviceInfoList = RxList<DeviceInfoStruct>([]);
-
-  /// Device Info List Lock
-  var lock = true;
-
-  /// Device Service Status
-  var deviceServiceStatus = ServiceStatus.pending;
 
   /// Local Device Card Added
   var localDeviceCardAdded = false;
@@ -27,7 +22,7 @@ class DeviceService {
 
   /// Add a device by [DeviceInfoStruct]
   Future<void> addDevice(DeviceInfoStruct info) async {
-    if (deviceServiceStatus != ServiceStatus.running) return;
+    if (serviceStatus != ServiceStatus.running) return;
 
     var _tempList = deviceInfoList.toList();
 
@@ -42,13 +37,13 @@ class DeviceService {
     } else {
       // Add new device.
 
-      if (info.deviceName == Global.deviceName) {
+      if (info.deviceName == instances.deviceInfo.deviceName) {
         // Local device.
 
         deviceInfoList.insert(0, info);
         localDeviceCardAdded = true;
 
-        Log.info('Insert local device to 0.');
+        log.info('Insert local device to 0.');
       } else if (info.isMainDevice) {
         // Main device.
 
@@ -56,7 +51,7 @@ class DeviceService {
         deviceInfoList.insert(index, info);
         mainDeviceCardAdded = true;
 
-        Log.info('Insert main device to $index.');
+        log.info('Insert main device to $index.');
       } else {
         // Other device.
 
@@ -69,15 +64,13 @@ class DeviceService {
           devicesCountPerOS[osType] = countDevices(osType);
         }
 
-        var localDeviceOS = _tempList.firstWhereOrNull((element) => element.deviceName == Global.deviceName);
-        var mainDeviceOS = _tempList.firstWhereOrNull((element) => element.isMainDevice);
+        var localDeviceOS = _tempList
+            .firstWhereOrNull((element) => element.deviceName == instances.deviceInfo.deviceName)
+            ?.deviceOSType;
+        var mainDeviceOS = _tempList.firstWhereOrNull((element) => element.isMainDevice)?.deviceOSType;
 
-        if (localDeviceOS != null) {
-          devicesCountPerOS[localDeviceOS.deviceOSType] = devicesCountPerOS[localDeviceOS.deviceOSType]! - 1;
-        }
-        if (mainDeviceOS != null) {
-          devicesCountPerOS[mainDeviceOS.deviceOSType] = devicesCountPerOS[mainDeviceOS.deviceOSType]! - 1;
-        }
+        if (localDeviceOS != null) devicesCountPerOS[localDeviceOS] = devicesCountPerOS[localDeviceOS]! - 1;
+        if (mainDeviceOS != null) devicesCountPerOS[mainDeviceOS] = devicesCountPerOS[mainDeviceOS]! - 1;
 
         var instIndex = fixedCardsCount;
 
@@ -103,39 +96,37 @@ class DeviceService {
     deviceInfoList.refresh();
   }
 
-  /// 停止服务
-  Future<void> stopService() async {
-    deviceServiceStatus = ServiceStatus.stopping;
-    deviceInfoList.clear();
+  /// Get device info list length
+  int get length => deviceInfoList.length;
+
+  @override
+  var serviceStatus = ServiceStatus.pending.obs;
+
+  @override
+  var serviceException;
+
+  @override
+  Future<DeviceService> init() async {
+    serviceStatus.value = ServiceStatus.starting;
 
     localDeviceCardAdded = false;
     mainDeviceCardAdded = false;
 
-    deviceServiceStatus = ServiceStatus.pending;
-  }
-
-  /// Remove a device by [DeviceInfoStruct]
-  Future<void> initService() async {
-    deviceServiceStatus = ServiceStatus.starting;
-
-    localDeviceCardAdded = false;
-    mainDeviceCardAdded = false;
-
-    Timer.periodic(Duration(seconds: Config.WebService_DeviceInfoCheckTTLSeconds), (_) {
+    Timer.periodic(Duration(seconds: config.webServiceDeviceInfoCheckTTLSeconds), (_) {
       var _tempList = deviceInfoList.toList();
 
       for (var each in _tempList) {
         var now = DateTime.now();
         var time = each.sendTime;
 
-        if (now.difference(time).inSeconds > Config.WebService_DeviceInfoTTLSeconds) {
+        if (now.difference(time).inSeconds > config.webServiceDeviceInfoTTLSeconds) {
           deviceInfoList.remove(each);
 
-          if (each.deviceName == Global.deviceName) {
+          if (each.deviceName == instances.deviceInfo.deviceName) {
             localDeviceCardAdded = false;
 
             // If local device removed, restart devices server.
-            Global.restartDevicesServer();
+            instances.restartDevicesServer();
           } else if (each.isMainDevice) {
             mainDeviceCardAdded = false;
           }
@@ -145,9 +136,26 @@ class DeviceService {
       deviceInfoList.refresh();
     });
 
-    deviceServiceStatus = ServiceStatus.running;
+    serviceStatus.value = ServiceStatus.running;
+
+    return this;
   }
 
-  /// Get device info list length
-  int get length => deviceInfoList.length;
+  @override
+  Future<DeviceService> restart() async {
+    return this;
+  }
+
+  @override
+  Future<DeviceService> stop() async {
+    serviceStatus.value = ServiceStatus.stopping;
+    deviceInfoList.clear();
+
+    localDeviceCardAdded = false;
+    mainDeviceCardAdded = false;
+
+    serviceStatus.value = ServiceStatus.pending;
+
+    return this;
+  }
 }

@@ -3,11 +3,12 @@
 import 'package:f_logs/f_logs.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:kitx_mobile/converters/size_converter.dart';
-import 'package:kitx_mobile/themes/light_theme.dart';
+import 'package:kitx_mobile/instances.dart';
 import 'package:kitx_mobile/utils/composer.dart';
 import 'package:kitx_mobile/utils/config.dart';
-import 'package:kitx_mobile/utils/global.dart';
+import 'package:kitx_mobile/utils/converters/size_converter.dart';
+import 'package:kitx_mobile/utils/handlers/tasks/delayed_task.dart';
+import 'package:kitx_mobile/utils/themes/themes.dart';
 
 /// Settings Group Title
 class SettingsGroupTitle extends StatelessWidget {
@@ -62,7 +63,7 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
-  var selectedModes = <ThemeMode>{Global.themeMode};
+  var selectedModes = <ThemeMode>{instances.appInfo.themeMode};
   var logFilePath = '/data/data/com.crequency.kitx.mobile/app_flutter/flog.db';
 
   var useMaterial3 = lightThemeData.value.useMaterial3.obs;
@@ -89,20 +90,9 @@ class _SettingsPageState extends State<SettingsPage> {
   }
 
   void saveChanges(BuildContext context) {
-    Config.saveAsync().then(
-      (value) => showSnackBar(Text('SettingsPage_Saved'.tr)),
-    );
-
-    // var snackBar = SnackBar(
-    //   content: Text('SettingsPage_Saved'.tr),
-    //   // margin: EdgeInsets.all(30),
-    //   // behavior: SnackBarBehavior.floating,
-    //   showCloseIcon: true,
-    //   duration: Duration(milliseconds: 1200),
-    //   // animation: Animation,
-    // );
-    //
-    // ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    config.saveAsync().then(
+          (value) => showSnackBar(Text('SettingsPage_Saved'.tr)),
+        );
   }
 
   @override
@@ -126,21 +116,17 @@ class _SettingsPageState extends State<SettingsPage> {
             itemBuilder: (context) => [
               PopupMenuItem(
                 child: const Text('简体中文'),
-                onTap: () {
-                  Global.delay(() {
-                    Global.languageCodeProperty = 'zh-CN';
-                    saveChanges(context);
-                  }, 200);
-                },
+                onTap: () => () {
+                  instances.appInfo.languageCodeProperty = 'zh-CN';
+                  saveChanges(context);
+                }.delay(milliseconds: 200).execute(),
               ),
               PopupMenuItem(
                 child: const Text('English (US)'),
-                onTap: () {
-                  Global.delay(() {
-                    Global.languageCodeProperty = 'en-US';
-                    saveChanges(context);
-                  }, 200);
-                },
+                onTap: () => () {
+                  instances.appInfo.languageCodeProperty = 'en-US';
+                  saveChanges(context);
+                }.delay(milliseconds: 200).execute(),
               ),
             ],
           ),
@@ -183,7 +169,7 @@ class _SettingsPageState extends State<SettingsPage> {
                       setState(() {
                         selectedModes = newSelection;
                       }),
-                      Global.themeModeProperty = newSelection.first,
+                      instances.appInfo.themeModeProperty = newSelection.first,
                       // Global.themeMode = newSelection.first,
                       // Get.changeThemeMode(newSelection.first),
                       saveChanges(context),
@@ -201,7 +187,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         () => Switch.adaptive(
                           value: useMaterial3.value,
                           onChanged: (selection) {
-                            Global.updateTheme(useMaterial3: selection);
+                            instances.appInfo.updateTheme(useMaterial3: selection);
                             useMaterial3.value = selection;
                             saveChanges(context);
                           },
@@ -224,9 +210,9 @@ class _SettingsPageState extends State<SettingsPage> {
                   Text('${'Public_Enable'.tr} ${'Public_Additional'.tr} ${'Public_Animation'.tr}'),
                   Obx(
                     () => Switch.adaptive(
-                      value: Global.animationEnabled.value,
+                      value: instances.appInfo.animationEnabled.value,
                       onChanged: (selection) {
-                        Global.animationEnabled.value = selection;
+                        instances.appInfo.animationEnabled.value = selection;
                         saveChanges(context);
                       },
                     ),
@@ -263,7 +249,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 Container(
                   alignment: Alignment.center,
                   child: ElevatedButton(
-                    onPressed: () => Global.delay(() async {
+                    onPressed: () async {
                       var beforeSize = 0;
                       var beforeSizeString = convert2string(beforeSize);
                       var nowSize = 0;
@@ -298,7 +284,7 @@ class _SettingsPageState extends State<SettingsPage> {
                       } else {
                         showSnackBar(Text('Log file clean action requested.'));
                       }
-                    }, 200),
+                    }.delay(milliseconds: 200).execute,
                     child: Text('SettingsPage_CleanLog'.tr),
                   ),
                 ),

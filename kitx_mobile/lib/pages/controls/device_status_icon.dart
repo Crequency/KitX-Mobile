@@ -1,7 +1,7 @@
 ﻿import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:kitx_mobile/instances.dart';
 import 'package:kitx_mobile/services/public/service_status.dart';
-import 'package:kitx_mobile/utils/global.dart';
 
 /// Device Status Icon
 class DeviceStatusIcon extends StatelessWidget {
@@ -11,7 +11,7 @@ class DeviceStatusIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Obx(() {
-      switch (Global.webService.webServiceStatus.value) {
+      switch (instances.devicesDiscoveryService.serviceStatus.value) {
         case ServiceStatus.running:
           return const Icon(Icons.circle, color: Colors.greenAccent);
         case ServiceStatus.pending:
