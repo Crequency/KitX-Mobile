@@ -25,9 +25,7 @@ class LocalDeviceInfo {
     var _deviceInfoPlugin = DeviceInfoPlugin();
     var _ldi = LocalDeviceInfo();
 
-    await FlutterBluePlus.instance.name.then((value) {
-      _ldi.deviceName = value.toString();
-    });
+    _ldi.deviceName = await FlutterBluePlus.adapterName;
 
     if (Platform.isAndroid) {
       var deviceData = await _deviceInfoPlugin.androidInfo;
