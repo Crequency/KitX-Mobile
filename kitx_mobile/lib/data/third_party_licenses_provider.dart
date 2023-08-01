@@ -27,7 +27,7 @@ var thirdPartyDataList = [
   ),
   ThirdPartyData(
     'built_value',
-    '^8.4.4',
+    '^8.5.0',
     'google',
     'https://pub.dev/packages/built_value',
     'https://github.com/google/built_value.dart/tree/master/built_value',
@@ -76,14 +76,14 @@ var thirdPartyDataList = [
   ),
   ThirdPartyData(
     'flutter_blue_plus',
-    '^1.5.2',
+    '^1.12.8',
     '',
     'https://pub.dev/packages/flutter_blue_plus',
     '',
   ),
   ThirdPartyData(
     'flutter_chat_ui',
-    '^1.6.6',
+    '^1.6.9',
     'flyerhq',
     'https://pub.dev/packages/flutter_chat_ui',
     'https://github.com/flyerhq/flutter_chat_ui',
@@ -139,7 +139,7 @@ var thirdPartyDataList = [
   ),
   ThirdPartyData(
     'url_launcher',
-    '^6.1.11',
+    '^6.1.12',
     'flutter',
     'https://pub.dev/packages/url_launcher',
     'https://github.com/flutter/packages/tree/main/packages/url_launcher/url_launcher',
