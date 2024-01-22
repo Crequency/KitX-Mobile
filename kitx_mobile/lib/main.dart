@@ -33,7 +33,7 @@ class MainApp extends StatelessWidget {
         highContrastTheme: ThemeData(),
         highContrastDarkTheme: ThemeData(),
         translations: Translation(),
-        locale: instances.appInfo.getLanguageCode ?? Localizations.localeOf(context),
+        locale: instances.appInfo.getLanguageCode ?? Get.deviceLocale,
         fallbackLocale: Locale('en', 'US'),
         getPages: getPages(),
         home: const HomePage(),

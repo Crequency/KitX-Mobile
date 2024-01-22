@@ -75,9 +75,9 @@ class DevicesDiscoveryService implements Service {
         ((b) => b
           ..deviceName = instances.deviceInfo.deviceName
           ..deviceOSVersion = instances.deviceInfo.osDescription
-          ..iPv4 = instances.networkInfo.ipv4
-          ..iPv6 = instances.networkInfo.ipv6
-          ..deviceMacAddress = instances.networkInfo.mac
+          ..iPv4 = instances.networkInfo.ipv4 ?? 'null ipv4 value'
+          ..iPv6 = instances.networkInfo.ipv6 ?? 'null ipv6 value'
+          ..deviceMacAddress = instances.networkInfo.mac ?? 'null mac address'
           ..pluginServerPort = 0
           ..pluginsCount = 0
           ..sendTime = DateTime.now().toUtc()
