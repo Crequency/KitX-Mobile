@@ -15,6 +15,7 @@ dependencies:
   built_value: ^8.8.1 # JSON 序列化
   community_material_icon: ^5.9.55 # Material Design Icons 社区贡献
   concentric_transition: ^1.0.3 # 同心过渡动画
+  connectivity_plus: ^2.3.8
   crypto: ^3.0.3
   device_info_plus: ^9.1.1 # 设备信息
   f_logs: ^2.0.1 # 日志管理
