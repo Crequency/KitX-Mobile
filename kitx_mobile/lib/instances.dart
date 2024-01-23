@@ -1,3 +1,4 @@
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/services.dart';
 import 'package:kitx_mobile/data/app_info.dart';
 import 'package:kitx_mobile/data/local_device_info.dart';
@@ -38,6 +39,9 @@ class Instances {
   /// Instance for [UrlHandler] class
   var urlHandler = UrlHandler();
 
+  /// Instance for [Connectivity] class
+  var connectivity = Connectivity();
+
   /// Instance for [DevicesDiscoveryService] class
   var devicesDiscoveryService = DevicesDiscoveryService()
     ..udpPortSend = config.webServiceUdpPortSend
@@ -53,6 +57,14 @@ class Instances {
     deviceInfo = await LocalDeviceInfo.get();
     networkInfo = await LocalNetworkInfo.get();
 
+    connectivity.onConnectivityChanged.listen(
+      (result) async => {
+        instances.deviceInfo = await LocalDeviceInfo.get(),
+        instances.networkInfo = await LocalNetworkInfo.get(),
+        restartDevicesServer(),
+      },
+    );
+
     // Init WebService
     await devicesDiscoveryService.init();
 
@@ -66,6 +78,7 @@ class Instances {
     devicesService.stop();
 
     devicesDiscoveryService.init();
+    devicesService.init();
   }
 
   /// Shutdown [devicesService] and [devicesDiscoveryService]
