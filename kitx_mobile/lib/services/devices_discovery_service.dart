@@ -2,8 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:get/get.dart';
 import 'package:kitx_mobile/instances.dart';
 import 'package:kitx_mobile/models/device_info.dart';
@@ -12,17 +11,6 @@ import 'package:kitx_mobile/services/service.dart';
 import 'package:kitx_mobile/utils/config.dart';
 import 'package:kitx_mobile/utils/handlers/tasks/delayed_task.dart';
 import 'package:kitx_mobile/utils/log.dart';
-
-void main() {
-  WidgetsFlutterBinding.ensureInitialized();
-
-  var server = DevicesDiscoveryService()
-    ..udpPortSend = 23404
-    ..udpPortReceive = 24040
-    ..udpBroadcastAddress = '224.0.0.0';
-
-  server.init();
-}
 
 /// [DevicesDiscoveryService] class
 class DevicesDiscoveryService implements Service {
@@ -60,17 +48,20 @@ class DevicesDiscoveryService implements Service {
   Future<DevicesDiscoveryService> init() async {
     serviceStatus.value = ServiceStatus.starting;
 
+    var connection = await instances.connectivity.checkConnectivity();
+
+    if (connection != ConnectivityResult.wifi) {
+      log.error('No wifi connection, WebService will not start.');
+      serviceException = Exception('No Wi-Fi connection, current is ${connection.toString()}');
+      serviceStatus.value = ServiceStatus.error;
+      return this;
+    }
+
     _isExitPackageSent = false;
 
-    instances.devicesService.serviceStatus.value = ServiceStatus.running;
+    serviceStatus.value = ServiceStatus.running;
 
     try {
-      if (kIsWeb) {
-        log.info('This is a web application, WebService will not start.');
-        return this;
-      }
-
-      // deviceInfo 初始值
       var deviceInfo = DeviceInfoStruct(
         ((b) => b
           ..deviceName = instances.deviceInfo.deviceName
@@ -89,10 +80,11 @@ class DevicesDiscoveryService implements Service {
 
       log.info('Get device info: ${deviceInfo.toString()}');
 
-      // 启动 UDP 服务
-
-      // UDP 发送
-      await RawDatagramSocket.bind(InternetAddress.anyIPv4, _udpPortSend).then(
+      // UDP Sending
+      await RawDatagramSocket.bind(
+        InternetAddress.anyIPv4,
+        _udpPortSend,
+      ).then(
         (socket) {
           sendSocket = socket;
 
@@ -112,26 +104,39 @@ class DevicesDiscoveryService implements Service {
               }
 
               var _data = deviceInfo.toString();
-              // Log.info('UDP send: $_data');
-              socket.send(utf8.encode(_data), InternetAddress(_udpBroadcastAddress), _udpPortReceive);
+              socket.send(
+                utf8.encode(_data),
+                InternetAddress(_udpBroadcastAddress),
+                _udpPortReceive,
+              );
             } catch (e, stack) {
+              log.info('UDP send error: $e $stack. Try to restart the service in 5 seconds.');
+
               timer.cancel();
               socket.close();
-              log.info('UDP send error: $e $stack. Try to restart the service in 5 seconds.');
+              serviceException = e as Exception;
+              serviceStatus.value = ServiceStatus.error;
+
               Future.delayed(const Duration(seconds: 5), () => init());
-              throw e;
             }
           });
+
           log.info('UDP send service started.');
         },
       );
 
-      // UDP 接收
-      await RawDatagramSocket.bind(InternetAddress.anyIPv4, _udpPortReceive, ttl: 1).then(
+      // UDP Receiving
+      await RawDatagramSocket.bind(
+        InternetAddress.anyIPv4,
+        _udpPortReceive,
+        ttl: 1,
+      ).then(
         (socket) {
           receiveSocket = socket;
 
-          socket.joinMulticast(InternetAddress(_udpBroadcastAddress));
+          socket.joinMulticast(
+            InternetAddress(_udpBroadcastAddress),
+          );
           socket.listen(
             (event) async {
               var d = socket.receive();
@@ -145,6 +150,9 @@ class DevicesDiscoveryService implements Service {
                 if (_deviceInfo != null) await instances.devicesService.addDevice(_deviceInfo);
               } catch (e, stack) {
                 log.error('Can not deserialize device info pack: `$_data`. Error: $e $stack');
+
+                serviceException = e as Exception;
+                serviceStatus.value = ServiceStatus.error;
               }
             },
           );
@@ -154,8 +162,9 @@ class DevicesDiscoveryService implements Service {
       (() => serviceStatus.value = ServiceStatus.running).delay(milliseconds: 500).execute();
     } catch (e, stack) {
       log.error('Catch an error: $e On: $stack');
-      serviceStatus.value = ServiceStatus.error;
+
       serviceException = e as Exception;
+      serviceStatus.value = ServiceStatus.error;
     }
 
     return this;
@@ -183,12 +192,16 @@ class DevicesDiscoveryService implements Service {
       serviceStatus.value = ServiceStatus.pending;
     }
 
+    var inErrState = serviceStatus.value == ServiceStatus.error;
+
     instances.devicesService.serviceStatus.value = ServiceStatus.pending;
     instances.devicesService.deviceInfoList.clear();
 
     serviceStatus.value = ServiceStatus.stopping;
 
-    if (sendExitPackage) {
+    if (inErrState) {
+      serviceStatus.value = ServiceStatus.pending;
+    } else if (sendExitPackage) {
       _isExitPackageSent = true;
 
       stopAction.delay(milliseconds: 1500).execute();

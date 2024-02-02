@@ -1,1 +1,4 @@
+## Platform Ignore
+*.DS_Store
+
 .idea/

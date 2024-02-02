@@ -20,7 +20,7 @@ class LocalNetworkInfo {
 
   /// Get an instance for [LocalNetworkInfo] class
   static Future<LocalNetworkInfo> get() async {
-    var getBackupDeviceIdString = () async {
+    var getBackupDeviceIdStringForAndroid = () async {
       var _deviceInfoPlugin = DeviceInfoPlugin();
 
       var androidInfo = await _deviceInfoPlugin.androidInfo;
@@ -30,6 +30,13 @@ class LocalNetworkInfo {
       var deviceId = '$fingerPrint || $display';
 
       var bytes = utf8.encode(deviceId);
+      var hexString = bytes.sublist(0, 5).map((b) => b.toRadixString(16).padLeft(2, '0')).join(':');
+
+      return 'FO:${hexString.toUpperCase()}';
+    };
+
+    var getBackupDeviceIdStringForIos = (String key) async {
+      var bytes = utf8.encode(key);
       var hexString = bytes.sublist(0, 5).map((b) => b.toRadixString(16).padLeft(2, '0')).join(':');
 
       return 'FO:${hexString.toUpperCase()}';
@@ -49,10 +56,10 @@ class LocalNetworkInfo {
     try {
       if (Platform.isAndroid) {
         var _actualMac = '${await instances.channel.invokeMethod('getMAC') ?? ''}';
-        _mac = _actualMac == '' ? await getBackupDeviceIdString() : _actualMac;
+        _mac = _actualMac == '' ? await getBackupDeviceIdStringForAndroid() : _actualMac;
       } else if (Platform.isIOS) {
         var _actualMac = (await _deviceInfoPlugin.iosInfo).identifierForVendor ?? '';
-        _mac = _actualMac == '' ? defaultMac : _actualMac;
+        _mac = _actualMac == '' ? defaultMac : await getBackupDeviceIdStringForIos(_actualMac);
       } else {
         _mac = defaultMac;
       }

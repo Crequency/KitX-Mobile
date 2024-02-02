@@ -3,45 +3,46 @@ description: Mobile Client for KitX
 
 publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
-version: 1.0.0+1
+version: 3.23.04+6805
 
 environment:
   sdk: ">=3.0.0 <4.0.0"
 
 dependencies:
-  badges: ^3.1.1 # 徽章
-  battery_plus: ^4.0.1 # 电池数据
+  badges: ^3.1.2 # 徽章
+  battery_plus: ^5.0.2 # 电池数据
   built_collection: ^5.1.1
-  built_value: ^8.4.4 # JSON 序列化
+  built_value: ^8.8.1 # JSON 序列化
   community_material_icon: ^5.9.55 # Material Design Icons 社区贡献
   concentric_transition: ^1.0.3 # 同心过渡动画
+  connectivity_plus: ^2.3.8
   crypto: ^3.0.3
-  device_info_plus: ^9.0.2 # 设备信息
+  device_info_plus: ^9.1.1 # 设备信息
   f_logs: ^2.0.1 # 日志管理
   flutter: # Flutter
     sdk: flutter
-  flutter_blue_plus: ^1.5.2 # 蓝牙
+  flutter_blue_plus: ^1.31.8 # 蓝牙
   # flutter_i18n: ^0.32.4 # 国际化
   # flutter_logs: ^2.1.7 # 日志
-  flutter_chat_ui: ^1.6.6 # Chat UI
-  get: ^4.6.5 # 路由管理
+  flutter_chat_ui: ^1.6.10 # Chat UI
+  get: ^4.6.6 # 状态管理
   # intl: ^0.17.0
   # mac_address: ^1.0.0 # 获取 MAC  p.s. iOS 未实现
-  network_info_plus: ^4.0.1 # 网络信息
-  package_info_plus: ^4.0.2 # 包信息
-  permission_handler: ^10.4.1 # 权限管理
-  sensors_plus: ^3.0.2 # 传感器
-  shared_preferences: ^2.2.0
+  network_info_plus: ^4.1.0 # 网络信息
+  package_info_plus: ^5.0.1 # 包信息
+  permission_handler: ^11.2.0 # 权限管理
+  sensors_plus: ^4.0.2 # 传感器
+  shared_preferences: ^2.2.2
   sliding_up_panel: ^2.0.0+1 # 向上滑动布局
   # sms_receiver: ^0.4.1 # 短信接收
-  url_launcher: ^6.1.11 # 打开链接
-  vibration: ^1.8.1 # 手机震动
+  url_launcher: ^6.2.3 # 打开链接
+  vibration: ^1.8.4 # 手机震动
 
 dev_dependencies:
   # 使用 flutter packages pub run build_runner build 生成 g.dart 文件
-  build_runner: ^2.4.6 # Build 工具
-  built_value_generator: ^8.4.4 # 生成工具
-  flutter_gen: ^5.3.1 # 生成工具
+  build_runner: ^2.4.8 # Build 工具
+  built_value_generator: ^8.8.1 # 生成工具
+  flutter_gen: ^5.4.0 # 生成工具
   flutter_test:
     sdk: flutter
 

@@ -22,8 +22,8 @@ website_docs_tags = ["<!--Begin PackagesTable-->", "<!--End PackagesTable-->"]
 
 mobile_about_path = ["./lib/data/third_party_licenses_provider.dart"]
 website_docs_path = [
-    "../../KitX Docs/docs/mobile/guide/packages.md",
-    "../../KitX Docs/docs/en/mobile/guide/packages.md",
+    "../../../KitX Docs/docs/mobile/guide/packages.md",
+    "../../../KitX Docs/docs/en/mobile/guide/packages.md",
 ]
 
 for arg in sys.argv:
