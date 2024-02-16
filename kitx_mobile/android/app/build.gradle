@@ -1,6 +1,8 @@
-import java.time.Duration
-import java.time.LocalDateTime
-import java.time.ZoneOffset
+plugins {
+    id "com.android.application"
+    id "kotlin-android"
+    id "dev.flutter.flutter-gradle-plugin"
+}
 
 def localProperties = new Properties()
 def localPropertiesFile = rootProject.file('local.properties')
@@ -8,11 +10,6 @@ if (localPropertiesFile.exists()) {
     localPropertiesFile.withReader('UTF-8') { reader ->
         localProperties.load(reader)
     }
-}
-
-def flutterRoot = localProperties.getProperty('flutter.sdk')
-if (flutterRoot == null) {
-    throw new GradleException("Flutter SDK not found. Define location with flutter.sdk in the local.properties file.")
 }
 
 def flutterVersionCode = localProperties.getProperty('flutter.versionCode')
@@ -25,19 +22,8 @@ if (flutterVersionName == null) {
     flutterVersionName = '1.0'
 }
 
-def currentUTC = LocalDateTime.now(ZoneOffset.UTC)
-def specifiedTime = LocalDateTime.of(2005, 6, 6, 0, 0, 0)
-def deltaDays = Duration.between(specifiedTime, currentUTC).toDays()
-
-def majorVersion = "3.23.04"
-def majorVersionCode = 100000
-def buildVersionCode = deltaDays % 65535 as int
-
-apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android'
-apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
-
 android {
+    namespace "com.crequency.kitx.mobile"
     compileSdkVersion flutter.compileSdkVersion
     ndkVersion flutter.ndkVersion
 
@@ -56,13 +42,11 @@ android {
 
     defaultConfig {
         applicationId "com.crequency.kitx.mobile"
-        // You can update the following values to match your application needs.
-        // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-build-configuration.
         minSdkVersion 21
-        compileSdkVersion 33
-        targetSdkVersion 33
-        versionCode majorVersionCode + buildVersionCode
-        versionName "v" + majorVersion + "." + buildVersionCode
+        compileSdkVersion 34
+        targetSdkVersion 34
+        versionCode flutterVersionCode.toInteger()
+        versionName flutterVersionName
     }
 
     buildTypes {
@@ -78,6 +62,4 @@ flutter {
     source '../..'
 }
 
-dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-}
+dependencies {}
