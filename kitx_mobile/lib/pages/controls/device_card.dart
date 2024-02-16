@@ -2,10 +2,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kitx_mobile/instances.dart';
-import 'package:kitx_mobile/models/device_info.dart';
-import 'package:kitx_mobile/models/enums/device_os_type.dart';
 import 'package:kitx_mobile/utils/datetime_format.dart' show datetimeToShortString;
+import 'package:kitx_mobile/utils/extensions/operating_systems_to_icon.dart';
 import 'package:kitx_mobile/utils/handlers/tasks/delayed_task.dart';
+import 'package:kitx_shared_dart/kitx_shared_dart.dart';
 
 /// Device Card
 class DeviceCard extends StatefulWidget {
@@ -24,7 +24,7 @@ class DeviceCard extends StatefulWidget {
   });
 
   /// Device Info Struct
-  final DeviceInfoStruct? info;
+  final DeviceInfo? info;
 
   /// Index in ListView
   final int index;
@@ -102,19 +102,21 @@ class _DeviceCard extends State<DeviceCard> with TickerProviderStateMixin {
     super.dispose();
   }
 
-  String getDeviceDisplayName(DeviceInfoStruct info) {
-    var result = info.deviceName;
+  String getDeviceDisplayName(DeviceInfo info) {
+    var result = info.device.deviceName;
 
-    if (info.deviceName == instances.deviceInfo.deviceName) result += ' ${'DevicePage_LocalDevice'.tr}';
+    if (info.device.deviceName == instances.deviceInfo.deviceName) {
+      result += ' ${'DevicePage_LocalDevice'.tr}';
+    }
     if (info.isMainDevice) result += ' ${'DevicePage_MainDevice'.tr}';
 
     return result;
   }
 
-  Color getDeviceCardColor(BuildContext context, DeviceInfoStruct info) {
+  Color getDeviceCardColor(BuildContext context, DeviceInfo info) {
     var result = context.theme.cardColor;
 
-    if (info.deviceName == instances.deviceInfo.deviceName) {
+    if (info.device.deviceName == instances.deviceInfo.deviceName) {
       result = context.isDarkMode ? Colors.indigo : Colors.limeAccent;
     }
     if (info.isMainDevice) result = context.isDarkMode ? Colors.deepPurple : Colors.tealAccent;
@@ -195,12 +197,12 @@ class _DeviceCard extends State<DeviceCard> with TickerProviderStateMixin {
                           ],
                         ),
                         Text(datetimeToShortString(info.sendTime)),
-                        Text(info.deviceMacAddress),
+                        Text(info.device.macAddress),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              '${info.iPv4}:${info.pluginServerPort}',
+                              '${info.device.iPv4}:${info.pluginsServerPort}',
                               style: const TextStyle(fontSize: 12),
                             ),
                             const SizedBox(width: 30),
@@ -208,7 +210,7 @@ class _DeviceCard extends State<DeviceCard> with TickerProviderStateMixin {
                               child: SingleChildScrollView(
                                 scrollDirection: Axis.horizontal,
                                 child: Text(
-                                  info.iPv6,
+                                  info.device.iPv6,
                                   textAlign: TextAlign.right,
                                   style: const TextStyle(fontSize: 12),
                                 ),

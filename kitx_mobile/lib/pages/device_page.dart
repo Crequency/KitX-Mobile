@@ -2,11 +2,11 @@ import 'package:community_material_icon/community_material_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kitx_mobile/instances.dart';
-import 'package:kitx_mobile/models/device_info.dart';
 import 'package:kitx_mobile/pages/controls/device_card.dart';
 import 'package:kitx_mobile/pages/controls/device_status_icon.dart';
 import 'package:kitx_mobile/pages/controls/device_status_label.dart';
 import 'package:kitx_mobile/pages/sub_pages/device_chat_page.dart';
+import 'package:kitx_shared_dart/kitx_shared_dart.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 /// Device Page
@@ -26,7 +26,7 @@ class _DevicePage extends State<DevicePage> {
   var backToTopButtonVisibility = false.obs;
   var justEnteredPage = true;
 
-  var selectedDeviceInfo = Rx<DeviceInfoStruct?>(null);
+  var selectedDeviceInfo = Rx<DeviceInfo?>(null);
 
   @override
   void initState() {
@@ -131,7 +131,7 @@ class _DevicePage extends State<DevicePage> {
                             return DeviceCard(
                               info,
                               index,
-                              key: Key('${info?.deviceName ?? ''}${info?.iPv4 ?? ''}'),
+                              key: Key('${info?.device.deviceName ?? ''}${info?.device.iPv4 ?? ''}'),
                               shouldDelay: justEnteredPage,
                               shouldScaleIn: instances.appInfo.animationEnabled.value,
                               onTap: () => {
@@ -159,8 +159,8 @@ class _DevicePage extends State<DevicePage> {
                                   instances.devicesService.deviceInfoList[i],
                                   i,
                                   width: (MediaQuery.of(context).size.width - 20) * deviceCardHorizontalScale,
-                                  key: Key('${instances.devicesService.deviceInfoList[i].deviceName}'
-                                      '${instances.devicesService.deviceInfoList[i].iPv4}'),
+                                  key: Key('${instances.devicesService.deviceInfoList[i].device.deviceName}'
+                                      '${instances.devicesService.deviceInfoList[i].device.iPv4}'),
                                   shouldDelay: justEnteredPage,
                                   shouldScaleIn: instances.appInfo.animationEnabled.value,
                                   onTap: () => {
@@ -195,7 +195,7 @@ class _DevicePage extends State<DevicePage> {
                 ),
                 Obx(
                   () => Text(
-                    selectedDeviceInfo.value?.deviceName ?? '',
+                    selectedDeviceInfo.value?.device.deviceName ?? '',
                     style: const TextStyle(fontSize: 20),
                   ),
                 ),
