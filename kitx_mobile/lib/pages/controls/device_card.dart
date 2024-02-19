@@ -106,9 +106,9 @@ class _DeviceCard extends State<DeviceCard> with TickerProviderStateMixin {
     var result = info.device.deviceName;
 
     if (info.device.deviceName == instances.deviceInfo.deviceName) {
-      result += ' ${'DevicePage_LocalDevice'.tr}';
+      result += ' ${'DevicesPage_LocalDevice'.tr}';
     }
-    if (info.isMainDevice) result += ' ${'DevicePage_MainDevice'.tr}';
+    if (info.isMainDevice) result += ' ${'DevicesPage_MainDevice'.tr}';
 
     return result;
   }
@@ -147,7 +147,7 @@ class _DeviceCard extends State<DeviceCard> with TickerProviderStateMixin {
             padding: EdgeInsets.only(bottom: width == null ? 20 : 8),
             child: badges.Badge(
               badgeContent: Text(
-                'DevicePage_PluginsCountText'.tr.replaceAll('%count%', (info.pluginsCount).toString()),
+                'DevicesPage_PluginsCountText'.tr.replaceAll('%count%', (info.pluginsCount).toString()),
                 style: const TextStyle(color: Colors.white),
               ),
               position: badges.BadgePosition.topEnd(top: 70, end: 15),

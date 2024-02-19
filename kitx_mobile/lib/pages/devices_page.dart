@@ -10,15 +10,15 @@ import 'package:kitx_shared_dart/kitx_shared_dart.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 /// Device Page
-class DevicePage extends StatefulWidget {
+class DevicesPage extends StatefulWidget {
   /// Constructor
-  const DevicePage({Key? key}) : super(key: key);
+  const DevicesPage({Key? key}) : super(key: key);
 
   @override
-  State<DevicePage> createState() => _DevicePage();
+  State<DevicesPage> createState() => _DevicesPage();
 }
 
-class _DevicePage extends State<DevicePage> {
+class _DevicesPage extends State<DevicesPage> {
   var _scrollController = ScrollController();
   var _paneController = PanelController();
 
@@ -48,7 +48,7 @@ class _DevicePage extends State<DevicePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('DevicePage_Title'.tr),
+        title: Text('DevicesPage_Title'.tr),
         actions: [
           OrientationBuilder(
             builder: (context, _) => MediaQuery.of(context).orientation == Orientation.landscape

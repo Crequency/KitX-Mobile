@@ -70,7 +70,7 @@ class HomePage extends StatelessWidget {
           ),
           trailing: const Icon(Icons.keyboard_arrow_right),
           shape: tileRadius,
-          onTap: () => (() => Get.to(() => const DevicePage())).delay(milliseconds: pageOpenDelay).execute(),
+          onTap: () => (() => Get.to(() => const DevicesPage())).delay(milliseconds: pageOpenDelay).execute(),
           onLongPress: () {
             showMenu(
               context: context,

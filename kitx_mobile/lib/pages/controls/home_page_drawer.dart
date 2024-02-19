@@ -36,7 +36,7 @@ class HomePageDrawer extends StatelessWidget {
             title: Text('Drawer_Devices'.tr),
             onTap: () {
               Get.back();
-              Get.to(() => const DevicePage());
+              Get.to(() => const DevicesPage());
             }.delay(milliseconds: pageOpenDelay).execute,
           ),
           ListTile(
