@@ -20,6 +20,8 @@ class LocalNetworkInfo {
 
   /// Get an instance for [LocalNetworkInfo] class
   static Future<LocalNetworkInfo> get() async {
+    await requestNetworkRelatedPermissions();
+
     var getBackupDeviceIdStringForAndroid = () async {
       var _deviceInfoPlugin = DeviceInfoPlugin();
 
@@ -46,8 +48,6 @@ class LocalNetworkInfo {
     var _deviceInfoPlugin = DeviceInfoPlugin();
 
     late String? _ipv4, _ipv6, _mac;
-
-    await requestNetworkRelatedPermissions();
 
     _ipv4 = await _networkInfo.getWifiIP();
     _ipv6 = await _networkInfo.getWifiIPv6();
