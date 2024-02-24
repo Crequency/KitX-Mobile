@@ -66,14 +66,6 @@ class Instances {
     deviceInfo = await LocalDeviceInfo.get();
     networkInfo = await LocalNetworkInfo.get();
 
-    connectivity.onConnectivityChanged.listen(
-      (result) async {
-        instances.deviceInfo = await LocalDeviceInfo.get();
-        instances.networkInfo = await LocalNetworkInfo.get();
-        restartDevicesServer();
-      },
-    );
-
     // Init WebService
     await devicesDiscoveryService.init();
 
@@ -82,6 +74,14 @@ class Instances {
 
     // Init NotificationService
     await notificationService.initAsync();
+
+    connectivity.onConnectivityChanged.listen(
+      (result) async {
+        instances.deviceInfo = await LocalDeviceInfo.get();
+        instances.networkInfo = await LocalNetworkInfo.get();
+        restartDevicesServer();
+      },
+    );
   }
 
   /// Restart [devicesService] and [devicesDiscoveryService]
