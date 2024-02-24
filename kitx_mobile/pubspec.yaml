@@ -9,6 +9,7 @@ environment:
   sdk: ">=3.0.0 <4.0.0"
 
 dependencies:
+  awesome_notifications: ^0.7.4+1
   badges: ^3.1.2 # 徽章
   battery_plus: ^5.0.3 # 电池数据
   community_material_icon: ^5.9.55 # Material Design Icons 社区贡献

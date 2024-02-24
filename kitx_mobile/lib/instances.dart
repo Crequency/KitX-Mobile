@@ -7,6 +7,7 @@ import 'package:kitx_mobile/data/local_device_info.dart';
 import 'package:kitx_mobile/data/local_network_info.dart';
 import 'package:kitx_mobile/services/devices_discovery_service.dart';
 import 'package:kitx_mobile/services/devices_service.dart';
+import 'package:kitx_mobile/services/notification.dart';
 import 'package:kitx_mobile/utils/config.dart';
 import 'package:kitx_mobile/utils/handlers/tasks/delayed_task.dart';
 import 'package:kitx_mobile/utils/handlers/url_handler.dart';
@@ -53,6 +54,9 @@ class Instances {
   /// Instance for [DeviceService] class
   var devicesService = DeviceService();
 
+  /// Instance for [NotificationService] class
+  var notificationService = NotificationService();
+
   /// Is in debug mode
   var isDebugMode = kDebugMode.obs;
 
@@ -75,6 +79,9 @@ class Instances {
 
     // Init DeviceService
     await devicesService.init();
+
+    // Init NotificationService
+    await notificationService.initAsync();
   }
 
   /// Restart [devicesService] and [devicesDiscoveryService]
