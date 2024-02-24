@@ -7,6 +7,7 @@ import 'package:f_logs/model/flog/flog_config.dart';
 import 'package:f_logs/model/flog/log_level.dart';
 import 'package:f_logs/utils/formatter/formate_type.dart';
 import 'package:f_logs/utils/timestamp/timestamp_format.dart';
+import 'package:stack_trace/stack_trace.dart';
 
 var _config = LogsConfig()
   ..isDebuggable = true
@@ -26,7 +27,11 @@ class Log {
   void info(String message) => FLog.info(text: message);
 
   /// Log a message at level [LogLevel.ERROR].
-  void error(String message) => FLog.error(text: message);
+  void error(String message) {
+    var trace = Trace.current().frames;
+    var filteredTrace = trace.where((frame) => !frame.library.contains('package:kitx_mobile/utils/log.dart'));
+    FLog.error(text: message, stacktrace: Trace(filteredTrace));
+  }
 
   /// Log a message at level [LogLevel.WARNING].
   void warning(String message) => FLog.warning(text: message);

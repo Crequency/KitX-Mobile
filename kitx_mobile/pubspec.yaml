@@ -35,6 +35,7 @@ dependencies:
   shared_preferences: ^2.2.2
   sliding_up_panel: ^2.0.0+1 # 向上滑动布局
   # sms_receiver: ^0.4.1 # 短信接收
+  stack_trace: ^1.11.1
   url_launcher: ^6.2.4 # 打开链接
   vibration: ^1.8.4 # 手机震动
   wakelock_plus: ^1.1.4
