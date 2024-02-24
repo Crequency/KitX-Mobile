@@ -202,8 +202,8 @@ class _AboutPageState extends State<AboutPage> {
               const ContributorChip(name: 'Dynesshely', url: 'https://github.com/Dynesshely'),
               const SizedBox(width: 10),
               const ContributorChip(
-                name: 'LYF511',
-                url: 'https://github.com/LYF511',
+                name: 'Cranyozen',
+                url: 'https://github.com/Cranyozen',
               ),
               const SizedBox(width: 10),
               const ContributorChip(
