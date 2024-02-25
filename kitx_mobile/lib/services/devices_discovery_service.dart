@@ -5,12 +5,13 @@ import 'dart:io';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:get/get.dart';
 import 'package:kitx_mobile/instances.dart';
-import 'package:kitx_mobile/models/device_info.dart';
 import 'package:kitx_mobile/services/public/service_status.dart';
 import 'package:kitx_mobile/services/service.dart';
 import 'package:kitx_mobile/utils/config.dart';
+import 'package:kitx_mobile/utils/extensions/null_value_checker.dart';
 import 'package:kitx_mobile/utils/handlers/tasks/delayed_task.dart';
 import 'package:kitx_mobile/utils/log.dart';
+import 'package:kitx_shared_dart/kitx_shared_dart.dart';
 
 /// [DevicesDiscoveryService] class
 class DevicesDiscoveryService implements Service {
@@ -62,19 +63,20 @@ class DevicesDiscoveryService implements Service {
     serviceStatus.value = ServiceStatus.running;
 
     try {
-      var deviceInfo = DeviceInfoStruct(
+      var deviceInfo = DeviceInfo(
         ((b) => b
-          ..deviceName = instances.deviceInfo.deviceName
-          ..deviceOSVersion = instances.deviceInfo.osDescription
-          ..iPv4 = instances.networkInfo.ipv4
-          ..iPv6 = instances.networkInfo.ipv6
-          ..deviceMacAddress = instances.networkInfo.mac
-          ..pluginServerPort = 0
+          ..device = DeviceLocator(((l) => l
+            ..deviceName = instances.deviceInfo.deviceName.ifNull('')
+            ..iPv4 = instances.networkInfo.ipv4.ifNull('')
+            ..iPv6 = instances.networkInfo.ipv6.ifNull('')
+            ..macAddress = instances.networkInfo.mac.ifNull(''))).toBuilder()
+          ..deviceOSVersion = instances.deviceInfo.osDescription.ifNull('')
+          ..pluginsServerPort = 0
           ..pluginsCount = 0
           ..sendTime = DateTime.now().toUtc()
           ..isMainDevice = false
-          ..deviceServerPort = 0
-          ..deviceServerBuildTime = DateTime.now().toUtc()
+          ..devicesServerPort = 0
+          ..devicesServerBuildTime = DateTime.now().toUtc()
           ..deviceOSType = config.webServiceDeviceOSType),
       );
 
@@ -146,7 +148,7 @@ class DevicesDiscoveryService implements Service {
               log.info('UDP receive: $_data');
 
               try {
-                var _deviceInfo = DeviceInfoStruct.fromString(_data);
+                var _deviceInfo = DeviceInfo.fromString(_data);
                 if (_deviceInfo != null) await instances.devicesService.addDevice(_deviceInfo);
               } catch (e, stack) {
                 log.error('Can not deserialize device info pack: `$_data`. Error: $e $stack');

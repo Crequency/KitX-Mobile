@@ -13,24 +13,10 @@ var thirdPartyDataList = [
   ),
   ThirdPartyData(
     'battery_plus',
-    '^5.0.2',
+    '^5.0.3',
     'fluttercommunity',
     'https://pub.dev/packages/battery_plus',
     'https://github.com/fluttercommunity/plus_plugins/tree/main/packages/battery_plus/battery_plus',
-  ),
-  ThirdPartyData(
-    'built_collection',
-    '^5.1.1',
-    '',
-    'https://pub.dev/packages/built_collection',
-    '',
-  ),
-  ThirdPartyData(
-    'built_value',
-    '^8.8.1',
-    'google',
-    'https://pub.dev/packages/built_value',
-    'https://github.com/google/built_value.dart/tree/master/built_value',
   ),
   ThirdPartyData(
     'community_material_icon',
@@ -48,7 +34,7 @@ var thirdPartyDataList = [
   ),
   ThirdPartyData(
     'connectivity_plus',
-    '^2.3.8',
+    '^5.0.2',
     'fluttercommunity',
     'https://pub.dev/packages/connectivity_plus',
     'https://github.com/fluttercommunity/plus_plugins/tree/main/packages/connectivity_plus/connectivity_plus',
@@ -83,14 +69,14 @@ var thirdPartyDataList = [
   ),
   ThirdPartyData(
     'flutter_blue_plus',
-    '^1.31.8',
+    '^1.31.15',
     '',
     'https://pub.dev/packages/flutter_blue_plus',
     '',
   ),
   ThirdPartyData(
     'flutter_chat_ui',
-    '^1.6.10',
+    '^1.6.12',
     'flyerhq',
     'https://pub.dev/packages/flutter_chat_ui',
     'https://github.com/flyerhq/flutter_chat_ui',
@@ -101,6 +87,13 @@ var thirdPartyDataList = [
     '',
     'https://pub.dev/packages/get',
     '',
+  ),
+  ThirdPartyData(
+    'kitx_shared_dart',
+    '^3.24.10+6829-patch-1',
+    'Crequency',
+    'https://pub.dev/packages/kitx_shared_dart',
+    'https://github.com/Crequency/KitX-Standard/KitX.Shared.Dart/',
   ),
   ThirdPartyData(
     'network_info_plus',
@@ -118,7 +111,7 @@ var thirdPartyDataList = [
   ),
   ThirdPartyData(
     'permission_handler',
-    '^11.2.0',
+    '^11.3.0',
     'baseflow',
     'https://pub.dev/packages/permission_handler',
     'https://github.com/baseflow/flutter-permission-handler',
@@ -146,7 +139,7 @@ var thirdPartyDataList = [
   ),
   ThirdPartyData(
     'url_launcher',
-    '^6.2.3',
+    '^6.2.4',
     'flutter',
     'https://pub.dev/packages/url_launcher',
     'https://github.com/flutter/packages/tree/main/packages/url_launcher/url_launcher',

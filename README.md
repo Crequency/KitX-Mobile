@@ -1,12 +1,13 @@
 # KitX Mobile
 
-Mobile Client for KitX  
+Mobile Client for KitX
+
 Runs on `Android`, `iOS`
 
 ## Build project
 
-> **Warning**  
-> Please use physical devices to debug, any emulator may cause problems.  
+> **Warning**
+> Please use physical devices to debug, any emulator may cause problems.
 > Android emulators are currently known to experience problems; the situation with iOS simulators is currently unknown.
 
 1. Pass `flutter doctor -v`
@@ -30,7 +31,7 @@ Runs on `Android`, `iOS`
 
 ## Tools
 
-- `update-version.py` for `[iOS]`
+- `update-version.py` for both `android` and `iOS`
   - This script changes version number in `pubspec.yaml`.
   - Run this script in `XCode` build phases by add custom script:
     ```shell
@@ -42,4 +43,3 @@ Runs on `Android`, `iOS`
   - Tow arguments:
     - `--export-for-mobile-about`
     - `--export-for-website-docs`
-

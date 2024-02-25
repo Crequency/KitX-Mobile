@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import 'package:kitx_mobile/pages/test_pages/device_info_test.dart';
 import 'package:kitx_mobile/pages/test_pages/device_sensors.dart';
 import 'package:kitx_mobile/pages/test_pages/network_info_test.dart';
+import 'package:wakelock_plus/wakelock_plus.dart';
 
 /// [TestPage] Class
 class TestPage extends StatefulWidget {
@@ -30,6 +30,25 @@ class _TestPageState extends State<TestPage> with SingleTickerProviderStateMixin
         headerSliverBuilder: (context, innerBoxIsScrolled) => [
           SliverAppBar(
             title: Text('TestPage_Title'.tr),
+            actions: [
+              PopupMenuButton(
+                tooltip: '',
+                padding: EdgeInsets.all(0),
+                icon: const Icon(Icons.handyman),
+                position: PopupMenuPosition.under,
+                itemBuilder: (context) => [
+                  PopupMenuItem(
+                    child: const Text('Enable awaker'),
+                    onTap: () => WakelockPlus.enable(),
+                  ),
+                  PopupMenuItem(
+                    child: const Text('Disable awaker'),
+                    onTap: () => WakelockPlus.disable(),
+                  ),
+                ],
+              ),
+              const SizedBox(width: 10),
+            ],
             pinned: true,
             snap: true,
             floating: true,

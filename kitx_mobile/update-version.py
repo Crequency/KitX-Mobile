@@ -3,7 +3,7 @@ import re
 from datetime import datetime, timezone
 
 file_pubspec = "./pubspec.yaml"
-major_version = "3.23.04"
+major_version = "3.24.10"
 
 def calculateLatestVersionBuildNumber():
     current_utc = datetime.now(timezone.utc)
@@ -18,17 +18,27 @@ def calculateLatestVersionBuildNumber():
 
 def updateVersion():
     ver = calculateLatestVersionBuildNumber()
-    pattern = re.compile(r"^version: \d.\d.\d\+\d$")
+    pattern = re.compile(r"^version: \d+.\d+.\d+\+\d+(-[a-zA-Z0-9-]+)$")
     temp_lines = []
-    
+
     with open(file_pubspec, "r") as file:
         for line in file:
-            new_line = pattern.sub(
-                "version: " + major_version + "+" + ver,
-                line
-            )
-            temp_lines.append(new_line)
-            
+            match = re.match(pattern, line);
+            if match:
+                append = match.group(1)
+
+                if match.group(1) == None:
+                    append = ""
+
+                new_line = pattern.sub(
+                    "version: " + major_version + "+" + ver + append,
+                    line
+                )
+
+                temp_lines.append(new_line)
+            else:
+                temp_lines.append(line)
+
     with open(file_pubspec, "w") as file:
         file.writelines(temp_lines)
 

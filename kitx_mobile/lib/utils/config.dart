@@ -1,9 +1,9 @@
 library kitx_moblie.config;
 
 import 'package:kitx_mobile/instances.dart';
-import 'package:kitx_mobile/models/enums/device_os_type.dart';
 import 'package:kitx_mobile/utils/extensions/int_ext.dart';
 import 'package:kitx_mobile/utils/extensions/theme_mode_ext.dart';
+import 'package:kitx_shared_dart/kitx_shared_dart.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 /// [Config] class
@@ -27,7 +27,7 @@ class Config {
   var webServiceDeviceInfoTTLSeconds = 7;
 
   /// WebService local device os type
-  var webServiceDeviceOSType = DeviceOSTypeEnum.Android;
+  var webServiceDeviceOSType = OperatingSystems.android;
 
   /// Load all configurations
   Future<void> loadAsync() async {
