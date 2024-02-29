@@ -6,5 +6,8 @@
 		{
 			"path": "kitx_mobile"
 		}
-	]
+	],
+	"settings": {
+		"git.autorefresh": true
+	}
 }

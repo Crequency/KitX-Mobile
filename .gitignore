@@ -1,4 +1,8 @@
 ## Platform Ignore
 *.DS_Store
 
+## IDEA Settings
 .idea/
+
+## VSCode Personal Settings
+.vscode/
