@@ -3,7 +3,7 @@ description: Mobile Client for KitX
 
 publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
-version: 3.24.10+6829
+version: 3.24.10+563
 
 environment:
   sdk: ">=3.0.0 <4.0.0"
