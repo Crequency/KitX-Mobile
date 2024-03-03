@@ -1,0 +1,1 @@
+﻿Allow you to directly control your local devices through the mobile device, check devices' states, call the plug-ins remotely, and adjust the workflow

@@ -1,5 +1,4 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.crequency.kitx.mobile">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.crequency.kitx.mobile">
 
     <queries>
         <intent>
@@ -71,27 +70,16 @@
             android:value="2" />
     </application>
 
-    <!--模糊位置访问权限-->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <!--获取精确地址权限-->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <!--网络访问权限-->
     <uses-permission android:name="android.permission.INTERNET" />
-    <!--网络信息权限-->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <!--WIFI 信息-->
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <!--获取精确 MAC 地址权限-->
     <uses-permission android:name="android.permission.LOCAL_MAC_ADDRESS" />
-    <!--文件写权限-->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <!--文件读权限-->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <!--SMS 接收权限-->
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
-    <!--蓝牙相关权限-->
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
-    <!--马达振动权限-->
     <uses-permission android:name="android.permission.VIBRATE" />
 </manifest>

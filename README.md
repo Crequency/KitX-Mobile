@@ -1,44 +1,45 @@
 # KitX Mobile
 
-Mobile Client for KitX  
+Mobile Client for KitX
+
 Runs on `Android`, `iOS`
 
 ## Build project
+
 > **Warning**
 > Please use physical devices to debug, any emulator may cause problems.
+> Android emulators are currently known to experience problems; the situation with iOS simulators is currently unknown.
 
 1. Pass `flutter doctor -v`
-2. `[If Live in China Mainland]` Config flutter related SDKs mirror through commands:
+2. `[China Mainland Developer]` Config flutter related SDKs mirror through commands:
 
-   ```SHELL
+   ```shell
    set PUB_HOSTED_URL=https://mirrors.tuna.tsinghua.edu.cn/dart-pub
    set FLUTTER_STORAGE_BASE_URL=https://mirrors.tuna.tsinghua.edu.cn/flutter
    ```
 
-   > Only works in current window. Config system envrionment varieties for permanent.
+   > Only works in current session. Config system envrionment varieties for permanent effect.
 3. Set system environment varieties `GRADLE_OPTS` to `-Dfile.encoding=UTF-8`.
-4. Use `flutter run` to run the project, but you need connect your phone to your computer in adb first.
-5. Use `flutter build --split-per-abi` to build the project, remove `--split-per-abi` arguments for flat apk which is much bigger.
-6. The output apk is in `/kitx_mobile/build/app/outputs/flutter-apk/` folder.
+4. Run `init_packages.sh/ps1` to fetch packages.
+5. Use `flutter run` to run the project
+   - `[Android]` You need connect your phone to your computer in `adb` first.
+   - `[iOS]` Open your `simulator` first or connect your iPhone to your `XCode`.
+6. `[Android]` Use `flutter build --split-per-abi` to build the project, remove `--split-per-abi` arguments for flat apk which is much bigger but support more platforms.
+   - We suggest your to run `build.py` instead.
+   - `[iOS]` Build app in `XCode`.
+7. `[Android]` The output apk is in `/kitx_mobile/build/app/outputs/flutter-apk/` folder.
 
-## 构建项目
+## Tools
 
-> **Warning**
-> 在为此仓库作出贡献时，请先阅读 [代码开发规范](code.style.md)
-
-> **Warning**
-> 请使用实体机调试，任何模拟器都可能出现不可预料的问题
-
-1. 请尽可能确保 `flutter doctor -v` 通过并尽可能使用最新稳定版本的 flutter sdk
-2. 使用 Windows 开发时，可以参考以下命令配置临时 flutter 镜像（仅在当前窗口有效）：
-
-   ```
-   set PUB_HOSTED_URL=https://mirrors.tuna.tsinghua.edu.cn/dart-pub
-   set FLUTTER_STORAGE_BASE_URL=https://mirrors.tuna.tsinghua.edu.cn/flutter
-   ```
-
-   若要配置永久镜像，请修改系统环境变量
-3. 在编译时，如出现输出乱码，请修改系统环境变量 `GRADLE_OPTS` 为 `-Dfile.encoding=UTF-8` 即可解决
-4. 使用 `flutter run` 运行项目，但是需要先将手机通过 adb 连接到电脑上
-5. 使用 `flutter build --split-per-abi` 构建项目，移除 `--split-per-abi` 参数可以构建出适应多个 CPU 架构的 apk，但是体积会更大
-6. 构建出的 apk 位于 `/kitx_mobile/build/app/outputs/flutter-apk/` 文件夹
+- `update-version.py` for both `android` and `iOS`
+  - This script changes version number in `pubspec.yaml`.
+  - Run this script in `XCode` build phases by add custom script:
+    ```shell
+    cd ..
+    python3 update-version.py
+    ```
+- `dependencies-analyzer.py`
+  - This script analyze `pubspec.yaml` and update thirdparty data in both mobile and kitx docs.
+  - Tow arguments:
+    - `--export-for-mobile-about`
+    - `--export-for-website-docs`

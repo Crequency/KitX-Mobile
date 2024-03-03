@@ -2,17 +2,16 @@ import 'dart:async';
 
 import 'package:get/get.dart';
 import 'package:kitx_mobile/instances.dart';
-import 'package:kitx_mobile/models/device_info.dart';
-import 'package:kitx_mobile/models/enums/device_os_type.dart';
 import 'package:kitx_mobile/services/public/service_status.dart';
 import 'package:kitx_mobile/services/service.dart';
 import 'package:kitx_mobile/utils/config.dart';
 import 'package:kitx_mobile/utils/log.dart';
+import 'package:kitx_shared_dart/kitx_shared_dart.dart';
 
 /// Device Service
 class DeviceService implements Service {
   /// Device Info List
-  final deviceInfoList = RxList<DeviceInfoStruct>([]);
+  final deviceInfoList = RxList<DeviceInfo>([]);
 
   /// Local Device Card Added
   var localDeviceCardAdded = false;
@@ -20,14 +19,16 @@ class DeviceService implements Service {
   /// Main Device Card Added
   var mainDeviceCardAdded = false;
 
-  /// Add a device by [DeviceInfoStruct]
-  Future<void> addDevice(DeviceInfoStruct info) async {
+  /// Add a device by [DeviceInfo]
+  Future<void> addDevice(DeviceInfo info) async {
     if (serviceStatus != ServiceStatus.running) return;
 
     var _tempList = deviceInfoList.toList();
 
     var findIndex = _tempList.indexWhere(
-      (element) => element.iPv4 == info.iPv4 || element.deviceMacAddress == info.deviceMacAddress,
+      (element) =>
+          element.device.iPv4 == info.device.iPv4 ||
+          element.device.macAddress == info.device.macAddress,
     );
 
     if (findIndex != -1) {
@@ -37,7 +38,7 @@ class DeviceService implements Service {
     } else {
       // Add new device.
 
-      if (info.deviceName == instances.deviceInfo.deviceName) {
+      if (info.device.deviceName == instances.deviceInfo.deviceName) {
         // Local device.
 
         deviceInfoList.insert(0, info);
@@ -59,13 +60,13 @@ class DeviceService implements Service {
 
         var countDevices = (osType) => _tempList.where((element) => element.deviceOSType == osType).length;
 
-        var devicesCountPerOS = <DeviceOSTypeEnum, int>{};
-        for (var osType in DeviceOSTypeEnum.values) {
+        var devicesCountPerOS = <OperatingSystems, int>{};
+        for (var osType in OperatingSystems.values) {
           devicesCountPerOS[osType] = countDevices(osType);
         }
 
         var localDeviceOS = _tempList
-            .firstWhereOrNull((element) => element.deviceName == instances.deviceInfo.deviceName)
+            .firstWhereOrNull((element) => element.device.deviceName == instances.deviceInfo.deviceName)
             ?.deviceOSType;
         var mainDeviceOS = _tempList.firstWhereOrNull((element) => element.isMainDevice)?.deviceOSType;
 
@@ -75,11 +76,11 @@ class DeviceService implements Service {
         var instIndex = fixedCardsCount;
 
         var sortList = [
-          DeviceOSTypeEnum.Windows,
-          DeviceOSTypeEnum.Linux,
-          DeviceOSTypeEnum.MacOS,
-          DeviceOSTypeEnum.Android,
-          DeviceOSTypeEnum.iOS,
+          OperatingSystems.windows,
+          OperatingSystems.linux,
+          OperatingSystems.macOS,
+          OperatingSystems.android,
+          OperatingSystems.iOS,
         ];
 
         for (var element in sortList) {
@@ -122,7 +123,7 @@ class DeviceService implements Service {
         if (now.difference(time).inSeconds > config.webServiceDeviceInfoTTLSeconds) {
           deviceInfoList.remove(each);
 
-          if (each.deviceName == instances.deviceInfo.deviceName) {
+          if (each.device.deviceName == instances.deviceInfo.deviceName) {
             localDeviceCardAdded = false;
 
             // If local device removed, restart devices server.
