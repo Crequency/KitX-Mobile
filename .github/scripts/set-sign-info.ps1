@@ -32,7 +32,8 @@ while (([DirectoryInfo]$currentPath).FullName -ne ([DirectoryInfo]$currentPath).
     if ($resolvedKitxMobilePath -and (Test-Path $resolvedKitxMobilePath -Type Container)) {
         Set-Location $resolvedKitxMobilePath.ProviderPath
         break
-    } else {
+    }
+    else {
         $currentPath = ([DirectoryInfo]$currentPath).Parent.FullName
     }
 }
@@ -51,7 +52,7 @@ Write-Output $content > $fileName
 
 Set-Location app
 
-if ($null -eq $jksBase64 -or '' -eq $jksBase64) {
+if (($null -eq $jksBase64) -or ('' -eq $jksBase64)) {
     Write-Error "JKS file is not provided"
     exit 1
 }
