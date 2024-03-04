@@ -16,21 +16,25 @@ storePassword=$storePassword
 keyAlias=$keyAlias
 storeFile=$storeFile"
 
-$currentPath = Convert-Path .
+$currentPath = $pwd.ToString()
 
-while ((Convert-Path $currentPath) -ne ([DirectoryInfo]$currentPath).Parent.FullName) {
+Write-Debug "# Current path: $currentPath"
+
+while (([DirectoryInfo]$currentPath).FullName -ne ([DirectoryInfo]$currentPath).Parent.FullName) {
+    Write-Debug "# Current path: $currentPath"
+
     $relativeKitxMobilePath = Join-Path $currentPath "kitx_mobile"
     $resolvedKitxMobilePath = Resolve-Path $relativeKitxMobilePath -ErrorAction SilentlyContinue
+
+    Write-Debug "# Relative path: $relativeKitxMobilePath"
+    Write-Debug "# Resolved path: $resolvedKitxMobilePath"
 
     if ($resolvedKitxMobilePath -and (Test-Path $resolvedKitxMobilePath -Type Container)) {
         Set-Location $resolvedKitxMobilePath.ProviderPath
         break
+    } else {
+        $currentPath = ([DirectoryInfo]$currentPath).Parent.FullName
     }
-    else {
-        $currentPath = [DirectoryInfo]$currentPath.Parent.FullName
-    }
-
-    Write-Host "Changing directory to $pwd"
 }
 
 if (Test-Path "pubspec.yaml") {
