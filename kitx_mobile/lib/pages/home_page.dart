@@ -4,6 +4,7 @@ import 'package:kitx_mobile/instances.dart';
 import 'package:kitx_mobile/pages/controls/device_status_label.dart';
 import 'package:kitx_mobile/pages/controls/home_page_drawer.dart';
 import 'package:kitx_mobile/pages/pages.dart';
+import 'package:kitx_mobile/pages/plugins_page.dart';
 import 'package:kitx_mobile/utils/handlers/tasks/delayed_task.dart';
 
 /// HomePage
@@ -94,24 +95,24 @@ class HomePage extends StatelessWidget {
       SizedBox(
         width: tileWidth,
         child: ListTile(
-          leading: const Icon(Icons.alternate_email),
-          title: Text('Drawer_Account'.tr),
+          leading: const Icon(Icons.layers),
+          title: Text('Drawer_Plugins'.tr),
           subtitle: isLandscape ? const Text('developing ...') : null,
           trailing: const Icon(Icons.keyboard_arrow_right),
           shape: tileRadius,
-          onTap: () => (() => Get.to(() => const AccountPage())).delay(milliseconds: pageOpenDelay).execute(),
+          onTap: () => (() => Get.to(() => const PluginsPage())).delay(milliseconds: pageOpenDelay).execute(),
         ),
       ),
       const SizedBox(height: tilesPadding),
       SizedBox(
         width: tileWidth,
         child: ListTile(
-          leading: const Icon(Icons.bug_report),
-          title: Text('Drawer_Test'.tr),
-          subtitle: isLandscape ? const Text('no new tests') : null,
+          leading: const Icon(Icons.alternate_email),
+          title: Text('Drawer_Account'.tr),
+          subtitle: isLandscape ? const Text('developing ...') : null,
           trailing: const Icon(Icons.keyboard_arrow_right),
           shape: tileRadius,
-          onTap: () => (() => Get.to(() => const TestPage())).delay(milliseconds: pageOpenDelay).execute(),
+          onTap: () => (() => Get.to(() => const AccountPage())).delay(milliseconds: pageOpenDelay).execute(),
         ),
       ),
       const SizedBox(height: tilesPadding),

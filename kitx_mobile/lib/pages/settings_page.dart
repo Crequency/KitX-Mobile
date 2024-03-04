@@ -4,6 +4,9 @@ import 'package:f_logs/f_logs.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kitx_mobile/instances.dart';
+import 'package:kitx_mobile/pages/test_pages/device_info_test.dart';
+import 'package:kitx_mobile/pages/test_pages/device_sensors.dart';
+import 'package:kitx_mobile/pages/test_pages/network_info_test.dart';
 import 'package:kitx_mobile/utils/composer.dart';
 import 'package:kitx_mobile/utils/config.dart';
 import 'package:kitx_mobile/utils/converters/size_converter.dart';
@@ -292,6 +295,35 @@ class _SettingsPageState extends State<SettingsPage> {
             ),
             const SettingsGroupDivider(),
             spacer: null,
+          ),
+          group(
+            SettingsGroupTitle(titleKey: 'Drawer_Test'.tr),
+            Container(
+              margin: EdgeInsets.symmetric(horizontal: 20),
+              child: Wrap(
+                alignment: WrapAlignment.center,
+                spacing: 8.0,
+                runSpacing: 4.0,
+                children: [
+                  ElevatedButton.icon(
+                    onPressed: () => Get.to(() => const DeviceInfoTestPage()),
+                    icon: const Icon(Icons.devices),
+                    label: const Text('Device Info'),
+                  ),
+                  ElevatedButton.icon(
+                    onPressed: () => Get.to(() => DeviceSensorsPage()),
+                    icon: const Icon(Icons.sensors),
+                    label: const Text('Device Sensors'),
+                  ),
+                  ElevatedButton.icon(
+                    onPressed: () => Get.to(() => const NetworkInfoTestPage()),
+                    icon: const Icon(Icons.wifi),
+                    label: const Text('Network Info'),
+                  ),
+                ],
+              ),
+            ),
+            const SettingsGroupDivider(),
           ),
           const SizedBox(height: 300),
         ],
