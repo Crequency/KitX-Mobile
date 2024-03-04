@@ -26,7 +26,7 @@ class GyroscopeDisplayStandState extends State<GyroscopeDisplayStand> {
 
   @override
   void initState() {
-    gyroscopeEventStream(samplingPeriod: Duration(microseconds: 20)).listen((event) {
+    gyroscopeDataListener = gyroscopeEventStream(samplingPeriod: Duration(microseconds: 50)).listen((event) {
       dirX.value = event.x;
       dirY.value = event.y;
       dirZ.value = event.z;
@@ -49,7 +49,6 @@ class GyroscopeDisplayStandState extends State<GyroscopeDisplayStand> {
         directionZ.value = '👉';
       }
     });
-
     super.initState();
   }
 

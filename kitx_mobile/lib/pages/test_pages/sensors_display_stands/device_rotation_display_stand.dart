@@ -28,15 +28,14 @@ class DeviceRotationDisplayStandState extends State<DeviceRotationDisplayStand> 
 
   /// Begin listen gyroscope sensor's datas
   void beginListenGyroscopeData() {
-    gyroscopeEventStream(samplingPeriod: Duration(milliseconds: 20)).listen((event) {
-      DeviceRotationHost.rotateWithAcceleration(event.x, event.y, event.z, 0.2);
+    gyroscopeDataListener = gyroscopeEventStream(samplingPeriod: Duration(milliseconds: 20)).listen((event) {
+      DeviceRotationHost.rotateWithAcceleration(event.x, event.y, event.z, 0.02);
     });
   }
 
   @override
   void initState() {
     beginListenGyroscopeData();
-
     super.initState();
   }
 
