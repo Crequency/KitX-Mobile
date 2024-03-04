@@ -3,7 +3,7 @@ description: Mobile Client for KitX
 
 publish_to: "none"
 
-version: 3.24.10+564
+version: 24.10.63+564
 
 environment:
   sdk: ">=3.3.0 <4.0.0"

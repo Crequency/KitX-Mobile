@@ -3,7 +3,7 @@ import re
 from datetime import datetime, timezone
 
 file_pubspec = "./pubspec.yaml"
-major_version = "3.24.10"
+major_version = "24.10"
 
 def calculateLatestVersionBuildNumber():
     current_utc = datetime.now(timezone.utc)
@@ -11,6 +11,12 @@ def calculateLatestVersionBuildNumber():
     delta_days = (current_utc - specified_time).days
     build_version_code = delta_days % 65535
     return str(build_version_code)
+
+def calculateThirdVersionField():
+    now_utc = datetime.now(timezone.utc)
+    start_of_year_utc = datetime(now_utc.year, 1, 1, tzinfo=timezone.utc)
+    days_passed_this_year = (now_utc - start_of_year_utc).days
+    return str(days_passed_this_year)
 
 def updateVersion():
     ver = calculateLatestVersionBuildNumber()
@@ -27,7 +33,7 @@ def updateVersion():
                     append = ""
 
                 new_line = pattern.sub(
-                    "version: " + major_version + "+" + ver + append,
+                    "version: " + major_version + "." + calculateThirdVersionField() + "+" + ver + append,
                     line
                 )
 
