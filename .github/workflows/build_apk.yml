@@ -51,7 +51,7 @@ jobs:
           StoreFile: ${{ secrets.JKS_STOREFILE }}
           JksBase64: ${{ secrets.JKS_BASE64 }}
         run: |
-          ./set-sign-info.ps1 -keyPassword $KeyPassword -storePassword $StorePassword -keyAlias $KeyAlias -storeFile $StoreFile -jksBase64 $JksBase64
+          ./set-sign-info.ps1 -keyPassword $env:KeyPassword -storePassword $env:StorePassword -keyAlias $env:KeyAlias -storeFile $env:StoreFile -jksBase64 $env:JksBase64
 
       - name: Build
         working-directory: kitx_mobile
