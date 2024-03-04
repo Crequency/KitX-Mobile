@@ -39,19 +39,31 @@ Point rotateAll(Point p, double yaw, double pitch, double roll) => rotateX(
 /// Rotate X
 Point rotateX(Point p, double alpha) {
   alpha *= pi / 180;
-  return Point(cos(alpha) * p.x + sin(alpha) * p.z, p.y, -sin(alpha) * p.x + cos(alpha) * p.z);
+  return Point(
+    cos(alpha) * p.x + sin(alpha) * p.z,
+    p.y,
+    -sin(alpha) * p.x + cos(alpha) * p.z,
+  );
 }
 
 /// Rotate Y
 Point rotateY(Point p, double beta) {
   beta *= pi / 180;
-  return Point(p.x, cos(beta) * p.y - sin(beta) * p.z, sin(beta) * p.y + cos(beta) * p.z);
+  return Point(
+    p.x,
+    cos(beta) * p.y - sin(beta) * p.z,
+    sin(beta) * p.y + cos(beta) * p.z,
+  );
 }
 
 /// Rotate Z
 Point rotateZ(Point p, double gamma) {
   gamma *= pi / 180;
-  return Point(cos(gamma) * p.x - sin(gamma) * p.y, sin(gamma) * p.x + cos(gamma) * p.y, p.z);
+  return Point(
+    cos(gamma) * p.x - sin(gamma) * p.y,
+    sin(gamma) * p.x + cos(gamma) * p.y,
+    p.z,
+  );
 }
 
 /// Get direction

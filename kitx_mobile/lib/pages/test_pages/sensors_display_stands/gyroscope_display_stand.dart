@@ -1,6 +1,4 @@
-﻿// ignore_for_file: non_constant_identifier_names, public_member_api_docs
-
-import 'dart:async';
+﻿import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -9,40 +7,46 @@ import 'package:kitx_mobile/pages/test_pages/sensors_display_stands/device_rotat
 
 import 'package:sensors_plus/sensors_plus.dart';
 
+/// GyroscopeDisplayStand
 class GyroscopeDisplayStand extends StatefulWidget {
   @override
   GyroscopeDisplayStandState createState() => GyroscopeDisplayStandState();
 }
 
+/// GyroscopeDisplayStandState
 class GyroscopeDisplayStandState extends State<GyroscopeDisplayStand> {
-  final dir_x = 0.0.obs, dir_y = 0.0.obs, dir_z = 0.0.obs;
-  final direction_x = 'none'.obs, direction_y = 'none'.obs, direction_z = 'none'.obs;
+  /// Gyroscope x-axis, y-axis, z-axis
+  final dirX = 0.0.obs, dirY = 0.0.obs, dirZ = 0.0.obs;
 
+  /// Gyroscope direction x, y, z
+  final directionX = 'none'.obs, directionY = 'none'.obs, directionZ = 'none'.obs;
+
+  /// Gyroscope sensor data listener
   StreamSubscription<GyroscopeEvent>? gyroscopeDataListener;
 
   @override
   void initState() {
-    gyroscopeDataListener = gyroscopeEvents.listen((event) {
-      dir_x.value = event.x;
-      dir_y.value = event.y;
-      dir_z.value = event.z;
+    gyroscopeEventStream(samplingPeriod: Duration(microseconds: 20)).listen((event) {
+      dirX.value = event.x;
+      dirY.value = event.y;
+      dirZ.value = event.z;
 
-      if (dir_x >= 0) {
-        direction_x.value = 'back';
+      if (dirX >= 0) {
+        directionX.value = 'back';
       } else {
-        direction_x.value = 'forward';
+        directionX.value = 'forward';
       }
 
-      if (dir_y >= 0) {
-        direction_y.value = 'right';
+      if (dirY >= 0) {
+        directionY.value = 'right';
       } else {
-        direction_y.value = 'left';
+        directionY.value = 'left';
       }
 
-      if (dir_z >= 0) {
-        direction_z.value = '👈';
+      if (dirZ >= 0) {
+        directionZ.value = '👈';
       } else {
-        direction_z.value = '👉';
+        directionZ.value = '👉';
       }
     });
 
@@ -71,32 +75,32 @@ class GyroscopeDisplayStandState extends State<GyroscopeDisplayStand> {
             children: <Widget>[
               Obx(
                 () => Text(
-                  direction_x.value,
+                  directionX.value,
                   style: TextStyle(fontSize: 26),
                 ),
               ),
               Obx(
                 () => Text(
-                  direction_y.value,
+                  directionY.value,
                   style: TextStyle(fontSize: 26),
                 ),
               ),
               Obx(
                 () => Text(
-                  direction_z.value,
+                  directionZ.value,
                   style: TextStyle(fontSize: 26),
                 ),
               ),
             ],
           ),
           Obx(
-            () => Text('x: ${dir_x.value}', style: TextStyle(fontSize: 14)),
+            () => Text('x: ${dirX.value}', style: TextStyle(fontSize: 14)),
           ),
           Obx(
-            () => Text('y: ${dir_y.value}', style: TextStyle(fontSize: 14)),
+            () => Text('y: ${dirY.value}', style: TextStyle(fontSize: 14)),
           ),
           Obx(
-            () => Text('z: ${dir_z.value}', style: TextStyle(fontSize: 14)),
+            () => Text('z: ${dirZ.value}', style: TextStyle(fontSize: 14)),
           ),
         ],
       ),

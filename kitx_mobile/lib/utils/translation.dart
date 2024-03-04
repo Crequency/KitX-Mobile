@@ -46,16 +46,18 @@ class Translation extends Translations {
           'SettingsPage_Saved': '配置已保存!',
           'AboutPage_Title': '关于',
           'AboutPage_Version': '版本',
+          'AboutPage_VersionCode': '构建号',
           'AboutPage_Contributors': '贡献者',
           'AboutPage_Repos': '仓库',
           'AboutPage_ThirdPartyLicenses': '第三方许可',
           'AboutPage_ThirdPartyLicenses_DisplayAll': '显示全部',
           'AboutPage_JoinUS': '加入我们',
-          'AboutPage_JoinUS_Text': '我们的项目都托管在 https://github.com/Crequency/, '
-              '欢迎 Fork 并贡献您宝贵的意见.\n\n'
-              'KitX Mobile 的源码全部位于 https://github.com/Crequency/KitX-Mobile/\n\n'
-              'KitX Mobile 是 KitX Project 一部分, '
-              'KitX Project 的主仓库是 https://github.com/Crequency/KitX',
+          'AboutPage_JoinUS_Text': ''
+              '我们的项目都托管在 https://github.com/Crequency/, 欢迎 Fork 并贡献您宝贵的意见.'
+              '\n\n'
+              'KitX Mobile 的源码全部位于 https://github.com/Crequency/KitX-Mobile/'
+              '\n\n'
+              'KitX Mobile 是 KitX Project 一部分, KitX Project 的主仓库是 https://github.com/Crequency/KitX',
         },
         'en_US': {
           'Public_Enable': 'Enable',
@@ -99,16 +101,18 @@ class Translation extends Translations {
           'SettingsPage_Saved': 'Changes saved!',
           'AboutPage_Title': 'About',
           'AboutPage_Version': 'Version',
+          'AboutPage_VersionCode': 'Build Number',
           'AboutPage_Contributors': 'Contributors',
           'AboutPage_Repos': 'Repos',
           'AboutPage_ThirdPartyLicenses': 'Third-Party Licenses',
           'AboutPage_ThirdPartyLicenses_DisplayAll': 'Display all',
           'AboutPage_JoinUS': 'Join US',
-          'AboutPage_JoinUS_Text': 'All our projects storage on https://github.com/Crequency/, '
-              'welcome to fork and contribute to them.\n\n'
-              'Source code of KitX Mobile located at https://github.com/Crequency/KitX-Mobile/\n\n'
-              'KitX Mobile belongs to KitX Project, '
-              'Main repo of KitX Project located at https://github.com/Crequency/KitX',
+          'AboutPage_JoinUS_Text': ''
+              'All our projects storage on https://github.com/Crequency/, welcome to fork and contribute to them.'
+              '\n\n'
+              'Source code of KitX Mobile located at https://github.com/Crequency/KitX-Mobile/'
+              '\n\n'
+              'KitX Mobile belongs to KitX Project, Main repo of KitX Project located at https://github.com/Crequency/KitX',
         }
       };
 }

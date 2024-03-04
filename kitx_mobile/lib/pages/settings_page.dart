@@ -55,7 +55,7 @@ class SettingsGroupDivider extends StatelessWidget {
 
 /// Settings Page
 class SettingsPage extends StatefulWidget {
-  // ignore: public_member_api_docs
+  /// Constructor
   const SettingsPage({Key? key}) : super(key: key);
 
   @override

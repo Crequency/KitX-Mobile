@@ -2,7 +2,7 @@
 
 /// Request Permission
 Future<bool> requestPermission(Permission target) async {
-  var status = await Permission.location.status;
+  var status = await target.status;
   if (status.isDenied || status.isRestricted) {
     return target.request().isGranted;
   } else {
@@ -24,6 +24,7 @@ Future<bool> requestNetworkRelatedPermissions() async {
   var result = await requestPermissions([
     Permission.location,
     Permission.bluetooth,
+    Permission.bluetoothConnect,
   ]);
 
   if (result.every((element) => element)) {
