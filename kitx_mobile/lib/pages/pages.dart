@@ -3,6 +3,7 @@ import 'package:kitx_mobile/pages/about_page.dart';
 import 'package:kitx_mobile/pages/account_page.dart';
 import 'package:kitx_mobile/pages/devices_page.dart';
 import 'package:kitx_mobile/pages/home_page.dart';
+import 'package:kitx_mobile/pages/plugins_page.dart';
 import 'package:kitx_mobile/pages/settings_page.dart';
 import 'package:kitx_mobile/pages/test_page.dart';
 
@@ -17,6 +18,7 @@ export 'test_page.dart';
 List<GetPage<dynamic>> getPages() => [
       GetPage(name: '/', page: () => const HomePage()),
       GetPage(name: '/DevicesPage/', page: () => const DevicesPage()),
+      GetPage(name: '/PluginsPage/', page: () => const PluginsPage()),
       GetPage(name: '/AccountPage/', page: () => const AccountPage()),
       GetPage(name: '/TestPage/', page: () => const TestPage()),
       GetPage(name: '/SettingsPage/', page: () => const SettingsPage()),
