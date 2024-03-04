@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 
 /// Account Page
 class AccountPage extends StatefulWidget {
-  // ignore: public_member_api_docs
+  /// Constructor
   const AccountPage({Key? key}) : super(key: key);
 
   @override

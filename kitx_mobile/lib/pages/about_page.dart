@@ -160,10 +160,9 @@ class _AboutPageState extends State<AboutPage> {
                   duration: 500,
                   opacity: titleEntered.value && versionDisplay.value ? 1 : 0,
                   curve: Curves.easeInOutCubic,
-                  child: Text('${'AboutPage_Version'.tr}: ${instances.appInfo.versionString.value}'),
+                  child: Text('${instances.appInfo.versionString.value} (${instances.appInfo.versionCode.value})'),
                 ),
               ),
-              // Divider(),
             ],
           ),
         ),
@@ -198,25 +197,21 @@ class _AboutPageState extends State<AboutPage> {
               ).createShader(rect);
             },
             blendMode: BlendMode.dstOut,
-            child: ListView(
-                shrinkWrap: true,
-                scrollDirection: Axis.horizontal,
-                physics: BouncingScrollPhysics(),
-                children: [
-                  GraduallySmallerSpacer(duration: 1200, width: contentEntering ? 15 : 800),
-                  const ContributorChip(name: 'Dynesshely', url: 'https://github.com/Dynesshely'),
-                  const SizedBox(width: 10),
-                  const ContributorChip(
-                    name: 'LYF511',
-                    url: 'https://github.com/LYF511',
-                  ),
-                  const SizedBox(width: 10),
-                  const ContributorChip(
-                    name: 'orzMaster',
-                    url: 'https://github.com/orzMaster',
-                  ),
-                  const SizedBox(width: 15),
-                ]),
+            child: ListView(shrinkWrap: true, scrollDirection: Axis.horizontal, physics: BouncingScrollPhysics(), children: [
+              GraduallySmallerSpacer(duration: 1200, width: contentEntering ? 15 : 800),
+              const ContributorChip(name: 'Dynesshely', url: 'https://github.com/Dynesshely'),
+              const SizedBox(width: 10),
+              const ContributorChip(
+                name: 'LYF511',
+                url: 'https://github.com/LYF511',
+              ),
+              const SizedBox(width: 10),
+              const ContributorChip(
+                name: 'orzMaster',
+                url: 'https://github.com/orzMaster',
+              ),
+              const SizedBox(width: 15),
+            ]),
           ),
         ),
       ),
@@ -357,9 +352,7 @@ class _AboutPageState extends State<AboutPage> {
                 splashRadius: 20,
                 padding: const EdgeInsets.all(0),
                 iconSize: 24,
-                icon: url?.contains('pub.dev') ?? false
-                    ? const Icon(CommunityMaterialIcons.link)
-                    : const Icon(CommunityMaterialIcons.link),
+                icon: url?.contains('pub.dev') ?? false ? const Icon(CommunityMaterialIcons.link) : const Icon(CommunityMaterialIcons.link),
                 onPressed: () => instances.urlHandler.open(thirdPartyData.ThirdPartyUrl ?? ''),
               ),
               IconButton(
@@ -367,9 +360,7 @@ class _AboutPageState extends State<AboutPage> {
                 splashRadius: 20,
                 padding: const EdgeInsets.all(0),
                 iconSize: 24,
-                icon: repo?.contains('github.com') ?? false
-                    ? const Icon(CommunityMaterialIcons.github)
-                    : const Icon(CommunityMaterialIcons.link),
+                icon: repo?.contains('github.com') ?? false ? const Icon(CommunityMaterialIcons.github) : const Icon(CommunityMaterialIcons.link),
                 onPressed: () => instances.urlHandler.open(thirdPartyData.ThirdPartyRepo ?? ''),
               ),
               Container(

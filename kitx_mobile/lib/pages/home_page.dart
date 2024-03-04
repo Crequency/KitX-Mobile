@@ -123,8 +123,7 @@ class HomePage extends StatelessWidget {
           subtitle: isLandscape ? const Text('no notifications') : null,
           trailing: const Icon(Icons.keyboard_arrow_right),
           shape: tileRadius,
-          onTap: () =>
-              (() => Get.to(() => const SettingsPage())).delay(milliseconds: pageOpenDelay).execute(),
+          onTap: () => (() => Get.to(() => const SettingsPage())).delay(milliseconds: pageOpenDelay).execute(),
         ),
       ),
       const SizedBox(height: tilesPadding),

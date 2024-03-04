@@ -1,6 +1,4 @@
-﻿// ignore_for_file: non_constant_identifier_names, public_member_api_docs
-
-import 'dart:async';
+﻿import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -16,15 +14,21 @@ class DeviceRotationDisplayStand extends StatefulWidget {
 
 /// DeviceRotationDisplayStandState
 class DeviceRotationDisplayStandState extends State<DeviceRotationDisplayStand> {
-  static double canvas_width = 400;
-  static double canvas_height = 300;
+  /// Drawing canvas width
+  static double canvasWidth = 400;
 
+  /// Drawing canvas height
+  static double canvasHeight = 300;
+
+  /// Is drawing paused
   var rotationPaused = false.obs;
 
+  /// Gyroscope sensor data listener
   StreamSubscription<GyroscopeEvent>? gyroscopeDataListener;
 
+  /// Begin listen gyroscope sensor's datas
   void beginListenGyroscopeData() {
-    gyroscopeDataListener = gyroscopeEvents.listen((event) {
+    gyroscopeEventStream(samplingPeriod: Duration(milliseconds: 20)).listen((event) {
       DeviceRotationHost.rotateWithAcceleration(event.x, event.y, event.z, 0.2);
     });
   }
@@ -45,7 +49,7 @@ class DeviceRotationDisplayStandState extends State<DeviceRotationDisplayStand> 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    canvas_width = size.width;
+    canvasWidth = size.width;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -67,7 +71,7 @@ class DeviceRotationDisplayStandState extends State<DeviceRotationDisplayStand> 
                 borderRadius: BorderRadius.all(Radius.elliptical(10, 10)),
                 child: CustomPaint(
                   isComplex: true,
-                  size: Size(canvas_width - 60, canvas_height),
+                  size: Size(canvasWidth - 60, canvasHeight),
                   willChange: true,
                   painter: Painter(),
                 ),
@@ -94,71 +98,140 @@ class DeviceRotationDisplayStandState extends State<DeviceRotationDisplayStand> 
   }
 }
 
+/// The painter class implements the CustomPainter class
 class Painter extends CustomPainter {
-  var object_width = 135, object_height = 240;
+  /// The object's size
+  var objectWidth = 135, objectHeight = 240;
 
-  var Camera = Point(0, 0, 800);
+  /// The camera's position
+  var camera = Point(0, 0, 800);
 
+  /// Return absolute value
   double abs(double num) => num >= 0 ? num : -num;
 
-  //  yaw - pitch - roll
-  Doubles3D GetRotationAngles() => DeviceRotationHost.getRotationAngles();
+  /// Yaw - Pitch - Roll
+  Doubles3D getRotationAngles() => DeviceRotationHost.getRotationAngles();
 
-  Point? GetLeftBarPoint() => getCrossPoint(
-      rotate(Point(-object_width / 2 + object_width / 4, -object_height / 2 + object_height / 24, 0),
-          GetRotationAngles()),
-      Camera,
-      null,
-      null);
+  /// Get left bar point
+  Point? getLeftBarPoint() => getCrossPoint(
+        rotate(
+          Point(
+            -objectWidth / 2 + objectWidth / 4,
+            -objectHeight / 2 + objectHeight / 24,
+            0,
+          ),
+          getRotationAngles(),
+        ),
+        camera,
+        null,
+        null,
+      );
 
-  Point? GetRightBarPoint() => getCrossPoint(
-      rotate(Point(object_width / 2 - object_width / 4, -object_height / 2 + object_height / 24, 0),
-          GetRotationAngles()),
-      Camera,
-      null,
-      null);
+  /// Get right bar point
+  Point? getRightBarPoint() => getCrossPoint(
+        rotate(
+          Point(
+            objectWidth / 2 - objectWidth / 4,
+            -objectHeight / 2 + objectHeight / 24,
+            0,
+          ),
+          getRotationAngles(),
+        ),
+        camera,
+        null,
+        null,
+      );
 
-  Point? GetLeftTopPoint() => getCrossPoint(
-      rotate(Point(-object_width / 2, object_height / 2, 0), GetRotationAngles()), Camera, null, null);
+  /// Get left top point
+  Point? getLeftTopPoint() => getCrossPoint(
+        rotate(
+          Point(
+            -objectWidth / 2,
+            objectHeight / 2,
+            0,
+          ),
+          getRotationAngles(),
+        ),
+        camera,
+        null,
+        null,
+      );
 
-  Point? GetRightTopPoint() => getCrossPoint(
-      rotate(Point(object_width / 2, object_height / 2, 0), GetRotationAngles()), Camera, null, null);
+  /// Get right top point
+  Point? getRightTopPoint() => getCrossPoint(
+        rotate(
+          Point(
+            objectWidth / 2,
+            objectHeight / 2,
+            0,
+          ),
+          getRotationAngles(),
+        ),
+        camera,
+        null,
+        null,
+      );
 
-  Point? GetRightBottomPoint() => getCrossPoint(
-      rotate(Point(object_width / 2, -object_height / 2, 0), GetRotationAngles()), Camera, null, null);
+  /// Get right bottom point
+  Point? getRightBottomPoint() => getCrossPoint(
+        rotate(
+          Point(
+            objectWidth / 2,
+            -objectHeight / 2,
+            0,
+          ),
+          getRotationAngles(),
+        ),
+        camera,
+        null,
+        null,
+      );
 
-  Point? GetLeftBottomPoint() => getCrossPoint(
-      rotate(Point(-object_width / 2, -object_height / 2, 0), GetRotationAngles()), Camera, null, null);
+  /// Get left bottom point
+  Point? getLeftBottomPoint() => getCrossPoint(
+        rotate(
+          Point(
+            -objectWidth / 2,
+            -objectHeight / 2,
+            0,
+          ),
+          getRotationAngles(),
+        ),
+        camera,
+        null,
+        null,
+      );
 
-  Offset ToOffset(Point p) => Offset(p.x, p.y);
+  /// Convert [Point] to [Offset]
+  Offset toOffset(Point p) => Offset(p.x, p.y);
 
-  Offset ToCenter(Offset p, double width, double height) => Offset(
-      p.dx > 0 ? width / 2 + p.dx : width / 2 - abs(p.dx),
-      p.dy > 0 ? height / 2 - p.dy : height / 2 + abs(p.dy));
+  /// Trans [Offset] to center position
+  Offset toCenter(Offset p, double width, double height) => Offset(p.dx > 0 ? width / 2 + p.dx : width / 2 - abs(p.dx), p.dy > 0 ? height / 2 - p.dy : height / 2 + abs(p.dy));
 
-  Offset ToScreen(Point p, Size size) => ToCenter(ToOffset(p), size.width, size.height);
+  /// Convert [Point] to [Offset] for screen display
+  Offset toScreen(Point p, Size size) => toCenter(toOffset(p), size.width, size.height);
 
   @override
   void paint(Canvas canvas, Size size) {
-    var angles = GetRotationAngles();
+    var angles = getRotationAngles();
     var isBack = abs(angles.y) > 90 || abs(angles.z) > 90;
     var paint = Paint()
       ..color = isBack ? Colors.blue : Colors.red
       ..strokeWidth = 1.0;
 
-    var a = GetLeftTopPoint();
-    var b = GetRightTopPoint();
-    var c = GetRightBottomPoint();
-    var d = GetLeftBottomPoint();
-    var e = GetLeftBarPoint();
-    var f = GetRightBarPoint();
+    var a = getLeftTopPoint();
+    var b = getRightTopPoint();
+    var c = getRightBottomPoint();
+    var d = getLeftBottomPoint();
+    var e = getLeftBarPoint();
+    var f = getRightBarPoint();
 
-    if (a != null && b != null) canvas.drawLine(ToScreen(a, size), ToScreen(b, size), paint);
-    if (b != null && c != null) canvas.drawLine(ToScreen(b, size), ToScreen(c, size), paint);
-    if (c != null && d != null) canvas.drawLine(ToScreen(c, size), ToScreen(d, size), paint);
-    if (d != null && a != null) canvas.drawLine(ToScreen(d, size), ToScreen(a, size), paint);
+    if (a != null && b != null) canvas.drawLine(toScreen(a, size), toScreen(b, size), paint);
+    if (b != null && c != null) canvas.drawLine(toScreen(b, size), toScreen(c, size), paint);
+    if (c != null && d != null) canvas.drawLine(toScreen(c, size), toScreen(d, size), paint);
+    if (d != null && a != null) canvas.drawLine(toScreen(d, size), toScreen(a, size), paint);
 
-    if (e != null && f != null) canvas.drawLine(ToScreen(e, size), ToScreen(f, size), paint);
+    if (e != null && f != null) canvas.drawLine(toScreen(e, size), toScreen(f, size), paint);
   }
 
   @override

@@ -1,6 +1,4 @@
-﻿// ignore_for_file: non_constant_identifier_names, public_member_api_docs
-
-import 'dart:async';
+﻿import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -14,16 +12,18 @@ class AccelerationDisplayStand extends StatefulWidget {
 
 /// AccelerationDisplayStandState
 class AccelerationDisplayStandState extends State<AccelerationDisplayStand> {
-  final acc_x = 0.0.obs, acc_y = 0.0.obs, acc_z = 0.0.obs;
+  /// Acceleration x-axis, y-axis, z-axis
+  final accX = 0.0.obs, accY = 0.0.obs, accZ = 0.0.obs;
 
+  /// User accelerometer sensor data listener
   StreamSubscription<UserAccelerometerEvent>? userAccelerometerDataListener;
 
   @override
   void initState() {
-    userAccelerometerDataListener = userAccelerometerEvents.listen((event) {
-      acc_x.value = event.x;
-      acc_y.value = event.y;
-      acc_z.value = event.z;
+    userAccelerometerEventStream(samplingPeriod: Duration(milliseconds: 20)).listen((event) {
+      accX.value = event.x;
+      accY.value = event.y;
+      accZ.value = event.z;
     });
 
     super.initState();
@@ -44,13 +44,13 @@ class AccelerationDisplayStandState extends State<AccelerationDisplayStand> {
         children: [
           Text('Acceleration Data', style: TextStyle(fontSize: 32)),
           Obx(
-            () => Text('x: ${acc_x.value}', style: TextStyle(fontSize: 14)),
+            () => Text('x: ${accX.value}', style: TextStyle(fontSize: 14)),
           ),
           Obx(
-            () => Text('y: ${acc_y.value}', style: TextStyle(fontSize: 14)),
+            () => Text('y: ${accY.value}', style: TextStyle(fontSize: 14)),
           ),
           Obx(
-            () => Text('z: ${acc_z.value}', style: TextStyle(fontSize: 14)),
+            () => Text('z: ${accZ.value}', style: TextStyle(fontSize: 14)),
           ),
         ],
       ),
