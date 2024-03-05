@@ -31,9 +31,12 @@ jobs:
           echo "$(pwd)/.flutter/bin"
           echo "$(pwd)/.flutter/bin" >> $GITHUB_PATH
 
-      - name: "[Debug] Flutter Channel"
+      - name: "[Debug] Flutter Version"
         run: |
-          flutter channel stable
+          git submodule
+          cd .flutter
+          git status
+          git checkout 3.19.2
 
       - name: "[Debug] Flutter Version"
         run: |
