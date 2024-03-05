@@ -30,6 +30,7 @@ dependencies:
   shared_preferences: ^2.2.2
   sliding_up_panel: ^2.0.0+1
   url_launcher: ^6.2.5
+  vector_math: ^2.1.4
   vibration: ^1.8.4
   wakelock_plus: ^1.1.4
 
