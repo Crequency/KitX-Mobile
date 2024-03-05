@@ -26,14 +26,9 @@ jobs:
         with:
           submodules: true
 
-    #   - uses: subosito/flutter-action@v2
-    #     with:
-    #       channel: "stable"
-    #       cache: true
-
       - name: "Setting environment"
         run: |
-          export PATH="$PWD/.flutter:$PATH"
+          echo "$PWD/.flutter/" >> $GITHUB_PATH
 
       - name: "[Debug] Flutter Version"
         run: |
