@@ -23,18 +23,25 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        # with:
+        #   submodules: true
+
+      - name: Checkout Flutter SDK
+        uses: actions/checkout@v4
         with:
-          submodules: true
+            repository: "flutter/flutter"
+            ref: "3.19.2"
+            path: ".flutter"
 
       - name: "Setting environment"
         run: |
           echo "$(pwd)/.flutter/bin"
           echo "$(pwd)/.flutter/bin" >> $GITHUB_PATH
 
-      - name: "[Debug] Flutter Version"
+      - name: "[Debug] Flutter Repo"
+        working-directory: .flutter
         run: |
           git submodule
-          cd .flutter
           git status
           git checkout 3.19.2
 
