@@ -1,4 +1,5 @@
-﻿import 'package:flutter/material.dart';
+﻿import 'package:community_material_icon/community_material_icon.dart';
+import 'package:flutter/material.dart';
 import 'package:kitx_mobile/instances.dart';
 
 /// Repo Button
@@ -11,6 +12,10 @@ class RepoButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(onPressed: () => instances.urlHandler.open(url), child: Text(name));
+    return ElevatedButton.icon(
+      onPressed: () => instances.urlHandler.open(url),
+      label: Text(name),
+      icon: name == 'GitHub' ? const Icon(CommunityMaterialIcons.github) : const Icon(CommunityMaterialIcons.git),
+    );
   }
 }

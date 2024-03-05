@@ -199,11 +199,14 @@ class _AboutPageState extends State<AboutPage> {
             blendMode: BlendMode.dstOut,
             child: ListView(shrinkWrap: true, scrollDirection: Axis.horizontal, physics: BouncingScrollPhysics(), children: [
               GraduallySmallerSpacer(duration: 1200, width: contentEntering ? 15 : 800),
-              const ContributorChip(name: 'Dynesshely', url: 'https://github.com/Dynesshely'),
+              const ContributorChip(
+                name: 'Dynesshely',
+                url: 'https://github.com/Dynesshely',
+              ),
               const SizedBox(width: 10),
               const ContributorChip(
-                name: 'LYF511',
-                url: 'https://github.com/LYF511',
+                name: 'Cranyozen',
+                url: 'https://github.com/Cranyozen',
               ),
               const SizedBox(width: 10),
               const ContributorChip(
@@ -242,9 +245,9 @@ class _AboutPageState extends State<AboutPage> {
             physics: BouncingScrollPhysics(),
             padding: EdgeInsets.all(10),
             children: [
-              const RepoButton(name: 'GitHub', url: 'https://github.com/Crequency/KitX'),
+              const RepoButton(name: 'GitHub', url: 'https://github.com/Crequency/KitX-Mobile'),
               const SizedBox(width: 10),
-              const RepoButton(name: 'Gitee', url: 'https://gitee.com/Crequency/KitX'),
+              const RepoButton(name: 'Gitee', url: 'https://gitee.com/Crequency/KitX-Mobile'),
             ],
           ),
         ),
@@ -305,6 +308,14 @@ class _AboutPageState extends State<AboutPage> {
       ),
       Column(
         children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const RepoButton(name: 'GitHub', url: 'https://github.com/Crequency/KitX'),
+              const SizedBox(width: 10),
+              const RepoButton(name: 'Gitee', url: 'https://gitee.com/Crequency/KitX'),
+            ],
+          ),
           const SizedBox(height: 30),
           const Divider(),
         ],

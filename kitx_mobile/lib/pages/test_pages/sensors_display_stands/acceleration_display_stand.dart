@@ -20,12 +20,11 @@ class AccelerationDisplayStandState extends State<AccelerationDisplayStand> {
 
   @override
   void initState() {
-    userAccelerometerEventStream(samplingPeriod: Duration(milliseconds: 20)).listen((event) {
+    userAccelerometerDataListener = userAccelerometerEventStream(samplingPeriod: Duration(milliseconds: 50)).listen((event) {
       accX.value = event.x;
       accY.value = event.y;
       accZ.value = event.z;
     });
-
     super.initState();
   }
 
