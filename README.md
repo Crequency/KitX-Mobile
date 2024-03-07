@@ -1,5 +1,9 @@
 # KitX Mobile
 
+<a href="https://f-droid.org/packages/com.crequency.kitx.mobile">
+    <img align="right" src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png" alt="Get it on F-Droid" height="80">
+</a>
+
 Mobile Client for KitX
 
 Runs on `Android`, `iOS`

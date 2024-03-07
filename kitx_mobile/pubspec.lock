@@ -416,6 +416,13 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.8.1"
+  kitx_mobile_internal_plugins:
+    dependency: "direct main"
+    description:
+      path: "../kitx_mobile_internal_plugins"
+      relative: true
+    source: path
+    version: "0.0.1"
   kitx_shared_dart:
     dependency: "direct main"
     description:

@@ -1,6 +1,7 @@
 ﻿import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:kitx_mobile_internal_plugins/kitx_mobile_internal_plugins.dart';
 
 /// Plugins Page
 class PluginsPage extends StatefulWidget {
@@ -33,29 +34,7 @@ class _PluginsPageState extends State<PluginsPage> {
             const SizedBox(height: 10),
             ListView(
               shrinkWrap: true,
-              children: [
-                ListTile(
-                  title: const Text('Native Async'),
-                  subtitle: const Text('Crequency'),
-                  trailing: const Icon(Icons.block),
-                  shape: tileRadius,
-                  onTap: () {},
-                ),
-                ListTile(
-                  title: const Text('Notification Service Provider'),
-                  subtitle: const Text('Crequency'),
-                  trailing: const Icon(Icons.block),
-                  shape: tileRadius,
-                  onTap: () {},
-                ),
-                ListTile(
-                  title: const Text('Sensors Data Provider'),
-                  subtitle: const Text('Crequency'),
-                  trailing: const Icon(Icons.block),
-                  shape: tileRadius,
-                  onTap: () {},
-                ),
-              ],
+              children: InternalPluginsManager.instance().getList(shape: tileRadius),
             ),
             const SizedBox(height: 50),
             Text(
