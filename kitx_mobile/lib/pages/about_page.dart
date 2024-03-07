@@ -213,6 +213,11 @@ class _AboutPageState extends State<AboutPage> {
                 name: 'orzMaster',
                 url: 'https://github.com/orzMaster',
               ),
+              const SizedBox(width: 10),
+              const ContributorChip(
+                name: 'Cronyet',
+                url: 'https://github.com/Cronyet',
+              ),
               const SizedBox(width: 15),
             ]),
           ),
