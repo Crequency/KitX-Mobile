@@ -101,7 +101,7 @@ class DevicesDiscoveryService implements Service {
               deviceInfo = deviceInfo.rebuild(
                 (b) => b
                   ..sendTime = DateTime.now().toUtc()
-                  ..pluginsCount = InternalPluginsManager.enabledLength,
+                  ..pluginsCount = InternalPluginsManager.instance().enabledLength,
               );
 
               if (_isExitPackageSent) {

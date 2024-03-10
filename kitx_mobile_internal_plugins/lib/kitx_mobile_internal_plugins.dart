@@ -20,9 +20,13 @@ class InternalPluginsManager {
         SensorsDataProviderPlugin.instance(),
       ];
 
-  static int get length => plugins.length;
+  Function(bool) onPluginChangedAction = (_) {};
 
-  static int get enabledLength => plugins.where((plugin) => plugin.isEnabled.value).length;
+  void onPluginAbilityChanged(Function(bool) action) => onPluginChangedAction = action;
+
+  int get length => plugins.length;
+
+  int get enabledLength => plugins.where((plugin) => plugin.isEnabled.value).length;
 
   List<Widget> getList({ShapeBorder? shape}) {
     return plugins
@@ -33,7 +37,10 @@ class InternalPluginsManager {
             trailing: Obx(
               () => Switch(
                 value: plugin.isEnabled.value,
-                onChanged: (value) => plugin.isEnabled.value = value,
+                onChanged: (value) {
+                  onPluginChangedAction(value);
+                  plugin.isEnabled.value = value;
+                },
               ),
             ),
             shape: shape,
