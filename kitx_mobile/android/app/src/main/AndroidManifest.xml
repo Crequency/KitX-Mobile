@@ -1,4 +1,5 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.crequency.kitx.mobile">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.crequency.kitx.mobile">
 
     <queries>
         <intent>
@@ -43,6 +44,15 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data
+                    android:scheme="kitx-mobile"
+                    android:host="wake" />
             </intent-filter>
         </activity>
 
