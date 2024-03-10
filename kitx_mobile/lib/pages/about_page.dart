@@ -96,7 +96,7 @@ class _AboutPageState extends State<AboutPage> {
             snap: false,
             floating: false,
             // expandedHeight: entered ? 380.0 : 380.0,
-            expandedHeight: 345.0,
+            expandedHeight: 360.0,
             title: Text('AboutPage_Title'.tr),
             flexibleSpace: FlexibleSpaceBar(
               // title: Text('AboutPage_Title'.tr),
@@ -120,7 +120,6 @@ class _AboutPageState extends State<AboutPage> {
     return ListView(
       physics: NeverScrollableScrollPhysics(),
       children: [
-        SizedBox(height: 30),
         Obx(
           () => AnimatedContainer(
             duration: const Duration(milliseconds: 800),
@@ -334,7 +333,6 @@ class _AboutPageState extends State<AboutPage> {
       physics: NeverScrollableScrollPhysics(),
       children: [
         GraduallySmallerSpacer(duration: 1000, height: contentEntering ? 0 : 800),
-        const SizedBox(height: 30),
         getContributors(context),
         getRepos(context),
         getThirdPartyLicenses(context),

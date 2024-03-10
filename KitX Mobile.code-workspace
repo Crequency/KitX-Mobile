@@ -5,9 +5,6 @@
         },
         {
             "path": "kitx_mobile"
-        },
-        {
-            "path": "kitx_mobile_internal_plugins"
         }
     ],
     "settings": {

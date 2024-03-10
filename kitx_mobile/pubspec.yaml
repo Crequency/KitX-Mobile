@@ -21,6 +21,7 @@ dependencies:
     sdk: flutter
   flutter_blue_plus: ^1.31.15
   flutter_chat_ui: ^1.6.12
+  flutter_sharing_intent: ^1.1.1
   get: ^4.6.6
   kitx_mobile_internal_plugins:
     path: ../kitx_mobile_internal_plugins/
