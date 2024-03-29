@@ -93,9 +93,7 @@ class DevicesDiscoveryService implements Service {
           socket.broadcastEnabled = true;
           socket.joinMulticast(InternetAddress(_udpBroadcastAddress));
 
-          Timer.periodic(Duration(seconds: config.webServiceUdpSendFrequency), (timer) {
-            sendTimer = timer;
-
+          sendTimer = Timer.periodic(Duration(seconds: config.webServiceUdpSendFrequency), (timer) {
             try {
               deviceInfo = deviceInfo.rebuild((b) => b..sendTime = DateTime.now().toUtc());
 
