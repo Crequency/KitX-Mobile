@@ -20,11 +20,8 @@ class GyroscopeDisplayStandState extends State<GyroscopeDisplayStand> {
   /// Gyroscope direction x, y, z
   final directionX = 'none'.obs, directionY = 'none'.obs, directionZ = 'none'.obs;
 
-  /// Drawing canvas width
-  static double canvasWidth = 400;
-
-  /// Drawing canvas height
-  static double canvasHeight = 300;
+  /// Drawing canvas size
+  static double canvasWidth = 400, canvasHeight = 300;
 
   /// Is drawing paused
   var rotationPaused = false.obs;
@@ -39,17 +36,25 @@ class GyroscopeDisplayStandState extends State<GyroscopeDisplayStand> {
   void initState() {
     painter.initialize();
 
-    gyroscopeDataListener = gyroscopeEventStream(samplingPeriod: Duration(milliseconds: 50)).listen((event) {
-      DeviceRotationHost.rotateWithAcceleration(event.x, event.y, event.z, 0.05);
+    gyroscopeDataListener = gyroscopeEventStream(samplingPeriod: Duration(milliseconds: 50)).listen(
+      (event) {
+        DeviceRotationHost.rotateWithAcceleration(event.x, event.y, event.z, 0.05);
 
-      dirX.value = event.x;
-      dirY.value = event.y;
-      dirZ.value = event.z;
+        dirX.value = event.x;
+        dirY.value = event.y;
+        dirZ.value = event.z;
 
-      directionX.value = dirX >= 0 ? '⇊' : '⇈';
-      directionY.value = dirY >= 0 ? '↻' : '↺';
-      directionZ.value = dirZ >= 0 ? '↶' : '↷';
-    });
+        directionX.value = dirX >= 0 ? '⇊' : '⇈';
+        directionY.value = dirY >= 0 ? '↻' : '↺';
+        directionZ.value = dirZ >= 0 ? '↶' : '↷';
+      },
+      onError: (error) {
+        Timer.periodic(Duration(milliseconds: 50), (timer) {
+          DeviceRotationHost.rotateWithAcceleration(0, 0, 0.5, 0.05);
+        });
+      },
+      cancelOnError: true,
+    );
 
     super.initState();
   }
@@ -142,22 +147,19 @@ class Painter extends CustomPainter {
   /// Return absolute value
   double abs(double num) => num >= 0 ? num : -num;
 
-  /// Yaw - Pitch - Roll
-  vector_math.Vector3 getRotationAngles() => DeviceRotationHost.getRotationAngles();
-
   /// Initialize
   void initialize() {
-    DeviceRotationHost.axis = vector_math.Vector3(objectWidth / 2, 0, 0);
-    DeviceRotationHost.ayis = vector_math.Vector3(0, objectHeight / 2, 0);
-    DeviceRotationHost.azis = vector_math.Vector3(0, 0, 1);
+    DeviceRotationHost.xDir = vector_math.Quaternion(objectWidth / 2, 0, 0, 0);
+    DeviceRotationHost.yDir = vector_math.Quaternion(0, objectHeight / 2, 0, 0);
+    DeviceRotationHost.zDir = vector_math.Quaternion(0, 0, 1, 0);
 
     DeviceRotationHost.setPoints([
-      vector_math.Vector3(-objectWidth / 2, objectHeight / 2, 0),
-      vector_math.Vector3(objectWidth / 2, objectHeight / 2, 0),
-      vector_math.Vector3(objectWidth / 2, -objectHeight / 2, 0),
-      vector_math.Vector3(-objectWidth / 2, -objectHeight / 2, 0),
-      vector_math.Vector3(-objectWidth / 2 + objectWidth / 4, -objectHeight / 2 + objectHeight / 24, 0),
-      vector_math.Vector3(objectWidth / 2 - objectWidth / 4, -objectHeight / 2 + objectHeight / 24, 0),
+      vector_math.Quaternion(-objectWidth / 2, objectHeight / 2, 0, 0),
+      vector_math.Quaternion(objectWidth / 2, objectHeight / 2, 0, 0),
+      vector_math.Quaternion(objectWidth / 2, -objectHeight / 2, 0, 0),
+      vector_math.Quaternion(-objectWidth / 2, -objectHeight / 2, 0, 0),
+      vector_math.Quaternion(-objectWidth / 2 + objectWidth / 4, -objectHeight / 2 + objectHeight / 24, 0, 0),
+      vector_math.Quaternion(objectWidth / 2 - objectWidth / 4, -objectHeight / 2 + objectHeight / 24, 0, 0),
     ]);
   }
 
@@ -168,7 +170,7 @@ class Painter extends CustomPainter {
     List<vector_math.Vector3> displayPoints = [];
 
     for (int i = 0; i < rotatedPoints.length; ++i) {
-      displayPoints.add(getCrossPoint(rotatedPoints[i], camera, null, null) ?? vector_math.Vector3(0, 0, 0));
+      displayPoints.add(getCrossPoint(rotatedPoints[i].toPoint(), camera, null, null) ?? vector_math.Vector3(0, 0, 0));
     }
 
     return displayPoints;
@@ -185,11 +187,14 @@ class Painter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    var angles = getRotationAngles();
+    // var angles = getRotationAngles();
     var points = getPoints();
-    var isBack = abs(angles.y) > 90 || abs(angles.z) > 90;
+    // var isBack = abs(angles.y) > 90 || abs(angles.z) > 90;
+    // var paint = Paint()
+    //   ..color = isBack ? Colors.blue : Colors.red
+    //   ..strokeWidth = 1.0;
     var paint = Paint()
-      ..color = isBack ? Colors.blue : Colors.red
+      ..color = Colors.blue
       ..strokeWidth = 1.0;
 
     var a = points[0];

@@ -5,6 +5,9 @@ import 'package:vector_math/vector_math.dart';
 /// PI
 const double pi = 3.1415926535897938324626433832795028841971;
 
+/// Per rad equals 57.29 degrees
+const double perRadToDegrees = 57.29577951308232;
+
 /// Get direction
 Vector3 getDirection(Vector3 p1, Vector3 p2) => Vector3(p2.x - p1.x, p2.y - p1.y, p2.z - p1.z);
 
@@ -36,92 +39,44 @@ Vector3? getCrossPoint(Vector3 p, Vector3 camera, Vector3? n, Vector3? plane) {
   }
 }
 
-/// Rotate
-Vector3 rotate(Vector3 p, Vector3 angles) => rotateAll(p, angles.x, angles.y, angles.z);
-
-/// Rotate all
-Vector3 rotateAll(Vector3 p, double yaw, double pitch, double roll) => rotateX(
-      rotateY(
-        rotateZ(p, yaw),
-        pitch,
-      ),
-      roll,
-    );
-
-/// Rotate X
-Vector3 rotateX(Vector3 p, double alpha) {
-  alpha *= pi / 180;
-  return Vector3(
-    cos(alpha) * p.x + sin(alpha) * p.z,
-    p.y,
-    -sin(alpha) * p.x + cos(alpha) * p.z,
-  );
-}
-
-/// Rotate Y
-Vector3 rotateY(Vector3 p, double beta) {
-  beta *= pi / 180;
-  return Vector3(
-    p.x,
-    cos(beta) * p.y - sin(beta) * p.z,
-    sin(beta) * p.y + cos(beta) * p.z,
-  );
-}
-
-/// Rotate Z
-Vector3 rotateZ(Vector3 p, double gamma) {
-  gamma *= pi / 180;
-  return Vector3(
-    cos(gamma) * p.x - sin(gamma) * p.y,
-    sin(gamma) * p.x + cos(gamma) * p.y,
-    p.z,
-  );
-}
-
 /// DeviceRotationHost
 class DeviceRotationHost {
-  /// Per rad equals 57.29 degrees
-  static double perRadToDegrees = 57.29577951308232;
+  /// Directions
+  static Quaternion xDir = Quaternion(1, 0, 0, 0), yDir = Quaternion(0, 1, 0, 0), zDir = Quaternion(0, 0, 1, 0);
 
-  /// Rotation degrees
-  static double yaw = 0, pitch = 0, roll = 0;
-
-  /// Get rotation angles
-  static Vector3 getRotationAngles() => Vector3(yaw, pitch, roll);
-
-  /// Default axis, ayis, azis
-  static Vector3 axis = Vector3(1, 0, 0), ayis = Vector3(0, 1, 0), azis = Vector3(0, 0, 1);
+  /// The last time's directions rotation
+  static Quaternion lastXDirR = Quaternion(1, 0, 0, 0), lastYDirR = Quaternion(0, 1, 0, 0), lastZDirR = Quaternion(0, 0, 1, 0);
 
   /// Points to rotate
-  static List<Vector3> points = [], originPoints = [];
+  static List<Quaternion> points = [], originPoints = [];
 
   /// 显式调用此方法来计算加速度之后的四元数
   /// [gyroX], [gyroY], [gyroZ] 单位: rad/s, [samplingRate] 单位: s
-  /// yaw -> z
-  /// pitch -> y
-  /// roll -> x
   static void rotateWithAcceleration(double gyroX, double gyroY, double gyroZ, double samplingRate) {
-    yaw += gyroZ * samplingRate * perRadToDegrees;
-    pitch += gyroX * samplingRate * perRadToDegrees;
-    roll += gyroY * samplingRate * perRadToDegrees;
+    var radX = gyroX * samplingRate, radY = gyroY * samplingRate, radZ = gyroZ * samplingRate;
 
-    var qx = Quaternion.axisAngle(axis, -gyroX * samplingRate);
-    var qy = Quaternion.axisAngle(ayis, -gyroY * samplingRate);
-    var qz = Quaternion.axisAngle(azis, -gyroZ * samplingRate);
+    var xDirR = xDir.ewNormalize().wpRotate(radX);
+    var yDirR = yDir.ewNormalize().wpRotate(radY);
+    var zDirR = zDir.ewNormalize().wpRotate(radZ);
 
-    var q = qx * qy * qz;
-
-    q.normalize();
+    var xDirRInv = xDirR.clone().conjugated();
+    var yDirRInv = yDirR.clone().conjugated();
+    var zDirRInv = zDirR.clone().conjugated();
 
     for (int i = 0; i < points.length; ++i) {
-      qz.rotate(points[i]);
-      qy.rotate(points[i]);
-      qx.rotate(points[i]);
+      var np = points[i].clone();
+      np = xDirR * np * xDirRInv;
+      np = yDirR * np * yDirRInv;
+      np = zDirR * np * zDirRInv;
+      points[i] = np;
     }
   }
 
   /// Set points
-  static void setPoints(List<Vector3> newPoints) {
+  static void setPoints(List<Quaternion> newPoints) {
+    originPoints.clear();
+    points.clear();
+
     for (int i = 0; i < newPoints.length; ++i) {
       points.add(newPoints[i].clone());
       originPoints.add(newPoints[i].clone());
@@ -130,12 +85,31 @@ class DeviceRotationHost {
 
   /// Restore quaternion
   static void restore() {
-    yaw = 0;
-    pitch = 0;
-    roll = 0;
-
     for (int i = 0; i < points.length; ++i) {
       points[i] = originPoints[i].clone();
     }
+  }
+}
+
+/// Quaternion extension
+extension QuaternionExtension on Quaternion {
+  /// To [Vector3]
+  Vector3 toPoint() => Vector3(x, y, z);
+
+  /// Normalize except w
+  Quaternion ewNormalize() {
+    var norm = sqrt(x * x + y * y + z * z);
+    return Quaternion(x / norm, y / norm, z / norm, 0);
+  }
+
+  /// Rotate with rad for point
+  Quaternion wpRotate(double rad) {
+    var r = rad / 2, w = cos(r), k = sin(r);
+    return Quaternion(k * x, k * y, k * z, w);
+  }
+
+  /// Get text to display
+  String getText() {
+    return 'x: $x, y: $y, z: $z, w: $w';
   }
 }
