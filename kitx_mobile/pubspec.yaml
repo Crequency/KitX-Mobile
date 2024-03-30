@@ -17,6 +17,7 @@ dependencies:
   crypto: ^3.0.3
   device_info_plus: ^9.1.1
   f_logs: ^2.0.1
+  fl_chart: ^0.67.0
   flutter:
     sdk: flutter
   flutter_blue_plus: ^1.31.15

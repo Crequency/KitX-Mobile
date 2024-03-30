@@ -70,6 +70,10 @@ class DeviceRotationHost {
       np = zDirR * np * zDirRInv;
       points[i] = np;
     }
+
+    lastXDirR = xDirR;
+    lastYDirR = yDirR;
+    lastZDirR = zDirR;
   }
 
   /// Set points

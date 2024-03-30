@@ -17,14 +17,14 @@ class GyroscopeDisplayStandState extends State<GyroscopeDisplayStand> {
   /// Gyroscope x-axis, y-axis, z-axis
   final dirX = 0.0.obs, dirY = 0.0.obs, dirZ = 0.0.obs;
 
-  /// Gyroscope direction x, y, z
-  final directionX = 'none'.obs, directionY = 'none'.obs, directionZ = 'none'.obs;
-
   /// Drawing canvas size
   static double canvasWidth = 400, canvasHeight = 300;
 
   /// Is drawing paused
   var rotationPaused = false.obs;
+
+  /// Sampling Rage
+  var samplingRate = 0.05.obs;
 
   /// Gyroscope sensor data listener
   StreamSubscription<GyroscopeEvent>? gyroscopeDataListener;
@@ -36,21 +36,19 @@ class GyroscopeDisplayStandState extends State<GyroscopeDisplayStand> {
   void initState() {
     painter.initialize();
 
-    gyroscopeDataListener = gyroscopeEventStream(samplingPeriod: Duration(milliseconds: 50)).listen(
+    gyroscopeDataListener = gyroscopeEventStream(
+      samplingPeriod: Duration(milliseconds: (samplingRate.value * 1000).toInt()),
+    ).listen(
       (event) {
-        DeviceRotationHost.rotateWithAcceleration(event.x, event.y, event.z, 0.05);
+        DeviceRotationHost.rotateWithAcceleration(event.x, event.y, event.z, samplingRate.value);
 
         dirX.value = event.x;
         dirY.value = event.y;
         dirZ.value = event.z;
-
-        directionX.value = dirX >= 0 ? '⇊' : '⇈';
-        directionY.value = dirY >= 0 ? '↻' : '↺';
-        directionZ.value = dirZ >= 0 ? '↶' : '↷';
       },
       onError: (error) {
         Timer.periodic(Duration(milliseconds: 50), (timer) {
-          DeviceRotationHost.rotateWithAcceleration(0, 0, 0.5, 0.05);
+          DeviceRotationHost.rotateWithAcceleration(0.5, 0.5, 0.5, samplingRate.value);
         });
       },
       cancelOnError: true,
@@ -122,14 +120,18 @@ class GyroscopeDisplayStandState extends State<GyroscopeDisplayStand> {
             ],
           ),
           Obx(
-            () => Text('${directionX.value} x: ${dirX.value}', style: TextStyle(fontSize: 16)),
+            () => Text('${dirX >= 0 ? '⏬' : '⏫'} \tx: ${dirX.value}', style: TextStyle(fontSize: 16)),
           ),
           Obx(
-            () => Text('${directionY.value} y: ${dirY.value}', style: TextStyle(fontSize: 16)),
+            () => Text('${dirY >= 0 ? '⤵' : '⤴'} \ty: ${dirY.value}', style: TextStyle(fontSize: 16)),
           ),
           Obx(
-            () => Text('${directionZ.value} z: ${dirZ.value}', style: TextStyle(fontSize: 16)),
+            () => Text('${dirZ >= 0 ? '⏪' : '⏩'} \tz: ${dirZ.value}', style: TextStyle(fontSize: 16)),
           ),
+          Obx(
+            () => Text('⏱ \tSampling Rate: ${samplingRate.value} s', style: TextStyle(fontSize: 16)),
+          ),
+          const Text('↔ \tUnit: rad/s', style: TextStyle(fontSize: 16)),
         ],
       ),
     );
