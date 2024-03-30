@@ -50,8 +50,8 @@ class DeviceRotationHost {
   /// Points to rotate
   static List<Quaternion> points = [], originPoints = [];
 
-  /// 显式调用此方法来计算加速度之后的四元数
-  /// [gyroX], [gyroY], [gyroZ] 单位: rad/s, [samplingRate] 单位: s
+  /// Explicitly call this method to calculate the quaternion after rotation
+  /// [gyroX], [gyroY], [gyroZ] unit: rad/s, [samplingRate] unit: s
   static void rotateWithAcceleration(double gyroX, double gyroY, double gyroZ, double samplingRate) {
     var radX = gyroX * samplingRate, radY = gyroY * samplingRate, radZ = gyroZ * samplingRate;
 
@@ -96,20 +96,15 @@ extension QuaternionExtension on Quaternion {
   /// To [Vector3]
   Vector3 toPoint() => Vector3(x, y, z);
 
-  /// Normalize except w
+  /// Normalize without arg w
   Quaternion ewNormalize() {
     var norm = sqrt(x * x + y * y + z * z);
     return Quaternion(x / norm, y / norm, z / norm, 0);
   }
 
-  /// Rotate with rad for point
+  /// Rotate direction with rad
   Quaternion wpRotate(double rad) {
     var r = rad / 2, w = cos(r), k = sin(r);
     return Quaternion(k * x, k * y, k * z, w);
-  }
-
-  /// Get text to display
-  String getText() {
-    return 'x: $x, y: $y, z: $z, w: $w';
   }
 }
