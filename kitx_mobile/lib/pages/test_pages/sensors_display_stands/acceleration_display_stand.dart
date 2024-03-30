@@ -1,5 +1,5 @@
 ﻿import 'dart:async';
-import 'dart:collection';
+import 'dart:math';
 
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
@@ -54,7 +54,26 @@ class AccelerationDisplayStandState extends State<AccelerationDisplayStand> {
           zValues.removeAt(0);
         }
       },
-      onError: (error) {},
+      onError: (error) {
+        var random = Random(114514);
+        Timer.periodic(Duration(milliseconds: (samplingRate * 1000).toInt()), (timer) {
+          accX.value = random.nextDouble() * 10 - 5;
+          accY.value = random.nextDouble() * 10 - 5;
+          accZ.value = random.nextDouble() * 10 - 5;
+          maxX.value += samplingRate.value;
+          if ((maxX.value - minX.value) >= samplingRate.value * xCount.value) {
+            minX.value += samplingRate.value;
+          }
+          xValues.add(FlSpot(maxX.value, accX.value));
+          yValues.add(FlSpot(maxX.value, accY.value));
+          zValues.add(FlSpot(maxX.value, accZ.value));
+          if (xValues.length > xCount.value + 1) {
+            xValues.removeAt(0);
+            yValues.removeAt(0);
+            zValues.removeAt(0);
+          }
+        });
+      },
       cancelOnError: true,
     );
     super.initState();
