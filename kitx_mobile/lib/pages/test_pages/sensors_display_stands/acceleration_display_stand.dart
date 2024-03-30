@@ -32,6 +32,9 @@ class AccelerationDisplayStandState extends State<AccelerationDisplayStand> {
   /// Acceleration x-axis, y-axis, z-axis values
   var xValues = <FlSpot>[], yValues = <FlSpot>[], zValues = <FlSpot>[];
 
+  /// Random sensor data timer
+  Timer? randomSensorDataTimer;
+
   @override
   void initState() {
     userAccelerometerDataListener = userAccelerometerEventStream(
@@ -59,7 +62,7 @@ class AccelerationDisplayStandState extends State<AccelerationDisplayStand> {
 
         var random = Random(114514);
 
-        Timer.periodic(Duration(milliseconds: (samplingRate * 1000).toInt()), (timer) {
+        randomSensorDataTimer = Timer.periodic(Duration(milliseconds: (samplingRate * 1000).toInt()), (timer) {
           accX.value = random.nextDouble() * 10 - 5;
           accY.value = random.nextDouble() * 10 - 5;
           accZ.value = random.nextDouble() * 10 - 5;
@@ -85,6 +88,7 @@ class AccelerationDisplayStandState extends State<AccelerationDisplayStand> {
   @override
   void dispose() {
     userAccelerometerDataListener?.cancel();
+    randomSensorDataTimer?.cancel();
     super.dispose();
   }
 

@@ -34,6 +34,9 @@ class GyroscopeDisplayStandState extends State<GyroscopeDisplayStand> {
   /// Painter
   Painter painter = Painter();
 
+  /// Random sensor data timer
+  Timer? randomSensorDataTimer;
+
   @override
   void initState() {
     painter.initialize();
@@ -53,7 +56,7 @@ class GyroscopeDisplayStandState extends State<GyroscopeDisplayStand> {
 
         var random = Random(114514);
 
-        Timer.periodic(Duration(milliseconds: 50), (timer) {
+        randomSensorDataTimer = Timer.periodic(Duration(milliseconds: 50), (timer) {
           var rad = 0.5 + random.nextDouble() / 10;
 
           dirY.value = rad;
@@ -70,6 +73,7 @@ class GyroscopeDisplayStandState extends State<GyroscopeDisplayStand> {
   @override
   void dispose() {
     gyroscopeDataListener?.cancel();
+    randomSensorDataTimer?.cancel();
     super.dispose();
   }
 
