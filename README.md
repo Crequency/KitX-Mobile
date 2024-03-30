@@ -12,9 +12,11 @@ Runs on `Android`, `iOS`
 
 > **Warning**
 >
-> Please use physical devices to debug, any emulator may cause problems.
+> We recommend that you use a physical device for debugging, you may experience some issues debugging on an emulator
 >
-> Android emulators are currently known to experience problems; the situation with iOS simulators is currently unknown.
+> Known issues are as follows:
+> 1. KitX Mobile will join the LAN multicast. If the emulator does not support this function, an error will occur.
+> 2. The simulator does not provide sensor data, KitX Mobile will use random data to replace scenarios that require sensor data.
 
 ### Prerequisites
 

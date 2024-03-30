@@ -23,8 +23,8 @@ class AccelerationDisplayStandState extends State<AccelerationDisplayStand> {
   /// User accelerometer sensor data listener
   StreamSubscription<UserAccelerometerEvent>? userAccelerometerDataListener;
 
-  /// Is listener paused
-  var listenerPaused = false.obs;
+  /// Is listener paused, errored
+  var listenerPaused = false.obs, listnerErrored = false.obs;
 
   /// Chart related data
   var minX = 0.0.obs, maxX = 0.05.obs, xCount = 10.obs;
@@ -55,7 +55,10 @@ class AccelerationDisplayStandState extends State<AccelerationDisplayStand> {
         }
       },
       onError: (error) {
+        listnerErrored.value = true;
+
         var random = Random(114514);
+
         Timer.periodic(Duration(milliseconds: (samplingRate * 1000).toInt()), (timer) {
           accX.value = random.nextDouble() * 10 - 5;
           accY.value = random.nextDouble() * 10 - 5;
@@ -193,18 +196,20 @@ class AccelerationDisplayStandState extends State<AccelerationDisplayStand> {
           const Text('↔ \tUnit: m/s^2', style: TextStyle(fontSize: 16)),
           const SizedBox(height: 20),
           Obx(
-            () => ElevatedButton(
-              onPressed: () {
-                if (userAccelerometerDataListener?.isPaused ?? true) {
-                  userAccelerometerDataListener?.resume();
-                  listenerPaused.value = false;
-                } else {
-                  userAccelerometerDataListener?.pause();
-                  listenerPaused.value = true;
-                }
-              },
-              child: listenerPaused.value ? const Text('Resume') : const Text("Pause"),
-            ),
+            () => listnerErrored.value
+                ? const Text('No sensor data, you are seeing random data.')
+                : ElevatedButton(
+                    onPressed: () {
+                      if (userAccelerometerDataListener?.isPaused ?? true) {
+                        userAccelerometerDataListener?.resume();
+                        listenerPaused.value = false;
+                      } else {
+                        userAccelerometerDataListener?.pause();
+                        listenerPaused.value = true;
+                      }
+                    },
+                    child: listenerPaused.value ? const Text('Resume') : const Text("Pause"),
+                  ),
           ),
         ],
       ),

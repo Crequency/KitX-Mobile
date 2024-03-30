@@ -1,4 +1,5 @@
 ﻿import 'dart:async';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -21,7 +22,8 @@ class GyroscopeDisplayStandState extends State<GyroscopeDisplayStand> {
   static double canvasWidth = 400, canvasHeight = 300;
 
   /// Is drawing paused
-  var rotationPaused = false.obs;
+  /// Is listener errored
+  var rotationPaused = false.obs, listenerErrored = false.obs;
 
   /// Sampling Rage
   var samplingRate = 0.05.obs;
@@ -47,8 +49,16 @@ class GyroscopeDisplayStandState extends State<GyroscopeDisplayStand> {
         dirZ.value = event.z;
       },
       onError: (error) {
+        listenerErrored.value = true;
+
+        var random = Random(114514);
+
         Timer.periodic(Duration(milliseconds: 50), (timer) {
-          DeviceRotationHost.rotateWithAcceleration(0.5, 0.5, 0.5, samplingRate.value);
+          var rad = 0.5 + random.nextDouble() / 10;
+
+          dirY.value = rad;
+
+          DeviceRotationHost.rotateWithAcceleration(dirX.value, dirY.value, dirZ.value, samplingRate.value);
         });
       },
       cancelOnError: true,
@@ -132,6 +142,8 @@ class GyroscopeDisplayStandState extends State<GyroscopeDisplayStand> {
             () => Text('⏱ \tSampling Rate: ${samplingRate.value} s', style: TextStyle(fontSize: 16)),
           ),
           const Text('↔ \tUnit: rad/s', style: TextStyle(fontSize: 16)),
+          const SizedBox(height: 20),
+          Obx(() => listenerErrored.value ? const Text('No sensor data, you are seeing random data.') : const SizedBox())
         ],
       ),
     );
