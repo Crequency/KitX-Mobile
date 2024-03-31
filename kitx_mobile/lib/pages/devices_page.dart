@@ -5,12 +5,19 @@ import 'package:kitx_mobile/instances.dart';
 import 'package:kitx_mobile/pages/controls/device_card.dart';
 import 'package:kitx_mobile/pages/controls/device_status_icon.dart';
 import 'package:kitx_mobile/pages/controls/device_status_label.dart';
+import 'package:kitx_mobile/pages/pages.dart';
 import 'package:kitx_mobile/pages/sub_pages/device_chat_page.dart';
 import 'package:kitx_shared_dart/kitx_shared_dart.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 /// Device Page
-class DevicesPage extends StatefulWidget {
+class DevicesPage extends StatefulWidget implements ConstantPage {
+  /// Get Route
+  static String getRoute() => '/devices';
+
+  /// Get Page
+  static Widget Function() getPage() => () => const DevicesPage();
+
   /// Constructor
   const DevicesPage({Key? key}) : super(key: key);
 
@@ -205,7 +212,7 @@ class _DevicesPage extends State<DevicesPage> {
                 SizedBox(
                   width: 130,
                   child: FilledButton.tonalIcon(
-                    onPressed: () => Get.to(() => DeviceChatPage()),
+                    onPressed: () => Get.toNamed(DeviceChatPage.getRoute()),
                     icon: const Icon(CommunityMaterialIcons.telegram),
                     label: Text('Public_Chat'.tr),
                   ),

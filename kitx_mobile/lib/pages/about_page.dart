@@ -8,12 +8,19 @@ import 'package:kitx_mobile/pages/controls/fade_in_control.dart';
 import 'package:kitx_mobile/pages/controls/gradually_smaller_spacer.dart';
 import 'package:kitx_mobile/pages/controls/group_divider.dart';
 import 'package:kitx_mobile/pages/controls/repo_button.dart';
+import 'package:kitx_mobile/pages/pages.dart';
 import 'package:kitx_mobile/utils/composer.dart';
 import 'package:kitx_mobile/utils/handlers/tasks/delayed_task.dart';
 import 'package:vibration/vibration.dart';
 
 /// About Page
-class AboutPage extends StatefulWidget {
+class AboutPage extends StatefulWidget implements ConstantPage {
+  /// Get Route
+  static String getRoute() => '/about';
+
+  /// Get Page
+  static Widget Function() getPage() => () => const AboutPage();
+
   /// Constructor
   const AboutPage({Key? key}) : super(key: key);
 

@@ -1,12 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:kitx_mobile/pages/pages.dart';
 import 'package:kitx_mobile/pages/test_pages/device_info_test.dart';
 import 'package:kitx_mobile/pages/test_pages/device_sensors.dart';
 import 'package:kitx_mobile/pages/test_pages/network_info_test.dart';
 import 'package:wakelock_plus/wakelock_plus.dart';
 
 /// [TestPage] Class
-class TestPage extends StatefulWidget {
+class TestPage extends StatefulWidget implements ConstantPage {
+  /// Get Route
+  static String getRoute() => '/test';
+
+  /// Get Page
+  static Widget Function() getPage() => () => const TestPage();
+
   /// Constructor for [TestPage]
   const TestPage({Key? key}) : super(key: key);
 

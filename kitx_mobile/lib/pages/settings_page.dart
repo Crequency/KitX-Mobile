@@ -4,6 +4,7 @@ import 'package:f_logs/f_logs.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kitx_mobile/instances.dart';
+import 'package:kitx_mobile/pages/pages.dart';
 import 'package:kitx_mobile/pages/test_pages/device_info_test.dart';
 import 'package:kitx_mobile/pages/test_pages/device_sensors.dart';
 import 'package:kitx_mobile/pages/test_pages/network_info_test.dart';
@@ -57,7 +58,13 @@ class SettingsGroupDivider extends StatelessWidget {
 }
 
 /// Settings Page
-class SettingsPage extends StatefulWidget {
+class SettingsPage extends StatefulWidget implements ConstantPage {
+  /// Get Route
+  static String getRoute() => '/settings';
+
+  /// Get Page
+  static Widget Function() getPage() => () => const SettingsPage();
+
   /// Constructor
   const SettingsPage({Key? key}) : super(key: key);
 
@@ -306,17 +313,17 @@ class _SettingsPageState extends State<SettingsPage> {
                 runSpacing: 4.0,
                 children: [
                   ElevatedButton.icon(
-                    onPressed: () => Get.to(() => const DeviceInfoTestPage()),
+                    onPressed: () => Get.toNamed(DeviceInfoTestPage.getRoute()),
                     icon: const Icon(Icons.devices),
                     label: const Text('Device Info'),
                   ),
                   ElevatedButton.icon(
-                    onPressed: () => Get.to(() => DeviceSensorsPage()),
+                    onPressed: () => Get.toNamed(DeviceSensorsPage.getRoute()),
                     icon: const Icon(Icons.sensors),
                     label: const Text('Device Sensors'),
                   ),
                   ElevatedButton.icon(
-                    onPressed: () => Get.to(() => const NetworkInfoTestPage()),
+                    onPressed: () => Get.toNamed(NetworkInfoTestPage.getRoute()),
                     icon: const Icon(Icons.wifi),
                     label: const Text('Network Info'),
                   ),

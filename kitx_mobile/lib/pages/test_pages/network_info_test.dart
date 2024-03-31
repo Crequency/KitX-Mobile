@@ -2,10 +2,17 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:kitx_mobile/pages/pages.dart';
 import 'package:network_info_plus/network_info_plus.dart';
 
 /// NetworkInfoTest Page
-class NetworkInfoTestPage extends StatefulWidget {
+class NetworkInfoTestPage extends StatefulWidget implements ConstantPage {
+  /// Get Route
+  static String getRoute() => '/test/network_info';
+
+  /// Get Page
+  static Widget Function() getPage() => () => const NetworkInfoTestPage();
+
   /// Constructor
   const NetworkInfoTestPage({Key? key}) : super(key: key);
 

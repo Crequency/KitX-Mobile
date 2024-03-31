@@ -1,13 +1,20 @@
 ﻿import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:kitx_mobile/pages/pages.dart';
 import 'package:kitx_mobile_internal_plugins/kitx_mobile_internal_plugins.dart';
 import 'package:sound_mode/sound_mode.dart';
 import 'package:sound_mode/utils/ringer_mode_statuses.dart';
 import 'package:vibration/vibration.dart';
 
 /// Plugins Page
-class PluginsPage extends StatefulWidget {
+class PluginsPage extends StatefulWidget implements ConstantPage {
+  /// Get Route
+  static String getRoute() => '/plugins';
+
+  /// Get Page
+  static Widget Function() getPage() => () => const PluginsPage();
+
   /// Constructor
   const PluginsPage({super.key});
 

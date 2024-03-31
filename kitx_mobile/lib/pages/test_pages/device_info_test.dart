@@ -3,9 +3,16 @@ import 'dart:io';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:kitx_mobile/pages/pages.dart';
 
 /// DeviceInfoTestPage
-class DeviceInfoTestPage extends StatefulWidget {
+class DeviceInfoTestPage extends StatefulWidget implements ConstantPage {
+  /// Get Route
+  static String getRoute() => '/test/device_info';
+
+  /// Get Page
+  static Widget Function() getPage() => () => const DeviceInfoTestPage();
+
   /// Constructor
   const DeviceInfoTestPage({Key? key}) : super(key: key);
 

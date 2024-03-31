@@ -4,33 +4,33 @@ import 'package:get/get.dart';
 import 'package:kitx_mobile/pages/pages.dart';
 
 /// Account Page
-class AccountPage extends StatefulWidget implements ConstantPage {
+class NotFoundPage extends StatefulWidget implements ConstantPage {
   /// Get Route
-  static String getRoute() => '/account';
+  static String getRoute() => '/404';
 
   /// Get Page
-  static Widget Function() getPage() => () => const AccountPage();
+  static Widget Function() getPage() => () => const NotFoundPage();
 
   /// Constructor
-  const AccountPage({Key? key}) : super(key: key);
+  const NotFoundPage({Key? key}) : super(key: key);
 
   @override
-  State<AccountPage> createState() => _AccountPageState();
+  State<NotFoundPage> createState() => _NotFoundPageState();
 }
 
-class _AccountPageState extends State<AccountPage> {
+class _NotFoundPageState extends State<NotFoundPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('AccountPage_Title'.tr),
+        title: Text('NotFoundPage_Title'.tr),
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
-              'Developing ...',
+              '404',
             ),
           ],
         ),

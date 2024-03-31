@@ -36,7 +36,7 @@ class HomePageDrawer extends StatelessWidget {
             title: Text('Drawer_Devices'.tr),
             onTap: () {
               Get.back();
-              Get.to(() => const DevicesPage());
+              Get.toNamed(DevicesPage.getRoute());
             }.delay(milliseconds: pageOpenDelay).execute,
           ),
           ListTile(
@@ -44,7 +44,7 @@ class HomePageDrawer extends StatelessWidget {
             title: Text('Drawer_Plugins'.tr),
             onTap: () {
               Get.back();
-              Get.to(() => const PluginsPage());
+              Get.toNamed(PluginsPage.getRoute());
             }.delay(milliseconds: pageOpenDelay).execute,
           ),
           ListTile(
@@ -52,56 +52,31 @@ class HomePageDrawer extends StatelessWidget {
             title: Text('Drawer_Account'.tr),
             onTap: () {
               Get.back();
-              Get.to(() => const AccountPage());
+              Get.toNamed(AccountPage.getRoute());
             }.delay(milliseconds: pageOpenDelay).execute,
           ),
           const Divider(),
-          //   ListTile(
-          //     leading: const Icon(Icons.settings),
-          //     title: Text('Drawer_Setting'.tr),
-          //     onTap: () {
-          //       Get.back();
-          //       Get.to(() => const SettingsPage());
-          //     }.delay(milliseconds: pageOpenDelay).execute,
-          //   ),
-          //   Divider(),
-          //   ListTile(
-          //     leading: const Icon(Icons.info_outline_rounded),
-          //     title: Text('Drawer_About'.tr),
-          //     onTap: () {
-          //       Get.back();
-          //       Get.to(() => const AboutPage());
-          //     }.delay(milliseconds: pageOpenDelay).execute,
-          //   ),
-          //   ListTile(
-          //     leading: const Icon(Icons.bug_report),
-          //     title: Text('Drawer_Test'.tr),
-          //     onTap: () {
-          //       Get.back();
-          //       Get.to(() => const TestPage());
-          //     }.delay(milliseconds: pageOpenDelay).execute,
-          //   ),
           Row(
             children: [
               const SizedBox(width: 5),
               IconButton(
                 onPressed: () {
                   Get.back();
-                  Get.to(() => const SettingsPage());
+                  Get.toNamed(SettingsPage.getRoute());
                 }.delay(milliseconds: pageOpenDelay).execute,
                 icon: const Icon(Icons.settings),
               ),
               IconButton(
                 onPressed: () {
                   Get.back();
-                  Get.to(() => const AboutPage());
+                  Get.toNamed(AboutPage.getRoute());
                 }.delay(milliseconds: pageOpenDelay).execute,
                 icon: const Icon(Icons.info_outline_rounded),
               ),
               IconButton(
                 onPressed: () {
                   Get.back();
-                  Get.to(() => const TestPage());
+                  Get.toNamed(TestPage.getRoute());
                 }.delay(milliseconds: pageOpenDelay).execute,
                 icon: const Icon(Icons.bug_report),
               ),

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 import 'package:flutter_chat_ui/flutter_chat_ui.dart';
 import 'package:get/get.dart';
+import 'package:kitx_mobile/pages/pages.dart';
 
 /// Get Random String
 String randomString() {
@@ -14,7 +15,13 @@ String randomString() {
 }
 
 /// Device Chat Page
-class DeviceChatPage extends StatefulWidget {
+class DeviceChatPage extends StatefulWidget implements ConstantPage {
+  /// Get Route
+  static String getRoute() => '/devices/chat';
+
+  /// Get Page
+  static Widget Function() getPage() => () => const DeviceChatPage();
+
   /// Constructor
   const DeviceChatPage({Key? key}) : super(key: key);
 

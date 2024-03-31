@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart' hide Intent;
 import 'package:get/get.dart';
 import 'package:kitx_mobile/instances.dart';
+import 'package:kitx_mobile/pages/not_found_page.dart';
 import 'package:kitx_mobile/pages/pages.dart';
 import 'package:kitx_mobile/utils/config.dart';
 import 'package:kitx_mobile/utils/log.dart';
@@ -36,6 +37,10 @@ class MainApp extends StatelessWidget {
         locale: instances.appInfo.getLanguageCode ?? Get.deviceLocale,
         fallbackLocale: Locale('en', 'US'),
         getPages: getPages(),
+        unknownRoute: GetPage(
+          name: NotFoundPage.getRoute(),
+          page: NotFoundPage.getPage(),
+        ),
         home: const HomePage(),
       ),
     );

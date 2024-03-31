@@ -8,7 +8,13 @@ import 'package:kitx_mobile/pages/plugins_page.dart';
 import 'package:kitx_mobile/utils/handlers/tasks/delayed_task.dart';
 
 /// HomePage
-class HomePage extends StatelessWidget {
+class HomePage extends StatelessWidget implements ConstantPage {
+  /// Get Route
+  static String getRoute() => '/';
+
+  /// Get Page
+  static Widget Function() getPage() => () => const HomePage();
+
   /// Constructor
   const HomePage({super.key});
 
@@ -71,7 +77,7 @@ class HomePage extends StatelessWidget {
           ),
           trailing: const Icon(Icons.keyboard_arrow_right),
           shape: tileRadius,
-          onTap: () => (() => Get.to(() => const DevicesPage())).delay(milliseconds: pageOpenDelay).execute(),
+          onTap: () => (() => Get.toNamed(DevicesPage.getRoute())).delay(milliseconds: pageOpenDelay).execute(),
           onLongPress: () {
             showMenu(
               context: context,
@@ -100,7 +106,7 @@ class HomePage extends StatelessWidget {
           subtitle: isLandscape ? const Text('developing ...') : null,
           trailing: const Icon(Icons.keyboard_arrow_right),
           shape: tileRadius,
-          onTap: () => (() => Get.to(() => const PluginsPage())).delay(milliseconds: pageOpenDelay).execute(),
+          onTap: () => (() => Get.toNamed(PluginsPage.getRoute())).delay(milliseconds: pageOpenDelay).execute(),
         ),
       ),
       const SizedBox(height: tilesPadding),
@@ -112,7 +118,7 @@ class HomePage extends StatelessWidget {
           subtitle: isLandscape ? const Text('developing ...') : null,
           trailing: const Icon(Icons.keyboard_arrow_right),
           shape: tileRadius,
-          onTap: () => (() => Get.to(() => const AccountPage())).delay(milliseconds: pageOpenDelay).execute(),
+          onTap: () => (() => Get.toNamed(AccountPage.getRoute())).delay(milliseconds: pageOpenDelay).execute(),
         ),
       ),
       const SizedBox(height: tilesPadding),
@@ -124,7 +130,7 @@ class HomePage extends StatelessWidget {
           subtitle: isLandscape ? const Text('no notifications') : null,
           trailing: const Icon(Icons.keyboard_arrow_right),
           shape: tileRadius,
-          onTap: () => (() => Get.to(() => const SettingsPage())).delay(milliseconds: pageOpenDelay).execute(),
+          onTap: () => (() => Get.toNamed(SettingsPage.getRoute())).delay(milliseconds: pageOpenDelay).execute(),
         ),
       ),
       const SizedBox(height: tilesPadding),
@@ -137,7 +143,7 @@ class HomePage extends StatelessWidget {
             subtitle: Text(instances.appInfo.versionString.value),
             trailing: const Icon(Icons.keyboard_arrow_right),
             shape: tileRadius,
-            onTap: () => (() => Get.to(() => const AboutPage())).delay(milliseconds: pageOpenDelay).execute(),
+            onTap: () => (() => Get.toNamed(AboutPage.getRoute())).delay(milliseconds: pageOpenDelay).execute(),
           ),
         ),
       ),
