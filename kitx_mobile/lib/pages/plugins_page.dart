@@ -1,11 +1,11 @@
-﻿import 'package:flutter/material.dart';
+﻿import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 import 'package:get/get.dart';
 import 'package:kitx_mobile/pages/pages.dart';
+import 'package:kitx_mobile/utils/handlers/vibration_handler.dart';
 import 'package:kitx_mobile_internal_plugins/kitx_mobile_internal_plugins.dart';
-import 'package:sound_mode/sound_mode.dart';
-import 'package:sound_mode/utils/ringer_mode_statuses.dart';
-import 'package:vibration/vibration.dart';
 
 /// Plugins Page
 class PluginsPage extends StatefulWidget implements ConstantPage {
@@ -27,32 +27,11 @@ class _PluginsPageState extends State<PluginsPage> {
 
   @override
   Widget build(BuildContext context) {
-    InternalPluginsManager.instance().onPluginAbilityChanged((ability) {
-      SoundMode.ringerModeStatus.then((ringer) {
-        if (ringer == RingerModeStatus.silent) {
-          return;
-        }
-
-        Vibration.hasVibrator().then((value) {
-          Vibration.hasCustomVibrationsSupport().then(
-            (value) => {
-              if (value ?? false)
-                {
-                  Vibration.vibrate(duration: ability ? 50 : 100),
-                }
-              else
-                {
-                  Vibration.hasVibrator().then(
-                    (value) => {
-                      if (value ?? false) Vibration.vibrate(),
-                    },
-                  ),
-                }
-            },
-          );
-        });
-      });
-    });
+    InternalPluginsManager.instance().onPluginAbilityChanged(
+      (ability) => VibrationHandler.tryVibrate(
+        milliseconds: ability ? 50 : 100,
+      ),
+    );
 
     return Scaffold(
       appBar: AppBar(
@@ -69,9 +48,11 @@ class _PluginsPageState extends State<PluginsPage> {
             const SizedBox(height: 10),
             const Divider(),
             const SizedBox(height: 10),
-            ListView(
-              shrinkWrap: true,
-              children: InternalPluginsManager.instance().getList(shape: tileRadius),
+            Column(
+              children: InternalPluginsManager.instance().getList(
+                shape: tileRadius,
+                vibrator: () => VibrationHandler.tryVibrate(),
+              ),
             ),
             const SizedBox(height: 50),
             Text(
@@ -81,8 +62,7 @@ class _PluginsPageState extends State<PluginsPage> {
             const SizedBox(height: 10),
             const Divider(),
             const SizedBox(height: 10),
-            ListView(
-              shrinkWrap: true,
+            Column(
               children: [
                 const ListTile(
                   title: Text('Nothing here yet!'),

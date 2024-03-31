@@ -13,6 +13,7 @@ import 'package:kitx_mobile/utils/composer.dart';
 import 'package:kitx_mobile/utils/config.dart';
 import 'package:kitx_mobile/utils/converters/size_converter.dart';
 import 'package:kitx_mobile/utils/handlers/tasks/delayed_task.dart';
+import 'package:kitx_mobile/utils/handlers/vibration_handler.dart';
 
 /// Settings Group Title
 class SettingsGroupTitle extends StatelessWidget {
@@ -152,7 +153,7 @@ class _SettingsPageState extends State<SettingsPage> {
               title: Text('SettingsPage_Theme'.tr),
               trailing: const Icon(Icons.keyboard_arrow_right),
               shape: tileRadius,
-              onTap: () => Get.toNamed(ExteriorSettingsPage.getRoute()),
+              onTap: () => (() => Get.toNamed(ExteriorSettingsPage.getRoute())).tryVibrate().call(),
             ),
           ),
           const Divider(),

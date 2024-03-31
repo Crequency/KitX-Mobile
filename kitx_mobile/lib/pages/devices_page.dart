@@ -7,6 +7,7 @@ import 'package:kitx_mobile/pages/controls/device_status_icon.dart';
 import 'package:kitx_mobile/pages/controls/device_status_label.dart';
 import 'package:kitx_mobile/pages/pages.dart';
 import 'package:kitx_mobile/pages/sub_pages/device_chat_page.dart';
+import 'package:kitx_mobile/utils/handlers/vibration_handler.dart';
 import 'package:kitx_shared_dart/kitx_shared_dart.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
@@ -67,11 +68,15 @@ class _DevicesPage extends State<DevicesPage> {
                     itemBuilder: (context) => [
                       PopupMenuItem(
                         child: const Text('2'),
-                        onTap: () => deviceCardHorizontalScale = 0.5,
+                        onTap: () => () {
+                          deviceCardHorizontalScale = 0.5;
+                        }.tryVibrate().call(),
                       ),
                       PopupMenuItem(
                         child: const Text('3'),
-                        onTap: () => deviceCardHorizontalScale = 1.0 / 3,
+                        onTap: () => () {
+                          deviceCardHorizontalScale = 1.0 / 3;
+                        }.tryVibrate().call(),
                       ),
                     ],
                   )
@@ -85,11 +90,11 @@ class _DevicesPage extends State<DevicesPage> {
             itemBuilder: (context) => [
               PopupMenuItem(
                 child: Text('Option_RestartDevicesServer'.tr),
-                onTap: instances.restartDevicesServer,
+                onTap: () => instances.restartDevicesServer.tryVibrate().call(),
               ),
               PopupMenuItem(
                 child: Text('Option_ShutdownDevicesServer'.tr),
-                onTap: instances.shutdownDevicesServer,
+                onTap: () => instances.shutdownDevicesServer.tryVibrate().call(),
               ),
             ],
           ),
@@ -102,11 +107,13 @@ class _DevicesPage extends State<DevicesPage> {
           curve: Curves.easeInOutCubicEmphasized,
           opacity: backToTopButtonVisibility.value ? 1 : 0,
           child: FloatingActionButton(
-            onPressed: () => _scrollController.animateTo(
-              0.0,
-              duration: const Duration(milliseconds: 300),
-              curve: Curves.easeInOutCubicEmphasized,
-            ),
+            onPressed: () => () {
+              _scrollController.animateTo(
+                0.0,
+                duration: const Duration(milliseconds: 300),
+                curve: Curves.easeInOutCubicEmphasized,
+              );
+            }.tryVibrate().call(),
             child: const Icon(Icons.arrow_upward),
           ),
         ),

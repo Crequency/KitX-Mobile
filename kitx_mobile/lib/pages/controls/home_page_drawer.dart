@@ -4,6 +4,7 @@ import 'package:kitx_mobile/pages/pages.dart';
 import 'package:kitx_mobile/pages/plugins_page.dart';
 import 'package:kitx_mobile/utils/config.dart';
 import 'package:kitx_mobile/utils/handlers/tasks/delayed_task.dart';
+import 'package:kitx_mobile/utils/handlers/vibration_handler.dart';
 
 /// [HomePageDrawer] class
 class HomePageDrawer extends StatelessWidget {
@@ -35,50 +36,50 @@ class HomePageDrawer extends StatelessWidget {
           ListTile(
             leading: const Icon(Icons.devices),
             title: Text('Drawer_Devices'.tr),
-            onTap: () {
+            onTap: () => () {
               Get.back();
               Get.toNamed(DevicesPage.getRoute());
-            }.delay(milliseconds: config.delayOpenPageInHomePage.value ? pageOpenDelay : 0).execute,
+            }.tryVibrate().delay(milliseconds: config.delayOpenPageInHomePage.value ? pageOpenDelay : 0).execute(),
           ),
           ListTile(
             leading: const Icon(Icons.layers),
             title: Text('Drawer_Plugins'.tr),
-            onTap: () {
+            onTap: () => () {
               Get.back();
               Get.toNamed(PluginsPage.getRoute());
-            }.delay(milliseconds: config.delayOpenPageInHomePage.value ? pageOpenDelay : 0).execute,
+            }.tryVibrate().delay(milliseconds: config.delayOpenPageInHomePage.value ? pageOpenDelay : 0).execute(),
           ),
           ListTile(
             leading: const Icon(Icons.alternate_email),
             title: Text('Drawer_Account'.tr),
-            onTap: () {
+            onTap: () => () {
               Get.back();
               Get.toNamed(AccountPage.getRoute());
-            }.delay(milliseconds: config.delayOpenPageInHomePage.value ? pageOpenDelay : 0).execute,
+            }.tryVibrate().delay(milliseconds: config.delayOpenPageInHomePage.value ? pageOpenDelay : 0).execute(),
           ),
           const Divider(),
           Row(
             children: [
               const SizedBox(width: 5),
               IconButton(
-                onPressed: () {
+                onPressed: () => () {
                   Get.back();
                   Get.toNamed(SettingsPage.getRoute());
-                }.delay(milliseconds: config.delayOpenPageInHomePage.value ? pageOpenDelay : 0).execute,
+                }.tryVibrate().delay(milliseconds: config.delayOpenPageInHomePage.value ? pageOpenDelay : 0).execute(),
                 icon: const Icon(Icons.settings),
               ),
               IconButton(
-                onPressed: () {
+                onPressed: () => () {
                   Get.back();
                   Get.toNamed(AboutPage.getRoute());
-                }.delay(milliseconds: config.delayOpenPageInHomePage.value ? pageOpenDelay : 0).execute,
+                }.tryVibrate().delay(milliseconds: config.delayOpenPageInHomePage.value ? pageOpenDelay : 0).execute(),
                 icon: const Icon(Icons.info_outline_rounded),
               ),
               IconButton(
-                onPressed: () {
+                onPressed: () => () {
                   Get.back();
                   Get.toNamed(TestPage.getRoute());
-                }.delay(milliseconds: config.delayOpenPageInHomePage.value ? pageOpenDelay : 0).execute,
+                }.tryVibrate().delay(milliseconds: config.delayOpenPageInHomePage.value ? pageOpenDelay : 0).execute(),
                 icon: const Icon(Icons.bug_report),
               ),
             ],

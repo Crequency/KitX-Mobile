@@ -7,6 +7,7 @@ import 'package:kitx_mobile/pages/pages.dart';
 import 'package:kitx_mobile/pages/plugins_page.dart';
 import 'package:kitx_mobile/utils/config.dart';
 import 'package:kitx_mobile/utils/handlers/tasks/delayed_task.dart';
+import 'package:kitx_mobile/utils/handlers/vibration_handler.dart';
 
 /// HomePage
 class HomePage extends StatelessWidget implements ConstantPage {
@@ -31,11 +32,11 @@ class HomePage extends StatelessWidget implements ConstantPage {
       body: Padding(
         padding: EdgeInsets.all(20),
         child: ListView(
-          children: [
-            OrientationBuilder(
-              builder: (context, _) => MediaQuery.of(context).orientation == Orientation.portrait
-                  ? ListView(
-                      shrinkWrap: true,
+        children: [
+          OrientationBuilder(
+          builder: (context, _) => MediaQuery.of(context).orientation == Orientation.portrait
+              ? ListView(
+                    shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
                       children: getContent(
                         context,
@@ -78,7 +79,7 @@ class HomePage extends StatelessWidget implements ConstantPage {
           ),
           trailing: const Icon(Icons.keyboard_arrow_right),
           shape: tileRadius,
-          onTap: () => (() => Get.toNamed(DevicesPage.getRoute())).delay(milliseconds: config.delayOpenPageInHomePage.value ? pageOpenDelay : 0).execute(),
+          onTap: () => (() => Get.toNamed(DevicesPage.getRoute())).tryVibrate().delay(milliseconds: config.delayOpenPageInHomePage.value ? pageOpenDelay : 0).execute(),
           onLongPress: () {
             showMenu(
               context: context,
@@ -107,7 +108,7 @@ class HomePage extends StatelessWidget implements ConstantPage {
           subtitle: isLandscape ? const Text('developing ...') : null,
           trailing: const Icon(Icons.keyboard_arrow_right),
           shape: tileRadius,
-          onTap: () => (() => Get.toNamed(PluginsPage.getRoute())).delay(milliseconds: config.delayOpenPageInHomePage.value ? pageOpenDelay : 0).execute(),
+          onTap: () => (() => Get.toNamed(PluginsPage.getRoute())).tryVibrate().delay(milliseconds: config.delayOpenPageInHomePage.value ? pageOpenDelay : 0).execute(),
         ),
       ),
       const SizedBox(height: tilesPadding),
@@ -119,7 +120,7 @@ class HomePage extends StatelessWidget implements ConstantPage {
           subtitle: isLandscape ? const Text('developing ...') : null,
           trailing: const Icon(Icons.keyboard_arrow_right),
           shape: tileRadius,
-          onTap: () => (() => Get.toNamed(AccountPage.getRoute())).delay(milliseconds: config.delayOpenPageInHomePage.value ? pageOpenDelay : 0).execute(),
+          onTap: () => (() => Get.toNamed(AccountPage.getRoute())).tryVibrate().delay(milliseconds: config.delayOpenPageInHomePage.value ? pageOpenDelay : 0).execute(),
         ),
       ),
       const SizedBox(height: tilesPadding),
@@ -131,7 +132,7 @@ class HomePage extends StatelessWidget implements ConstantPage {
           subtitle: isLandscape ? const Text('no notifications') : null,
           trailing: const Icon(Icons.keyboard_arrow_right),
           shape: tileRadius,
-          onTap: () => (() => Get.toNamed(SettingsPage.getRoute())).delay(milliseconds: config.delayOpenPageInHomePage.value ? pageOpenDelay : 0).execute(),
+          onTap: () => (() => Get.toNamed(SettingsPage.getRoute())).tryVibrate().delay(milliseconds: config.delayOpenPageInHomePage.value ? pageOpenDelay : 0).execute(),
         ),
       ),
       const SizedBox(height: tilesPadding),
@@ -144,7 +145,7 @@ class HomePage extends StatelessWidget implements ConstantPage {
             subtitle: Text(instances.appInfo.versionString.value),
             trailing: const Icon(Icons.keyboard_arrow_right),
             shape: tileRadius,
-            onTap: () => (() => Get.toNamed(AboutPage.getRoute())).delay(milliseconds: config.delayOpenPageInHomePage.value ? pageOpenDelay : 0).execute(),
+            onTap: () => (() => Get.toNamed(AboutPage.getRoute())).tryVibrate().delay(milliseconds: config.delayOpenPageInHomePage.value ? pageOpenDelay : 0).execute(),
           ),
         ),
       ),
