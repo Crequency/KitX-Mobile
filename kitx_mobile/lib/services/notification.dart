@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -51,7 +53,13 @@ class NotificationService {
       }
     } else if (key == 'action_view_exit') {
       // Exit app
-      SystemNavigator.pop(); // Probably not working on iOS (by Copilot)
+      instances.shutdownDevicesServer();
+
+      // Delete all notifications
+      AwesomeNotifications().cancelAll();
+
+      await SystemNavigator.pop(); // Probably not working on iOS (by Copilot)
+      exit(0);
     }
   }
 
@@ -74,12 +82,14 @@ class NotificationService {
           NotificationActionButton(
             key: 'action_view_button',
             label: (serviceStatus == ServiceStatus.running) ? 'Public_Stop'.tr : 'Public_Launch'.tr,
-            actionType: ActionType.SilentAction,
+            actionType: ActionType.KeepOnTop,
+            autoDismissible: false,
           ),
           NotificationActionButton(
             key: 'action_view_exit',
             label: 'Public_Quit'.tr,
             actionType: ActionType.SilentAction,
+            autoDismissible: false,
           ),
         ]);
   }
