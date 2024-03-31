@@ -145,8 +145,9 @@ class _SettingsPageState extends State<SettingsPage> {
       ),
       body: ListView(
         children: [
+          const SizedBox(height: 30),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 30, vertical: 30),
+            padding: EdgeInsets.symmetric(horizontal: 30, vertical: 5),
             child: ListTile(
               leading: const Icon(Icons.color_lens),
               title: Text('SettingsPage_Theme'.tr),
@@ -155,7 +156,55 @@ class _SettingsPageState extends State<SettingsPage> {
               onTap: () => (() => Get.toNamed(ExteriorSettingsPage.getRoute())).tryVibrate().call(),
             ),
           ),
-          const Divider(),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 30, vertical: 5),
+            child: ListTile(
+              leading: const Icon(Icons.notes),
+              title: Text('Public_Log'.tr),
+              trailing: const Icon(Icons.keyboard_arrow_right),
+              shape: tileRadius,
+              onTap: () => (() => {}).tryVibrate().call(),
+            ),
+          ),
+          group(
+            SettingsGroupTitle(titleKey: 'Drawer_Test'.tr),
+            Column(
+              children: [
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 30, vertical: 5),
+                  child: ListTile(
+                    leading: const Icon(Icons.devices),
+                    title: Text('Device Info'.tr),
+                    trailing: const Icon(Icons.keyboard_arrow_right),
+                    shape: tileRadius,
+                    onTap: () => (() => Get.toNamed(DeviceInfoTestPage.getRoute())).tryVibrate().call(),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 30, vertical: 5),
+                  child: ListTile(
+                    leading: const Icon(Icons.sensors),
+                    title: Text('Device Sensors'.tr),
+                    trailing: const Icon(Icons.keyboard_arrow_right),
+                    shape: tileRadius,
+                    onTap: () => (() => Get.toNamed(DeviceSensorsPage.getRoute())).tryVibrate().call(),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 30, vertical: 5),
+                  child: ListTile(
+                    leading: const Icon(Icons.wifi),
+                    title: Text('Network Info'.tr),
+                    trailing: const Icon(Icons.keyboard_arrow_right),
+                    shape: tileRadius,
+                    onTap: () => (() => Get.toNamed(NetworkInfoTestPage.getRoute())).tryVibrate().call(),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(),
+            spacer: null,
+          ),
           //   group(
           //     SettingsGroupTitle(titleKey: 'Public_Log'),
           //     Column(
@@ -228,35 +277,6 @@ class _SettingsPageState extends State<SettingsPage> {
           //     const SettingsGroupDivider(),
           //     spacer: null,
           //   ),
-          group(
-            SettingsGroupTitle(titleKey: 'Drawer_Test'.tr),
-            Container(
-              margin: EdgeInsets.symmetric(horizontal: 20),
-              child: Wrap(
-                alignment: WrapAlignment.center,
-                spacing: 8.0,
-                runSpacing: 4.0,
-                children: [
-                  ElevatedButton.icon(
-                    onPressed: () => Get.toNamed(DeviceInfoTestPage.getRoute()),
-                    icon: const Icon(Icons.devices),
-                    label: const Text('Device Info'),
-                  ),
-                  ElevatedButton.icon(
-                    onPressed: () => Get.toNamed(DeviceSensorsPage.getRoute()),
-                    icon: const Icon(Icons.sensors),
-                    label: const Text('Device Sensors'),
-                  ),
-                  ElevatedButton.icon(
-                    onPressed: () => Get.toNamed(NetworkInfoTestPage.getRoute()),
-                    icon: const Icon(Icons.wifi),
-                    label: const Text('Network Info'),
-                  ),
-                ],
-              ),
-            ),
-            const SettingsGroupDivider(),
-          ),
           const SizedBox(height: 300),
         ],
       ),
