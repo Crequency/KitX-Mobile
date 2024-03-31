@@ -1,4 +1,5 @@
 ﻿import 'dart:async';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -17,17 +18,15 @@ class GyroscopeDisplayStandState extends State<GyroscopeDisplayStand> {
   /// Gyroscope x-axis, y-axis, z-axis
   final dirX = 0.0.obs, dirY = 0.0.obs, dirZ = 0.0.obs;
 
-  /// Gyroscope direction x, y, z
-  final directionX = 'none'.obs, directionY = 'none'.obs, directionZ = 'none'.obs;
-
-  /// Drawing canvas width
-  static double canvasWidth = 400;
-
-  /// Drawing canvas height
-  static double canvasHeight = 300;
+  /// Drawing canvas size
+  static double canvasWidth = 400, canvasHeight = 300;
 
   /// Is drawing paused
-  var rotationPaused = false.obs;
+  /// Is listener errored
+  var rotationPaused = false.obs, listenerErrored = false.obs;
+
+  /// Sampling Rage
+  var samplingRate = 0.05.obs;
 
   /// Gyroscope sensor data listener
   StreamSubscription<GyroscopeEvent>? gyroscopeDataListener;
@@ -35,21 +34,38 @@ class GyroscopeDisplayStandState extends State<GyroscopeDisplayStand> {
   /// Painter
   Painter painter = Painter();
 
+  /// Random sensor data timer
+  Timer? randomSensorDataTimer;
+
   @override
   void initState() {
     painter.initialize();
 
-    gyroscopeDataListener = gyroscopeEventStream(samplingPeriod: Duration(milliseconds: 50)).listen((event) {
-      DeviceRotationHost.rotateWithAcceleration(event.x, event.y, event.z, 0.05);
+    gyroscopeDataListener = gyroscopeEventStream(
+      samplingPeriod: Duration(milliseconds: (samplingRate.value * 1000).toInt()),
+    ).listen(
+      (event) {
+        DeviceRotationHost.rotateWithAcceleration(event.x, event.y, event.z, samplingRate.value);
 
-      dirX.value = event.x;
-      dirY.value = event.y;
-      dirZ.value = event.z;
+        dirX.value = event.x;
+        dirY.value = event.y;
+        dirZ.value = event.z;
+      },
+      onError: (error) {
+        listenerErrored.value = true;
 
-      directionX.value = dirX >= 0 ? '⇊' : '⇈';
-      directionY.value = dirY >= 0 ? '↻' : '↺';
-      directionZ.value = dirZ >= 0 ? '↶' : '↷';
-    });
+        var random = Random(114514);
+
+        randomSensorDataTimer = Timer.periodic(Duration(milliseconds: 50), (timer) {
+          var rad = 0.5 + random.nextDouble() / 10;
+
+          dirY.value = rad;
+
+          DeviceRotationHost.rotateWithAcceleration(dirX.value, dirY.value, dirZ.value, samplingRate.value);
+        });
+      },
+      cancelOnError: true,
+    );
 
     super.initState();
   }
@@ -57,6 +73,7 @@ class GyroscopeDisplayStandState extends State<GyroscopeDisplayStand> {
   @override
   void dispose() {
     gyroscopeDataListener?.cancel();
+    randomSensorDataTimer?.cancel();
     super.dispose();
   }
 
@@ -117,14 +134,20 @@ class GyroscopeDisplayStandState extends State<GyroscopeDisplayStand> {
             ],
           ),
           Obx(
-            () => Text('${directionX.value} x: ${dirX.value}', style: TextStyle(fontSize: 16)),
+            () => Text('${dirX >= 0 ? '⏬' : '⏫'} \tx: ${dirX.value}', style: TextStyle(fontSize: 16)),
           ),
           Obx(
-            () => Text('${directionY.value} y: ${dirY.value}', style: TextStyle(fontSize: 16)),
+            () => Text('${dirY >= 0 ? '⤵' : '⤴'} \ty: ${dirY.value}', style: TextStyle(fontSize: 16)),
           ),
           Obx(
-            () => Text('${directionZ.value} z: ${dirZ.value}', style: TextStyle(fontSize: 16)),
+            () => Text('${dirZ >= 0 ? '⏪' : '⏩'} \tz: ${dirZ.value}', style: TextStyle(fontSize: 16)),
           ),
+          Obx(
+            () => Text('⏱ \tSampling Rate: ${samplingRate.value} s', style: TextStyle(fontSize: 16)),
+          ),
+          const Text('↔ \tUnit: rad/s', style: TextStyle(fontSize: 16)),
+          const SizedBox(height: 20),
+          Obx(() => listenerErrored.value ? const Text('No sensor data, you are seeing random data.') : const SizedBox())
         ],
       ),
     );
@@ -142,22 +165,19 @@ class Painter extends CustomPainter {
   /// Return absolute value
   double abs(double num) => num >= 0 ? num : -num;
 
-  /// Yaw - Pitch - Roll
-  vector_math.Vector3 getRotationAngles() => DeviceRotationHost.getRotationAngles();
-
   /// Initialize
   void initialize() {
-    DeviceRotationHost.axis = vector_math.Vector3(objectWidth / 2, 0, 0);
-    DeviceRotationHost.ayis = vector_math.Vector3(0, objectHeight / 2, 0);
-    DeviceRotationHost.azis = vector_math.Vector3(0, 0, 1);
+    DeviceRotationHost.xDir = vector_math.Quaternion(objectWidth / 2, 0, 0, 0);
+    DeviceRotationHost.yDir = vector_math.Quaternion(0, objectHeight / 2, 0, 0);
+    DeviceRotationHost.zDir = vector_math.Quaternion(0, 0, 1, 0);
 
     DeviceRotationHost.setPoints([
-      vector_math.Vector3(-objectWidth / 2, objectHeight / 2, 0),
-      vector_math.Vector3(objectWidth / 2, objectHeight / 2, 0),
-      vector_math.Vector3(objectWidth / 2, -objectHeight / 2, 0),
-      vector_math.Vector3(-objectWidth / 2, -objectHeight / 2, 0),
-      vector_math.Vector3(-objectWidth / 2 + objectWidth / 4, -objectHeight / 2 + objectHeight / 24, 0),
-      vector_math.Vector3(objectWidth / 2 - objectWidth / 4, -objectHeight / 2 + objectHeight / 24, 0),
+      vector_math.Quaternion(-objectWidth / 2, objectHeight / 2, 0, 0),
+      vector_math.Quaternion(objectWidth / 2, objectHeight / 2, 0, 0),
+      vector_math.Quaternion(objectWidth / 2, -objectHeight / 2, 0, 0),
+      vector_math.Quaternion(-objectWidth / 2, -objectHeight / 2, 0, 0),
+      vector_math.Quaternion(-objectWidth / 2 + objectWidth / 4, -objectHeight / 2 + objectHeight / 24, 0, 0),
+      vector_math.Quaternion(objectWidth / 2 - objectWidth / 4, -objectHeight / 2 + objectHeight / 24, 0, 0),
     ]);
   }
 
@@ -168,7 +188,7 @@ class Painter extends CustomPainter {
     List<vector_math.Vector3> displayPoints = [];
 
     for (int i = 0; i < rotatedPoints.length; ++i) {
-      displayPoints.add(getCrossPoint(rotatedPoints[i], camera, null, null) ?? vector_math.Vector3(0, 0, 0));
+      displayPoints.add(getCrossPoint(rotatedPoints[i].toPoint(), camera, null, null) ?? vector_math.Vector3(0, 0, 0));
     }
 
     return displayPoints;
@@ -185,11 +205,14 @@ class Painter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    var angles = getRotationAngles();
+    // var angles = getRotationAngles();
     var points = getPoints();
-    var isBack = abs(angles.y) > 90 || abs(angles.z) > 90;
+    // var isBack = abs(angles.y) > 90 || abs(angles.z) > 90;
+    // var paint = Paint()
+    //   ..color = isBack ? Colors.blue : Colors.red
+    //   ..strokeWidth = 1.0;
     var paint = Paint()
-      ..color = isBack ? Colors.blue : Colors.red
+      ..color = Colors.blue
       ..strokeWidth = 1.0;
 
     var a = points[0];
