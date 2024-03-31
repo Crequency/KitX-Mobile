@@ -139,6 +139,12 @@ class DeviceService implements Service {
       }
 
       deviceInfoList.refresh();
+
+      // Update notification service.
+      instances.notificationService.updateStatusNotification(
+        deviceCount: deviceInfoList.length,
+        serviceStatus: serviceStatus.value,
+      );
     });
 
     serviceStatus.value = ServiceStatus.running;

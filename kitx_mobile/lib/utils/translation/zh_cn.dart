@@ -18,6 +18,7 @@ const Map<String, String> zh_cn = {
   'Public_Stopping': '停止中',
   'Public_Running': '运行中',
   'Public_Pending': '等待中',
+  'Public_Quit': '退出',
   'NotificationService_StatusNotificationTitle': 'KitX @status',
   'NotificationService_StatusNotificationBody': '当前设备数: @device_count',
   'Drawer_Title': 'KitX',

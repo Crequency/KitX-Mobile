@@ -18,6 +18,7 @@ const Map<String, String> en_us = {
   'Public_Stopping': 'Stopping',
   'Public_Running': 'Running',
   'Public_Pending': 'Pending',
+  'Public_Quit': 'Quit',
   'NotificationService_StatusNotificationTitle': 'KitX @status',
   'NotificationService_StatusNotificationBody': '@device_count Devices Online',
   'Drawer_Title': 'KitX',

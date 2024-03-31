@@ -1,7 +1,9 @@
 import 'package:awesome_notifications/awesome_notifications.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:kitx_mobile/services/public/service_status.dart';
 import 'package:kitx_mobile/utils/extensions/service_status_to_string.dart';
+import 'package:kitx_mobile/instances.dart';
 // import 'package:flutter/material.dart';
 
 /// [NotificationService] class
@@ -23,12 +25,34 @@ class NotificationService {
           channelKey: statusChannelKey,
           channelName: 'KitX Status Notifications',
           channelDescription: 'KitX status',
-          locked: true,
+          locked: true, // Prevents the user from deleting the channel
+          playSound: false, // Do NOT play sound when the notification is displayed
+          enableVibration: false, // Do NOT vibrate when the notification is displayed
+          onlyAlertOnce: true, // Only alert once
           // defaultColor: Color(0xFF9D50DD),
           // ledColor: Colors.white,
         ),
       ],
     );
+    AwesomeNotifications().setListeners(onActionReceivedMethod: onActionReceivedMethod);
+  }
+
+  /// On action received method
+  @pragma('vm:entry-point')
+  static Future<void> onActionReceivedMethod(ReceivedAction receivedAction) async {
+    var key = receivedAction.buttonKeyPressed;
+    if (key == 'action_view_button') {
+      if (instances.devicesService.serviceStatus == ServiceStatus.running) {
+        // Stop service
+        instances.shutdownDevicesServer();
+      } else {
+        // Start service
+        instances.restartDevicesServer();
+      }
+    } else if (key == 'action_view_exit') {
+      // Exit app
+      SystemNavigator.pop(); // Probably not working on iOS (by Copilot)
+    }
   }
 
   /// Update status notification
@@ -37,15 +61,26 @@ class NotificationService {
     required ServiceStatus serviceStatus,
   }) async {
     AwesomeNotifications().createNotification(
-      content: NotificationContent(
-        id: statusNotificationId,
-        channelKey: statusChannelKey,
-        title: 'NotificationService_StatusNotificationTitle'.trParams({"status": serviceStatus.toText()}),
-        body: 'NotificationService_StatusNotificationBody'.trParams({'device_count': deviceCount.toString()}),
-        locked: true,
-        autoDismissible: false,
-        category: NotificationCategory.Status,
-      ),
-    );
+        content: NotificationContent(
+          id: statusNotificationId,
+          channelKey: statusChannelKey,
+          title: 'NotificationService_StatusNotificationTitle'.trParams({"status": serviceStatus.toText()}),
+          body: 'NotificationService_StatusNotificationBody'.trParams({'device_count': deviceCount.toString()}),
+          locked: true,
+          autoDismissible: false,
+          category: NotificationCategory.Status,
+        ),
+        actionButtons: [
+          NotificationActionButton(
+            key: 'action_view_button',
+            label: (serviceStatus == ServiceStatus.running) ? 'Public_Stop'.tr : 'Public_Launch'.tr,
+            actionType: ActionType.SilentAction,
+          ),
+          NotificationActionButton(
+            key: 'action_view_exit',
+            label: 'Public_Quit'.tr,
+            actionType: ActionType.SilentAction,
+          ),
+        ]);
   }
 }
