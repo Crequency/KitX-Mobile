@@ -29,7 +29,7 @@ class SettingsPageState extends State<SettingsPage> {
             children: [
               Obx(
                 () => Card(
-                  color: widget.plugin.isEnabled.value ? Colors.indigo : Colors.blueGrey,
+                  color: widget.plugin.isEnabled.value ? (context.isDarkMode ? Colors.indigo : Colors.cyan) : Colors.grey,
                   shadowColor: Colors.blueGrey,
                   child: Container(
                     margin: const EdgeInsets.fromLTRB(20, 10, 10, 10),
