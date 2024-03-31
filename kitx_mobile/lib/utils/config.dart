@@ -1,5 +1,6 @@
 library kitx_moblie.config;
 
+import 'package:get/get.dart';
 import 'package:kitx_mobile/instances.dart';
 import 'package:kitx_mobile/utils/extensions/int_ext.dart';
 import 'package:kitx_mobile/utils/extensions/theme_mode_ext.dart';
@@ -29,6 +30,9 @@ class Config {
   /// WebService local device os type
   var webServiceDeviceOSType = OperatingSystems.android;
 
+  /// Delay open page in home page
+  var delayOpenPageInHomePage = false.obs;
+
   /// Load all configurations
   Future<void> loadAsync() async {
     final prefs = await SharedPreferences.getInstance();
@@ -46,6 +50,8 @@ class Config {
     instances.appInfo.themeMode = (prefs.getInt('AppThemeMode') ?? 0).toThemeMode();
     instances.appInfo.material3Enabled = prefs.getBool('material3Enabled') ?? true;
     instances.appInfo.animationEnabled.value = prefs.getBool('AnimationEnabled') ?? true;
+
+    delayOpenPageInHomePage.value = prefs.getBool('delayOpenPageInHomePage') ?? false;
   }
 
   /// Save all configurations
@@ -63,6 +69,8 @@ class Config {
     await prefs.setInt('AppThemeMode', instances.appInfo.themeMode.toInt());
     await prefs.setBool('material3Enabled', instances.appInfo.material3Enabled);
     await prefs.setBool('AnimationEnabled', instances.appInfo.animationEnabled.value);
+
+    await prefs.setBool('delayOpenPageInHomePage', delayOpenPageInHomePage.value);
   }
 }
 

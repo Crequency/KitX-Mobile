@@ -2,6 +2,7 @@
 import 'package:get/get.dart';
 import 'package:kitx_mobile/pages/pages.dart';
 import 'package:kitx_mobile/pages/plugins_page.dart';
+import 'package:kitx_mobile/utils/config.dart';
 import 'package:kitx_mobile/utils/handlers/tasks/delayed_task.dart';
 
 /// [HomePageDrawer] class
@@ -37,7 +38,7 @@ class HomePageDrawer extends StatelessWidget {
             onTap: () {
               Get.back();
               Get.toNamed(DevicesPage.getRoute());
-            }.delay(milliseconds: pageOpenDelay).execute,
+            }.delay(milliseconds: config.delayOpenPageInHomePage.value ? pageOpenDelay : 0).execute,
           ),
           ListTile(
             leading: const Icon(Icons.layers),
@@ -45,7 +46,7 @@ class HomePageDrawer extends StatelessWidget {
             onTap: () {
               Get.back();
               Get.toNamed(PluginsPage.getRoute());
-            }.delay(milliseconds: pageOpenDelay).execute,
+            }.delay(milliseconds: config.delayOpenPageInHomePage.value ? pageOpenDelay : 0).execute,
           ),
           ListTile(
             leading: const Icon(Icons.alternate_email),
@@ -53,7 +54,7 @@ class HomePageDrawer extends StatelessWidget {
             onTap: () {
               Get.back();
               Get.toNamed(AccountPage.getRoute());
-            }.delay(milliseconds: pageOpenDelay).execute,
+            }.delay(milliseconds: config.delayOpenPageInHomePage.value ? pageOpenDelay : 0).execute,
           ),
           const Divider(),
           Row(
@@ -63,21 +64,21 @@ class HomePageDrawer extends StatelessWidget {
                 onPressed: () {
                   Get.back();
                   Get.toNamed(SettingsPage.getRoute());
-                }.delay(milliseconds: pageOpenDelay).execute,
+                }.delay(milliseconds: config.delayOpenPageInHomePage.value ? pageOpenDelay : 0).execute,
                 icon: const Icon(Icons.settings),
               ),
               IconButton(
                 onPressed: () {
                   Get.back();
                   Get.toNamed(AboutPage.getRoute());
-                }.delay(milliseconds: pageOpenDelay).execute,
+                }.delay(milliseconds: config.delayOpenPageInHomePage.value ? pageOpenDelay : 0).execute,
                 icon: const Icon(Icons.info_outline_rounded),
               ),
               IconButton(
                 onPressed: () {
                   Get.back();
                   Get.toNamed(TestPage.getRoute());
-                }.delay(milliseconds: pageOpenDelay).execute,
+                }.delay(milliseconds: config.delayOpenPageInHomePage.value ? pageOpenDelay : 0).execute,
                 icon: const Icon(Icons.bug_report),
               ),
             ],

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kitx_mobile/instances.dart';
 import 'package:kitx_mobile/pages/pages.dart';
+import 'package:kitx_mobile/pages/settings_pages/exterior_settings_page.dart';
 import 'package:kitx_mobile/pages/test_pages/device_info_test.dart';
 import 'package:kitx_mobile/pages/test_pages/device_sensors.dart';
 import 'package:kitx_mobile/pages/test_pages/network_info_test.dart';
@@ -12,7 +13,6 @@ import 'package:kitx_mobile/utils/composer.dart';
 import 'package:kitx_mobile/utils/config.dart';
 import 'package:kitx_mobile/utils/converters/size_converter.dart';
 import 'package:kitx_mobile/utils/handlers/tasks/delayed_task.dart';
-import 'package:kitx_mobile/utils/themes/themes.dart';
 
 /// Settings Group Title
 class SettingsGroupTitle extends StatelessWidget {
@@ -73,10 +73,10 @@ class SettingsPage extends StatefulWidget implements ConstantPage {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
-  var selectedModes = <ThemeMode>{instances.appInfo.themeMode};
+  var tileRadius = ContinuousRectangleBorder(borderRadius: BorderRadius.circular(10.0));
+
   var logFilePath = '/data/data/com.crequency.kitx.mobile/app_flutter/flog.db';
 
-  var useMaterial3 = lightThemeData.value.useMaterial3.obs;
   var logFileSizeString = 'getting ...'.obs;
   var logFileExists = false.obs;
 
@@ -145,94 +145,17 @@ class _SettingsPageState extends State<SettingsPage> {
       ),
       body: ListView(
         children: [
-          group(
-            SettingsGroupTitle(titleKey: 'SettingsPage_Theme'),
-            Column(
-              children: [
-                Container(
-                  width: double.infinity,
-                  margin: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-                  child: SegmentedButton<ThemeMode>(
-                    emptySelectionAllowed: false,
-                    multiSelectionEnabled: false,
-                    segments: <ButtonSegment<ThemeMode>>[
-                      ButtonSegment<ThemeMode>(
-                        value: ThemeMode.light,
-                        label: Text('SettingsPage_Light'.tr),
-                        icon: Icon(Icons.light_mode),
-                      ),
-                      ButtonSegment<ThemeMode>(
-                        value: ThemeMode.dark,
-                        label: Text('SettingsPage_Dark'.tr),
-                        icon: Icon(Icons.dark_mode),
-                      ),
-                      ButtonSegment<ThemeMode>(
-                        value: ThemeMode.system,
-                        label: Text('SettingsPage_FollowSystem'.tr),
-                        icon: Icon(Icons.settings),
-                      ),
-                    ],
-                    selected: selectedModes,
-                    // selectedIcon: Icon(Icons.check),
-                    showSelectedIcon: false,
-                    onSelectionChanged: (Set<ThemeMode> newSelection) => {
-                      setState(() {
-                        selectedModes = newSelection;
-                      }),
-                      instances.appInfo.themeModeProperty = newSelection.first,
-                      // Global.themeMode = newSelection.first,
-                      // Get.changeThemeMode(newSelection.first),
-                      saveChanges(context),
-                    },
-                  ),
-                ),
-                const SizedBox(height: 30),
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: 30),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text('${'Public_Enable'.tr} Material 3'),
-                      Obx(
-                        () => Switch.adaptive(
-                          value: useMaterial3.value,
-                          onChanged: (selection) {
-                            instances.appInfo.updateTheme(useMaterial3: selection);
-                            useMaterial3.value = selection;
-                            saveChanges(context);
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 30, vertical: 30),
+            child: ListTile(
+              leading: const Icon(Icons.color_lens),
+              title: Text('SettingsPage_Theme'.tr),
+              trailing: const Icon(Icons.keyboard_arrow_right),
+              shape: tileRadius,
+              onTap: () => Get.toNamed(ExteriorSettingsPage.getRoute()),
             ),
-            const SettingsGroupDivider(),
           ),
-          group(
-            SettingsGroupTitle(titleKey: 'Public_Animation'),
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 30),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text('${'Public_Enable'.tr} ${'Public_Additional'.tr} ${'Public_Animation'.tr}'),
-                  Obx(
-                    () => Switch.adaptive(
-                      value: instances.appInfo.animationEnabled.value,
-                      onChanged: (selection) {
-                        instances.appInfo.animationEnabled.value = selection;
-                        saveChanges(context);
-                      },
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            const SettingsGroupDivider(),
-            spacer: null,
-          ),
+          const Divider(),
           group(
             SettingsGroupTitle(titleKey: 'Public_Log'),
             Column(
@@ -298,6 +221,8 @@ class _SettingsPageState extends State<SettingsPage> {
                     child: Text('SettingsPage_CleanLog'.tr),
                   ),
                 ),
+                const SizedBox(height: 30),
+                ElevatedButton(onPressed: () {}, child: const Text('...')),
               ],
             ),
             const SettingsGroupDivider(),
