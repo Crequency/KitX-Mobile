@@ -3,10 +3,9 @@ import 'dart:io';
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:kitx_mobile/instances.dart';
 import 'package:kitx_mobile/services/public/service_status.dart';
 import 'package:kitx_mobile/utils/extensions/service_status_to_string.dart';
-import 'package:kitx_mobile/instances.dart';
-// import 'package:flutter/material.dart';
 
 /// [NotificationService] class
 class NotificationService {
@@ -18,25 +17,24 @@ class NotificationService {
 
   /// Initialize the notification service
   Future<void> initAsync() async {
-    // TODO: Adapt to iOS
-    AwesomeNotifications().initialize(
-      'resource://drawable/app_icon',
-      [
-        // KitX status channel
-        NotificationChannel(
-          channelKey: statusChannelKey,
-          channelName: 'KitX Status Notifications',
-          channelDescription: 'KitX status',
-          locked: true, // Prevents the user from deleting the channel
-          playSound: false, // Do NOT play sound when the notification is displayed
-          enableVibration: false, // Do NOT vibrate when the notification is displayed
-          onlyAlertOnce: true, // Only alert once
-          // defaultColor: Color(0xFF9D50DD),
-          // ledColor: Colors.white,
-        ),
-      ],
-    );
-    AwesomeNotifications().setListeners(onActionReceivedMethod: onActionReceivedMethod);
+    // TODO: adapt to iOS
+    if (Platform.isAndroid) {
+      AwesomeNotifications().initialize(
+        'resource://drawable/app_icon',
+        [
+          NotificationChannel(
+            channelKey: statusChannelKey,
+            channelName: 'KitX Status Notifications',
+            channelDescription: 'KitX Mobile Status',
+            locked: true,
+            playSound: false,
+            enableVibration: false,
+            onlyAlertOnce: true,
+          ),
+        ],
+      );
+      AwesomeNotifications().setListeners(onActionReceivedMethod: onActionReceivedMethod);
+    }
   }
 
   /// On action received method
@@ -45,20 +43,17 @@ class NotificationService {
     var key = receivedAction.buttonKeyPressed;
     if (key == 'action_view_button') {
       if (instances.devicesService.serviceStatus == ServiceStatus.running) {
-        // Stop service
         instances.shutdownDevicesServer();
       } else {
-        // Start service
         instances.restartDevicesServer();
       }
     } else if (key == 'action_view_exit') {
-      // Exit app
       instances.shutdownDevicesServer();
 
-      // Delete all notifications
       AwesomeNotifications().cancelAll();
 
-      await SystemNavigator.pop(); // Probably not working on iOS (by Copilot)
+      await SystemNavigator.pop();
+
       exit(0);
     }
   }
@@ -90,6 +85,7 @@ class NotificationService {
             label: 'Public_Quit'.tr,
             actionType: ActionType.SilentAction,
             autoDismissible: false,
+            isDangerousOption: true,
           ),
         ]);
   }

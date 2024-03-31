@@ -7,7 +7,7 @@ import 'package:kitx_mobile/data/local_device_info.dart';
 import 'package:kitx_mobile/data/local_network_info.dart';
 import 'package:kitx_mobile/services/devices_discovery_service.dart';
 import 'package:kitx_mobile/services/devices_service.dart';
-import 'package:kitx_mobile/services/notification.dart';
+import 'package:kitx_mobile/services/notification_service.dart';
 import 'package:kitx_mobile/utils/config.dart';
 import 'package:kitx_mobile/utils/handlers/tasks/delayed_task.dart';
 import 'package:kitx_mobile/utils/handlers/url_handler.dart';

@@ -6,50 +6,50 @@ publish_to: "none"
 version: 24.10.63+564
 
 environment:
-  sdk: ">=3.3.0 <4.0.0"
+    sdk: ">=3.3.0 <4.0.0"
 
 dependencies:
-  awesome_notifications: ^0.7.4+1
-  badges: ^3.1.2 # 徽章
-  battery_plus: ^5.0.3 # 电池数据
-  community_material_icon: ^5.9.55 # Material Design Icons 社区贡献
-  concentric_transition: ^1.0.3 # 同心过渡动画
-  connectivity_plus: ^5.0.2
-  crypto: ^3.0.3
-  device_info_plus: ^9.1.1
-  f_logs: ^2.0.1
-  fl_chart: ^0.67.0
-  flutter:
-    sdk: flutter
-  flutter_blue_plus: ^1.31.15
-  flutter_chat_ui: ^1.6.12
-  flutter_sharing_intent: ^1.1.1
-  get: ^4.6.6
-  kitx_mobile_internal_plugins:
-    path: ../kitx_mobile_internal_plugins/
-  kitx_shared_dart: ^3.24.10+6829-patch-1
-  network_info_plus: ^4.1.0
-  package_info_plus: ^5.0.1
-  permission_handler: ^11.3.0
-  sensors_plus: ^4.0.2
-  shared_preferences: ^2.2.2
-  sliding_up_panel: ^2.0.0+1
-  sound_mode: ^3.0.0
-  url_launcher: ^6.2.5
-  vector_math: ^2.1.4
-  vibration: ^1.8.4
-  wakelock_plus: ^1.1.4
+    awesome_notifications: ^0.7.4+1
+    badges: ^3.1.2
+    battery_plus: ^5.0.3
+    community_material_icon: ^5.9.55
+    concentric_transition: ^1.0.3
+    connectivity_plus: ^5.0.2
+    crypto: ^3.0.3
+    device_info_plus: ^9.1.1
+    f_logs: ^2.0.1
+    fl_chart: ^0.67.0
+    flutter:
+        sdk: flutter
+    flutter_blue_plus: ^1.31.15
+    flutter_chat_ui: ^1.6.12
+    flutter_sharing_intent: ^1.1.1
+    get: ^4.6.6
+    kitx_mobile_internal_plugins:
+        path: ../kitx_mobile_internal_plugins/
+    kitx_shared_dart: ^3.24.10+6829-patch-1
+    network_info_plus: ^4.1.0
+    package_info_plus: ^5.0.1
+    permission_handler: ^11.3.0
+    sensors_plus: ^4.0.2
+    shared_preferences: ^2.2.2
+    sliding_up_panel: ^2.0.0+1
+    sound_mode: ^3.0.0
+    url_launcher: ^6.2.5
+    vector_math: ^2.1.4
+    vibration: ^1.8.4
+    wakelock_plus: ^1.1.4
 
 dev_dependencies:
-  flutter_gen: ^5.4.0
-  flutter_lints: ^3.0.0
-  flutter_test:
-    sdk: flutter
+    flutter_gen: ^5.4.0
+    flutter_lints: ^3.0.0
+    flutter_test:
+        sdk: flutter
 
 flutter:
-  uses-material-design: true
+    uses-material-design: true
 
-  assets:
-    - assets/
+    assets:
+        - assets/
 
-  generate: true #
+    generate: true
