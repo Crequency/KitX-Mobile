@@ -1,4 +1,5 @@
 ﻿import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
 
 /// [int] Extensions
 extension IntExtensions on int {
@@ -14,5 +15,19 @@ extension IntExtensions on int {
       default:
         return ThemeMode.system;
     }
+  }
+
+  /// Convert [int] to [Level]
+  Level toLogLevel() {
+    var result = Level.off;
+
+    for (var element in Level.values) {
+      if (element.index == this) {
+        result = element;
+        continue;
+      }
+    }
+
+    return result;
   }
 }

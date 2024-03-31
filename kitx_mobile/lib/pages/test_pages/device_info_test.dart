@@ -76,13 +76,7 @@ class _DeviceInfoTestPageState extends State<DeviceInfoTestPage> {
       'Build Type': build.type,
       'Is physical device': build.isPhysicalDevice,
       'System Features': build.systemFeatures,
-      'Display Size Inches': ((build.displayMetrics.sizeInches * 10).roundToDouble() / 10),
-      'Display Width Pixels': build.displayMetrics.widthPx,
-      'Display Width Inches': build.displayMetrics.widthInches,
-      'Display Height Pixels': build.displayMetrics.heightPx,
-      'Display Height Inches': build.displayMetrics.heightInches,
-      'Display X DPI': build.displayMetrics.xDpi,
-      'Display Y DPI': build.displayMetrics.yDpi,
+      'Serial Number': build.serialNumber,
     };
   }
 

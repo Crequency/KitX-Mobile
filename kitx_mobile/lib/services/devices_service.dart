@@ -5,7 +5,6 @@ import 'package:kitx_mobile/instances.dart';
 import 'package:kitx_mobile/services/public/service_status.dart';
 import 'package:kitx_mobile/services/service.dart';
 import 'package:kitx_mobile/utils/config.dart';
-import 'package:kitx_mobile/utils/log.dart';
 import 'package:kitx_shared_dart/kitx_shared_dart.dart';
 
 /// Device Service
@@ -42,7 +41,7 @@ class DeviceService implements Service {
         deviceInfoList.insert(0, info);
         localDeviceCardAdded = true;
 
-        log.info('Insert local device to 0.');
+        instances.logger.i('Insert local device to 0.');
       } else if (info.isMainDevice) {
         // Main device.
 
@@ -50,7 +49,7 @@ class DeviceService implements Service {
         deviceInfoList.insert(index, info);
         mainDeviceCardAdded = true;
 
-        log.info('Insert main device to $index.');
+        instances.logger.i('Insert main device to $index.');
       } else {
         // Other device.
 

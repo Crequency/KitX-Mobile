@@ -1,6 +1,5 @@
 ﻿import 'dart:io';
 
-import 'package:f_logs/f_logs.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kitx_mobile/instances.dart';
@@ -157,78 +156,78 @@ class _SettingsPageState extends State<SettingsPage> {
             ),
           ),
           const Divider(),
-          group(
-            SettingsGroupTitle(titleKey: 'Public_Log'),
-            Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Obx(
-                      () => AnimatedContainer(
-                        duration: Duration(milliseconds: 700),
-                        curve: Curves.easeInOutCubic,
-                        width: logFileExists.value ? null : MediaQuery.of(context).size.width / 3 * 2,
-                        child: Text(logFileSizeString.value),
-                      ),
-                    ),
-                    const SizedBox(width: 10),
-                    IconButton(
-                      onPressed: updateLogFileSizeString,
-                      icon: Icon(Icons.refresh),
-                    )
-                  ],
-                ),
-                const SizedBox(height: 30),
-                Container(
-                  alignment: Alignment.center,
-                  child: ElevatedButton(
-                    onPressed: () async {
-                      var beforeSize = 0;
-                      var beforeSizeString = convert2string(beforeSize);
-                      var nowSize = 0;
-                      var nowSizeString = convert2string(nowSize);
+          //   group(
+          //     SettingsGroupTitle(titleKey: 'Public_Log'),
+          //     Column(
+          //       children: [
+          //         Row(
+          //           mainAxisAlignment: MainAxisAlignment.center,
+          //           children: [
+          //             Obx(
+          //               () => AnimatedContainer(
+          //                 duration: Duration(milliseconds: 700),
+          //                 curve: Curves.easeInOutCubic,
+          //                 width: logFileExists.value ? null : MediaQuery.of(context).size.width / 3 * 2,
+          //                 child: Text(logFileSizeString.value),
+          //               ),
+          //             ),
+          //             const SizedBox(width: 10),
+          //             IconButton(
+          //               onPressed: updateLogFileSizeString,
+          //               icon: Icon(Icons.refresh),
+          //             )
+          //           ],
+          //         ),
+          //         const SizedBox(height: 30),
+          //         Container(
+          //           alignment: Alignment.center,
+          //           child: ElevatedButton(
+          //             onPressed: () async {
+          //               var beforeSize = 0;
+          //               var beforeSizeString = convert2string(beforeSize);
+          //               var nowSize = 0;
+          //               var nowSizeString = convert2string(nowSize);
 
-                      var file = File(logFilePath);
+          //               var file = File(logFilePath);
 
-                      if (file.existsSync()) {
-                        logFileExists.value = true;
+          //               if (file.existsSync()) {
+          //                 logFileExists.value = true;
 
-                        beforeSize = file.lengthSync();
-                        beforeSizeString = convert2string(beforeSize);
-                      }
+          //                 beforeSize = file.lengthSync();
+          //                 beforeSizeString = convert2string(beforeSize);
+          //               }
 
-                      if (logFileExists.value) {
-                        await FLog.clearLogs();
-                      } else {
-                        FLog.clearLogs();
-                      }
+          //               if (logFileExists.value) {
+          //                 await FLog.clearLogs();
+          //               } else {
+          //                 FLog.clearLogs();
+          //               }
 
-                      file = File(logFilePath);
+          //               file = File(logFilePath);
 
-                      if (logFileExists.value) {
-                        nowSize = file.lengthSync();
-                        nowSizeString = convert2string(nowSize);
-                      }
+          //               if (logFileExists.value) {
+          //                 nowSize = file.lengthSync();
+          //                 nowSizeString = convert2string(nowSize);
+          //               }
 
-                      updateLogFileSizeString();
+          //               updateLogFileSizeString();
 
-                      if (logFileExists.value) {
-                        showSnackBar(Text('$beforeSizeString -> $nowSizeString'));
-                      } else {
-                        showSnackBar(Text('Log file clean action requested.'));
-                      }
-                    }.delay(milliseconds: 200).execute,
-                    child: Text('SettingsPage_CleanLog'.tr),
-                  ),
-                ),
-                const SizedBox(height: 30),
-                ElevatedButton(onPressed: () {}, child: const Text('...')),
-              ],
-            ),
-            const SettingsGroupDivider(),
-            spacer: null,
-          ),
+          //               if (logFileExists.value) {
+          //                 showSnackBar(Text('$beforeSizeString -> $nowSizeString'));
+          //               } else {
+          //                 showSnackBar(Text('Log file clean action requested.'));
+          //               }
+          //             }.delay(milliseconds: 200).execute,
+          //             child: Text('SettingsPage_CleanLog'.tr),
+          //           ),
+          //         ),
+          //         const SizedBox(height: 30),
+          //         ElevatedButton(onPressed: () {}, child: const Text('...')),
+          //       ],
+          //     ),
+          //     const SettingsGroupDivider(),
+          //     spacer: null,
+          //   ),
           group(
             SettingsGroupTitle(titleKey: 'Drawer_Test'.tr),
             Container(

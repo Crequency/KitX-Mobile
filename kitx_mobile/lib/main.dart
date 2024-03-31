@@ -4,7 +4,6 @@ import 'package:kitx_mobile/instances.dart';
 import 'package:kitx_mobile/pages/not_found_page.dart';
 import 'package:kitx_mobile/pages/pages.dart';
 import 'package:kitx_mobile/utils/config.dart';
-import 'package:kitx_mobile/utils/log.dart';
 import 'package:kitx_mobile/utils/themes/themes.dart';
 import 'package:kitx_mobile/utils/translation/translation.dart';
 
@@ -12,7 +11,6 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await config.loadAsync();
-  await log.initAsync();
   await instances.initAsync();
 
   runApp(MainApp());

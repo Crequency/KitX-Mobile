@@ -5,6 +5,7 @@ import 'package:kitx_mobile/instances.dart';
 import 'package:kitx_mobile/utils/extensions/int_ext.dart';
 import 'package:kitx_mobile/utils/extensions/theme_mode_ext.dart';
 import 'package:kitx_shared_dart/kitx_shared_dart.dart';
+import 'package:logger/logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 /// [Config] class
@@ -52,6 +53,8 @@ class Config {
     instances.appInfo.animationEnabled.value = prefs.getBool('AnimationEnabled') ?? true;
 
     delayOpenPageInHomePage.value = prefs.getBool('delayOpenPageInHomePage') ?? false;
+
+    Logger.level = (prefs.getInt('logLevel') ?? 0).toLogLevel();
   }
 
   /// Save all configurations
@@ -71,6 +74,8 @@ class Config {
     await prefs.setBool('AnimationEnabled', instances.appInfo.animationEnabled.value);
 
     await prefs.setBool('delayOpenPageInHomePage', delayOpenPageInHomePage.value);
+
+    await prefs.setInt('logLevel', Logger.level.value);
   }
 }
 
