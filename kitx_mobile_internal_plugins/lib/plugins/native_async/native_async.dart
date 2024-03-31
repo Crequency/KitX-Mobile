@@ -1,5 +1,4 @@
 ﻿import 'package:flutter/material.dart';
-import 'package:kitx_mobile_internal_plugins/interface/settings_page.dart';
 import 'package:kitx_mobile_internal_plugins/kitx_mobile_internal_plugins.dart';
 import 'package:kitx_mobile_internal_plugins/plugins/native_async/settings_page.dart';
 
@@ -14,8 +13,9 @@ class NativeAsyncPlugin extends InternalPlugin {
 
   NativeAsyncPlugin._internal();
 
-  SettingsPage get settingsPage => NativeAsyncSettingsPage(plugin: this);
-
   @override
-  Widget getSettings() => settingsPage;
+  Widget getSettings({Function(bool)? onPluginAbilityChangedAction}) => NativeAsyncSettingsPage(
+        plugin: this,
+        onPluginAbilityChangedAction: onPluginAbilityChangedAction,
+      );
 }

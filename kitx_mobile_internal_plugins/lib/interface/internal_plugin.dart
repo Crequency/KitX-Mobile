@@ -11,5 +11,7 @@ abstract class InternalPlugin {
 
   late var isEnabled = false.obs;
 
-  Widget getSettings();
+  Widget getSettings({
+    Function(bool)? onPluginAbilityChangedAction,
+  });
 }

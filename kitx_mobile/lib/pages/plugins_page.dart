@@ -1,6 +1,4 @@
-﻿import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+﻿import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:kitx_mobile/pages/pages.dart';
@@ -25,13 +23,13 @@ class PluginsPage extends StatefulWidget implements ConstantPage {
 class _PluginsPageState extends State<PluginsPage> {
   var tileRadius = ContinuousRectangleBorder(borderRadius: BorderRadius.circular(10.0));
 
+  var onPluginAbilityChanged = (bool ability) => VibrationHandler.tryVibrate(
+        milliseconds: ability ? 50 : 100,
+      );
+
   @override
   Widget build(BuildContext context) {
-    InternalPluginsManager.instance().onPluginAbilityChanged(
-      (ability) => VibrationHandler.tryVibrate(
-        milliseconds: ability ? 50 : 100,
-      ),
-    );
+    InternalPluginsManager.instance().onPluginAbilityChanged(onPluginAbilityChanged);
 
     return Scaffold(
       appBar: AppBar(
@@ -52,6 +50,7 @@ class _PluginsPageState extends State<PluginsPage> {
               children: InternalPluginsManager.instance().getList(
                 shape: tileRadius,
                 vibrator: () => VibrationHandler.tryVibrate(),
+                onPluginAbilityChangedAction: onPluginAbilityChanged,
               ),
             ),
             const SizedBox(height: 50),

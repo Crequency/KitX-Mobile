@@ -28,7 +28,7 @@ class InternalPluginsManager {
 
   int get enabledLength => plugins.where((plugin) => plugin.isEnabled.value).length;
 
-  List<Widget> getList({ShapeBorder? shape, Function? vibrator}) {
+  List<Widget> getList({ShapeBorder? shape, Function? vibrator, Function(bool)? onPluginAbilityChangedAction}) {
     return plugins
         .map(
           (plugin) => ListTile(
@@ -46,7 +46,7 @@ class InternalPluginsManager {
             shape: shape,
             onTap: () {
               vibrator?.call();
-              Get.to(plugin.getSettings());
+              Get.to(plugin.getSettings(onPluginAbilityChangedAction: onPluginAbilityChangedAction));
             },
           ),
         )

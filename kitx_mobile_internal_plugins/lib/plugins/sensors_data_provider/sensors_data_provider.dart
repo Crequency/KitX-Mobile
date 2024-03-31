@@ -1,5 +1,4 @@
 ﻿import 'package:flutter/material.dart';
-import 'package:kitx_mobile_internal_plugins/interface/settings_page.dart';
 import 'package:kitx_mobile_internal_plugins/kitx_mobile_internal_plugins.dart';
 import 'package:kitx_mobile_internal_plugins/plugins/sensors_data_provider/settings_page.dart';
 
@@ -14,8 +13,9 @@ class SensorsDataProviderPlugin extends InternalPlugin {
 
   SensorsDataProviderPlugin._internal();
 
-  SettingsPage get settingsPage => SensorsDataProviderSettingsPage(plugin: this);
-
   @override
-  Widget getSettings() => settingsPage;
+  Widget getSettings({Function(bool)? onPluginAbilityChangedAction}) => SensorsDataProviderSettingsPage(
+        plugin: this,
+        onPluginAbilityChangedAction: onPluginAbilityChangedAction,
+      );
 }

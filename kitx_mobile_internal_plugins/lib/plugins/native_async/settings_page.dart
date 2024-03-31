@@ -3,7 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:kitx_mobile_internal_plugins/interface/settings_page.dart';
 
 class NativeAsyncSettingsPage extends SettingsPage {
-  const NativeAsyncSettingsPage({super.key, required super.plugin});
+  const NativeAsyncSettingsPage({super.key, super.onPluginAbilityChangedAction, required super.plugin});
 
   @override
   Widget buildSettingsContent(BuildContext context) {

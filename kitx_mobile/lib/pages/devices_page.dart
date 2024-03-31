@@ -148,9 +148,10 @@ class _DevicesPage extends State<DevicesPage> {
                               key: Key('${info?.device.deviceName ?? ''}${info?.device.iPv4 ?? ''}'),
                               shouldDelay: justEnteredPage,
                               shouldScaleIn: instances.appInfo.animationEnabled.value,
-                              onTap: () => {
-                                if (info != null) selectedDeviceInfo.value = info,
-                                _paneController.open(),
+                              onTap: () {
+                                VibrationHandler.tryVibrate();
+                                if (info != null) selectedDeviceInfo.value = info;
+                                _paneController.open();
                               },
                             );
                           },
@@ -179,9 +180,10 @@ class _DevicesPage extends State<DevicesPage> {
                                   ),
                                   shouldDelay: justEnteredPage,
                                   shouldScaleIn: instances.appInfo.animationEnabled.value,
-                                  onTap: () => {
-                                    selectedDeviceInfo.value = instances.devicesService.deviceInfoList[i],
-                                    _paneController.open(),
+                                  onTap: () {
+                                    VibrationHandler.tryVibrate();
+                                    selectedDeviceInfo.value = instances.devicesService.deviceInfoList[i];
+                                    _paneController.open();
                                   },
                                 )
                             ],

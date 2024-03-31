@@ -4,9 +4,11 @@ import 'package:kitx_mobile_internal_plugins/interface/interface.dart';
 import 'package:kitx_mobile_internal_plugins/interface/internal_plugin.dart';
 
 class SettingsPage extends StatefulWidget {
-  const SettingsPage({super.key, required this.plugin});
+  const SettingsPage({super.key, required this.onPluginAbilityChangedAction, required this.plugin});
 
   final InternalPlugin plugin;
+
+  final Function(bool)? onPluginAbilityChangedAction;
 
   Widget buildSettingsContent(BuildContext context) => const Text('Developing ...');
 
@@ -38,7 +40,7 @@ class SettingsPageState extends State<SettingsPage> {
                             alignment: Alignment.centerLeft,
                             child: Text(
                               widget.plugin.name,
-                              style: const TextStyle(fontSize: 18),
+                              style: const TextStyle(fontSize: 18, color: Colors.white),
                             ),
                           ),
                         ),
@@ -47,7 +49,10 @@ class SettingsPageState extends State<SettingsPage> {
                             alignment: Alignment.centerRight,
                             child: Switch(
                               value: widget.plugin.isEnabled.value,
-                              onChanged: (value) => widget.plugin.isEnabled.value = value,
+                              onChanged: (value) {
+                                widget.onPluginAbilityChangedAction?.call(value);
+                                widget.plugin.isEnabled.value = value;
+                              },
                             ),
                           ),
                         ),
