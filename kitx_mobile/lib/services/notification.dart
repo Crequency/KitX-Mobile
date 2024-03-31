@@ -40,11 +40,8 @@ class NotificationService {
       content: NotificationContent(
         id: statusNotificationId,
         channelKey: statusChannelKey,
-        title:
-            'NotificationService_StatusNotificationTitle'.tr.replaceAll("%status%", serviceStatus.toText()),
-        body: 'NotificationService_StatusNotificationBody'
-            .tr
-            .replaceAll('%device_count%', deviceCount.toString()),
+        title: 'NotificationService_StatusNotificationTitle'.trParams({"status": serviceStatus.toText()}),
+        body: 'NotificationService_StatusNotificationBody'.trParams({'device_count': deviceCount.toString()}),
         locked: true,
         autoDismissible: false,
         category: NotificationCategory.Status,

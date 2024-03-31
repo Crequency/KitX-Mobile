@@ -5,7 +5,7 @@ import 'package:kitx_mobile/pages/pages.dart';
 import 'package:kitx_mobile/utils/config.dart';
 import 'package:kitx_mobile/utils/log.dart';
 import 'package:kitx_mobile/utils/themes/themes.dart';
-import 'package:kitx_mobile/utils/translation.dart';
+import 'package:kitx_mobile/utils/translation/translation.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

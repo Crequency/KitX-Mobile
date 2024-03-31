@@ -7,15 +7,15 @@ extension ServiceStatusExtensions on ServiceStatus {
   String toText() {
     switch (this) {
       case ServiceStatus.error:
-        return 'ServiceStatus_Error'.tr;
+        return 'Public_Error'.tr;
       case ServiceStatus.starting:
-        return 'ServiceStatus_Starting'.tr;
+        return 'Public_Launching'.tr;
       case ServiceStatus.stopping:
-        return 'ServiceStatus_Stopping'.tr;
+        return 'Public_Stopping'.tr;
       case ServiceStatus.running:
-        return 'ServiceStatus_Running'.tr;
+        return 'Public_Running'.tr;
       case ServiceStatus.pending:
-        return 'ServiceStatus_Pending'.tr;
+        return 'Public_Pending'.tr;
       default:
         return 'Unknown';
     }
