@@ -28,6 +28,7 @@ class Translation extends Translations {
           'NotificationService_StatusNotificationBody': '当前设备数: %device_count%',
           'Drawer_Title': 'KitX',
           'Drawer_Devices': '设备管理',
+          'Drawer_Plugins': '插件列表',
           'Drawer_Account': '账户',
           'Drawer_Test': '测试',
           'Drawer_Setting': '设置',
@@ -41,6 +42,9 @@ class Translation extends Translations {
           'DevicesPage_LocalDevice': '(本机)',
           'DevicesPage_MainDevice': '(主控)',
           'DeviceChatPage_Title': '聊天',
+          'PluginsPage_Title': '插件列表',
+          'PluginsPage_BuiltInPlugins': '内置插件',
+          'PluginsPage_ConnectedPlugins': '已连接的插件',
           'AccountPage_Title': '账户',
           'TestPage_Title': '测试',
           'SettingsPage_Title': '设置',
@@ -53,16 +57,18 @@ class Translation extends Translations {
           'SettingsPage_Saved': '配置已保存!',
           'AboutPage_Title': '关于',
           'AboutPage_Version': '版本',
+          'AboutPage_VersionCode': '构建号',
           'AboutPage_Contributors': '贡献者',
           'AboutPage_Repos': '仓库',
           'AboutPage_ThirdPartyLicenses': '第三方许可',
           'AboutPage_ThirdPartyLicenses_DisplayAll': '显示全部',
           'AboutPage_JoinUS': '加入我们',
-          'AboutPage_JoinUS_Text': '我们的项目都托管在 https://github.com/Crequency/, '
-              '欢迎 Fork 并贡献您宝贵的意见.\n\n'
-              'KitX Mobile 的源码全部位于 https://github.com/Crequency/KitX-Mobile/\n\n'
-              'KitX Mobile 是 KitX Project 一部分, '
-              'KitX Project 的主仓库是 https://github.com/Crequency/KitX',
+          'AboutPage_JoinUS_Text': ''
+              '我们的项目都托管在 https://github.com/Crequency/, 欢迎 Fork 并贡献您宝贵的意见.'
+              '\n\n'
+              'KitX Mobile 的源码全部位于 https://github.com/Crequency/KitX-Mobile/'
+              '\n\n'
+              'KitX Mobile 是 KitX Project 一部分, KitX Project 的主仓库是 https://github.com/Crequency/KitX',
         },
         'en_US': {
           'Public_Enable': 'Enable',
@@ -88,6 +94,7 @@ class Translation extends Translations {
           'NotificationService_StatusNotificationBody': '%device_count% Devices Online',
           'Drawer_Title': 'KitX',
           'Drawer_Devices': 'Devices',
+          'Drawer_Plugins': 'Plugins',
           'Drawer_Account': 'Account',
           'Drawer_Test': 'Test',
           'Drawer_Setting': 'Settings',
@@ -101,6 +108,9 @@ class Translation extends Translations {
           'DevicesPage_LocalDevice': '(Local)',
           'DevicesPage_MainDevice': '(Master)',
           'DeviceChatPage_Title': 'Chat',
+          'PluginsPage_Title': 'Plugins',
+          'PluginsPage_BuiltInPlugins': 'Built-in Plugins',
+          'PluginsPage_ConnectedPlugins': 'Connected Plugins',
           'AccountPage_Title': 'Account',
           'TestPage_Title': 'Test',
           'SettingsPage_Title': 'Settings',
@@ -113,16 +123,18 @@ class Translation extends Translations {
           'SettingsPage_Saved': 'Changes saved!',
           'AboutPage_Title': 'About',
           'AboutPage_Version': 'Version',
+          'AboutPage_VersionCode': 'Build Number',
           'AboutPage_Contributors': 'Contributors',
           'AboutPage_Repos': 'Repos',
           'AboutPage_ThirdPartyLicenses': 'Third-Party Licenses',
           'AboutPage_ThirdPartyLicenses_DisplayAll': 'Display all',
           'AboutPage_JoinUS': 'Join US',
-          'AboutPage_JoinUS_Text': 'All our projects storage on https://github.com/Crequency/, '
-              'welcome to fork and contribute to them.\n\n'
-              'Source code of KitX Mobile located at https://github.com/Crequency/KitX-Mobile/\n\n'
-              'KitX Mobile belongs to KitX Project, '
-              'Main repo of KitX Project located at https://github.com/Crequency/KitX',
+          'AboutPage_JoinUS_Text': ''
+              'All our projects storage on https://github.com/Crequency/, welcome to fork and contribute to them.'
+              '\n\n'
+              'Source code of KitX Mobile located at https://github.com/Crequency/KitX-Mobile/'
+              '\n\n'
+              'KitX Mobile belongs to KitX Project, Main repo of KitX Project located at https://github.com/Crequency/KitX',
         }
       };
 }

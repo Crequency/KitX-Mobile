@@ -26,9 +26,7 @@ class DeviceService implements Service {
     var _tempList = deviceInfoList.toList();
 
     var findIndex = _tempList.indexWhere(
-      (element) =>
-          element.device.iPv4 == info.device.iPv4 ||
-          element.device.macAddress == info.device.macAddress,
+      (element) => element.device.iPv4 == info.device.iPv4 || element.device.macAddress == info.device.macAddress,
     );
 
     if (findIndex != -1) {
@@ -66,9 +64,15 @@ class DeviceService implements Service {
         }
 
         var localDeviceOS = _tempList
-            .firstWhereOrNull((element) => element.device.deviceName == instances.deviceInfo.deviceName)
+            .firstWhereOrNull(
+              (element) => element.device.deviceName == instances.deviceInfo.deviceName,
+            )
             ?.deviceOSType;
-        var mainDeviceOS = _tempList.firstWhereOrNull((element) => element.isMainDevice)?.deviceOSType;
+        var mainDeviceOS = _tempList
+            .firstWhereOrNull(
+              (element) => element.isMainDevice,
+            )
+            ?.deviceOSType;
 
         if (localDeviceOS != null) devicesCountPerOS[localDeviceOS] = devicesCountPerOS[localDeviceOS]! - 1;
         if (mainDeviceOS != null) devicesCountPerOS[mainDeviceOS] = devicesCountPerOS[mainDeviceOS]! - 1;

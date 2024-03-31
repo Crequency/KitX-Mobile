@@ -77,9 +77,7 @@ class _DeviceCard extends State<DeviceCard> with TickerProviderStateMixin {
 
     if (shouldScaleIn ?? true) {
       if (shouldDelay ?? true) {
-        (() => _animationController.forward().then((value) => onScaleEnd?.call()))
-            .delay(milliseconds: 150 * index)
-            .execute();
+        (() => _animationController.forward().then((value) => onScaleEnd?.call())).delay(milliseconds: 150 * index).execute();
       } else {
         _animationController.forward().then((value) => onScaleEnd?.call());
       }
@@ -137,6 +135,8 @@ class _DeviceCard extends State<DeviceCard> with TickerProviderStateMixin {
     var cardColor = getDeviceCardColor(context, info);
     var deviceName = getDeviceDisplayName(info);
 
+    var deviceNameController = ScrollController();
+
     return ScaleTransition(
       scale: _animation,
       child: SizedBox(
@@ -186,9 +186,19 @@ class _DeviceCard extends State<DeviceCard> with TickerProviderStateMixin {
                                       scrollDirection: Axis.horizontal,
                                       child: Text(deviceName, style: const TextStyle(fontSize: 18)),
                                     ),
-                                    SingleChildScrollView(
-                                      scrollDirection: Axis.horizontal,
-                                      child: Text(info.deviceOSVersion),
+                                    ShaderMask(
+                                      shaderCallback: (Rect rect) => LinearGradient(
+                                        begin: Alignment.centerLeft,
+                                        end: Alignment.centerRight,
+                                        colors: [Colors.indigo, Colors.transparent, Colors.transparent, Colors.indigo],
+                                        stops: deviceNameController.offset > 0 ? [0.0, 0.05, 0.95, 1.0] : [0.0, 0.0, 0.95, 1.0],
+                                      ).createShader(rect),
+                                      blendMode: BlendMode.dstOut,
+                                      child: SingleChildScrollView(
+                                        controller: deviceNameController,
+                                        scrollDirection: Axis.horizontal,
+                                        child: Text('${info.deviceOSVersion}   '),
+                                      ),
                                     ),
                                   ],
                                 ),

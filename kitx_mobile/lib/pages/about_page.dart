@@ -96,7 +96,7 @@ class _AboutPageState extends State<AboutPage> {
             snap: false,
             floating: false,
             // expandedHeight: entered ? 380.0 : 380.0,
-            expandedHeight: 345.0,
+            expandedHeight: 360.0,
             title: Text('AboutPage_Title'.tr),
             flexibleSpace: FlexibleSpaceBar(
               // title: Text('AboutPage_Title'.tr),
@@ -120,7 +120,6 @@ class _AboutPageState extends State<AboutPage> {
     return ListView(
       physics: NeverScrollableScrollPhysics(),
       children: [
-        SizedBox(height: 30),
         Obx(
           () => AnimatedContainer(
             duration: const Duration(milliseconds: 800),
@@ -160,10 +159,10 @@ class _AboutPageState extends State<AboutPage> {
                   duration: 500,
                   opacity: titleEntered.value && versionDisplay.value ? 1 : 0,
                   curve: Curves.easeInOutCubic,
-                  child: Text('${'AboutPage_Version'.tr}: ${instances.appInfo.versionString.value}'),
+                  child: Text(
+                      '${instances.appInfo.versionString.value} (${instances.appInfo.versionCode.value})'),
                 ),
               ),
-              // Divider(),
             ],
           ),
         ),
@@ -204,7 +203,10 @@ class _AboutPageState extends State<AboutPage> {
                 physics: BouncingScrollPhysics(),
                 children: [
                   GraduallySmallerSpacer(duration: 1200, width: contentEntering ? 15 : 800),
-                  const ContributorChip(name: 'Dynesshely', url: 'https://github.com/Dynesshely'),
+                  const ContributorChip(
+                    name: 'Dynesshely',
+                    url: 'https://github.com/Dynesshely',
+                  ),
                   const SizedBox(width: 10),
                   const ContributorChip(
                     name: 'Cranyozen',
@@ -214,6 +216,11 @@ class _AboutPageState extends State<AboutPage> {
                   const ContributorChip(
                     name: 'orzMaster',
                     url: 'https://github.com/orzMaster',
+                  ),
+                  const SizedBox(width: 10),
+                  const ContributorChip(
+                    name: 'Cronyet',
+                    url: 'https://github.com/Cronyet',
                   ),
                   const SizedBox(width: 15),
                 ]),
@@ -247,9 +254,9 @@ class _AboutPageState extends State<AboutPage> {
             physics: BouncingScrollPhysics(),
             padding: EdgeInsets.all(10),
             children: [
-              const RepoButton(name: 'GitHub', url: 'https://github.com/Crequency/KitX'),
+              const RepoButton(name: 'GitHub', url: 'https://github.com/Crequency/KitX-Mobile'),
               const SizedBox(width: 10),
-              const RepoButton(name: 'Gitee', url: 'https://gitee.com/Crequency/KitX'),
+              const RepoButton(name: 'Gitee', url: 'https://gitee.com/Crequency/KitX-Mobile'),
             ],
           ),
         ),
@@ -310,6 +317,14 @@ class _AboutPageState extends State<AboutPage> {
       ),
       Column(
         children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const RepoButton(name: 'GitHub', url: 'https://github.com/Crequency/KitX'),
+              const SizedBox(width: 10),
+              const RepoButton(name: 'Gitee', url: 'https://gitee.com/Crequency/KitX'),
+            ],
+          ),
           const SizedBox(height: 30),
           const Divider(),
         ],
@@ -323,7 +338,6 @@ class _AboutPageState extends State<AboutPage> {
       physics: NeverScrollableScrollPhysics(),
       children: [
         GraduallySmallerSpacer(duration: 1000, height: contentEntering ? 0 : 800),
-        const SizedBox(height: 30),
         getContributors(context),
         getRepos(context),
         getThirdPartyLicenses(context),

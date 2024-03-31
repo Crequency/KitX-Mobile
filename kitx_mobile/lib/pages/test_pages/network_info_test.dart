@@ -1,5 +1,3 @@
-// ignore_for_file: non_constant_identifier_names
-
 import 'dart:async';
 
 import 'package:flutter/material.dart';
@@ -8,7 +6,7 @@ import 'package:network_info_plus/network_info_plus.dart';
 
 /// NetworkInfoTest Page
 class NetworkInfoTestPage extends StatefulWidget {
-  // ignore: public_member_api_docs
+  /// Constructor
   const NetworkInfoTestPage({Key? key}) : super(key: key);
 
   @override
@@ -18,13 +16,13 @@ class NetworkInfoTestPage extends StatefulWidget {
 class _NetworkInfoTestPageState extends State<NetworkInfoTestPage> {
   final _networkInfo = NetworkInfo();
 
-  final wifi_name = ''.obs;
-  final wifi_bssid = ''.obs;
-  final wifi_ipv4 = ''.obs;
-  final wifi_ipv6 = ''.obs;
-  final wifi_broadcast = ''.obs;
-  final wifi_gateway = ''.obs;
-  final wifi_subnetMask = ''.obs;
+  final wifiName = ''.obs;
+  final wifiBssid = ''.obs;
+  final wifiIPv4 = ''.obs;
+  final wifiIPv6 = ''.obs;
+  final wifiBroadcast = ''.obs;
+  final wifiGateway = ''.obs;
+  final wifiSubnetMask = ''.obs;
 
   static const linePadding = 20.0;
 
@@ -44,19 +42,19 @@ class _NetworkInfoTestPageState extends State<NetworkInfoTestPage> {
             children: [
               Text('Connection Status', style: TextStyle(fontSize: 32)),
               const SizedBox(height: linePadding * 2),
-              Text('Wifi Name: ${wifi_name.value}'),
+              Text('Wifi Name: ${wifiName.value}'),
               const SizedBox(height: linePadding),
-              Text('Wifi BSSID: ${wifi_bssid.value}'),
+              Text('Wifi BSSID: ${wifiBssid.value}'),
               const SizedBox(height: linePadding),
-              Text('Wifi IPv4: ${wifi_ipv4.value}'),
+              Text('Wifi IPv4: ${wifiIPv4.value}'),
               const SizedBox(height: linePadding),
-              Text('Wifi IPv6: ${wifi_ipv6.value}'),
+              Text('Wifi IPv6: ${wifiIPv6.value}'),
               const SizedBox(height: linePadding),
-              Text('Wifi Broadcast: ${wifi_broadcast.value}'),
+              Text('Wifi Broadcast: ${wifiBroadcast.value}'),
               const SizedBox(height: linePadding),
-              Text('Wifi Gateway: ${wifi_gateway.value}'),
+              Text('Wifi Gateway: ${wifiGateway.value}'),
               const SizedBox(height: linePadding),
-              Text('Wifi Subnet mask: ${wifi_subnetMask.value}'),
+              Text('Wifi Subnet mask: ${wifiSubnetMask.value}'),
               const SizedBox(height: 300),
             ],
           ),
@@ -66,12 +64,12 @@ class _NetworkInfoTestPageState extends State<NetworkInfoTestPage> {
   }
 
   Future<void> _initNetworkInfo() async {
-    wifi_name.value = await _networkInfo.getWifiName() ?? 'null';
-    wifi_bssid.value = await _networkInfo.getWifiBSSID() ?? 'null';
-    wifi_ipv4.value = await _networkInfo.getWifiIP() ?? 'null';
-    wifi_ipv6.value = await _networkInfo.getWifiIPv6() ?? 'null';
-    wifi_subnetMask.value = await _networkInfo.getWifiSubmask() ?? 'null';
-    wifi_broadcast.value = await _networkInfo.getWifiBroadcast() ?? 'null';
-    wifi_gateway.value = await _networkInfo.getWifiGatewayIP() ?? 'null';
+    wifiName.value = await _networkInfo.getWifiName() ?? 'null';
+    wifiBssid.value = await _networkInfo.getWifiBSSID() ?? 'null';
+    wifiIPv4.value = await _networkInfo.getWifiIP() ?? 'null';
+    wifiIPv6.value = await _networkInfo.getWifiIPv6() ?? 'null';
+    wifiSubnetMask.value = await _networkInfo.getWifiSubmask() ?? 'null';
+    wifiBroadcast.value = await _networkInfo.getWifiBroadcast() ?? 'null';
+    wifiGateway.value = await _networkInfo.getWifiGatewayIP() ?? 'null';
   }
 }

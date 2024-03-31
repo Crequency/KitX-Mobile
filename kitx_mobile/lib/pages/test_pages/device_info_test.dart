@@ -6,7 +6,7 @@ import 'package:flutter/services.dart';
 
 /// DeviceInfoTestPage
 class DeviceInfoTestPage extends StatefulWidget {
-  // ignore: public_member_api_docs
+  /// Constructor
   const DeviceInfoTestPage({Key? key}) : super(key: key);
 
   @override

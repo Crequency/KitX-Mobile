@@ -29,7 +29,3 @@ subprojects {
 tasks.register("clean", Delete) {
     delete rootProject.buildDir
 }
-
-tasks.withType(JavaCompile) {
-    options.encoding = "UTF-8"
-}

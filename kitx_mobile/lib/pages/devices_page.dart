@@ -159,8 +159,10 @@ class _DevicesPage extends State<DevicesPage> {
                                   instances.devicesService.deviceInfoList[i],
                                   i,
                                   width: (MediaQuery.of(context).size.width - 20) * deviceCardHorizontalScale,
-                                  key: Key('${instances.devicesService.deviceInfoList[i].device.deviceName}'
-                                      '${instances.devicesService.deviceInfoList[i].device.iPv4}'),
+                                  key: Key(
+                                    '${instances.devicesService.deviceInfoList[i].device.deviceName}'
+                                    '${instances.devicesService.deviceInfoList[i].device.iPv4}',
+                                  ),
                                   shouldDelay: justEnteredPage,
                                   shouldScaleIn: instances.appInfo.animationEnabled.value,
                                   onTap: () => {

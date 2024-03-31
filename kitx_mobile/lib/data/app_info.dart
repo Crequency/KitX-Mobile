@@ -48,12 +48,20 @@ class AppInfo {
   /// Version
   var version = ''.obs;
 
-  /// Version string
+  /// Version Code
+  var versionCode = ''.obs;
+
+  /// Version String
   var versionString = ''.obs;
 
   /// Init [AppInfo] class
   Future<AppInfo> init() async {
-    await instances.packageInfo.then((value) => version.value = value.version);
+    await instances.packageInfo.then(
+      (value) => {
+        version.value = value.version,
+        versionCode.value = value.buildNumber,
+      },
+    );
     versionString.value = '${version.value}${(isRelease ? ' (Release)' : ' (Debug)')}';
 
     return this;

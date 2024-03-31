@@ -1,10 +1,19 @@
 {
-	"folders": [
-		{
-			"path": "."
-		},
-		{
-			"path": "kitx_mobile"
-		}
-	]
+    "folders": [
+        {
+            "path": "."
+        },
+        {
+            "path": "kitx_mobile"
+        }
+    ],
+    "settings": {
+        "git.autorefresh": true,
+        "dart.lineLength": 200,
+        "[dart]": {
+            "editor.rulers": [
+                200
+            ],
+        }
+    }
 }

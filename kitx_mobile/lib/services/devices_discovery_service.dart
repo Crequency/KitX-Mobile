@@ -11,6 +11,7 @@ import 'package:kitx_mobile/utils/config.dart';
 import 'package:kitx_mobile/utils/extensions/null_value_checker.dart';
 import 'package:kitx_mobile/utils/handlers/tasks/delayed_task.dart';
 import 'package:kitx_mobile/utils/log.dart';
+import 'package:kitx_mobile_internal_plugins/kitx_mobile_internal_plugins.dart';
 import 'package:kitx_shared_dart/kitx_shared_dart.dart';
 
 /// [DevicesDiscoveryService] class
@@ -95,7 +96,11 @@ class DevicesDiscoveryService implements Service {
 
           sendTimer = Timer.periodic(Duration(seconds: config.webServiceUdpSendFrequency), (timer) {
             try {
-              deviceInfo = deviceInfo.rebuild((b) => b..sendTime = DateTime.now().toUtc());
+              deviceInfo = deviceInfo.rebuild(
+                (b) => b
+                  ..sendTime = DateTime.now().toUtc()
+                  ..pluginsCount = InternalPluginsManager.instance().enabledLength,
+              );
 
               if (_isExitPackageSent) {
                 deviceInfo = deviceInfo.rebuild(

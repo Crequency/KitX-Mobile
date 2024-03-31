@@ -56,16 +56,20 @@ class _TestPageState extends State<TestPage> with SingleTickerProviderStateMixin
             bottom: TabBar(
               controller: _tabController,
               tabs: <Tab>[
-                Tab(text: 'Device Info', icon: Icon(Icons.devices)),
-                Tab(text: 'Device Sensors', icon: Icon(Icons.sensors)),
-                Tab(text: 'Network Info', icon: Icon(Icons.wifi)),
+                const Tab(text: 'Device Info', icon: const Icon(Icons.devices)),
+                const Tab(text: 'Device Sensors', icon: const Icon(Icons.sensors)),
+                const Tab(text: 'Network Info', icon: const Icon(Icons.wifi)),
               ],
             ),
           ),
         ],
         body: TabBarView(
           controller: _tabController,
-          children: [DeviceInfoTestPage(), DeviceSensorsPage(), NetworkInfoTestPage()],
+          children: [
+            const DeviceInfoTestPage(),
+            DeviceSensorsPage(),
+            const NetworkInfoTestPage(),
+          ],
         ),
       ),
     );
