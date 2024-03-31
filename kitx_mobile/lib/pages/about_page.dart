@@ -159,8 +159,7 @@ class _AboutPageState extends State<AboutPage> {
                   duration: 500,
                   opacity: titleEntered.value && versionDisplay.value ? 1 : 0,
                   curve: Curves.easeInOutCubic,
-                  child: Text(
-                      '${instances.appInfo.versionString.value} (${instances.appInfo.versionCode.value})'),
+                  child: Text('${instances.appInfo.versionString.value} (${instances.appInfo.versionCode.value})'),
                 ),
               ),
             ],
@@ -223,7 +222,8 @@ class _AboutPageState extends State<AboutPage> {
                     url: 'https://github.com/Cronyet',
                   ),
                   const SizedBox(width: 15),
-                ]),
+                ],
+            ),
           ),
         ),
       ),
@@ -371,9 +371,7 @@ class _AboutPageState extends State<AboutPage> {
                 splashRadius: 20,
                 padding: const EdgeInsets.all(0),
                 iconSize: 24,
-                icon: url?.contains('pub.dev') ?? false
-                    ? const Icon(CommunityMaterialIcons.link)
-                    : const Icon(CommunityMaterialIcons.link),
+                icon: url?.contains('pub.dev') ?? false ? const Icon(CommunityMaterialIcons.link) : const Icon(CommunityMaterialIcons.link),
                 onPressed: () => instances.urlHandler.open(thirdPartyData.ThirdPartyUrl ?? ''),
               ),
               IconButton(
@@ -381,9 +379,7 @@ class _AboutPageState extends State<AboutPage> {
                 splashRadius: 20,
                 padding: const EdgeInsets.all(0),
                 iconSize: 24,
-                icon: repo?.contains('github.com') ?? false
-                    ? const Icon(CommunityMaterialIcons.github)
-                    : const Icon(CommunityMaterialIcons.link),
+                icon: repo?.contains('github.com') ?? false ? const Icon(CommunityMaterialIcons.github) : const Icon(CommunityMaterialIcons.link),
                 onPressed: () => instances.urlHandler.open(thirdPartyData.ThirdPartyRepo ?? ''),
               ),
               Container(
