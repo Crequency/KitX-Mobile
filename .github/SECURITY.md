@@ -2,12 +2,13 @@
 
 ## Supported Versions
 
-Use this section to tell people about which versions of your project are
-currently being supported with security updates.
+This project is under developing, and we are not ready to release a stable version yet.
 
+<!--
 | Version       | Supported          |
 |---------------|--------------------|
 | v1.0.0        | :white_check_mark: |
+ -->
 
 ## Reporting a Vulnerability
 
