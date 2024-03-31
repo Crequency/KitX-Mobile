@@ -9,10 +9,11 @@ environment:
   sdk: ">=3.3.0 <4.0.0"
 
 dependencies:
-  badges: ^3.1.2
-  battery_plus: ^5.0.3
-  community_material_icon: ^5.9.55
-  concentric_transition: ^1.0.3
+  awesome_notifications: ^0.7.4+1
+  badges: ^3.1.2 # 徽章
+  battery_plus: ^5.0.3 # 电池数据
+  community_material_icon: ^5.9.55 # Material Design Icons 社区贡献
+  concentric_transition: ^1.0.3 # 同心过渡动画
   connectivity_plus: ^5.0.2
   crypto: ^3.0.3
   device_info_plus: ^9.1.1
