@@ -7,6 +7,7 @@ import 'package:kitx_mobile/pages/controls/device_status_icon.dart';
 import 'package:kitx_mobile/pages/controls/device_status_label.dart';
 import 'package:kitx_mobile/pages/pages.dart';
 import 'package:kitx_mobile/pages/sub_pages/device_chat_page.dart';
+import 'package:kitx_mobile/utils/extensions/device_info_ext.dart';
 import 'package:kitx_mobile/utils/handlers/vibration_handler.dart';
 import 'package:kitx_shared_dart/kitx_shared_dart.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
@@ -140,17 +141,24 @@ class _DevicesPage extends State<DevicesPage> {
                           physics: NeverScrollableScrollPhysics(),
                           itemCount: instances.devicesService.length + 1,
                           itemBuilder: (_, index) {
+                            if (index >= instances.devicesService.length) {
+                              return const SizedBox(
+                                key: ValueKey('PlacerEmptySizedBox'),
+                                height: 300,
+                              );
+                            }
+
                             var list = instances.devicesService.deviceInfoList;
-                            var info = index >= instances.devicesService.length ? null : list[index];
+                            var info = list[index];
                             return DeviceCard(
                               info,
                               index,
-                              key: Key('${info?.device.deviceName ?? ''}${info?.device.iPv4 ?? ''}'),
+                              key: info.getValueKey(),
                               shouldDelay: justEnteredPage,
                               shouldScaleIn: instances.appInfo.animationEnabled.value,
                               onTap: () {
                                 VibrationHandler.tryVibrate();
-                                if (info != null) selectedDeviceInfo.value = info;
+                                selectedDeviceInfo.value = info;
                                 _paneController.open();
                               },
                             );
@@ -174,10 +182,7 @@ class _DevicesPage extends State<DevicesPage> {
                                   instances.devicesService.deviceInfoList[i],
                                   i,
                                   width: (MediaQuery.of(context).size.width - 20) * deviceCardHorizontalScale,
-                                  key: Key(
-                                    '${instances.devicesService.deviceInfoList[i].device.deviceName}'
-                                    '${instances.devicesService.deviceInfoList[i].device.iPv4}',
-                                  ),
+                                  key: instances.devicesService.deviceInfoList[i].getValueKey(),
                                   shouldDelay: justEnteredPage,
                                   shouldScaleIn: instances.appInfo.animationEnabled.value,
                                   onTap: () {
