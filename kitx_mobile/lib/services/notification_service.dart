@@ -19,7 +19,7 @@ class NotificationService {
   /// Initialize the notification service
   Future<void> initAsync() async {
     // TODO: adapt to iOS
-    if (Platform.isAndroid) {
+    if (GetPlatform.isAndroid) {
       AwesomeNotifications().initialize(
         'resource://drawable/app_icon',
         [

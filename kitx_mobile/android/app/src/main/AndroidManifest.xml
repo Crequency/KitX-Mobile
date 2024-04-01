@@ -20,10 +20,16 @@
         </intent>
     </queries>
 
+    <!--
+        enableOnBackInvokedCallback:
+            - If true, the application will enable predictive back function.
+            - This requires Android 14 (API level 34) or higher.
+    -->
     <application
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"
-        android:label="KitX">
+        android:label="KitX"
+        android:enableOnBackInvokedCallback="true">
 
         <activity
             android:name=".MainActivity"
