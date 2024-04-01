@@ -1,27 +1,29 @@
 ﻿import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kitx_mobile/instances.dart';
+import 'package:kitx_mobile/pages/controls/settings_group_divider.dart';
+import 'package:kitx_mobile/pages/controls/settings_group_title.dart';
 import 'package:kitx_mobile/pages/pages.dart';
 import 'package:kitx_mobile/utils/composer.dart';
 import 'package:kitx_mobile/utils/config.dart';
 import 'package:kitx_mobile/utils/themes/light_theme.dart';
 
 /// Exterior Settings Page
-class ExteriorSettingsPage extends StatefulWidget implements ConstantPage {
+class AppearanceSettingsPage extends StatefulWidget implements ConstantPage {
   /// Get Route
   static String getRoute() => '/settings/exterior';
 
   /// Get Page
-  static Widget Function() getPage() => () => const ExteriorSettingsPage();
+  static Widget Function() getPage() => () => const AppearanceSettingsPage();
 
   /// Constructor
-  const ExteriorSettingsPage({Key? key}) : super(key: key);
+  const AppearanceSettingsPage({Key? key}) : super(key: key);
 
   @override
-  State<ExteriorSettingsPage> createState() => _ExteriorSettingsPageState();
+  State<AppearanceSettingsPage> createState() => _AppearanceSettingsPageState();
 }
 
-class _ExteriorSettingsPageState extends State<ExteriorSettingsPage> {
+class _AppearanceSettingsPageState extends State<AppearanceSettingsPage> {
   var selectedModes = <ThemeMode>{instances.appInfo.themeMode};
   var useMaterial3 = lightThemeData.value.useMaterial3.obs;
 
@@ -29,7 +31,7 @@ class _ExteriorSettingsPageState extends State<ExteriorSettingsPage> {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       content: content,
       showCloseIcon: true,
-      duration: duration ?? Duration(milliseconds: 1200),
+      duration: duration ?? Duration(milliseconds: 400),
     ));
   }
 
@@ -48,12 +50,12 @@ class _ExteriorSettingsPageState extends State<ExteriorSettingsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('SettingsPage_Theme'.tr),
+        title: Text('SettingsPage_Appearance'.tr),
       ),
       body: ListView(
         children: [
           group(
-            SettingsGroupTitle(titleKey: 'SettingsPage_Theme'),
+            SettingsGroupTitle(titleKey: 'SettingsPage_Appearance_Theme'),
             Column(
               children: [
                 Container(
@@ -65,17 +67,17 @@ class _ExteriorSettingsPageState extends State<ExteriorSettingsPage> {
                     segments: <ButtonSegment<ThemeMode>>[
                       ButtonSegment<ThemeMode>(
                         value: ThemeMode.light,
-                        label: Text('SettingsPage_Light'.tr),
+                        label: Text('SettingsPage_Appearance_Theme_Light'.tr),
                         icon: Icon(Icons.light_mode),
                       ),
                       ButtonSegment<ThemeMode>(
                         value: ThemeMode.dark,
-                        label: Text('SettingsPage_Dark'.tr),
+                        label: Text('SettingsPage_Appearance_Theme_Dark'.tr),
                         icon: Icon(Icons.dark_mode),
                       ),
                       ButtonSegment<ThemeMode>(
                         value: ThemeMode.system,
-                        label: Text('SettingsPage_FollowSystem'.tr),
+                        label: Text('SettingsPage_Appearance_Theme_FollowSystem'.tr),
                         icon: Icon(Icons.settings),
                       ),
                     ],
@@ -126,7 +128,7 @@ class _ExteriorSettingsPageState extends State<ExteriorSettingsPage> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text('${'Public_Enable'.tr} ${'Public_Additional'.tr} ${'Public_Animation'.tr}'),
+                      Text('${'Public_Enable'.tr} ${'SettingsPage_Appearance_Animation_Additional'.tr}'),
                       Obx(
                         () => Switch.adaptive(
                           value: instances.appInfo.animationEnabled.value,
@@ -144,7 +146,7 @@ class _ExteriorSettingsPageState extends State<ExteriorSettingsPage> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text('${'Public_Enable'.tr} '),
+                      Text('${'Public_Enable'.tr} ${'SettingsPage_Appearance_Animation_OpenPageDelay'.tr}'),
                       Obx(
                         () => Switch.adaptive(
                           value: config.delayOpenPageInHomePage.value,

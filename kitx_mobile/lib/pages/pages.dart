@@ -7,7 +7,8 @@ import 'package:kitx_mobile/pages/home_page.dart';
 import 'package:kitx_mobile/pages/not_found_page.dart';
 import 'package:kitx_mobile/pages/plugins_page.dart';
 import 'package:kitx_mobile/pages/settings_page.dart';
-import 'package:kitx_mobile/pages/settings_pages/exterior_settings_page.dart';
+import 'package:kitx_mobile/pages/settings_pages/appearance_settings_page.dart';
+import 'package:kitx_mobile/pages/settings_pages/log_settings_page.dart';
 import 'package:kitx_mobile/pages/sub_pages/device_chat_page.dart';
 import 'package:kitx_mobile/pages/test_page.dart';
 import 'package:kitx_mobile/pages/test_pages/device_info_test.dart';
@@ -34,7 +35,8 @@ List<GetPage<dynamic>> getPages() => [
       GetPage(name: DeviceInfoTestPage.getRoute(), page: DeviceInfoTestPage.getPage()),
       GetPage(name: DeviceSensorsPage.getRoute(), page: DeviceSensorsPage.getPage()),
       GetPage(name: NetworkInfoTestPage.getRoute(), page: NetworkInfoTestPage.getPage()),
-      GetPage(name: ExteriorSettingsPage.getRoute(), page: ExteriorSettingsPage.getPage()),
+      GetPage(name: AppearanceSettingsPage.getRoute(), page: AppearanceSettingsPage.getPage()),
+      GetPage(name: LogSettingsPage.getRoute(), page: LogSettingsPage.getPage()),
     ];
 
 /// Constant Page
