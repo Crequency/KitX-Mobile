@@ -2,6 +2,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:crypto/crypto.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:kitx_mobile/instances.dart';
 import 'package:kitx_mobile/utils/handlers/permissions_handlers.dart';
@@ -28,10 +29,11 @@ class LocalNetworkInfo {
       var androidInfo = await _deviceInfoPlugin.androidInfo;
       var fingerPrint = androidInfo.fingerprint;
       var display = androidInfo.display;
+      var serial = androidInfo.serialNumber;
 
-      var deviceId = '$fingerPrint || $display';
+      var deviceId = '$serial || $fingerPrint || $display';
 
-      var bytes = utf8.encode(deviceId);
+      var bytes = md5.convert(utf8.encode(deviceId)).bytes;
       var hexString = bytes.sublist(0, 5).map((b) => b.toRadixString(16).padLeft(2, '0')).join(':');
 
       return 'FO:${hexString.toUpperCase()}';
