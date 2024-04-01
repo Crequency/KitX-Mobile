@@ -1,11 +1,10 @@
-﻿import 'dart:io';
-
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:kitx_mobile/pages/controls/settings_group_divider.dart';
 import 'package:kitx_mobile/pages/controls/settings_group_title.dart';
 import 'package:kitx_mobile/pages/pages.dart';
 import 'package:kitx_mobile/utils/composer.dart';
-import 'package:kitx_mobile/utils/converters/size_converter.dart';
+import 'package:logger/logger.dart';
 
 /// Log Settings Page
 class LogSettingsPage extends StatefulWidget implements ConstantPage {
@@ -23,29 +22,7 @@ class LogSettingsPage extends StatefulWidget implements ConstantPage {
 }
 
 class _LogSettingsPageState extends State<LogSettingsPage> {
-  var logFilePath = '/data/data/com.crequency.kitx.mobile/app_flutter/flog.db';
-
-  var logFileSizeString = 'getting ...'.obs;
-  var logFileExists = false.obs;
-
-  void updateLogFileSizeString() {
-    var file = File(logFilePath);
-    if (file.existsSync()) {
-      logFileSizeString.value = convert2string(file.lengthSync());
-      logFileExists.value = true;
-    } else {
-      logFileSizeString.value = 'File $logFilePath don\'t exists';
-      logFileExists.value = false;
-    }
-  }
-
-  void showSnackBar(Widget content, {Duration? duration}) {
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: content,
-      showCloseIcon: true,
-      duration: duration ?? Duration(milliseconds: 400),
-    ));
-  }
+  var logLevel = Logger.level.obs;
 
   @override
   Widget build(BuildContext context) {
@@ -60,87 +37,49 @@ class _LogSettingsPageState extends State<LogSettingsPage> {
             Column(
               children: [
                 Container(
-                  alignment: Alignment.center,
-                  child: ElevatedButton(
-                    onPressed: () {},
-                    child: Text('SettingsPage_Log_Clean'.tr),
+                  padding: EdgeInsets.symmetric(horizontal: 30),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text('SettingsPage_Log_SelectLevel'.tr),
+                      Obx(
+                        () => DropdownButton<String>(
+                          value: logLevel.value.name,
+                          onChanged: (newLevel) {
+                            // TODO: If new version of log lib removed deprecated member use, change this line
+                            // ignore: deprecated_member_use
+                            if (newLevel == Level.nothing.name || newLevel == Level.wtf.name || newLevel == Level.verbose.name) {
+                              Get.snackbar(
+                                'Public_Error'.tr,
+                                'SettingsPage_Log_NotSupportedLevel'.trParams({'level': newLevel ?? 'null'}),
+                                snackPosition: SnackPosition.BOTTOM,
+                                margin: EdgeInsets.all(20),
+                                icon: const Icon(Icons.error_outline_rounded, color: Colors.redAccent),
+                                duration: const Duration(milliseconds: 1200),
+                                animationDuration: const Duration(milliseconds: 300),
+                              );
+                              return;
+                            }
+
+                            Logger.level = Level.values.firstWhere((element) => element.name == newLevel);
+                            logLevel.value = Logger.level;
+
+                            SettingsPage.saveChanges();
+                          },
+                          items: Level.values.map<DropdownMenuItem<String>>((Level value) {
+                            return DropdownMenuItem<String>(
+                              value: value.name,
+                              child: Text(value.name),
+                            );
+                          }).toList(),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-                //   group(
-                //     SettingsGroupTitle(titleKey: 'Public_Log'),
-                //     Column(
-                //       children: [
-                //         Row(
-                //           mainAxisAlignment: MainAxisAlignment.center,
-                //           children: [
-                //             Obx(
-                //               () => AnimatedContainer(
-                //                 duration: Duration(milliseconds: 700),
-                //                 curve: Curves.easeInOutCubic,
-                //                 width: logFileExists.value ? null : MediaQuery.of(context).size.width / 3 * 2,
-                //                 child: Text(logFileSizeString.value),
-                //               ),
-                //             ),
-                //             const SizedBox(width: 10),
-                //             IconButton(
-                //               onPressed: updateLogFileSizeString,
-                //               icon: Icon(Icons.refresh),
-                //             )
-                //           ],
-                //         ),
-                //         const SizedBox(height: 30),
-                //         Container(
-                //           alignment: Alignment.center,
-                //           child: ElevatedButton(
-                //             onPressed: () async {
-                //               var beforeSize = 0;
-                //               var beforeSizeString = convert2string(beforeSize);
-                //               var nowSize = 0;
-                //               var nowSizeString = convert2string(nowSize);
-
-                //               var file = File(logFilePath);
-
-                //               if (file.existsSync()) {
-                //                 logFileExists.value = true;
-
-                //                 beforeSize = file.lengthSync();
-                //                 beforeSizeString = convert2string(beforeSize);
-                //               }
-
-                //               if (logFileExists.value) {
-                //                 await FLog.clearLogs();
-                //               } else {
-                //                 FLog.clearLogs();
-                //               }
-
-                //               file = File(logFilePath);
-
-                //               if (logFileExists.value) {
-                //                 nowSize = file.lengthSync();
-                //                 nowSizeString = convert2string(nowSize);
-                //               }
-
-                //               updateLogFileSizeString();
-
-                //               if (logFileExists.value) {
-                //                 showSnackBar(Text('$beforeSizeString -> $nowSizeString'));
-                //               } else {
-                //                 showSnackBar(Text('Log file clean action requested.'));
-                //               }
-                //             }.delay(milliseconds: 200).execute,
-                //             child: Text('SettingsPage_Log_Clean'.tr),
-                //           ),
-                //         ),
-                //         const SizedBox(height: 30),
-                //         ElevatedButton(onPressed: () {}, child: const Text('...')),
-                //       ],
-                //     ),
-                //     const SettingsGroupDivider(),
-                //     spacer: null,
-                //   ),
               ],
             ),
-            const SizedBox(),
+            const SettingsGroupDivider(),
           ),
         ],
       ),

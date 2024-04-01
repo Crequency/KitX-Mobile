@@ -6,6 +6,7 @@ import 'package:kitx_mobile/pages/controls/settings_group_title.dart';
 import 'package:kitx_mobile/pages/pages.dart';
 import 'package:kitx_mobile/utils/composer.dart';
 import 'package:kitx_mobile/utils/config.dart';
+import 'package:kitx_mobile/utils/handlers/tasks/delayed_task.dart';
 import 'package:kitx_mobile/utils/themes/light_theme.dart';
 
 /// Exterior Settings Page
@@ -24,22 +25,8 @@ class AppearanceSettingsPage extends StatefulWidget implements ConstantPage {
 }
 
 class _AppearanceSettingsPageState extends State<AppearanceSettingsPage> {
-  var selectedModes = <ThemeMode>{instances.appInfo.themeMode};
+  var selectedMode = instances.appInfo.themeMode.obs;
   var useMaterial3 = lightThemeData.value.useMaterial3.obs;
-
-  void showSnackBar(Widget content, {Duration? duration}) {
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: content,
-      showCloseIcon: true,
-      duration: duration ?? Duration(milliseconds: 400),
-    ));
-  }
-
-  void saveChanges(BuildContext context) {
-    config.saveAsync().then(
-          (value) => showSnackBar(Text('SettingsPage_Saved'.tr)),
-        );
-  }
 
   @override
   void initState() {
@@ -61,38 +48,38 @@ class _AppearanceSettingsPageState extends State<AppearanceSettingsPage> {
                 Container(
                   width: double.infinity,
                   margin: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-                  child: SegmentedButton<ThemeMode>(
-                    emptySelectionAllowed: false,
-                    multiSelectionEnabled: false,
-                    segments: <ButtonSegment<ThemeMode>>[
-                      ButtonSegment<ThemeMode>(
-                        value: ThemeMode.light,
-                        label: Text('SettingsPage_Appearance_Theme_Light'.tr),
-                        icon: Icon(Icons.light_mode),
-                      ),
-                      ButtonSegment<ThemeMode>(
-                        value: ThemeMode.dark,
-                        label: Text('SettingsPage_Appearance_Theme_Dark'.tr),
-                        icon: Icon(Icons.dark_mode),
-                      ),
-                      ButtonSegment<ThemeMode>(
-                        value: ThemeMode.system,
-                        label: Text('SettingsPage_Appearance_Theme_FollowSystem'.tr),
-                        icon: Icon(Icons.settings),
-                      ),
-                    ],
-                    selected: selectedModes,
-                    // selectedIcon: Icon(Icons.check),
-                    showSelectedIcon: false,
-                    onSelectionChanged: (Set<ThemeMode> newSelection) => {
-                      setState(() {
-                        selectedModes = newSelection;
-                      }),
-                      instances.appInfo.themeModeProperty = newSelection.first,
-                      // Global.themeMode = newSelection.first,
-                      // Get.changeThemeMode(newSelection.first),
-                      saveChanges(context),
-                    },
+                  child: Obx(
+                    () => SegmentedButton<ThemeMode>(
+                      emptySelectionAllowed: false,
+                      multiSelectionEnabled: false,
+                      segments: <ButtonSegment<ThemeMode>>[
+                        ButtonSegment<ThemeMode>(
+                          value: ThemeMode.light,
+                          label: Text('SettingsPage_Appearance_Theme_Light'.tr),
+                          icon: Icon(Icons.light_mode),
+                        ),
+                        ButtonSegment<ThemeMode>(
+                          value: ThemeMode.dark,
+                          label: Text('SettingsPage_Appearance_Theme_Dark'.tr),
+                          icon: Icon(Icons.dark_mode),
+                        ),
+                        ButtonSegment<ThemeMode>(
+                          value: ThemeMode.system,
+                          label: Text('SettingsPage_Appearance_Theme_FollowSystem'.tr),
+                          icon: Icon(Icons.settings),
+                        ),
+                      ],
+                      selected: <ThemeMode>{selectedMode.value},
+                      // selectedIcon: Icon(Icons.check),
+                      showSelectedIcon: false,
+                      onSelectionChanged: (Set<ThemeMode> newSelection) {
+                        selectedMode.value = newSelection.first;
+                        instances.appInfo.themeModeProperty = newSelection.first;
+                        // Global.themeMode = newSelection.first,
+                        // Get.changeThemeMode(newSelection.first),
+                        SettingsPage.saveChanges.delay(milliseconds: 200).execute();
+                      },
+                    ),
                   ),
                 ),
                 const SizedBox(height: 30),
@@ -108,7 +95,7 @@ class _AppearanceSettingsPageState extends State<AppearanceSettingsPage> {
                           onChanged: (selection) {
                             instances.appInfo.updateTheme(useMaterial3: selection);
                             useMaterial3.value = selection;
-                            saveChanges(context);
+                            SettingsPage.saveChanges();
                           },
                         ),
                       ),
@@ -134,7 +121,7 @@ class _AppearanceSettingsPageState extends State<AppearanceSettingsPage> {
                           value: instances.appInfo.animationEnabled.value,
                           onChanged: (selection) {
                             instances.appInfo.animationEnabled.value = selection;
-                            saveChanges(context);
+                            SettingsPage.saveChanges();
                           },
                         ),
                       ),
@@ -152,7 +139,7 @@ class _AppearanceSettingsPageState extends State<AppearanceSettingsPage> {
                           value: config.delayOpenPageInHomePage.value,
                           onChanged: (selection) {
                             config.delayOpenPageInHomePage.value = selection;
-                            saveChanges(context);
+                            SettingsPage.saveChanges();
                           },
                         ),
                       ),

@@ -26,24 +26,23 @@ class SettingsPage extends StatefulWidget implements ConstantPage {
 
   @override
   State<SettingsPage> createState() => _SettingsPageState();
+
+  /// Save Changes
+  static void saveChanges() => config.saveAsync().then(
+        (value) => Get.snackbar(
+          'Public_Success'.tr,
+          'SettingsPage_Saved'.tr,
+          snackPosition: SnackPosition.BOTTOM,
+          margin: EdgeInsets.all(20),
+          icon: const Icon(Icons.task_alt_rounded, color: Colors.greenAccent),
+          duration: const Duration(milliseconds: 600),
+          animationDuration: const Duration(milliseconds: 300),
+        ),
+      );
 }
 
 class _SettingsPageState extends State<SettingsPage> {
   var tileRadius = ContinuousRectangleBorder(borderRadius: BorderRadius.circular(10.0));
-
-  void showSnackBar(Widget content, {Duration? duration}) {
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: content,
-      showCloseIcon: true,
-      duration: duration ?? Duration(milliseconds: 400),
-    ));
-  }
-
-  void saveChanges(BuildContext context) {
-    config.saveAsync().then(
-          (value) => showSnackBar(Text('SettingsPage_Saved'.tr)),
-        );
-  }
 
   @override
   void initState() {
@@ -66,14 +65,14 @@ class _SettingsPageState extends State<SettingsPage> {
                 child: const Text('简体中文'),
                 onTap: () => () {
                   instances.appInfo.languageCodeProperty = 'zh-CN';
-                  saveChanges(context);
+                  SettingsPage.saveChanges();
                 }.delay(milliseconds: 200).execute(),
               ),
               PopupMenuItem(
                 child: const Text('English (US)'),
                 onTap: () => () {
                   instances.appInfo.languageCodeProperty = 'en-US';
-                  saveChanges(context);
+                  SettingsPage.saveChanges();
                 }.delay(milliseconds: 200).execute(),
               ),
             ],

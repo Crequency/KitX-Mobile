@@ -1,5 +1,6 @@
 library kitx_moblie.config;
 
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:kitx_mobile/instances.dart';
 import 'package:kitx_mobile/utils/extensions/int_ext.dart';
@@ -54,7 +55,7 @@ class Config {
 
     delayOpenPageInHomePage.value = prefs.getBool('delayOpenPageInHomePage') ?? false;
 
-    Logger.level = (prefs.getInt('logLevel') ?? 0).toLogLevel();
+    Logger.level = (prefs.getInt('logLevel') ?? (kDebugMode ? Level.info.index : Level.warning.index)).toLogLevel();
   }
 
   /// Save all configurations
