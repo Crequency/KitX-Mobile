@@ -1,3 +1,4 @@
+import 'package:cherrilog/cherrilog.dart';
 import 'package:flutter/material.dart' hide Intent;
 import 'package:get/get.dart';
 import 'package:kitx_mobile/instances.dart';
@@ -9,6 +10,12 @@ import 'package:kitx_mobile/utils/translation/translation.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  CherriLog.init(
+    options: CherriOptions()
+      ..logLevelRange = CherriLogLevelRanges.release // The range will change when loading config
+      ..useBuffer = false,
+  ).logTo(CherriConsole());
 
   await config.loadAsync();
   await instances.initAsync();

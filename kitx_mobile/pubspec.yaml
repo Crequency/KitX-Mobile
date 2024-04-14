@@ -11,34 +11,34 @@ environment:
 dependencies:
     awesome_notifications: ^0.9.3+1
     badges: ^3.1.2
-    battery_plus: ^6.0.0
+    battery_plus: ^6.0.1
+    cherrilog: ^0.1.1
     community_material_icon: ^5.9.55
     concentric_transition: ^1.0.3
-    connectivity_plus: ^6.0.1
+    connectivity_plus: ^6.0.2
     crypto: ^3.0.3
-    device_info_plus: ^10.0.1
+    device_info_plus: ^10.1.0
     fl_chart: ^0.67.0
     flutter:
         sdk: flutter
-    flutter_blue_plus: ^1.32.0
+    flutter_blue_plus: ^1.32.2
     flutter_chat_ui: ^1.6.12
     flutter_sharing_intent: ^1.1.1
     get: ^4.6.6
     kitx_mobile_internal_plugins:
         path: ../kitx_mobile_internal_plugins/
     kitx_shared_dart: ^3.24.10+6829-patch-1
-    logger: ^2.2.0
-    network_info_plus: ^5.0.2
-    package_info_plus: ^6.0.0
+    network_info_plus: ^5.0.3
+    package_info_plus: ^7.0.0
     permission_handler: ^11.3.1
-    sensors_plus: ^5.0.0
-    shared_preferences: ^2.2.2
+    sensors_plus: ^5.0.1
+    shared_preferences: ^2.2.3
     sliding_up_panel: ^2.0.0+1
     sound_mode: ^3.0.0
-    url_launcher: ^6.2.5
+    url_launcher: ^6.2.6
     vector_math: ^2.1.4
     vibration: ^1.8.4
-    wakelock_plus: ^1.2.1
+    wakelock_plus: ^1.2.4
 
 dev_dependencies:
     flutter_gen: ^5.4.0

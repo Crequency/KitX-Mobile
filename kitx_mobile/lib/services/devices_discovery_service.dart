@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:cherrilog/cherrilog.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:get/get.dart';
 import 'package:kitx_mobile/instances.dart';
@@ -52,7 +53,7 @@ class DevicesDiscoveryService implements Service {
     var connection = await instances.connectivity.checkConnectivity();
 
     if (connection.contains(ConnectivityResult.wifi) == false) {
-      instances.logger.w('No wifi connection, WebService will not start.');
+      warning('No wifi connection, WebService will not start.');
       serviceException = Exception('No Wi-Fi connection, current is ${connection.toString()}');
       serviceStatus.value = ServiceStatus.error;
       return this;
@@ -80,7 +81,7 @@ class DevicesDiscoveryService implements Service {
           ..deviceOSType = config.webServiceDeviceOSType),
       );
 
-      instances.logger.i('Get device info: ${deviceInfo.toString()}');
+      info('Get device info: ${deviceInfo.toString()}');
 
       // UDP Sending
       await RawDatagramSocket.bind(
@@ -114,7 +115,7 @@ class DevicesDiscoveryService implements Service {
                 _udpPortReceive,
               );
             } catch (e, stack) {
-              instances.logger.w('UDP send error: $e $stack. Try to restart the service in 5 seconds.');
+              warning('UDP send error: $e $stack. Try to restart the service in 5 seconds.');
 
               timer.cancel();
               socket.close();
@@ -125,7 +126,7 @@ class DevicesDiscoveryService implements Service {
             }
           });
 
-          instances.logger.i('UDP send service started.');
+          info('UDP send service started.');
         },
       );
 
@@ -147,13 +148,13 @@ class DevicesDiscoveryService implements Service {
               if (d == null) return;
 
               var _data = utf8.decode(d.data);
-              instances.logger.i('UDP receive: $_data');
+              info('UDP receive: $_data');
 
               try {
                 var _deviceInfo = DeviceInfo.fromString(_data);
                 if (_deviceInfo != null) await instances.devicesService.addDevice(_deviceInfo);
               } catch (e, stack) {
-                instances.logger.e('Can not deserialize device info pack: `$_data`', error: e, stackTrace: stack);
+                error('Can not deserialize device info pack: `$_data`', error: e, stackTrace: stack);
 
                 serviceException = e as Exception;
                 serviceStatus.value = ServiceStatus.error;
@@ -165,7 +166,7 @@ class DevicesDiscoveryService implements Service {
 
       (() => serviceStatus.value = ServiceStatus.running).delay(milliseconds: 500).execute();
     } catch (e, stack) {
-      instances.logger.e('Unknown error', error: e, stackTrace: stack);
+      error('Unknown error', error: e, stackTrace: stack);
 
       serviceException = e as Exception;
       serviceStatus.value = ServiceStatus.error;

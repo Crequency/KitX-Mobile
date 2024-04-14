@@ -1,10 +1,10 @@
-﻿import 'package:flutter/material.dart';
+﻿import 'package:cherrilog/cherrilog.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kitx_mobile/pages/controls/settings_group_divider.dart';
 import 'package:kitx_mobile/pages/controls/settings_group_title.dart';
 import 'package:kitx_mobile/pages/pages.dart';
 import 'package:kitx_mobile/utils/composer.dart';
-import 'package:logger/logger.dart';
 
 /// Log Settings Page
 class LogSettingsPage extends StatefulWidget implements ConstantPage {
@@ -22,7 +22,7 @@ class LogSettingsPage extends StatefulWidget implements ConstantPage {
 }
 
 class _LogSettingsPageState extends State<LogSettingsPage> {
-  var logLevel = Logger.level.obs;
+  var logLevelRange = CherriLog.instance!.options.logLevelRange.obs;
 
   @override
   Widget build(BuildContext context) {
@@ -36,42 +36,58 @@ class _LogSettingsPageState extends State<LogSettingsPage> {
             SettingsGroupTitle(titleKey: 'SettingsPage_Log'),
             Column(
               children: [
-                Container(
+                Text('SettingsPage_Log_SelectLevelRange'.tr),
+                const SizedBox(height: 20),
+                Padding(
                   padding: EdgeInsets.symmetric(horizontal: 30),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text('SettingsPage_Log_SelectLevel'.tr),
                       Obx(
-                        () => DropdownButton<String>(
-                          value: logLevel.value.name,
+                        () => DropdownButton<CherriLogLevel>(
+                          value: logLevelRange.value.$1,
                           onChanged: (newLevel) {
-                            // TODO: If new version of log lib removed deprecated member use, change this line
-                            // ignore: deprecated_member_use
-                            if (newLevel == Level.nothing.name || newLevel == Level.wtf.name || newLevel == Level.verbose.name) {
-                              Get.snackbar(
-                                'Public_Error'.tr,
-                                'SettingsPage_Log_NotSupportedLevel'.trParams({'level': newLevel ?? 'null'}),
-                                snackPosition: SnackPosition.BOTTOM,
-                                margin: EdgeInsets.all(20),
-                                icon: const Icon(Icons.error_outline_rounded, color: Colors.redAccent),
-                                duration: const Duration(milliseconds: 1200),
-                                animationDuration: const Duration(milliseconds: 300),
-                              );
-                              return;
-                            }
-
-                            Logger.level = Level.values.firstWhere((element) => element.name == newLevel);
-                            logLevel.value = Logger.level;
-
+                            CherriLog.instance = CherriLog.instance!
+                              ..withOptions(
+                                CherriLog.instance!.options..logLevelRange = (newLevel!, logLevelRange.value.$2),
+                              )
+                              ..logTo(CherriLog.instance!.logger);
+                            logLevelRange.value = CherriLog.instance!.options.logLevelRange;
                             SettingsPage.saveChanges();
                           },
-                          items: Level.values.map<DropdownMenuItem<String>>((Level value) {
-                            return DropdownMenuItem<String>(
-                              value: value.name,
-                              child: Text(value.name),
-                            );
-                          }).toList(),
+                          items: CherriLogLevel.order
+                              .where((e) => e.name != CherriLogLevel.nether.name && e.name != CherriLogLevel.upperBond.name)
+                              .map(
+                                (e) => DropdownMenuItem(
+                                  child: Text("SettingsPage_Log_Level_${e.name}".tr),
+                                  value: e,
+                                ),
+                              )
+                              .toList(),
+                        ),
+                      ),
+                      const Padding(padding: EdgeInsets.symmetric(horizontal: 20), child: const Icon(Icons.compare_arrows)),
+                      Obx(
+                        () => DropdownButton<CherriLogLevel>(
+                          value: logLevelRange.value.$2,
+                          onChanged: (newLevel) {
+                            CherriLog.instance = CherriLog.instance!
+                              ..withOptions(
+                                CherriLog.instance!.options..logLevelRange = (logLevelRange.value.$1, newLevel!),
+                              )
+                              ..logTo(CherriLog.instance!.logger);
+                            logLevelRange.value = CherriLog.instance!.options.logLevelRange;
+                            SettingsPage.saveChanges();
+                          },
+                          items: CherriLogLevel.order
+                              .where((e) => e.name != CherriLogLevel.nether.name && e.name != CherriLogLevel.upperBond.name)
+                              .map(
+                                (e) => DropdownMenuItem(
+                                  child: Text("SettingsPage_Log_Level_${e.name}".tr),
+                                  value: e,
+                                ),
+                              )
+                              .toList(),
                         ),
                       ),
                     ],

@@ -11,7 +11,6 @@ import 'package:kitx_mobile/services/notification_service.dart';
 import 'package:kitx_mobile/utils/config.dart';
 import 'package:kitx_mobile/utils/handlers/tasks/delayed_task.dart';
 import 'package:kitx_mobile/utils/handlers/url_handler.dart';
-import 'package:logger/logger.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 /// [Instances] class
@@ -27,9 +26,6 @@ class Instances {
 
   /// Instance for [MethodChannel] class
   var channel = MethodChannel('com.crequency.kitx.mobile/channel');
-
-  /// Instance for [Logger] class
-  var logger = Logger();
 
   /// Instance for [AppInfo] class
   var appInfo = AppInfo();

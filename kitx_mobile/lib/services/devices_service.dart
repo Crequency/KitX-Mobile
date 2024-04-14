@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:cherrilog/cherrilog.dart';
 import 'package:get/get.dart';
 import 'package:kitx_mobile/instances.dart';
 import 'package:kitx_mobile/services/public/service_status.dart';
@@ -19,37 +20,37 @@ class DeviceService implements Service {
   var mainDeviceCardAdded = false;
 
   /// Add a device by [DeviceInfo]
-  Future<void> addDevice(DeviceInfo info) async {
+  Future<void> addDevice(DeviceInfo deviceInfo) async {
     if (serviceStatus != ServiceStatus.running) return;
 
     var _tempList = deviceInfoList.toList();
 
     var findIndex = _tempList.indexWhere(
-      (element) => element.device.iPv4 == info.device.iPv4 || element.device.macAddress == info.device.macAddress,
+      (element) => element.device.iPv4 == deviceInfo.device.iPv4 || element.device.macAddress == deviceInfo.device.macAddress,
     );
 
     if (findIndex != -1) {
       // Update existing device.
 
-      deviceInfoList[findIndex] = info;
+      deviceInfoList[findIndex] = deviceInfo;
     } else {
       // Add new device.
 
-      if (info.device.deviceName == instances.deviceInfo.deviceName) {
+      if (deviceInfo.device.deviceName == instances.deviceInfo.deviceName) {
         // Local device.
 
-        deviceInfoList.insert(0, info);
+        deviceInfoList.insert(0, deviceInfo);
         localDeviceCardAdded = true;
 
-        instances.logger.i('Insert local device to 0.');
-      } else if (info.isMainDevice) {
+        info('Insert local device to 0.');
+      } else if (deviceInfo.isMainDevice) {
         // Main device.
 
         var index = localDeviceCardAdded ? 1 : 0;
-        deviceInfoList.insert(index, info);
+        deviceInfoList.insert(index, deviceInfo);
         mainDeviceCardAdded = true;
 
-        instances.logger.i('Insert main device to $index.');
+        info('Insert main device to $index.');
       } else {
         // Other device.
 
@@ -88,12 +89,12 @@ class DeviceService implements Service {
 
         for (var element in sortList) {
           instIndex += devicesCountPerOS[element]!;
-          if (element == info.deviceOSType) break;
+          if (element == deviceInfo.deviceOSType) break;
         }
 
         var targetIndex = instIndex > deviceInfoList.length ? deviceInfoList.length : instIndex;
 
-        deviceInfoList.insert(targetIndex, info);
+        deviceInfoList.insert(targetIndex, deviceInfo);
       }
     }
 
