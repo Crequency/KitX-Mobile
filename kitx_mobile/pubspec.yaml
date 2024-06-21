@@ -12,7 +12,7 @@ dependencies:
     awesome_notifications: ^0.9.3+1
     badges: ^3.1.2
     battery_plus: ^6.0.1
-    cherrilog: ^0.1.1
+    cherrilog: ^0.2.0
     community_material_icon: ^5.9.55
     concentric_transition: ^1.0.3
     connectivity_plus: ^6.0.2
