@@ -204,32 +204,32 @@ class _AboutPageState extends State<AboutPage> {
             },
             blendMode: BlendMode.dstOut,
             child: ListView(
-                shrinkWrap: true,
-                scrollDirection: Axis.horizontal,
-                physics: BouncingScrollPhysics(),
-                children: [
-                  GraduallySmallerSpacer(duration: 1200, width: contentEntering ? 15 : 800),
-                  const ContributorChip(
-                    name: 'Dynesshely',
-                    url: 'https://github.com/Dynesshely',
-                  ),
-                  const SizedBox(width: 10),
-                  const ContributorChip(
-                    name: 'Cranyozen',
-                    url: 'https://github.com/Cranyozen',
-                  ),
-                  const SizedBox(width: 10),
-                  const ContributorChip(
-                    name: 'orzMaster',
-                    url: 'https://github.com/orzMaster',
-                  ),
-                  const SizedBox(width: 10),
-                  const ContributorChip(
-                    name: 'Cronyet',
-                    url: 'https://github.com/Cronyet',
-                  ),
-                  const SizedBox(width: 15),
-                ],
+              shrinkWrap: true,
+              scrollDirection: Axis.horizontal,
+              physics: BouncingScrollPhysics(),
+              children: [
+                GraduallySmallerSpacer(duration: 1200, width: contentEntering ? 15 : 800),
+                const ContributorChip(
+                  name: 'Dynesshely',
+                  url: 'https://github.com/Dynesshely',
+                ),
+                const SizedBox(width: 10),
+                const ContributorChip(
+                  name: 'Cranyozen',
+                  url: 'https://github.com/Cranyozen',
+                ),
+                const SizedBox(width: 10),
+                const ContributorChip(
+                  name: 'orzMaster',
+                  url: 'https://github.com/orzMaster',
+                ),
+                const SizedBox(width: 10),
+                const ContributorChip(
+                  name: 'Cronyet',
+                  url: 'https://github.com/Cronyet',
+                ),
+                const SizedBox(width: 15),
+              ],
             ),
           ),
         ),

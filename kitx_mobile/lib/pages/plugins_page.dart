@@ -34,6 +34,7 @@ class _PluginsPageState extends State<PluginsPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('PluginsPage_Title'.tr),
+        forceMaterialTransparency: true,
       ),
       body: Container(
         padding: EdgeInsets.all(30),

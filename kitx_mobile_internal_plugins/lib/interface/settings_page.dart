@@ -22,6 +22,7 @@ class SettingsPageState extends State<SettingsPage> {
     return Scaffold(
         appBar: AppBar(
           title: Text(widget.plugin.name),
+          forceMaterialTransparency: true,
         ),
         body: Container(
           padding: const EdgeInsets.all(30),

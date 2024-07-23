@@ -81,6 +81,7 @@ class _SettingsPageState extends State<SettingsPage> {
           ),
           const SizedBox(width: 10),
         ],
+        forceMaterialTransparency: true,
       ),
       body: ListView(
         children: [

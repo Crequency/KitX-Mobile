@@ -24,6 +24,7 @@ class _AccountPageState extends State<AccountPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('AccountPage_Title'.tr),
+        forceMaterialTransparency: true,
       ),
       body: Center(
         child: Column(

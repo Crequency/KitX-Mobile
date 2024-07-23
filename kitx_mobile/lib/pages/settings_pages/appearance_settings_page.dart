@@ -38,6 +38,7 @@ class _AppearanceSettingsPageState extends State<AppearanceSettingsPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('SettingsPage_Appearance'.tr),
+        forceMaterialTransparency: true,
       ),
       body: ListView(
         children: [

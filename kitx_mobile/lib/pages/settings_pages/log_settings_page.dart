@@ -29,6 +29,7 @@ class _LogSettingsPageState extends State<LogSettingsPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('SettingsPage_Log'.tr),
+        forceMaterialTransparency: true,
       ),
       body: ListView(
         children: [

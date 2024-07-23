@@ -25,6 +25,7 @@ class HomePage extends StatelessWidget implements ConstantPage {
     return Scaffold(
       appBar: AppBar(
         title: Text('IndexPage_Title'.tr),
+        forceMaterialTransparency: true,
       ),
       drawer: HomePageDrawer(),
       drawerEnableOpenDragGesture: true,

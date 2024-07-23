@@ -101,6 +101,7 @@ class _DevicesPage extends State<DevicesPage> {
           ),
           const SizedBox(width: 10),
         ],
+        forceMaterialTransparency: true,
       ),
       floatingActionButton: Obx(
         () => AnimatedOpacity(

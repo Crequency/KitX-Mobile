@@ -60,6 +60,7 @@ class _DeviceChatPage extends State<DeviceChatPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('DeviceChatPage_Title'.tr),
+        forceMaterialTransparency: true,
       ),
       body: Chat(
         messages: _messages,

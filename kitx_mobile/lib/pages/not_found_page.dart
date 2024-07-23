@@ -24,6 +24,7 @@ class _NotFoundPageState extends State<NotFoundPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('NotFoundPage_Title'.tr),
+        forceMaterialTransparency: true,
       ),
       body: Center(
         child: Column(

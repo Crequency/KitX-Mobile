@@ -110,6 +110,7 @@ class _PermissionsSettingsPageState extends State<PermissionsSettingsPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('SettingsPage_Permissions'.tr),
+        forceMaterialTransparency: true,
       ),
       body: ListView(
         children: [
@@ -149,20 +150,25 @@ class _PermissionsSettingsPageState extends State<PermissionsSettingsPage> {
                 for (var record in requestedPermissions.take(3)) getPermissionRequestRecordDisplayStand(record),
                 const SizedBox(height: 20),
                 ElevatedButton.icon(
-                  onPressed: () => Get.to(
-                    Scaffold(
-                      appBar: AppBar(
-                        title: Text('SettingsPage_Permissions_RequestLog'.tr),
+                  onPressed: () {
+                    VibrationHandler.tryVibrate();
+
+                    Get.to(
+                      Scaffold(
+                        appBar: AppBar(
+                          title: Text('SettingsPage_Permissions_RequestLog'.tr),
+                          forceMaterialTransparency: true,
+                        ),
+                        body: ListView(
+                          children: [
+                            const SizedBox(height: 20),
+                            for (var record in requestedPermissions) getPermissionRequestRecordDisplayStand(record),
+                            const SizedBox(height: 20),
+                          ],
+                        ),
                       ),
-                      body: ListView(
-                        children: [
-                          const SizedBox(height: 20),
-                          for (var record in requestedPermissions) getPermissionRequestRecordDisplayStand(record),
-                          const SizedBox(height: 20),
-                        ],
-                      ),
-                    ),
-                  ),
+                    );
+                  },
                   icon: const Icon(Icons.open_in_new_rounded),
                   label: Text("Public_More".tr),
                 ),
