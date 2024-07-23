@@ -33,3 +33,10 @@ Future<bool> requestNetworkRelatedPermissions() async {
     return false;
   }
 }
+
+/// Request Notification Permission
+Future<bool> requestNotificationPermission() async {
+  var result = await requestPermission(Permission.notification);
+
+  return result;
+}

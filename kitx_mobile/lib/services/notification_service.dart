@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:kitx_mobile/instances.dart';
 import 'package:kitx_mobile/services/public/service_status.dart';
 import 'package:kitx_mobile/utils/extensions/service_status_to_string.dart';
+import 'package:kitx_mobile/utils/handlers/permissions_handlers.dart';
 
 /// [NotificationService] class
 class NotificationService {
@@ -18,7 +19,8 @@ class NotificationService {
 
   /// Initialize the notification service
   Future<void> initAsync() async {
-    // TODO: adapt to iOS
+    if (await requestNotificationPermission() == false) return;
+
     if (GetPlatform.isAndroid) {
       AwesomeNotifications().initialize(
         'resource://drawable/app_icon',
@@ -35,6 +37,8 @@ class NotificationService {
         ],
       );
       AwesomeNotifications().setListeners(onActionReceivedMethod: onActionReceivedMethod);
+    } else if (GetPlatform.isIOS) {
+      // TODO: Adapt to iOS
     }
   }
 
