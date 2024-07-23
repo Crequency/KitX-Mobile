@@ -1,8 +1,31 @@
-﻿import 'package:kitx_mobile/models/permission_request_record.dart';
+﻿import 'package:kitx_mobile/models/permission_bundle.dart';
+import 'package:kitx_mobile/models/permission_request_record.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 /// Requested Permissions List
 final requestedPermissions = <PermissionRequestRecord>[];
+
+/// Permission Bundles
+final permissionsMap = <PermissionBundle>[
+  PermissionBundle(
+    key: "network",
+    description: 'Network Related Permissions',
+    descriptionKey: "SettingsPage_Permissions_Bundle_Network",
+    permissions: [
+      Permission.location,
+      Permission.bluetooth,
+      Permission.bluetoothConnect,
+    ],
+  ),
+  PermissionBundle(
+    key: "notification",
+    description: 'Notification Permission',
+    descriptionKey: "SettingsPage_Permissions_Bundle_Notification",
+    permissions: [
+      Permission.notification,
+    ],
+  ),
+];
 
 /// Request Permission
 Future<bool> requestPermission(Permission target) async {
@@ -27,11 +50,7 @@ Future<List<bool>> requestPermissions(List<Permission> targets) async {
 
 /// Request Network Related Permissions
 Future<bool> requestNetworkRelatedPermissions() async {
-  var result = await requestPermissions([
-    Permission.location,
-    Permission.bluetooth,
-    Permission.bluetoothConnect,
-  ]);
+  var result = await requestPermissions(permissionsMap.firstWhere((element) => element.key == "network").permissions);
 
   if (result.every((element) => element)) {
     return true;
@@ -42,7 +61,7 @@ Future<bool> requestNetworkRelatedPermissions() async {
 
 /// Request Notification Permission
 Future<bool> requestNotificationPermission() async {
-  var result = await requestPermission(Permission.notification);
+  var result = await requestPermission(permissionsMap.firstWhere((element) => element.key == "notification").permissions.first);
 
   return result;
 }

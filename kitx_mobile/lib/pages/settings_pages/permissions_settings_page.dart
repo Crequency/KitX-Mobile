@@ -8,6 +8,8 @@ import 'package:kitx_mobile/pages/controls/settings_group_title.dart';
 import 'package:kitx_mobile/pages/pages.dart';
 import 'package:kitx_mobile/utils/composer.dart';
 import 'package:kitx_mobile/utils/handlers/permissions_handlers.dart';
+import 'package:kitx_mobile/utils/handlers/vibration_handler.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 /// Log Settings Page
 class PermissionsSettingsPage extends StatefulWidget implements ConstantPage {
@@ -27,9 +29,56 @@ class PermissionsSettingsPage extends StatefulWidget implements ConstantPage {
 class _PermissionsSettingsPageState extends State<PermissionsSettingsPage> {
   var logLevelRange = CherriLog.instance!.options.logLevelRange.obs;
 
+  Widget getPermissionRequester(Permission permission) {
+    Rx<Color?> statusColor = Rx(null);
+
+    var fetchPermissionStatus = () {
+      permission.status.then((value) {
+        if (value.isGranted) {
+          statusColor.value = Colors.greenAccent;
+        } else if (value.isRestricted) {
+          statusColor.value = Colors.orange;
+        } else if (value.isDenied) {
+          statusColor.value = Colors.redAccent;
+        }
+      });
+    };
+
+    fetchPermissionStatus();
+
+    return Padding(
+      padding: EdgeInsets.only(bottom: 5),
+      child: ListTile(
+        title: Obx(() => Text(permission.toString(), style: TextStyle(color: statusColor.value))),
+        trailing: IconButton.outlined(
+          onPressed: () {
+            VibrationHandler.tryVibrate();
+
+            requestPermission(permission).then(
+              (result) {
+                Get.snackbar(
+                  "SettingsPage_Permissions_List_ReRequest".tr,
+                  result.toString(),
+                  snackPosition: SnackPosition.BOTTOM,
+                  margin: EdgeInsets.all(20),
+                  icon: Icon(Icons.task_alt_rounded, color: result ? Colors.greenAccent : Colors.redAccent),
+                  duration: const Duration(milliseconds: 600),
+                  animationDuration: const Duration(milliseconds: 300),
+                );
+
+                fetchPermissionStatus();
+              },
+            );
+          },
+          icon: const Icon(Icons.refresh),
+        ),
+      ),
+    );
+  }
+
   Widget getPermissionRequestRecordDisplayStand(PermissionRequestRecord record) {
     return Card(
-      margin: EdgeInsets.symmetric(horizontal: 30, vertical: 5),
+      margin: EdgeInsets.symmetric(horizontal: 30, vertical: 7.5),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -66,7 +115,31 @@ class _PermissionsSettingsPageState extends State<PermissionsSettingsPage> {
         children: [
           group(
             SettingsGroupTitle(titleKey: 'SettingsPage_Permissions_List'),
-            const SizedBox(),
+            Column(
+              children: [
+                for (var bundle in permissionsMap)
+                  Card(
+                    margin: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.all(20),
+                          child: Text(
+                            bundle.descriptionKey.tr,
+                            style: TextStyle(fontSize: 18),
+                          ),
+                        ),
+                        for (var permission in bundle.permissions)
+                          Padding(
+                            padding: EdgeInsets.only(left: 30),
+                            child: getPermissionRequester(permission),
+                          ),
+                      ],
+                    ),
+                  ),
+              ],
+            ),
             const SettingsGroupDivider(),
           ),
           group(
