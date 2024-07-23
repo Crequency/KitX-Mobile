@@ -1,7 +1,13 @@
-﻿import 'package:permission_handler/permission_handler.dart';
+﻿import 'package:kitx_mobile/models/permission_request_record.dart';
+import 'package:permission_handler/permission_handler.dart';
+
+/// Requested Permissions List
+final requestedPermissions = <PermissionRequestRecord>[];
 
 /// Request Permission
 Future<bool> requestPermission(Permission target) async {
+  requestedPermissions.add(PermissionRequestRecord.now(target)); // To record the requested permission
+
   var status = await target.status;
   if (status.isDenied || status.isRestricted) {
     return target.request().isGranted;

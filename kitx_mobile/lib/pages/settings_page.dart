@@ -5,6 +5,7 @@ import 'package:kitx_mobile/pages/controls/settings_group_title.dart';
 import 'package:kitx_mobile/pages/pages.dart';
 import 'package:kitx_mobile/pages/settings_pages/appearance_settings_page.dart';
 import 'package:kitx_mobile/pages/settings_pages/log_settings_page.dart';
+import 'package:kitx_mobile/pages/settings_pages/permissions_settings_page.dart';
 import 'package:kitx_mobile/pages/test_pages/device_info_test.dart';
 import 'package:kitx_mobile/pages/test_pages/device_sensors.dart';
 import 'package:kitx_mobile/pages/test_pages/network_info_test.dart';
@@ -51,6 +52,7 @@ class _SettingsPageState extends State<SettingsPage> {
 
   @override
   Widget build(BuildContext context) {
+    const trailingIcon = Icon(Icons.keyboard_arrow_right);
     return Scaffold(
       appBar: AppBar(
         title: Text('SettingsPage_Title'.tr),
@@ -91,7 +93,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   child: ListTile(
                     leading: const Icon(Icons.color_lens),
                     title: Text('SettingsPage_Appearance'.tr),
-                    trailing: const Icon(Icons.keyboard_arrow_right),
+                    trailing: trailingIcon,
                     shape: tileRadius,
                     onTap: () => (() => Get.toNamed(AppearanceSettingsPage.getRoute())).tryVibrate().call(),
                   ),
@@ -99,13 +101,23 @@ class _SettingsPageState extends State<SettingsPage> {
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 30, vertical: 5),
                   child: ListTile(
+                    leading: const Icon(Icons.security),
+                    title: Text("SettingsPage_Permissions".tr),
+                    trailing: trailingIcon,
+                    shape: tileRadius,
+                    onTap: () => (() => Get.toNamed(PermissionsSettingsPage.getRoute())).tryVibrate().call(),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 30, vertical: 5),
+                  child: ListTile(
                     leading: const Icon(Icons.notes),
                     title: Text('SettingsPage_Log'.tr),
-                    trailing: const Icon(Icons.keyboard_arrow_right),
+                    trailing: trailingIcon,
                     shape: tileRadius,
                     onTap: () => (() => Get.toNamed(LogSettingsPage.getRoute())).tryVibrate().call(),
                   ),
-                ),
+                )
               ],
             ),
             const SizedBox(),
@@ -120,7 +132,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   child: ListTile(
                     leading: const Icon(Icons.devices),
                     title: Text('Device Info'.tr),
-                    trailing: const Icon(Icons.keyboard_arrow_right),
+                    trailing: trailingIcon,
                     shape: tileRadius,
                     onTap: () => (() => Get.toNamed(DeviceInfoTestPage.getRoute())).tryVibrate().call(),
                   ),
@@ -130,7 +142,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   child: ListTile(
                     leading: const Icon(Icons.sensors),
                     title: Text('Device Sensors'.tr),
-                    trailing: const Icon(Icons.keyboard_arrow_right),
+                    trailing: trailingIcon,
                     shape: tileRadius,
                     onTap: () => (() => Get.toNamed(DeviceSensorsPage.getRoute())).tryVibrate().call(),
                   ),
@@ -140,7 +152,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   child: ListTile(
                     leading: const Icon(Icons.wifi),
                     title: Text('Network Info'.tr),
-                    trailing: const Icon(Icons.keyboard_arrow_right),
+                    trailing: trailingIcon,
                     shape: tileRadius,
                     onTap: () => (() => Get.toNamed(NetworkInfoTestPage.getRoute())).tryVibrate().call(),
                   ),
