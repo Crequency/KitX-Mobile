@@ -1,4 +1,4 @@
-﻿import 'package:cherrilog/cherrilog.dart';
+import 'package:cherrilog/cherrilog.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -153,13 +153,34 @@ class _PermissionsSettingsPageState extends State<PermissionsSettingsPage> {
                   onPressed: () {
                     VibrationHandler.tryVibrate();
 
+                    var controller = ScrollController();
+                    var showup = false.obs;
+
+                    controller.addListener(() => showup.value = controller.offset > 10);
+
                     Get.to(
                       Scaffold(
                         appBar: AppBar(
                           title: Text('SettingsPage_Permissions_RequestLog'.tr),
                           forceMaterialTransparency: true,
                         ),
+                        floatingActionButton: Obx(
+                          () => AnimatedOpacity(
+                            opacity: showup.value ? 1 : 0,
+                            duration: const Duration(milliseconds: 350),
+                            child: IconButton.filled(
+                              icon: const Icon(Icons.arrow_upward_rounded),
+                              iconSize: 34,
+                              onPressed: () => controller.animateTo(
+                                0,
+                                duration: const Duration(milliseconds: 300),
+                                curve: Curves.easeInOut,
+                              ),
+                            ),
+                          ),
+                        ),
                         body: ListView(
+                          controller: controller,
                           children: [
                             const SizedBox(height: 20),
                             for (var record in requestedPermissions) getPermissionRequestRecordDisplayStand(record),
@@ -168,6 +189,22 @@ class _PermissionsSettingsPageState extends State<PermissionsSettingsPage> {
                         ),
                       ),
                     );
+                    // PopScope(
+                    //   canPop: true,
+                    //   child: Scaffold(
+                    //     appBar: AppBar(
+                    //       title: Text('SettingsPage_Permissions_RequestLog'.tr),
+                    //       forceMaterialTransparency: true,
+                    //     ),
+                    //     body: ListView(
+                    //       children: [
+                    //         const SizedBox(height: 20),
+                    //         for (var record in requestedPermissions) getPermissionRequestRecordDisplayStand(record),
+                    //         const SizedBox(height: 20),
+                    //       ],
+                    //     ),
+                    //   ),
+                    // );
                   },
                   icon: const Icon(Icons.open_in_new_rounded),
                   label: Text("Public_More".tr),
