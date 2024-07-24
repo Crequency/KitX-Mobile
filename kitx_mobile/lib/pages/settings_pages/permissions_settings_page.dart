@@ -1,4 +1,4 @@
-import 'package:cherrilog/cherrilog.dart';
+﻿import 'package:cherrilog/cherrilog.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -29,17 +29,21 @@ class PermissionsSettingsPage extends StatefulWidget implements ConstantPage {
 class _PermissionsSettingsPageState extends State<PermissionsSettingsPage> {
   var logLevelRange = CherriLog.instance!.options.logLevelRange.obs;
 
+  static const Color grantedColor = Colors.greenAccent;
+  static const Color restrictedColor = Colors.orange;
+  static const Color deniedColor = Colors.redAccent;
+
   Widget getPermissionRequester(Permission permission) {
     Rx<Color?> statusColor = Rx(null);
 
     var fetchPermissionStatus = () {
       permission.status.then((value) {
         if (value.isGranted) {
-          statusColor.value = Colors.greenAccent;
+          statusColor.value = grantedColor;
         } else if (value.isRestricted) {
-          statusColor.value = Colors.orange;
+          statusColor.value = restrictedColor;
         } else if (value.isDenied) {
-          statusColor.value = Colors.redAccent;
+          statusColor.value = deniedColor;
         }
       });
     };
@@ -58,7 +62,7 @@ class _PermissionsSettingsPageState extends State<PermissionsSettingsPage> {
               (result) {
                 Get.snackbar(
                   "SettingsPage_Permissions_List_ReRequest".tr,
-                  result.toString(),
+                  'Is granted: ${result.toString()}',
                   snackPosition: SnackPosition.BOTTOM,
                   margin: EdgeInsets.all(20),
                   icon: Icon(Icons.task_alt_rounded, color: result ? Colors.greenAccent : Colors.redAccent),
@@ -118,6 +122,52 @@ class _PermissionsSettingsPageState extends State<PermissionsSettingsPage> {
             SettingsGroupTitle(titleKey: 'SettingsPage_Permissions_List'),
             Column(
               children: [
+                Card(
+                  margin: EdgeInsets.only(left: 30, right: 30, bottom: 10),
+                  child: Padding(
+                    padding: EdgeInsets.all(15),
+                    child: Row(
+                      children: [
+                        Container(
+                          width: 10,
+                          height: 10,
+                          decoration: const BoxDecoration(
+                            color: grantedColor,
+                            borderRadius: BorderRadius.all(Radius.circular(5)),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(left: 10, right: 25),
+                          child: Text('SettingsPage_Permissions_List_Granted'.tr),
+                        ),
+                        Container(
+                          width: 10,
+                          height: 10,
+                          decoration: const BoxDecoration(
+                            color: restrictedColor,
+                            borderRadius: BorderRadius.all(Radius.circular(5)),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(left: 10, right: 25),
+                          child: Text('SettingsPage_Permissions_List_Restricted'.tr),
+                        ),
+                        Container(
+                          width: 10,
+                          height: 10,
+                          decoration: const BoxDecoration(
+                            color: deniedColor,
+                            borderRadius: BorderRadius.all(Radius.circular(5)),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(left: 10, right: 25),
+                          child: Text('SettingsPage_Permissions_List_Denied'.tr),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
                 for (var bundle in permissionsMap)
                   Card(
                     margin: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
