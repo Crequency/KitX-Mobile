@@ -6,6 +6,7 @@ import 'package:kitx_mobile_internal_plugins/interface/internal_plugin.dart';
 import 'package:kitx_mobile_internal_plugins/plugins/native_async/native_async.dart';
 import 'package:kitx_mobile_internal_plugins/plugins/notification_service_provider/notification_service_provider.dart';
 import 'package:kitx_mobile_internal_plugins/plugins/sensors_data_provider/sensors_data_provider.dart';
+import 'package:kitx_mobile_internal_plugins/plugins/test/test.dart';
 
 export 'package:kitx_mobile_internal_plugins/interface/interface.dart';
 
@@ -15,6 +16,7 @@ class InternalPluginsManager {
   static InternalPluginsManager instance() => _instance ??= InternalPluginsManager();
 
   static List<InternalPlugin> get plugins => [
+        TestPlugin.instance(),
         NativeAsyncPlugin.instance(),
         NotificationServiceProviderPlugin.instance(),
         SensorsDataProviderPlugin.instance(),
