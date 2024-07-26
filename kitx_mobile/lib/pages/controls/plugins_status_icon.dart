@@ -1,0 +1,28 @@
+﻿import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:kitx_mobile/instances.dart';
+import 'package:kitx_mobile/services/public/service_status.dart';
+
+/// Plugins Status Icon
+class PluginsStatusIcon extends StatelessWidget {
+  /// Constructor for Plugins Status Icon
+  const PluginsStatusIcon({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Obx(() {
+      switch (instances.pluginsService.serviceStatus.value) {
+        case ServiceStatus.running:
+          return const Icon(Icons.circle, color: Colors.greenAccent);
+        case ServiceStatus.pending:
+          return const Icon(Icons.timer);
+        case ServiceStatus.error:
+          return const Icon(Icons.error, color: Colors.redAccent);
+        case ServiceStatus.starting:
+          return const Icon(Icons.rocket_launch, color: Colors.lightBlueAccent);
+        case ServiceStatus.stopping:
+          return const Icon(Icons.square, color: Colors.yellowAccent);
+      }
+    });
+  }
+}

@@ -1,6 +1,8 @@
 ﻿import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:kitx_mobile/instances.dart';
+import 'package:kitx_mobile/pages/controls/plugins_status_icon.dart';
 import 'package:kitx_mobile/pages/pages.dart';
 import 'package:kitx_mobile/utils/handlers/vibration_handler.dart';
 import 'package:kitx_mobile_internal_plugins/kitx_mobile_internal_plugins.dart';
@@ -34,6 +36,26 @@ class _PluginsPageState extends State<PluginsPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('PluginsPage_Title'.tr),
+        actions: [
+          PopupMenuButton(
+            tooltip: '',
+            padding: EdgeInsets.all(0),
+            icon: const PluginsStatusIcon(),
+            position: PopupMenuPosition.under,
+            itemBuilder: (context) => [
+              PopupMenuItem(
+                child: Text('Option_RestartPluginsService'.tr),
+                onTap: () => instances.pluginsService.restart.tryVibrate().call(),
+              ),
+              PopupMenuItem(
+                child: Text('Option_ShutdownPluginsService'.tr),
+                onTap: () => instances.pluginsService.stop.tryVibrate().call(),
+              ),
+            ],
+            onOpened: () => VibrationHandler.tryVibrate(),
+          ),
+          const SizedBox(width: 10),
+        ],
         forceMaterialTransparency: true,
       ),
       body: Container(

@@ -14,6 +14,9 @@ class PluginsService implements Service {
   @override
   var serviceException;
 
+  /// Timers
+  late Map<String, Timer> timers = {};
+
   @override
   Future<PluginsService> init() async {
     serviceStatus.value = ServiceStatus.starting;
@@ -26,14 +29,18 @@ class PluginsService implements Service {
             )
             .initialize();
 
-        Timer.periodic(
+        var timer = Timer.periodic(
           p.executeInterval,
           (timer) {
             if (p.isEnabled.value) p.execute();
           },
         );
+
+        timers[p.authorAndVersion] = timer;
       },
     );
+
+    await Future.delayed(const Duration(milliseconds: 300));
 
     serviceStatus.value = ServiceStatus.running;
 
@@ -42,9 +49,13 @@ class PluginsService implements Service {
 
   @override
   Future<PluginsService> restart() async {
-    await stop();
+    var needStop = !(serviceStatus.value == ServiceStatus.error || serviceStatus.value == ServiceStatus.pending);
 
-    await Future.delayed(const Duration(milliseconds: 500));
+    if (needStop) {
+      await stop();
+
+      await Future.delayed(const Duration(milliseconds: 500));
+    }
 
     await init();
 
@@ -55,9 +66,15 @@ class PluginsService implements Service {
   Future<PluginsService> stop() async {
     serviceStatus.value = ServiceStatus.stopping;
 
+    timers.forEach(
+      (_, value) => value.cancel(),
+    );
+
     InternalPluginsManager.instance().forEach(
       (p) => p.dispose(),
     );
+
+    await Future.delayed(const Duration(milliseconds: 300));
 
     serviceStatus.value = ServiceStatus.pending;
 
