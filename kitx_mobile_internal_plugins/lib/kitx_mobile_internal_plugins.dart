@@ -54,4 +54,6 @@ class InternalPluginsManager {
         )
         .toList();
   }
+
+  void forEach(Function(InternalPlugin) action) => plugins.forEach(action);
 }
