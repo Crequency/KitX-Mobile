@@ -147,6 +147,8 @@ class DeviceService implements Service {
       );
     });
 
+    await Future.delayed(const Duration(milliseconds: 500));
+
     serviceStatus.value = ServiceStatus.running;
 
     return this;
@@ -160,10 +162,13 @@ class DeviceService implements Service {
   @override
   Future<DeviceService> stop() async {
     serviceStatus.value = ServiceStatus.stopping;
+
     deviceInfoList.clear();
 
     localDeviceCardAdded = false;
     mainDeviceCardAdded = false;
+
+    await Future.delayed(const Duration(milliseconds: 500));
 
     serviceStatus.value = ServiceStatus.pending;
 

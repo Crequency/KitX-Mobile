@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kitx_mobile/instances.dart';
 import 'package:kitx_mobile/pages/controls/device_card.dart';
-import 'package:kitx_mobile/pages/controls/device_status_icon.dart';
-import 'package:kitx_mobile/pages/controls/device_status_label.dart';
+import 'package:kitx_mobile/pages/controls/devices_status_icon.dart';
+import 'package:kitx_mobile/pages/controls/devices_status_label.dart';
 import 'package:kitx_mobile/pages/pages.dart';
 import 'package:kitx_mobile/pages/sub_pages/device_chat_page.dart';
 import 'package:kitx_mobile/utils/extensions/device_info_ext.dart';
@@ -86,7 +86,7 @@ class _DevicesPage extends State<DevicesPage> {
           PopupMenuButton(
             tooltip: '',
             padding: EdgeInsets.all(0),
-            icon: const DeviceStatusIcon(),
+            icon: const DevicesStatusIcon(),
             position: PopupMenuPosition.under,
             itemBuilder: (context) => [
               PopupMenuItem(
@@ -98,6 +98,7 @@ class _DevicesPage extends State<DevicesPage> {
                 onTap: () => instances.shutdownDevicesServer.tryVibrate().call(),
               ),
             ],
+            onOpened: () => VibrationHandler.tryVibrate(),
           ),
           const SizedBox(width: 10),
         ],
@@ -130,7 +131,7 @@ class _DevicesPage extends State<DevicesPage> {
                 padding: EdgeInsets.fromLTRB(30, 30, 30, 0),
                 child: const Hero(
                   tag: 'HeroTag_DevicesCount',
-                  child: const DeviceStatusLabel(),
+                  child: const DevicesStatusLabel(inHomePage: false),
                 ),
               ),
               const SizedBox(height: 25),

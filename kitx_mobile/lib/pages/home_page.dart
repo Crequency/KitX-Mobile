@@ -1,7 +1,7 @@
 ﻿import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kitx_mobile/instances.dart';
-import 'package:kitx_mobile/pages/controls/device_status_label.dart';
+import 'package:kitx_mobile/pages/controls/devices_status_label.dart';
 import 'package:kitx_mobile/pages/controls/home_page_drawer.dart';
 import 'package:kitx_mobile/pages/pages.dart';
 import 'package:kitx_mobile/pages/plugins_page.dart';
@@ -110,7 +110,7 @@ class HomePage extends StatelessWidget implements ConstantPage {
               title: Text('Drawer_Devices'.tr),
               subtitle: const Hero(
                 tag: 'HeroTag_DevicesCount',
-                child: const DeviceStatusLabel(),
+                child: const DevicesStatusLabel(inHomePage: true),
               ),
               trailing: const Icon(Icons.keyboard_arrow_right),
               shape: tileRadius,
@@ -122,11 +122,11 @@ class HomePage extends StatelessWidget implements ConstantPage {
                   items: [
                     PopupMenuItem(
                       child: Text('Option_RestartDevicesServer'.tr),
-                      onTap: instances.restartDevicesServer,
+                      onTap: () => instances.restartDevicesServer.tryVibrate().call(),
                     ),
                     PopupMenuItem(
                       child: Text('Option_ShutdownDevicesServer'.tr),
-                      onTap: instances.shutdownDevicesServer,
+                      onTap: () => instances.shutdownDevicesServer.tryVibrate().call(),
                     ),
                   ],
                   elevation: 8.0,

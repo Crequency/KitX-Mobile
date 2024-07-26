@@ -92,10 +92,8 @@ class Instances {
 
   /// Restart [devicesService] and [devicesDiscoveryService]
   void restartDevicesServer() {
-    devicesDiscoveryService.stop(sendExitPackage: false);
     devicesService.stop();
-
-    devicesDiscoveryService.init();
+    Future.sync(devicesDiscoveryService.restart);
     devicesService.init();
   }
 

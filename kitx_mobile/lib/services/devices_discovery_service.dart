@@ -53,6 +53,8 @@ class DevicesDiscoveryService implements Service {
     var connection = await instances.connectivity.checkConnectivity();
 
     if (connection.contains(ConnectivityResult.wifi) == false) {
+      await Future.delayed(const Duration(milliseconds: 500));
+
       warning('No wifi connection, WebService will not start.');
       serviceException = Exception('No Wi-Fi connection, current is ${connection.toString()}');
       serviceStatus.value = ServiceStatus.error;
@@ -60,8 +62,6 @@ class DevicesDiscoveryService implements Service {
     }
 
     _isExitPackageSent = false;
-
-    serviceStatus.value = ServiceStatus.running;
 
     try {
       var deviceInfo = DeviceInfo(
@@ -94,7 +94,7 @@ class DevicesDiscoveryService implements Service {
           socket.broadcastEnabled = true;
           socket.joinMulticast(InternetAddress(_udpBroadcastAddress));
 
-          sendTimer = Timer.periodic(Duration(seconds: config.webServiceUdpSendFrequency), (timer) {
+          sendTimer = Timer.periodic(Duration(seconds: config.webServiceUdpSendFrequency), (timer) async {
             try {
               deviceInfo = deviceInfo.rebuild(
                 (b) => b
@@ -119,6 +119,9 @@ class DevicesDiscoveryService implements Service {
 
               timer.cancel();
               socket.close();
+
+              await Future.delayed(const Duration(milliseconds: 500));
+
               serviceException = e as Exception;
               serviceStatus.value = ServiceStatus.error;
 
@@ -154,6 +157,8 @@ class DevicesDiscoveryService implements Service {
                 var _deviceInfo = DeviceInfo.fromString(_data);
                 if (_deviceInfo != null) await instances.devicesService.addDevice(_deviceInfo);
               } catch (e, stack) {
+                await Future.delayed(const Duration(milliseconds: 500));
+
                 error('Can not deserialize device info pack: `$_data`', error: e, stackTrace: stack);
 
                 serviceException = e as Exception;
@@ -166,6 +171,8 @@ class DevicesDiscoveryService implements Service {
 
       (() => serviceStatus.value = ServiceStatus.running).delay(milliseconds: 500).execute();
     } catch (e, stack) {
+      await Future.delayed(const Duration(milliseconds: 500));
+
       error('Unknown error', error: e, stackTrace: stack);
 
       serviceException = e as Exception;
@@ -177,13 +184,22 @@ class DevicesDiscoveryService implements Service {
 
   @override
   Future<DevicesDiscoveryService> restart() async {
-    // TODO: implement restart
-    throw UnimplementedError();
+    var needStop = !(serviceStatus.value == ServiceStatus.error || serviceStatus.value == ServiceStatus.pending);
+
+    if (needStop) {
+      await stop(sendExitPackage: false);
+
+      await Future.delayed(const Duration(milliseconds: 1000));
+    }
+
+    await init();
+
+    return this;
   }
 
   @override
   Future<DevicesDiscoveryService> stop({bool sendExitPackage = true}) async {
-    void stopAction() {
+    Future<void> stopAction() async {
       sendTimer?.cancel();
       sendTimer = null;
 
@@ -193,6 +209,8 @@ class DevicesDiscoveryService implements Service {
 
       receiveSocket = null;
       sendSocket = null;
+
+      await Future.delayed(const Duration(milliseconds: 500));
 
       serviceStatus.value = ServiceStatus.pending;
     }
@@ -205,13 +223,15 @@ class DevicesDiscoveryService implements Service {
     serviceStatus.value = ServiceStatus.stopping;
 
     if (inErrState) {
+      await Future.delayed(const Duration(milliseconds: 500));
+
       serviceStatus.value = ServiceStatus.pending;
     } else if (sendExitPackage) {
       _isExitPackageSent = true;
 
-      stopAction.delay(milliseconds: 1500).execute();
+      await stopAction.delay(milliseconds: 1500).execute();
     } else {
-      stopAction();
+      await stopAction();
     }
 
     return this;
