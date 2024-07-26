@@ -11,7 +11,7 @@ import 'package:kitx_mobile/pages/controls/repo_button.dart';
 import 'package:kitx_mobile/pages/pages.dart';
 import 'package:kitx_mobile/utils/composer.dart';
 import 'package:kitx_mobile/utils/handlers/tasks/delayed_task.dart';
-import 'package:vibration/vibration.dart';
+import 'package:kitx_mobile/utils/handlers/vibration_handler.dart';
 
 /// About Page
 class AboutPage extends StatefulWidget implements ConstantPage {
@@ -33,8 +33,11 @@ class _AboutPageState extends State<AboutPage> {
   final iconEntered = (!instances.appInfo.animationEnabled.value).obs;
   final titleEntered = (!instances.appInfo.animationEnabled.value).obs;
 
-  final titleDisplay = true.obs;
-  final versionDisplay = true.obs;
+  final titleVisible = true.obs;
+  final versionVisible = true.obs;
+  final backButtonVisible = true.obs;
+  final backButtonTitleVisible = true.obs;
+  final backTopButtonVisible = false.obs;
 
   var contentEntering = !instances.appInfo.animationEnabled.value;
 
@@ -42,31 +45,27 @@ class _AboutPageState extends State<AboutPage> {
 
   final thirdPartyDataDisplayCount = 1.obs;
 
-  Future<void> vibrate() async {
-    if (await Vibration.hasCustomVibrationsSupport() ?? false) {
-      Vibration.vibrate(duration: 200);
-    } else if (await Vibration.hasVibrator() ?? false) {
-      Vibration.vibrate();
-    }
-  }
-
   @override
   void initState() {
     _scrollController.addListener(() {
-      // print('Scroller offset: ${_scrollController.offset}');
+      //   print('Scroller offset: ${_scrollController.offset}');
 
       if (instances.appInfo.animationEnabled.value) {
         var offset = _scrollController.offset;
 
         if (offset >= 50) {
-          if (titleDisplay.value) titleDisplay.value = false;
+          if (titleVisible.value) titleVisible.value = false;
         } else if (offset >= 5) {
-          if (!titleDisplay.value) titleDisplay.value = true;
-          if (versionDisplay.value) versionDisplay.value = false;
+          if (!titleVisible.value) titleVisible.value = true;
+          if (versionVisible.value) versionVisible.value = false;
         } else {
-          if (!titleDisplay.value) titleDisplay.value = true;
-          if (!versionDisplay.value) versionDisplay.value = true;
+          if (!titleVisible.value) titleVisible.value = true;
+          if (!versionVisible.value) versionVisible.value = true;
         }
+
+        backButtonTitleVisible.value = offset < 170;
+        backButtonVisible.value = offset < 380;
+        backTopButtonVisible.value = offset > 380;
       }
     });
 
@@ -104,13 +103,29 @@ class _AboutPageState extends State<AboutPage> {
             floating: false,
             // expandedHeight: entered ? 380.0 : 380.0,
             expandedHeight: 360.0,
-            title: Text('AboutPage_Title'.tr),
+            leading: Obx(
+              () => FadeInControl(
+                opacity: backButtonVisible.value ? 1 : 0,
+                duration: 150,
+                child: BackButton(
+                  onPressed: () {
+                    if (titleVisible.value) Get.back();
+                  },
+                ),
+              ),
+            ),
+            title: Obx(
+              () => FadeInControl(
+                opacity: backButtonTitleVisible.value ? 1 : 0,
+                duration: 150,
+                child: Text('AboutPage_Title'.tr),
+              ),
+            ),
             flexibleSpace: FlexibleSpaceBar(
-              // title: Text('AboutPage_Title'.tr),
-              centerTitle: true,
               collapseMode: CollapseMode.parallax,
               background: getFlexibleHeader(context),
             ),
+            forceMaterialTransparency: true,
           ),
           SliverList(
             delegate: SliverChildBuilderDelegate(
@@ -119,6 +134,21 @@ class _AboutPageState extends State<AboutPage> {
             ),
           ),
         ],
+      ),
+      floatingActionButton: Obx(
+        () => AnimatedOpacity(
+          opacity: backTopButtonVisible.value ? 1 : 0,
+          duration: const Duration(milliseconds: 350),
+          child: IconButton.filled(
+            icon: const Icon(Icons.arrow_upward_rounded),
+            iconSize: 34,
+            onPressed: () => _scrollController.animateTo(
+              0,
+              duration: const Duration(milliseconds: 300),
+              curve: Curves.easeInOut,
+            ),
+          ),
+        ),
       ),
     );
   }
@@ -132,7 +162,7 @@ class _AboutPageState extends State<AboutPage> {
             duration: const Duration(milliseconds: 800),
             curve: Curves.easeInOutCubicEmphasized,
             alignment: Alignment.topCenter,
-            margin: EdgeInsets.only(top: 25),
+            margin: EdgeInsets.only(top: 50),
             width: iconEntering.value ? 184 : 384,
             height: iconEntering.value ? 184 : 384,
             child: AnimatedOpacity(
@@ -141,7 +171,7 @@ class _AboutPageState extends State<AboutPage> {
               opacity: iconEntering.value ? 1 : 0,
               child: InkWell(
                 borderRadius: BorderRadius.all(Radius.elliptical(15, 15)),
-                onTap: () async => vibrate(),
+                onTap: () => VibrationHandler.tryVibrate(),
                 child: const Image(
                   alignment: Alignment.center,
                   image: const AssetImage('assets/KitX-Icon-1920x-margin-2x.png'),
@@ -157,14 +187,14 @@ class _AboutPageState extends State<AboutPage> {
             children: [
               Obx(
                 () => FadeInControl(
-                  opacity: iconEntered.value && titleDisplay.value ? 1 : 0,
+                  opacity: iconEntered.value && titleVisible.value ? 1 : 0,
                   child: const Text('KitX', style: TextStyle(fontSize: 50)),
                 ),
               ),
               Obx(
                 () => FadeInControl(
                   duration: 500,
-                  opacity: titleEntered.value && versionDisplay.value ? 1 : 0,
+                  opacity: titleEntered.value && versionVisible.value ? 1 : 0,
                   curve: Curves.easeInOutCubic,
                   child: Text('${instances.appInfo.versionString.value} (${instances.appInfo.versionCode.value})'),
                 ),
