@@ -7,6 +7,7 @@ abstract class InternalPlugin {
   late String version;
   late String description;
   late String author;
+  late Duration executeInterval = const Duration(milliseconds: 10);
 
   late RuntimeContext? context;
 

@@ -8,7 +8,8 @@ class TestPlugin extends InternalPlugin {
     ..name = "Test"
     ..author = "Crequency"
     ..version = "v0.0.1"
-    ..description = "Test Plugin for KitX Mobile";
+    ..description = "Test Plugin for KitX Mobile"
+    ..executeInterval = const Duration(milliseconds: 50);
 
   factory TestPlugin.instance() => _instance;
 

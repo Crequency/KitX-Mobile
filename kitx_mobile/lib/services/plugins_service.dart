@@ -19,18 +19,16 @@ class PluginsService implements Service {
     serviceStatus.value = ServiceStatus.starting;
 
     InternalPluginsManager.instance().forEach(
-      (p) => p
-          .authorize(
-            RuntimeContext('${p.author}_${p.name}:${p.version}'),
-          )
-          .initialize(),
-    );
+      (p) {
+        p
+            .authorize(
+              RuntimeContext('${p.author}_${p.name}:${p.version}'),
+            )
+            .initialize();
 
-    Timer.periodic(
-      const Duration(milliseconds: 10),
-      (timer) {
-        InternalPluginsManager.instance().forEach(
-          (p) {
+        Timer.periodic(
+          p.executeInterval,
+          (timer) {
             if (p.isEnabled.value) p.execute();
           },
         );
