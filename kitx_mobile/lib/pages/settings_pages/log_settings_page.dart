@@ -5,6 +5,7 @@ import 'package:kitx_mobile/pages/controls/settings_group_divider.dart';
 import 'package:kitx_mobile/pages/controls/settings_group_title.dart';
 import 'package:kitx_mobile/pages/pages.dart';
 import 'package:kitx_mobile/utils/composer.dart';
+import 'package:kitx_mobile/utils/handlers/vibration_handler.dart';
 
 /// Log Settings Page
 class LogSettingsPage extends StatefulWidget implements ConstantPage {
@@ -47,7 +48,9 @@ class _LogSettingsPageState extends State<LogSettingsPage> {
                       Obx(
                         () => DropdownButton<CherriLogLevel>(
                           value: logLevelRange.value.$1,
+                          onTap: () => VibrationHandler.tryVibrate(),
                           onChanged: (newLevel) {
+                            VibrationHandler.tryVibrate();
                             CherriLog.instance = CherriLog.instance!
                               ..withOptions(
                                 CherriLog.instance!.options..logLevelRange = (newLevel!, logLevelRange.value.$2),
@@ -71,7 +74,9 @@ class _LogSettingsPageState extends State<LogSettingsPage> {
                       Obx(
                         () => DropdownButton<CherriLogLevel>(
                           value: logLevelRange.value.$2,
+                          onTap: () => VibrationHandler.tryVibrate(),
                           onChanged: (newLevel) {
+                            VibrationHandler.tryVibrate();
                             CherriLog.instance = CherriLog.instance!
                               ..withOptions(
                                 CherriLog.instance!.options..logLevelRange = (logLevelRange.value.$1, newLevel!),

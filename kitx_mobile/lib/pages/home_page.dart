@@ -233,7 +233,9 @@ class HomePage extends StatelessWidget implements ConstantPage {
               subtitle: isLandscape ? const Text('no notifications') : null,
               trailing: const Icon(Icons.keyboard_arrow_right),
               shape: tileRadius,
-              onTap: () => (() => Get.toNamed(SettingsPage.getRoute())).tryVibrate().delay(milliseconds: config.delayOpenPageInHomePage.value ? pageOpenDelay : 0).execute(),
+              onTap: () => (() => Get.toNamed(
+                    SettingsPage.getRoute(),
+                  )).tryVibrate().delay(milliseconds: config.delayOpenPageInHomePage.value ? pageOpenDelay : 0).execute(),
             ),
           ),
         ),

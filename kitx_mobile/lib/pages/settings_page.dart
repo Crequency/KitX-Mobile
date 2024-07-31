@@ -62,20 +62,21 @@ class _SettingsPageState extends State<SettingsPage> {
             padding: EdgeInsets.all(0),
             icon: const Icon(Icons.translate),
             position: PopupMenuPosition.under,
+            onOpened: () => VibrationHandler.tryVibrate(),
             itemBuilder: (context) => [
               PopupMenuItem(
                 child: const Text('简体中文'),
                 onTap: () => () {
                   instances.appInfo.languageCodeProperty = 'zh-CN';
                   SettingsPage.saveChanges();
-                }.delay(milliseconds: 200).execute(),
+                }.tryVibrate().delay(milliseconds: 200).execute(),
               ),
               PopupMenuItem(
                 child: const Text('English (US)'),
                 onTap: () => () {
                   instances.appInfo.languageCodeProperty = 'en-US';
                   SettingsPage.saveChanges();
-                }.delay(milliseconds: 200).execute(),
+                }.tryVibrate().delay(milliseconds: 200).execute(),
               ),
             ],
           ),

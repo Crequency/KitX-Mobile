@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kitx_mobile/utils/emulators/rotation_emulator.dart';
+import 'package:kitx_mobile/utils/handlers/vibration_handler.dart';
 import 'package:sensors_plus/sensors_plus.dart';
 import 'package:vector_math/vector_math.dart' as vector_math;
 
@@ -115,6 +116,7 @@ class GyroscopeDisplayStandState extends State<GyroscopeDisplayStand> {
                             painter: painter,
                           ),
                           onTap: () {
+                            VibrationHandler.tryVibrate();
                             if (gyroscopeDataListener != null) {
                               if (gyroscopeDataListener?.isPaused ?? true) {
                                 gyroscopeDataListener?.resume();

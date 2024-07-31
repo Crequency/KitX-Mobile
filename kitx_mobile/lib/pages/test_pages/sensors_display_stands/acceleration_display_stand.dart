@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:kitx_mobile/utils/handlers/vibration_handler.dart';
 import 'package:sensors_plus/sensors_plus.dart';
 
 /// AccelerationDisplayStand
@@ -204,6 +205,7 @@ class AccelerationDisplayStandState extends State<AccelerationDisplayStand> {
                 ? const Text('No sensor data, you are seeing random data.')
                 : ElevatedButton(
                     onPressed: () {
+                      VibrationHandler.tryVibrate();
                       if (userAccelerometerDataListener?.isPaused ?? true) {
                         userAccelerometerDataListener?.resume();
                         listenerPaused.value = false;

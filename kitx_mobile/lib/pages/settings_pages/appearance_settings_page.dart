@@ -7,6 +7,7 @@ import 'package:kitx_mobile/pages/pages.dart';
 import 'package:kitx_mobile/utils/composer.dart';
 import 'package:kitx_mobile/utils/config.dart';
 import 'package:kitx_mobile/utils/handlers/tasks/delayed_task.dart';
+import 'package:kitx_mobile/utils/handlers/vibration_handler.dart';
 import 'package:kitx_mobile/utils/themes/light_theme.dart';
 
 /// Exterior Settings Page
@@ -74,6 +75,7 @@ class _AppearanceSettingsPageState extends State<AppearanceSettingsPage> {
                       // selectedIcon: Icon(Icons.check),
                       showSelectedIcon: false,
                       onSelectionChanged: (Set<ThemeMode> newSelection) {
+                        VibrationHandler.tryVibrate();
                         selectedMode.value = newSelection.first;
                         instances.appInfo.themeModeProperty = newSelection.first;
                         // Global.themeMode = newSelection.first,
@@ -94,6 +96,7 @@ class _AppearanceSettingsPageState extends State<AppearanceSettingsPage> {
                         () => Switch.adaptive(
                           value: useMaterial3.value,
                           onChanged: (selection) {
+                            VibrationHandler.tryVibrate();
                             instances.appInfo.updateTheme(useMaterial3: selection);
                             useMaterial3.value = selection;
                             SettingsPage.saveChanges();
@@ -121,6 +124,7 @@ class _AppearanceSettingsPageState extends State<AppearanceSettingsPage> {
                         () => Switch.adaptive(
                           value: instances.appInfo.animationEnabled.value,
                           onChanged: (selection) {
+                            VibrationHandler.tryVibrate();
                             instances.appInfo.animationEnabled.value = selection;
                             SettingsPage.saveChanges();
                           },
@@ -139,6 +143,7 @@ class _AppearanceSettingsPageState extends State<AppearanceSettingsPage> {
                         () => Switch.adaptive(
                           value: config.delayOpenPageInHomePage.value,
                           onChanged: (selection) {
+                            VibrationHandler.tryVibrate();
                             config.delayOpenPageInHomePage.value = selection;
                             SettingsPage.saveChanges();
                           },

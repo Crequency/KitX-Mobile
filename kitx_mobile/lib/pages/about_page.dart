@@ -10,7 +10,6 @@ import 'package:kitx_mobile/pages/controls/group_divider.dart';
 import 'package:kitx_mobile/pages/controls/repo_button.dart';
 import 'package:kitx_mobile/pages/pages.dart';
 import 'package:kitx_mobile/utils/composer.dart';
-import 'package:kitx_mobile/utils/handlers/tasks/delayed_task.dart';
 import 'package:kitx_mobile/utils/handlers/vibration_handler.dart';
 
 /// About Page
@@ -319,21 +318,26 @@ class _AboutPageState extends State<AboutPage> {
             duration: 1400,
             child: Container(
               padding: EdgeInsets.all(15),
-              child: ListView.builder(
-                shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
-                itemCount: thirdPartyDataDisplayCount.value,
-                itemBuilder: thirdPartyLicenseBuilder,
+              child: Obx(
+                () => ListView.builder(
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  itemCount: thirdPartyDataDisplayCount.value,
+                  itemBuilder: thirdPartyLicenseBuilder,
+                ),
               ),
             ),
           ),
-          Visibility(
-            visible: thirdPartyDataDisplayCount.value != thirdPartyDataList.length,
-            child: ElevatedButton(
-              onPressed: (() => super.setState(() {
-                    thirdPartyDataDisplayCount.value = thirdPartyDataList.length;
-                  })).delay(milliseconds: 200).execute,
-              child: Text('AboutPage_ThirdPartyLicenses_DisplayAll'.tr),
+          Obx(
+            () => Visibility(
+              visible: thirdPartyDataDisplayCount.value != thirdPartyDataList.length,
+              child: ElevatedButton(
+                onPressed: () {
+                  VibrationHandler.tryVibrate();
+                  thirdPartyDataDisplayCount.value = thirdPartyDataList.length;
+                },
+                child: Text('AboutPage_ThirdPartyLicenses_DisplayAll'.tr),
+              ),
             ),
           ),
         ],

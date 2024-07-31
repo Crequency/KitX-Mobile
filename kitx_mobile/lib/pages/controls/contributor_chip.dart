@@ -1,5 +1,6 @@
 ﻿import 'package:flutter/material.dart';
 import 'package:kitx_mobile/instances.dart';
+import 'package:kitx_mobile/utils/handlers/vibration_handler.dart';
 
 /// Contributor Chip
 class ContributorChip extends StatelessWidget {
@@ -14,7 +15,10 @@ class ContributorChip extends StatelessWidget {
     return Chip(
       label: Text(name),
       deleteIcon: const Icon(Icons.open_in_new),
-      onDeleted: () => instances.urlHandler.open(url),
+      onDeleted: () {
+        VibrationHandler.tryVibrate();
+        instances.urlHandler.open(url);
+      },
       deleteButtonTooltipMessage: '',
     );
   }
