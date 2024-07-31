@@ -35,6 +35,9 @@ class Config {
   /// Delay open page in home page
   var delayOpenPageInHomePage = false.obs;
 
+  /// Bottom operation mode
+  var bottomOptMode = false.obs;
+
   /// Load all configurations
   Future<void> loadAsync() async {
     final prefs = await SharedPreferences.getInstance();
@@ -59,6 +62,8 @@ class Config {
 
     {
       delayOpenPageInHomePage.value = prefs.getBool('delayOpenPageInHomePage') ?? false;
+
+      bottomOptMode.value = prefs.getBool('bottomOptMode') ?? false;
     }
 
     {
@@ -107,6 +112,8 @@ class Config {
 
     {
       await prefs.setBool('delayOpenPageInHomePage', delayOpenPageInHomePage.value);
+
+      await prefs.setBool('bottomOptMode', bottomOptMode.value);
     }
 
     {

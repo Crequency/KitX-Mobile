@@ -22,6 +22,8 @@ class HomePage extends StatelessWidget implements ConstantPage {
 
   @override
   Widget build(BuildContext context) {
+    var bottomOptMode = config.bottomOptMode;
+
     return Scaffold(
       appBar: AppBar(
         title: Text('IndexPage_Title'.tr),
@@ -30,6 +32,24 @@ class HomePage extends StatelessWidget implements ConstantPage {
       drawer: HomePageDrawer(),
       drawerEnableOpenDragGesture: true,
       drawerEdgeDragWidth: MediaQuery.of(context).size.width / 7 * 5,
+      floatingActionButton: Padding(
+        padding: EdgeInsets.only(bottom: 30, right: 20),
+        child: ElevatedButton.icon(
+          onPressed: () {
+            VibrationHandler.tryVibrate();
+            bottomOptMode.value = !bottomOptMode.value;
+          },
+          label: OrientationBuilder(
+            builder: (context, _) => MediaQuery.of(context).orientation == Orientation.portrait
+                ? Obx(
+                    () => Icon(
+                      bottomOptMode.value ? Icons.keyboard_double_arrow_up_rounded : Icons.keyboard_double_arrow_down_rounded,
+                    ),
+                  )
+                : const SizedBox(),
+          ),
+        ),
+      ),
       body: Padding(
         padding: EdgeInsets.all(20),
         child: ListView(
@@ -42,6 +62,7 @@ class HomePage extends StatelessWidget implements ConstantPage {
                       children: getContent(
                         context,
                         MediaQuery.of(context).size.width - 40,
+                        bottomOptMode,
                         isLandscape: false,
                       ),
                     )
@@ -49,11 +70,12 @@ class HomePage extends StatelessWidget implements ConstantPage {
                       children: getContent(
                         context,
                         (MediaQuery.of(context).size.width - 40) / 2,
+                        bottomOptMode,
                         isLandscape: true,
                       ),
                     ),
             ),
-            const SizedBox(height: 300),
+            // const SizedBox(height: 300),
           ],
         ),
       ),
@@ -61,7 +83,7 @@ class HomePage extends StatelessWidget implements ConstantPage {
   }
 
   /// Get Content
-  List<Widget> getContent(BuildContext context, double tileWidth, {bool isLandscape = false}) {
+  List<Widget> getContent(BuildContext context, double tileWidth, RxBool bottomOptMode, {bool isLandscape = false}) {
     var tileRadius = ContinuousRectangleBorder(borderRadius: BorderRadius.circular(10.0));
 
     const tilesPadding = 15.0;
@@ -76,6 +98,8 @@ class HomePage extends StatelessWidget implements ConstantPage {
 
     var tileEnterPad = 300.0;
     var tileEnterPadFuture = 40.0;
+
+    var getBottomOptHeight = () => MediaQuery.of(context).size.height * 0.35;
 
     if (instances.appInfo.animationEnabled.value) {
       Future.doWhile(() async {
@@ -94,7 +118,7 @@ class HomePage extends StatelessWidget implements ConstantPage {
         () => AnimatedContainer(
           duration: tileEnterDelay,
           curve: tileEnterCurve,
-          height: enteringTileIndex.value >= 1 ? tilesPadding : 400,
+          height: enteringTileIndex.value >= 1 ? (bottomOptMode.value ? getBottomOptHeight() : tilesPadding) : 400,
           width: 0,
         ),
       ),
