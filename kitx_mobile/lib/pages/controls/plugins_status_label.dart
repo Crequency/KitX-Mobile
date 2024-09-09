@@ -4,10 +4,10 @@ import 'package:kitx_mobile/instances.dart';
 import 'package:kitx_mobile/services/public/service_status.dart';
 import 'package:kitx_mobile/utils/handlers/vibration_handler.dart';
 
-/// Devices Status Label
-class DevicesStatusLabel extends StatelessWidget {
-  /// Constructor for Devices Status Label
-  const DevicesStatusLabel({required this.inHomePage, super.key});
+/// Plugins Status Label
+class PluginsStatusLabel extends StatelessWidget {
+  /// Constructor for Plugins Status Label
+  const PluginsStatusLabel({required this.inHomePage, super.key});
 
   /// If in home page
   final bool inHomePage;
@@ -16,14 +16,21 @@ class DevicesStatusLabel extends StatelessWidget {
   Widget build(BuildContext context) {
     return Obx(() {
       var textStyle = Theme.of(context).textTheme.bodyMedium;
-      switch (instances.devicesDiscoveryService.serviceStatus.value) {
+      switch (instances.pluginsService.serviceStatus.value) {
         case ServiceStatus.running:
           return Text(
-            'HomePage_DevicesCount'.trParams(
-              {
-                'count': instances.devicesService.length.obs.string,
-              },
-            ),
+            [
+              'HomePage_PluginsCount'.trParams(
+                {
+                  'count': instances.pluginsService.length.obs.string,
+                },
+              ),
+              'HomePage_EnabledPluginsCount'.trParams(
+                {
+                  'count': instances.pluginsService.enabledLength.obs.string,
+                },
+              ),
+            ].join('  ||  '),
             style: textStyle,
           );
         case ServiceStatus.starting:
@@ -42,7 +49,7 @@ class DevicesStatusLabel extends StatelessWidget {
                     Get.defaultDialog(
                       title: 'Public_Error'.tr,
                       titlePadding: EdgeInsets.only(top: 20),
-                      middleText: instances.devicesDiscoveryService.serviceException.toString(),
+                      middleText: instances.pluginsService.serviceException.toString(),
                       textConfirm: 'Public_Close'.tr,
                       contentPadding: EdgeInsets.only(top: 10, bottom: 20),
                       onConfirm: () => Get.back.tryVibrate().call(),

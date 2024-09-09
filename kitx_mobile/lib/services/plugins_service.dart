@@ -17,6 +17,12 @@ class PluginsService implements Service {
   /// Timers
   late Map<String, Timer> timers = {};
 
+  /// Get plugins list length
+  int get length => InternalPluginsManager.instance().length;
+
+  /// Get enabled plugins list length
+  int get enabledLength => InternalPluginsManager.instance().enabledLength;
+
   @override
   Future<PluginsService> init() async {
     serviceStatus.value = ServiceStatus.starting;

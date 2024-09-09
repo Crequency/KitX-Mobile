@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:kitx_mobile/instances.dart';
 import 'package:kitx_mobile/pages/controls/devices_status_label.dart';
 import 'package:kitx_mobile/pages/controls/home_page_drawer.dart';
+import 'package:kitx_mobile/pages/controls/plugins_status_label.dart';
 import 'package:kitx_mobile/pages/pages.dart';
 import 'package:kitx_mobile/pages/plugins_page.dart';
 import 'package:kitx_mobile/utils/config.dart';
@@ -178,7 +179,7 @@ class HomePage extends StatelessWidget implements ConstantPage {
             child: ListTile(
               leading: const Icon(Icons.layers),
               title: Text('Drawer_Plugins'.tr),
-              subtitle: isLandscape ? const Text('developing ...') : null,
+              subtitle: PluginsStatusLabel(inHomePage: true),
               trailing: const Icon(Icons.keyboard_arrow_right),
               shape: tileRadius,
               onTap: () => (() => Get.toNamed(PluginsPage.getRoute())).tryVibrate().delay(milliseconds: config.delayOpenPageInHomePage.value ? pageOpenDelay : 0).execute(),

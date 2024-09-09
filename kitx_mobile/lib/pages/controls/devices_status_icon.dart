@@ -3,9 +3,9 @@ import 'package:get/get.dart';
 import 'package:kitx_mobile/instances.dart';
 import 'package:kitx_mobile/services/public/service_status.dart';
 
-/// Device Status Icon
+/// Devices Status Icon
 class DevicesStatusIcon extends StatelessWidget {
-  /// Constructor for Device Status Icon
+  /// Constructor for Devices Status Icon
   const DevicesStatusIcon({super.key});
 
   @override
