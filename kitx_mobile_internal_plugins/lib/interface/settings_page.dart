@@ -1,16 +1,20 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kitx_mobile_internal_plugins/interface/interface.dart';
 import 'package:kitx_mobile_internal_plugins/interface/internal_plugin.dart';
 
 class SettingsPage extends StatefulWidget {
-  const SettingsPage({super.key, required this.onPluginAbilityChangedAction, required this.plugin});
+  const SettingsPage(
+      {super.key,
+      required this.onPluginAbilityChangedAction,
+      required this.plugin});
 
   final InternalPlugin plugin;
 
   final Function(bool)? onPluginAbilityChangedAction;
 
-  Widget buildSettingsContent(BuildContext context) => const Text('Developing ...');
+  Widget buildSettingsContent(BuildContext context) =>
+      const Text('Developing ...');
 
   @override
   State<SettingsPage> createState() => SettingsPageState();
@@ -30,7 +34,9 @@ class SettingsPageState extends State<SettingsPage> {
             children: [
               Obx(
                 () => Card(
-                  color: widget.plugin.isEnabled.value ? (context.isDarkMode ? Colors.indigo : Colors.cyan) : Colors.grey,
+                  color: widget.plugin.isEnabled.value
+                      ? (context.isDarkMode ? Colors.indigo : Colors.cyan)
+                      : Colors.grey,
                   shadowColor: Colors.blueGrey,
                   child: Container(
                     margin: const EdgeInsets.fromLTRB(20, 10, 10, 10),
@@ -41,7 +47,8 @@ class SettingsPageState extends State<SettingsPage> {
                             alignment: Alignment.centerLeft,
                             child: Text(
                               widget.plugin.name,
-                              style: const TextStyle(fontSize: 18, color: Colors.white),
+                              style: const TextStyle(
+                                  fontSize: 18, color: Colors.white),
                             ),
                           ),
                         ),
@@ -51,7 +58,8 @@ class SettingsPageState extends State<SettingsPage> {
                             child: Switch(
                               value: widget.plugin.isEnabled.value,
                               onChanged: (value) {
-                                widget.onPluginAbilityChangedAction?.call(value);
+                                widget.onPluginAbilityChangedAction
+                                    ?.call(value);
                                 widget.plugin.isEnabled.value = value;
                               },
                             ),

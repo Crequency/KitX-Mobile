@@ -1,10 +1,11 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kitx_mobile_internal_plugins/interface/settings_page.dart';
 import 'package:kitx_mobile_internal_plugins/plugins/test/test.dart';
 
 class TestSettingsPage extends SettingsPage {
-  const TestSettingsPage({super.key, super.onPluginAbilityChangedAction, required super.plugin});
+  const TestSettingsPage(
+      {super.key, super.onPluginAbilityChangedAction, required super.plugin});
 
   @override
   Widget buildSettingsContent(BuildContext context) {
@@ -18,14 +19,17 @@ class TestSettingsPage extends SettingsPage {
                 children: [
                   ListTile(
                     title: Text('Name: ${plugin.name}'),
-                    subtitle: Text('Author and version: ${plugin.authorAndVersion}'),
+                    subtitle:
+                        Text('Author and version: ${plugin.authorAndVersion}'),
                   ),
                   ListTile(
                     title: Obx(
-                      () => Text('Count: ${(plugin as TestPlugin).count.value}'),
+                      () =>
+                          Text('Count: ${(plugin as TestPlugin).count.value}'),
                     ),
                     subtitle: Obx(
-                      () => Text('Updated time: ${(plugin as TestPlugin).updatedTime.value.toIso8601String()}'),
+                      () => Text(
+                          'Updated time: ${(plugin as TestPlugin).updatedTime.value.toIso8601String()}'),
                     ),
                   ),
                 ],

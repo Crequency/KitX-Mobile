@@ -1,20 +1,22 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:kitx_mobile_internal_plugins/kitx_mobile_internal_plugins.dart';
 import 'package:kitx_mobile_internal_plugins/plugins/sensors_data_provider/settings_page.dart';
 
 class SensorsDataProviderPlugin extends InternalPlugin {
-  static final SensorsDataProviderPlugin _instance = SensorsDataProviderPlugin._internal()
-    ..name = "Sensors Data Provider"
-    ..author = "Crequency"
-    ..version = "v1.0.0"
-    ..description = "Sensors Data Provider Plugin for KitX Mobile";
+  static final SensorsDataProviderPlugin _instance =
+      SensorsDataProviderPlugin._internal()
+        ..name = "Sensors Data Provider"
+        ..author = "Crequency"
+        ..version = "v1.0.0"
+        ..description = "Sensors Data Provider Plugin for KitX Mobile";
 
   factory SensorsDataProviderPlugin.instance() => _instance;
 
   SensorsDataProviderPlugin._internal();
 
   @override
-  Widget getSettings({Function(bool)? onPluginAbilityChangedAction}) => SensorsDataProviderSettingsPage(
+  Widget getSettings({Function(bool)? onPluginAbilityChangedAction}) =>
+      SensorsDataProviderSettingsPage(
         plugin: this,
         onPluginAbilityChangedAction: onPluginAbilityChangedAction,
       );

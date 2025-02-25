@@ -13,7 +13,8 @@ export 'package:kitx_mobile_internal_plugins/interface/interface.dart';
 class InternalPluginsManager {
   static InternalPluginsManager? _instance;
 
-  static InternalPluginsManager instance() => _instance ??= InternalPluginsManager();
+  static InternalPluginsManager instance() =>
+      _instance ??= InternalPluginsManager();
 
   static List<InternalPlugin> get plugins => [
         TestPlugin.instance(),
@@ -24,13 +25,18 @@ class InternalPluginsManager {
 
   Function(bool) onPluginChangedAction = (_) {};
 
-  void onPluginAbilityChanged(Function(bool) action) => onPluginChangedAction = action;
+  void onPluginAbilityChanged(Function(bool) action) =>
+      onPluginChangedAction = action;
 
   int get length => plugins.length;
 
-  int get enabledLength => plugins.where((plugin) => plugin.isEnabled.value).length;
+  int get enabledLength =>
+      plugins.where((plugin) => plugin.isEnabled.value).length;
 
-  List<Widget> getList({ShapeBorder? shape, Function? vibrator, Function(bool)? onPluginAbilityChangedAction}) {
+  List<Widget> getList(
+      {ShapeBorder? shape,
+      Function? vibrator,
+      Function(bool)? onPluginAbilityChangedAction}) {
     return plugins
         .map(
           (plugin) => ListTile(
@@ -48,7 +54,8 @@ class InternalPluginsManager {
             shape: shape,
             onTap: () {
               vibrator?.call();
-              Get.to(plugin.getSettings(onPluginAbilityChangedAction: onPluginAbilityChangedAction));
+              Get.to(plugin.getSettings(
+                  onPluginAbilityChangedAction: onPluginAbilityChangedAction));
             },
           ),
         )

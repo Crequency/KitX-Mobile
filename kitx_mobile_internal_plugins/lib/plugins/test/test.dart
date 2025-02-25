@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kitx_mobile_internal_plugins/kitx_mobile_internal_plugins.dart';
 import 'package:kitx_mobile_internal_plugins/plugins/test/settings_page.dart';
@@ -20,7 +20,8 @@ class TestPlugin extends InternalPlugin {
   var updatedTime = DateTime.now().obs;
 
   @override
-  Widget getSettings({Function(bool)? onPluginAbilityChangedAction}) => TestSettingsPage(
+  Widget getSettings({Function(bool)? onPluginAbilityChangedAction}) =>
+      TestSettingsPage(
         plugin: this,
         onPluginAbilityChangedAction: onPluginAbilityChangedAction,
       );

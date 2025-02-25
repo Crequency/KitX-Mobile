@@ -1,9 +1,10 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 
 import 'package:kitx_mobile_internal_plugins/interface/settings_page.dart';
 
 class NotificationServiceProviderSettingsPage extends SettingsPage {
-  const NotificationServiceProviderSettingsPage({super.key, super.onPluginAbilityChangedAction, required super.plugin});
+  const NotificationServiceProviderSettingsPage(
+      {super.key, super.onPluginAbilityChangedAction, required super.plugin});
 
   @override
   Widget buildSettingsContent(BuildContext context) {
