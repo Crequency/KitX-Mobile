@@ -162,7 +162,7 @@ class _DeviceCard extends State<DeviceCard> with TickerProviderStateMixin {
                 color: cardColor,
                 clipBehavior: Clip.hardEdge,
                 child: InkWell(
-                  splashColor: context.iconColor?.withOpacity(0.3),
+                  splashColor: context.iconColor?.withValues(alpha: 0.3),
                   onTap: widget.onTap,
                   onLongPress: widget.onLongPress,
                   child: Padding(

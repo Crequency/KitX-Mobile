@@ -11,8 +11,6 @@ extension ThemeModeExtensions on ThemeMode {
         return 1;
       case ThemeMode.dark:
         return 2;
-      default:
-        return 0;
     }
   }
 }

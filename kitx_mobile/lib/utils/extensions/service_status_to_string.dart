@@ -16,8 +16,6 @@ extension ServiceStatusExtensions on ServiceStatus {
         return 'Public_Running'.tr;
       case ServiceStatus.pending:
         return 'Public_Pending'.tr;
-      default:
-        return 'Unknown';
     }
   }
 }

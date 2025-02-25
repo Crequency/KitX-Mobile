@@ -399,7 +399,7 @@ class _AboutPageState extends State<AboutPage> {
         width: 300,
         height: 50,
         child: InkWell(
-          splashColor: context.iconColor?.withOpacity(0.3),
+          splashColor: context.iconColor?.withValues(alpha: 0.3),
           onTap: () => print('${thirdPartyData.ThirdPartyName} tapped.'),
           child: ListView(
             shrinkWrap: true,
