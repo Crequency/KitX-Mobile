@@ -420,7 +420,9 @@ class _AboutPageState extends State<AboutPage> {
                 splashRadius: 20,
                 padding: const EdgeInsets.all(0),
                 iconSize: 24,
-                icon: repo?.contains('github.com') ?? false ? const Icon(CommunityMaterialIcons.github) : const Icon(CommunityMaterialIcons.link),
+                icon: repo?.contains('github.com') ?? false
+                    ? const Icon(CommunityMaterialIcons.github)
+                    : const Icon(CommunityMaterialIcons.link),
                 onPressed: () => instances.urlHandler.open(thirdPartyData.ThirdPartyRepo ?? ''),
               ),
               Container(

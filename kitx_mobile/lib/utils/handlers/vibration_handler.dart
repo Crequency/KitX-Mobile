@@ -1,4 +1,4 @@
-﻿import 'package:sound_mode/sound_mode.dart';
+import 'package:sound_mode/sound_mode.dart';
 import 'package:sound_mode/utils/ringer_mode_statuses.dart';
 import 'package:vibration/vibration.dart';
 
@@ -32,9 +32,9 @@ class VibrationHandler {
 
 /// [VibrationHandlerExtensions]
 extension VibrationHandlerExtensions on Function {
-    /// [tryVibrate]
-    Function tryVibrate({int milliseconds = 50}) {
-        VibrationHandler.tryVibrate(milliseconds: milliseconds);
-        return this;
-    }
+  /// [tryVibrate]
+  Function tryVibrate({int milliseconds = 50}) {
+    VibrationHandler.tryVibrate(milliseconds: milliseconds);
+    return this;
+  }
 }

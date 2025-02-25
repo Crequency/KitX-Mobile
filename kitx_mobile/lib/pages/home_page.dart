@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kitx_mobile/instances.dart';
 import 'package:kitx_mobile/pages/controls/devices_status_label.dart';
@@ -139,7 +139,10 @@ class HomePage extends StatelessWidget implements ConstantPage {
               ),
               trailing: const Icon(Icons.keyboard_arrow_right),
               shape: tileRadius,
-              onTap: () => (() => Get.toNamed(DevicesPage.getRoute())).tryVibrate().delay(milliseconds: config.delayOpenPageInHomePage.value ? pageOpenDelay : 0).execute(),
+              onTap: () => (() => Get.toNamed(DevicesPage.getRoute()))
+                  .tryVibrate()
+                  .delay(milliseconds: config.delayOpenPageInHomePage.value ? pageOpenDelay : 0)
+                  .execute(),
               onLongPress: () {
                 showMenu(
                   context: context,
@@ -182,7 +185,10 @@ class HomePage extends StatelessWidget implements ConstantPage {
               subtitle: PluginsStatusLabel(inHomePage: true),
               trailing: const Icon(Icons.keyboard_arrow_right),
               shape: tileRadius,
-              onTap: () => (() => Get.toNamed(PluginsPage.getRoute())).tryVibrate().delay(milliseconds: config.delayOpenPageInHomePage.value ? pageOpenDelay : 0).execute(),
+              onTap: () => (() => Get.toNamed(PluginsPage.getRoute()))
+                  .tryVibrate()
+                  .delay(milliseconds: config.delayOpenPageInHomePage.value ? pageOpenDelay : 0)
+                  .execute(),
             ),
           ),
         ),
@@ -208,7 +214,10 @@ class HomePage extends StatelessWidget implements ConstantPage {
               subtitle: isLandscape ? const Text('developing ...') : null,
               trailing: const Icon(Icons.keyboard_arrow_right),
               shape: tileRadius,
-              onTap: () => (() => Get.toNamed(AccountPage.getRoute())).tryVibrate().delay(milliseconds: config.delayOpenPageInHomePage.value ? pageOpenDelay : 0).execute(),
+              onTap: () => (() => Get.toNamed(AccountPage.getRoute()))
+                  .tryVibrate()
+                  .delay(milliseconds: config.delayOpenPageInHomePage.value ? pageOpenDelay : 0)
+                  .execute(),
             ),
           ),
         ),
@@ -262,7 +271,10 @@ class HomePage extends StatelessWidget implements ConstantPage {
               subtitle: Text(instances.appInfo.versionString.value),
               trailing: const Icon(Icons.keyboard_arrow_right),
               shape: tileRadius,
-              onTap: () => (() => Get.toNamed(AboutPage.getRoute())).tryVibrate().delay(milliseconds: config.delayOpenPageInHomePage.value ? pageOpenDelay : 0).execute(),
+              onTap: () => (() => Get.toNamed(AboutPage.getRoute()))
+                  .tryVibrate()
+                  .delay(milliseconds: config.delayOpenPageInHomePage.value ? pageOpenDelay : 0)
+                  .execute(),
             ),
           ),
         ),

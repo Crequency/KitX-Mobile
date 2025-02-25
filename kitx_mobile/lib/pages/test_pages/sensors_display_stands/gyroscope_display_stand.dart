@@ -1,4 +1,4 @@
-﻿import 'dart:async';
+import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -200,7 +200,8 @@ class Painter extends CustomPainter {
   Offset toOffset(vector_math.Vector3 p) => Offset(p.x, p.y);
 
   /// Trans [Offset] to center position
-  Offset toCenter(Offset p, double width, double height) => Offset(p.dx > 0 ? width / 2 + p.dx : width / 2 - abs(p.dx), p.dy > 0 ? height / 2 - p.dy : height / 2 + abs(p.dy));
+  Offset toCenter(Offset p, double width, double height) =>
+      Offset(p.dx > 0 ? width / 2 + p.dx : width / 2 - abs(p.dx), p.dy > 0 ? height / 2 - p.dy : height / 2 + abs(p.dy));
 
   /// Convert [vector_math.Vector3] to [Offset] for screen display
   Offset toScreen(vector_math.Vector3 p, Size size) => toCenter(toOffset(p), size.width, size.height);
