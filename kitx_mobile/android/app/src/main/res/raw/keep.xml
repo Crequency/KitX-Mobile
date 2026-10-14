@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  保留通过「字符串名」在运行时解析的资源。
+
+  awesome_notifications 用 resource://drawable/xxx 这种形式查找图标，属于运行时
+  字符串查找，静态分析看不到引用。AGP 9 的 release 构建会做资源压缩，把这些资源
+  整个移除（资源表里只剩 launch_background），导致通知创建时报
+  PlatformException: Invalid notification (no valid small icon)。
+
+  注意：通知小图标必须是单色透明图标，因此这里保留专用的 notification_icon，
+  而不是彩色应用图标 app_icon。
+-->
+<resources xmlns:tools="http://schemas.android.com/tools"
+    tools:keep="@drawable/app_icon,@drawable/notification_icon" />

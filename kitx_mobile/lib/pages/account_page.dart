@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:kitx_mobile/pages/pages.dart';
@@ -12,7 +12,7 @@ class AccountPage extends StatefulWidget implements ConstantPage {
   static Widget Function() getPage() => () => const AccountPage();
 
   /// Constructor
-  const AccountPage({Key? key}) : super(key: key);
+  const AccountPage({super.key});
 
   @override
   State<AccountPage> createState() => _AccountPageState();

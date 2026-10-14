@@ -10,6 +10,9 @@ import 'package:vector_math/vector_math.dart' as vector_math;
 
 /// GyroscopeDisplayStand
 class GyroscopeDisplayStand extends StatefulWidget {
+  /// Constructor
+  const GyroscopeDisplayStand({super.key});
+
   @override
   GyroscopeDisplayStandState createState() => GyroscopeDisplayStandState();
 }

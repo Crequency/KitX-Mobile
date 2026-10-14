@@ -1,4 +1,4 @@
-﻿import 'dart:async';
+import 'dart:async';
 
 import 'package:get/get.dart';
 import 'package:kitx_mobile/services/public/service_status.dart';
@@ -12,7 +12,7 @@ class PluginsService implements Service {
   var serviceStatus = ServiceStatus.pending.obs;
 
   @override
-  var serviceException;
+  Exception? serviceException;
 
   /// Timers
   late Map<String, Timer> timers = {};

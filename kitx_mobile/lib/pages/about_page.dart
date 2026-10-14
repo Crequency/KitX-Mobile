@@ -21,7 +21,7 @@ class AboutPage extends StatefulWidget implements ConstantPage {
   static Widget Function() getPage() => () => const AboutPage();
 
   /// Constructor
-  const AboutPage({Key? key}) : super(key: key);
+  const AboutPage({super.key});
 
   @override
   State<AboutPage> createState() => _AboutPageState();
@@ -40,7 +40,7 @@ class _AboutPageState extends State<AboutPage> {
 
   var contentEntering = !instances.appInfo.animationEnabled.value;
 
-  var _scrollController = ScrollController();
+  final _scrollController = ScrollController();
 
   final thirdPartyDataDisplayCount = 1.obs;
 
@@ -173,7 +173,7 @@ class _AboutPageState extends State<AboutPage> {
                 onTap: () => VibrationHandler.tryVibrate(),
                 child: const Image(
                   alignment: Alignment.center,
-                  image: const AssetImage('assets/KitX-Icon-1920x-margin-2x.png'),
+                  image: AssetImage('assets/KitX-Icon-1920x-margin-2x.png'),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -390,8 +390,8 @@ class _AboutPageState extends State<AboutPage> {
 
   Widget thirdPartyLicenseBuilder(BuildContext context, int index) {
     var thirdPartyData = thirdPartyDataList[index];
-    var url = thirdPartyData.ThirdPartyUrl;
-    var repo = thirdPartyData.ThirdPartyRepo;
+    var url = thirdPartyData.thirdPartyUrl;
+    var repo = thirdPartyData.thirdPartyRepo;
 
     return Card(
       clipBehavior: Clip.hardEdge,
@@ -400,7 +400,7 @@ class _AboutPageState extends State<AboutPage> {
         height: 50,
         child: InkWell(
           splashColor: context.iconColor?.withValues(alpha: 0.3),
-          onTap: () => print('${thirdPartyData.ThirdPartyName} tapped.'),
+          onTap: () => debugPrint('${thirdPartyData.thirdPartyName} tapped.'),
           child: ListView(
             shrinkWrap: true,
             padding: EdgeInsets.all(10),
@@ -413,7 +413,7 @@ class _AboutPageState extends State<AboutPage> {
                 padding: const EdgeInsets.all(0),
                 iconSize: 24,
                 icon: url?.contains('pub.dev') ?? false ? const Icon(CommunityMaterialIcons.link) : const Icon(CommunityMaterialIcons.link),
-                onPressed: () => instances.urlHandler.open(thirdPartyData.ThirdPartyUrl ?? ''),
+                onPressed: () => instances.urlHandler.open(thirdPartyData.thirdPartyUrl ?? ''),
               ),
               IconButton(
                 alignment: Alignment.center,
@@ -423,17 +423,17 @@ class _AboutPageState extends State<AboutPage> {
                 icon: repo?.contains('github.com') ?? false
                     ? const Icon(CommunityMaterialIcons.github)
                     : const Icon(CommunityMaterialIcons.link),
-                onPressed: () => instances.urlHandler.open(thirdPartyData.ThirdPartyRepo ?? ''),
+                onPressed: () => instances.urlHandler.open(thirdPartyData.thirdPartyRepo ?? ''),
               ),
               Container(
                 alignment: Alignment.center,
                 child: Text(
-                  thirdPartyData.ThirdPartyName ?? 'null',
+                  thirdPartyData.thirdPartyName ?? 'null',
                   style: TextStyle(fontSize: 20),
                 ),
               ),
               Text(
-                thirdPartyData.ThirdPartyVersion ?? 'null',
+                thirdPartyData.thirdPartyVersion ?? 'null',
                 style: TextStyle(fontSize: 12),
               ),
             ],

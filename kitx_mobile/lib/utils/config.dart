@@ -1,5 +1,3 @@
-library kitx_moblie.config;
-
 import 'package:cherrilog/cherrilog.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';

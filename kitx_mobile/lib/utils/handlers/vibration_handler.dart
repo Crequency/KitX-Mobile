@@ -1,5 +1,4 @@
-import 'package:sound_mode/sound_mode.dart';
-import 'package:sound_mode/utils/ringer_mode_statuses.dart';
+import 'package:sound_mode_advanced/sound_mode_advanced.dart';
 import 'package:vibration/vibration.dart';
 
 /// [VibrationHandler]
@@ -14,12 +13,12 @@ class VibrationHandler {
       Vibration.hasVibrator().then((value) {
         Vibration.hasCustomVibrationsSupport().then(
           (value) {
-            if (value ?? false) {
+            if (value) {
               Vibration.vibrate(duration: milliseconds);
             } else {
               Vibration.hasVibrator().then(
                 (value) {
-                  if (value ?? false) Vibration.vibrate();
+                  if (value) Vibration.vibrate();
                 },
               );
             }

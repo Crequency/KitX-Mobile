@@ -1,4 +1,4 @@
-﻿import 'package:badges/badges.dart' as badges;
+import 'package:badges/badges.dart' as badges;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kitx_mobile/instances.dart';
@@ -129,8 +129,8 @@ class _DeviceCard extends State<DeviceCard> with TickerProviderStateMixin {
 
     if (info == null) return SizedBox(height: 300, width: widget.width, key: Key('spacer'));
 
-    var _iconStyle = info.deviceOSType.toIconData();
-    var _icon = Icon(_iconStyle, size: 36);
+    var iconStyle = info.deviceOSType.toIconData();
+    var icon = Icon(iconStyle, size: 36);
 
     var cardColor = getDeviceCardColor(context, info);
     var deviceName = getDeviceDisplayName(info);
@@ -174,7 +174,7 @@ class _DeviceCard extends State<DeviceCard> with TickerProviderStateMixin {
                           children: <Widget>[
                             Padding(
                               padding: EdgeInsets.fromLTRB(5, 2, 0, 2),
-                              child: _icon,
+                              child: icon,
                             ),
                             Expanded(
                               child: Padding(

@@ -1,10 +1,13 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:vibration/vibration.dart';
 
 /// VibrationDisplayStand
 class VibrationDisplayStand extends StatefulWidget {
+  /// Constructor
+  const VibrationDisplayStand({super.key});
+
   @override
   VibrationDisplayStandState createState() => VibrationDisplayStandState();
 }
@@ -22,9 +25,9 @@ class VibrationDisplayStandState extends State<VibrationDisplayStand> {
 
   /// Vibrate
   Future<void> vibrate() async {
-    if (await Vibration.hasCustomVibrationsSupport() ?? false) {
+    if (await Vibration.hasCustomVibrationsSupport()) {
       Vibration.vibrate(duration: vibrateDuration);
-    } else if (await Vibration.hasVibrator() ?? false) {
+    } else if (await Vibration.hasVibrator()) {
       Vibration.vibrate();
     }
   }

@@ -14,7 +14,7 @@ class DeviceInfoTestPage extends StatefulWidget implements ConstantPage {
   static Widget Function() getPage() => () => const DeviceInfoTestPage();
 
   /// Constructor
-  const DeviceInfoTestPage({Key? key}) : super(key: key);
+  const DeviceInfoTestPage({super.key});
 
   @override
   State<DeviceInfoTestPage> createState() => _DeviceInfoTestPageState();
@@ -76,7 +76,6 @@ class _DeviceInfoTestPageState extends State<DeviceInfoTestPage> {
       'Build Type': build.type,
       'Is physical device': build.isPhysicalDevice,
       'System Features': build.systemFeatures,
-      'Serial Number': build.serialNumber,
     };
   }
 

@@ -1,4 +1,4 @@
-﻿import 'dart:async';
+import 'dart:async';
 import 'dart:math';
 
 import 'package:fl_chart/fl_chart.dart';
@@ -9,6 +9,9 @@ import 'package:sensors_plus/sensors_plus.dart';
 
 /// AccelerationDisplayStand
 class AccelerationDisplayStand extends StatefulWidget {
+  /// Constructor
+  const AccelerationDisplayStand({super.key});
+
   @override
   AccelerationDisplayStandState createState() => AccelerationDisplayStandState();
 }

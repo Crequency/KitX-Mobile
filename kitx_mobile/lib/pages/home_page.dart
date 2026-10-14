@@ -100,7 +100,7 @@ class HomePage extends StatelessWidget implements ConstantPage {
     var tileEnterPad = 300.0;
     var tileEnterPadFuture = 40.0;
 
-    var getBottomOptHeight = () => MediaQuery.of(context).size.height * 0.35;
+    double getBottomOptHeight() => MediaQuery.of(context).size.height * 0.35;
 
     if (instances.appInfo.animationEnabled.value) {
       Future.doWhile(() async {
@@ -135,7 +135,7 @@ class HomePage extends StatelessWidget implements ConstantPage {
               title: Text('Drawer_Devices'.tr),
               subtitle: const Hero(
                 tag: 'HeroTag_DevicesCount',
-                child: const DevicesStatusLabel(inHomePage: true),
+                child: DevicesStatusLabel(inHomePage: true),
               ),
               trailing: const Icon(Icons.keyboard_arrow_right),
               shape: tileRadius,

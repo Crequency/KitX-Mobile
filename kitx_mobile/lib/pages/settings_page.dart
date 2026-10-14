@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kitx_mobile/instances.dart';
 import 'package:kitx_mobile/pages/controls/settings_group_title.dart';
@@ -23,7 +23,7 @@ class SettingsPage extends StatefulWidget implements ConstantPage {
   static Widget Function() getPage() => () => const SettingsPage();
 
   /// Constructor
-  const SettingsPage({Key? key}) : super(key: key);
+  const SettingsPage({super.key});
 
   @override
   State<SettingsPage> createState() => _SettingsPageState();

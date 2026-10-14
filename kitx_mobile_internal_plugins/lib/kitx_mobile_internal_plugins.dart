@@ -1,5 +1,3 @@
-library kitx_mobile_internal_plugins;
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kitx_mobile_internal_plugins/interface/internal_plugin.dart';

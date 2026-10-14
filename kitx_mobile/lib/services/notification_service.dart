@@ -23,7 +23,7 @@ class NotificationService {
 
     if (GetPlatform.isAndroid) {
       AwesomeNotifications().initialize(
-        'resource://drawable/app_icon',
+        'resource://drawable/notification_icon',
         [
           NotificationChannel(
             channelKey: statusChannelKey,
@@ -47,7 +47,8 @@ class NotificationService {
   static Future<void> onActionReceivedMethod(ReceivedAction receivedAction) async {
     var key = receivedAction.buttonKeyPressed;
     if (key == 'action_view_button') {
-      if (instances.devicesService.serviceStatus == ServiceStatus.running) {
+      // 必须比较 .value，否则 Rx<ServiceStatus> 与枚举恒不相等，永远走 restart 分支。
+      if (instances.devicesService.serviceStatus.value == ServiceStatus.running) {
         instances.shutdownDevicesServer();
       } else {
         instances.restartDevicesServer();
@@ -72,6 +73,9 @@ class NotificationService {
         content: NotificationContent(
           id: statusNotificationId,
           channelKey: statusChannelKey,
+          // 通知小图标必须是单色透明图标，直接复用彩色应用图标会被系统拒绝
+          // （PlatformException: Invalid notification (no valid small icon)）。
+          icon: 'resource://drawable/notification_icon',
           title: 'NotificationService_StatusNotificationTitle'.trParams({"status": serviceStatus.toText()}),
           body: 'NotificationService_StatusNotificationBody'.trParams({'device_count': deviceCount.toString()}),
           locked: true,

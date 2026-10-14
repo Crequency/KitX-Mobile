@@ -15,7 +15,7 @@ class TestPage extends StatefulWidget implements ConstantPage {
   static Widget Function() getPage() => () => const TestPage();
 
   /// Constructor for [TestPage]
-  const TestPage({Key? key}) : super(key: key);
+  const TestPage({super.key});
 
   @override
   State<TestPage> createState() => _TestPageState();
@@ -63,9 +63,9 @@ class _TestPageState extends State<TestPage> with SingleTickerProviderStateMixin
             bottom: TabBar(
               controller: _tabController,
               tabs: <Tab>[
-                const Tab(text: 'Device Info', icon: const Icon(Icons.devices)),
-                const Tab(text: 'Device Sensors', icon: const Icon(Icons.sensors)),
-                const Tab(text: 'Network Info', icon: const Icon(Icons.wifi)),
+                const Tab(text: 'Device Info', icon: Icon(Icons.devices)),
+                const Tab(text: 'Device Sensors', icon: Icon(Icons.sensors)),
+                const Tab(text: 'Network Info', icon: Icon(Icons.wifi)),
               ],
             ),
           ),

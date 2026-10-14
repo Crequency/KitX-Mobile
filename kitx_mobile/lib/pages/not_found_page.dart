@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:kitx_mobile/pages/pages.dart';
@@ -12,7 +12,7 @@ class NotFoundPage extends StatefulWidget implements ConstantPage {
   static Widget Function() getPage() => () => const NotFoundPage();
 
   /// Constructor
-  const NotFoundPage({Key? key}) : super(key: key);
+  const NotFoundPage({super.key});
 
   @override
   State<NotFoundPage> createState() => _NotFoundPageState();

@@ -3,46 +3,53 @@ description: Mobile Client for KitX
 
 publish_to: "none"
 
-version: 24.10.63+564
+version: 24.10.286+11518
 
 environment:
-    sdk: ">=3.3.0 <4.0.0"
+    sdk: ^3.13.0
 
 dependencies:
-    awesome_notifications: ^0.9.3+1
-    badges: ^3.1.2
-    battery_plus: ^6.0.1
-    cherrilog: ^0.2.0
+    awesome_notifications: ^0.12.1
+    badges: ^4.0.1
+    battery_plus: ^7.1.2
+    cherrilog: ^0.3.1
     community_material_icon: ^5.9.55
     concentric_transition: ^1.0.3
-    connectivity_plus: ^6.0.2
-    crypto: ^3.0.3
-    device_info_plus: ^10.1.0
-    fl_chart: ^0.68.0
+    # 锁在 7.3.1：7.3.2 起依赖 nm ^0.6.0 -> dbus ^0.8.0，与 battery_plus 的
+    # upower ^0.7.0 -> dbus ^0.7.0 冲突。待 upower 跟进 dbus 0.8 后可改回 ^7.3.2。
+    connectivity_plus: 7.3.1
+    crypto: ^3.0.7
+    device_info_plus: ^13.3.0
+    fl_chart: ^1.2.0
     flutter:
         sdk: flutter
-    flutter_blue_plus: ^1.32.2
-    flutter_chat_ui: ^1.6.12
-    flutter_sharing_intent: ^1.1.1
-    get: ^4.6.6
+    flutter_blue_plus: ^2.3.14
+    flutter_sharing_intent: ^2.0.4
+    get: ^4.7.3
+    intl: ^0.20.3
     kitx_mobile_internal_plugins:
         path: ../kitx_mobile_internal_plugins/
     kitx_shared_dart: ^3.24.10+6829-patch-1
-    network_info_plus: ^5.0.3
-    package_info_plus: ^8.0.0
-    permission_handler: ^11.3.1
-    sensors_plus: ^5.0.1
-    shared_preferences: ^2.2.3
+    # 锁在 8.2.1：8.2.2 起依赖 nm ^0.6.0 -> dbus ^0.8.0，与上面的 dbus 0.7 生态冲突。
+    network_info_plus: 8.2.1
+    package_info_plus: ^10.2.2
+    # 锁在 12.x：13.0.x 依赖 permission_handler_android ^14.1.0，后者要求 compileSdk 37；
+    # 而 Flutter 3.47 的默认 compileSdk 是 36，且 SDK 仓库只提供 android-37.0 这类 minor
+    # 命名，AGP 的 compileSdk = 37 会去找不存在的 android-37。待 Flutter 提高默认值后可升级。
+    permission_handler: ^12.0.3
+    sensors_plus: ^7.1.1
+    shared_preferences: ^2.5.6
     sliding_up_panel: ^2.0.0+1
-    sound_mode: ^3.0.0
-    url_launcher: ^6.2.6
-    vector_math: ^2.1.4
-    vibration: ^1.8.4
-    wakelock_plus: ^1.2.4
+    sound_mode_advanced: ^4.0.0
+    url_launcher: ^6.3.3
+    vector_math: ^2.4.3
+    vibration: ^3.2.1
+    # 锁在 1.8.0：1.8.1 起要求 dbus ^0.8.0，与 battery_plus 的 upower ^0.7.0 -> dbus ^0.7.0 冲突。
+    # 待 upower 跟进 dbus 0.8 后可改回 ^1.8.0。
+    wakelock_plus: 1.8.0
 
 dev_dependencies:
-    flutter_gen: ^5.4.0
-    flutter_lints: ^4.0.0
+    flutter_lints: ^6.0.0
     flutter_test:
         sdk: flutter
 
@@ -51,5 +58,3 @@ flutter:
 
     assets:
         - assets/
-
-    generate: true

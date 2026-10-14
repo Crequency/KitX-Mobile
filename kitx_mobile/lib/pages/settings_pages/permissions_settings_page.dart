@@ -1,4 +1,4 @@
-﻿import 'package:cherrilog/cherrilog.dart';
+import 'package:cherrilog/cherrilog.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -20,7 +20,7 @@ class PermissionsSettingsPage extends StatefulWidget implements ConstantPage {
   static Widget Function() getPage() => () => const PermissionsSettingsPage();
 
   /// Constructor
-  const PermissionsSettingsPage({Key? key}) : super(key: key);
+  const PermissionsSettingsPage({super.key});
 
   @override
   State<PermissionsSettingsPage> createState() => _PermissionsSettingsPageState();
@@ -36,7 +36,7 @@ class _PermissionsSettingsPageState extends State<PermissionsSettingsPage> {
   Widget getPermissionRequester(Permission permission) {
     Rx<Color?> statusColor = Rx(null);
 
-    var fetchPermissionStatus = () {
+    void fetchPermissionStatus() {
       permission.status.then((value) {
         if (value.isGranted) {
           statusColor.value = grantedColor;
@@ -46,7 +46,7 @@ class _PermissionsSettingsPageState extends State<PermissionsSettingsPage> {
           statusColor.value = deniedColor;
         }
       });
-    };
+    }
 
     fetchPermissionStatus();
 

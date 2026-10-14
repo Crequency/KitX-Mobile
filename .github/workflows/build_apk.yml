@@ -26,11 +26,17 @@ jobs:
         # with:
         #   submodules: true
 
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: "temurin"
+          java-version: "17"
+
       - name: Checkout Flutter SDK
         uses: actions/checkout@v4
         with:
             repository: "flutter/flutter"
-            ref: "3.19.2"
+            ref: "3.47.7"
             path: ".flutter"
 
       - name: "Setting environment"
@@ -43,7 +49,7 @@ jobs:
         run: |
           git submodule
           git status
-          git checkout 3.19.2
+          git checkout 3.47.7
 
       - name: "[Debug] Flutter Version"
         run: |
@@ -68,6 +74,11 @@ jobs:
           JksBase64: ${{ secrets.JKS_BASE64 }}
         run: |
           ./set-sign-info.ps1 -keyPassword $env:KeyPassword -storePassword $env:StorePassword -keyAlias $env:KeyAlias -storeFile $env:StoreFile -jksBase64 $env:JksBase64
+
+      - name: Update version
+        working-directory: kitx_mobile
+        run: |
+          python update-version.py
 
       - name: Build
         working-directory: kitx_mobile

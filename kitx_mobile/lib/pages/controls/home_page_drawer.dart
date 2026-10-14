@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kitx_mobile/pages/pages.dart';
 import 'package:kitx_mobile/pages/plugins_page.dart';
@@ -11,6 +11,9 @@ class HomePageDrawer extends StatelessWidget {
   /// Delay time before open page
   final pageOpenDelay = 200;
 
+  /// Constructor
+  const HomePageDrawer({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -18,14 +21,14 @@ class HomePageDrawer extends StatelessWidget {
         padding: EdgeInsets.zero,
         children: <Widget>[
           const DrawerHeader(
-            decoration: const BoxDecoration(
-              image: const DecorationImage(
+            decoration: BoxDecoration(
+              image: DecorationImage(
                 alignment: Alignment.topCenter,
-                image: const AssetImage('assets/KitX-Background.png'),
+                image: AssetImage('assets/KitX-Background.png'),
                 fit: BoxFit.cover,
               ),
             ),
-            child: const Text(
+            child: Text(
               '',
               style: TextStyle(
                 color: Colors.white,

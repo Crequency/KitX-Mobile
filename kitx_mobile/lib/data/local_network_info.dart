@@ -1,4 +1,4 @@
-﻿import 'dart:async';
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
@@ -23,55 +23,57 @@ class LocalNetworkInfo {
   static Future<LocalNetworkInfo> get() async {
     await requestNetworkRelatedPermissions();
 
-    var getBackupDeviceIdStringForAndroid = () async {
-      var _deviceInfoPlugin = DeviceInfoPlugin();
+    Future<String> getBackupDeviceIdStringForAndroid() async {
+      var deviceInfoPlugin = DeviceInfoPlugin();
 
-      var androidInfo = await _deviceInfoPlugin.androidInfo;
+      var androidInfo = await deviceInfoPlugin.androidInfo;
       var fingerPrint = androidInfo.fingerprint;
       var display = androidInfo.display;
-      var serial = androidInfo.serialNumber;
+      // device_info_plus 12 起移除了 AndroidDeviceInfo.serialNumber（受 Google Play 政策限制），
+      // 这里改用 Build.ID 作为等价的设备标识来源。
+      var buildId = androidInfo.id;
 
-      var deviceId = '$serial || $fingerPrint || $display';
+      var deviceId = '$buildId || $fingerPrint || $display';
 
       var bytes = md5.convert(utf8.encode(deviceId)).bytes;
       var hexString = bytes.sublist(0, 5).map((b) => b.toRadixString(16).padLeft(2, '0')).join(':');
 
       return 'FO:${hexString.toUpperCase()}';
-    };
+    }
 
-    var getBackupDeviceIdStringForIos = (String key) async {
+    Future<String> getBackupDeviceIdStringForIos(String key) async {
       var bytes = utf8.encode(key);
       var hexString = bytes.sublist(0, 5).map((b) => b.toRadixString(16).padLeft(2, '0')).join(':');
 
       return 'FO:${hexString.toUpperCase()}';
-    };
+    }
 
-    var _networkInfo = NetworkInfo();
-    var _deviceInfoPlugin = DeviceInfoPlugin();
+    var networkInfo = NetworkInfo();
+    var deviceInfoPlugin = DeviceInfoPlugin();
 
-    late String? _ipv4, _ipv6, _mac;
+    late String? ipv4, ipv6, mac;
 
-    _ipv4 = await _networkInfo.getWifiIP();
-    _ipv6 = await _networkInfo.getWifiIPv6();
+    ipv4 = await networkInfo.getWifiIP();
+    ipv6 = await networkInfo.getWifiIPv6();
 
     var defaultMac = '00:20:00:00:00:00';
     try {
       if (Platform.isAndroid) {
-        var _actualMac = '${await instances.channel.invokeMethod('getMAC') ?? ''}';
-        _mac = _actualMac == '' ? await getBackupDeviceIdStringForAndroid() : _actualMac;
+        var actualMac = '${await instances.channel.invokeMethod('getMAC') ?? ''}';
+        mac = actualMac == '' ? await getBackupDeviceIdStringForAndroid() : actualMac;
       } else if (Platform.isIOS) {
-        var _actualMac = (await _deviceInfoPlugin.iosInfo).identifierForVendor ?? '';
-        _mac = _actualMac == '' ? defaultMac : await getBackupDeviceIdStringForIos(_actualMac);
+        var actualMac = (await deviceInfoPlugin.iosInfo).identifierForVendor ?? '';
+        mac = actualMac == '' ? defaultMac : await getBackupDeviceIdStringForIos(actualMac);
       } else {
-        _mac = defaultMac;
+        mac = defaultMac;
       }
     } catch (e) {
-      _mac = defaultMac;
+      mac = defaultMac;
     }
 
     return LocalNetworkInfo()
-      ..ipv4 = _ipv4
-      ..ipv6 = _ipv6
-      ..mac = _mac;
+      ..ipv4 = ipv4
+      ..ipv6 = ipv6
+      ..mac = mac;
   }
 }

@@ -21,11 +21,13 @@ class DeviceService implements Service {
 
   /// Add a device by [DeviceInfo]
   Future<void> addDevice(DeviceInfo deviceInfo) async {
-    if (serviceStatus != ServiceStatus.running) return;
+    // serviceStatus 是 Rx<ServiceStatus>，必须比较 .value。
+    // 直接与 ServiceStatus 比较会因类型不同而恒为真，导致 addDevice 永远提前返回。
+    if (serviceStatus.value != ServiceStatus.running) return;
 
-    var _tempList = deviceInfoList.toList();
+    var tempList = deviceInfoList.toList();
 
-    var findIndex = _tempList.indexWhere(
+    var findIndex = tempList.indexWhere(
       (element) => element.device.iPv4 == deviceInfo.device.iPv4 || element.device.macAddress == deviceInfo.device.macAddress,
     );
 
@@ -56,19 +58,19 @@ class DeviceService implements Service {
 
         var fixedCardsCount = (localDeviceCardAdded ? 1 : 0) + (mainDeviceCardAdded ? 1 : 0);
 
-        var countDevices = (osType) => _tempList.where((element) => element.deviceOSType == osType).length;
+        int countDevices(osType) => tempList.where((element) => element.deviceOSType == osType).length;
 
         var devicesCountPerOS = <OperatingSystems, int>{};
         for (var osType in OperatingSystems.values) {
           devicesCountPerOS[osType] = countDevices(osType);
         }
 
-        var localDeviceOS = _tempList
+        var localDeviceOS = tempList
             .firstWhereOrNull(
               (element) => element.device.deviceName == instances.deviceInfo.deviceName,
             )
             ?.deviceOSType;
-        var mainDeviceOS = _tempList
+        var mainDeviceOS = tempList
             .firstWhereOrNull(
               (element) => element.isMainDevice,
             )
@@ -108,7 +110,7 @@ class DeviceService implements Service {
   var serviceStatus = ServiceStatus.pending.obs;
 
   @override
-  var serviceException;
+  Exception? serviceException;
 
   @override
   Future<DeviceService> init() async {
@@ -118,9 +120,9 @@ class DeviceService implements Service {
     mainDeviceCardAdded = false;
 
     Timer.periodic(Duration(seconds: config.webServiceDeviceInfoCheckTTLSeconds), (_) {
-      var _tempList = deviceInfoList.toList();
+      var tempList = deviceInfoList.toList();
 
-      for (var each in _tempList) {
+      for (var each in tempList) {
         var now = DateTime.now();
         var time = each.sendTime;
 

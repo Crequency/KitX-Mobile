@@ -1,3 +1,5 @@
+include: package:flutter_lints/flutter.yaml
+
 analyzer:
   errors:
     avoid_returning_null_for_future: warning
@@ -8,8 +10,9 @@ analyzer:
     unused_import: warning
     avoid_empty_else: warning
   exclude:
-    - test/**
-    - lib/models/**
+    - build/**
+    - android/**
+    - ios/**
   language:
     strict-casts: true
 linter:
@@ -41,7 +44,6 @@ linter:
     - unnecessary_this
     - prefer_initializing_formals
     - unnecessary_new
-    - unnecessary_await_in_return
     - avoid_void_async
 formatter:
   page_width: 140

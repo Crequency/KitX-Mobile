@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:kitx_mobile/pages/pages.dart';
 
 import 'package:kitx_mobile/pages/test_pages/sensors_display_stands/acceleration_display_stand.dart';
@@ -14,10 +14,10 @@ class DeviceSensorsPage extends StatefulWidget implements ConstantPage {
   static Widget Function() getPage() => () => const DeviceSensorsPage();
 
   /// Constructor
-  const DeviceSensorsPage({Key? key}) : super(key: key);
+  const DeviceSensorsPage({super.key});
 
   @override
-  _DeviceSensorsPage createState() => _DeviceSensorsPage();
+  State<DeviceSensorsPage> createState() => _DeviceSensorsPage();
 }
 
 class _DeviceSensorsPage extends State<DeviceSensorsPage> {

@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kitx_mobile/instances.dart';
 import 'package:kitx_mobile/pages/controls/settings_group_divider.dart';
@@ -19,7 +19,7 @@ class AppearanceSettingsPage extends StatefulWidget implements ConstantPage {
   static Widget Function() getPage() => () => const AppearanceSettingsPage();
 
   /// Constructor
-  const AppearanceSettingsPage({Key? key}) : super(key: key);
+  const AppearanceSettingsPage({super.key});
 
   @override
   State<AppearanceSettingsPage> createState() => _AppearanceSettingsPageState();

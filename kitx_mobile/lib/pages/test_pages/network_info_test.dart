@@ -14,10 +14,10 @@ class NetworkInfoTestPage extends StatefulWidget implements ConstantPage {
   static Widget Function() getPage() => () => const NetworkInfoTestPage();
 
   /// Constructor
-  const NetworkInfoTestPage({Key? key}) : super(key: key);
+  const NetworkInfoTestPage({super.key});
 
   @override
-  _NetworkInfoTestPageState createState() => _NetworkInfoTestPageState();
+  State<NetworkInfoTestPage> createState() => _NetworkInfoTestPageState();
 }
 
 class _NetworkInfoTestPageState extends State<NetworkInfoTestPage> {

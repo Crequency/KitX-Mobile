@@ -1,4 +1,4 @@
-﻿import 'dart:io';
+import 'dart:io';
 
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
@@ -22,24 +22,24 @@ class LocalDeviceInfo {
 
   /// Get an instance for [LocalDeviceInfo] class
   static Future<LocalDeviceInfo> get() async {
-    var _deviceInfoPlugin = DeviceInfoPlugin();
-    var _ldi = LocalDeviceInfo();
+    var deviceInfoPlugin = DeviceInfoPlugin();
+    var ldi = LocalDeviceInfo();
 
-    _ldi.deviceName = await FlutterBluePlus.adapterName;
+    ldi.deviceName = await FlutterBluePlus.adapterName;
 
     if (Platform.isAndroid) {
-      var deviceData = await _deviceInfoPlugin.androidInfo;
-      _ldi.deviceModel = deviceData.model.toString();
-      _ldi.osVersion = deviceData.version.release;
-      _ldi.sdkVersion = deviceData.version.sdkInt;
-      _ldi.osDescription = '${_ldi.deviceModel} (Android ${_ldi.osVersion} SDK ${_ldi.sdkVersion})';
+      var deviceData = await deviceInfoPlugin.androidInfo;
+      ldi.deviceModel = deviceData.model.toString();
+      ldi.osVersion = deviceData.version.release;
+      ldi.sdkVersion = deviceData.version.sdkInt;
+      ldi.osDescription = '${ldi.deviceModel} (Android ${ldi.osVersion} SDK ${ldi.sdkVersion})';
     } else if (Platform.isIOS) {
-      var deviceData = await _deviceInfoPlugin.iosInfo;
-      _ldi.deviceModel = deviceData.name.toString();
-      _ldi.osVersion = deviceData.systemVersion;
-      _ldi.osDescription = '${_ldi.deviceModel} (iOS ${_ldi.osVersion})';
+      var deviceData = await deviceInfoPlugin.iosInfo;
+      ldi.deviceModel = deviceData.name.toString();
+      ldi.osVersion = deviceData.systemVersion;
+      ldi.osDescription = '${ldi.deviceModel} (iOS ${ldi.osVersion})';
     }
 
-    return _ldi;
+    return ldi;
   }
 }

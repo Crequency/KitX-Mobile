@@ -44,7 +44,7 @@ class DevicesDiscoveryService implements Service {
   var serviceStatus = ServiceStatus.pending.obs;
 
   @override
-  var serviceException;
+  Exception? serviceException;
 
   @override
   Future<DevicesDiscoveryService> init() async {
@@ -108,9 +108,9 @@ class DevicesDiscoveryService implements Service {
                 );
               }
 
-              var _data = deviceInfo.toString();
+              var data = deviceInfo.toString();
               socket.send(
-                utf8.encode(_data),
+                utf8.encode(data),
                 InternetAddress(_udpBroadcastAddress),
                 _udpPortReceive,
               );
@@ -150,16 +150,16 @@ class DevicesDiscoveryService implements Service {
               var d = socket.receive();
               if (d == null) return;
 
-              var _data = utf8.decode(d.data);
-              info('UDP receive: $_data');
+              var data = utf8.decode(d.data);
+              info('UDP receive: $data');
 
               try {
-                var _deviceInfo = DeviceInfo.fromString(_data);
-                if (_deviceInfo != null) await instances.devicesService.addDevice(_deviceInfo);
+                var deviceInfo0 = DeviceInfo.fromString(data);
+                if (deviceInfo0 != null) await instances.devicesService.addDevice(deviceInfo0);
               } catch (e, stack) {
                 await Future.delayed(const Duration(milliseconds: 500));
 
-                error('Can not deserialize device info pack: `$_data`', error: e, stackTrace: stack);
+                error('Can not deserialize device info pack: `$data`', error: e, stackTrace: stack);
 
                 serviceException = e as Exception;
                 serviceStatus.value = ServiceStatus.error;
@@ -229,7 +229,8 @@ class DevicesDiscoveryService implements Service {
     } else if (sendExitPackage) {
       _isExitPackageSent = true;
 
-      await stopAction.delay(milliseconds: 1500).execute();
+      // DelayedTask.execute() 返回 DelayedTask 而非 Future，对它 await 没有等待效果。
+      stopAction.delay(milliseconds: 1500).execute();
     } else {
       await stopAction();
     }

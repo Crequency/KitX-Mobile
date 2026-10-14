@@ -21,15 +21,15 @@ class DevicesPage extends StatefulWidget implements ConstantPage {
   static Widget Function() getPage() => () => const DevicesPage();
 
   /// Constructor
-  const DevicesPage({Key? key}) : super(key: key);
+  const DevicesPage({super.key});
 
   @override
   State<DevicesPage> createState() => _DevicesPage();
 }
 
 class _DevicesPage extends State<DevicesPage> {
-  var _scrollController = ScrollController();
-  var _paneController = PanelController();
+  final _scrollController = ScrollController();
+  final _paneController = PanelController();
 
   var deviceCardHorizontalScale = 0.5;
   var backToTopButtonVisibility = false.obs;
@@ -131,7 +131,7 @@ class _DevicesPage extends State<DevicesPage> {
                 padding: EdgeInsets.fromLTRB(30, 30, 30, 0),
                 child: const Hero(
                   tag: 'HeroTag_DevicesCount',
-                  child: const DevicesStatusLabel(inHomePage: false),
+                  child: DevicesStatusLabel(inHomePage: false),
                 ),
               ),
               const SizedBox(height: 25),
@@ -165,10 +165,11 @@ class _DevicesPage extends State<DevicesPage> {
                               },
                             );
                           },
-                          onReorder: (int oldIndex, int newIndex) {
+                          onReorderItem: (int oldIndex, int newIndex) {
                             var list = instances.devicesService.deviceInfoList;
-                            var moveBack = newIndex > oldIndex;
-                            list.insert(moveBack ? newIndex - 1 : newIndex, list.removeAt(oldIndex));
+                            // onReorderItem 的 newIndex 已由框架针对被移除项做过调整，
+                            // 因此这里不再需要旧 onReorder 的 newIndex - 1 补偿。
+                            list.insert(newIndex, list.removeAt(oldIndex));
                           },
                         ),
                       )
@@ -202,7 +203,7 @@ class _DevicesPage extends State<DevicesPage> {
             ],
           ),
           SlidingUpPanel(
-            borderRadius: const BorderRadius.vertical(top: const Radius.circular(15)),
+            borderRadius: const BorderRadius.vertical(top: Radius.circular(15)),
             color: Get.isDarkMode ? Colors.black : Colors.white,
             controller: _paneController,
             maxHeight: MediaQuery.of(context).size.height * 0.8,
@@ -215,7 +216,7 @@ class _DevicesPage extends State<DevicesPage> {
                   height: 5,
                   decoration: BoxDecoration(
                     color: Get.isDarkMode ? Colors.white60 : Colors.black38,
-                    borderRadius: const BorderRadius.all(const Radius.circular(5)),
+                    borderRadius: const BorderRadius.all(Radius.circular(5)),
                   ),
                 ),
                 Obx(

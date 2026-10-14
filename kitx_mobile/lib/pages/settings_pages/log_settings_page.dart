@@ -1,4 +1,4 @@
-﻿import 'package:cherrilog/cherrilog.dart';
+import 'package:cherrilog/cherrilog.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kitx_mobile/pages/controls/settings_group_divider.dart';
@@ -16,7 +16,7 @@ class LogSettingsPage extends StatefulWidget implements ConstantPage {
   static Widget Function() getPage() => () => const LogSettingsPage();
 
   /// Constructor
-  const LogSettingsPage({Key? key}) : super(key: key);
+  const LogSettingsPage({super.key});
 
   @override
   State<LogSettingsPage> createState() => _LogSettingsPageState();
@@ -63,14 +63,14 @@ class _LogSettingsPageState extends State<LogSettingsPage> {
                               .where((e) => e.name != CherriLogLevel.nether.name && e.name != CherriLogLevel.upperBond.name)
                               .map(
                                 (e) => DropdownMenuItem(
-                                  child: Text("SettingsPage_Log_Level_${e.name}".tr),
                                   value: e,
+                                  child: Text("SettingsPage_Log_Level_${e.name}".tr),
                                 ),
                               )
                               .toList(),
                         ),
                       ),
-                      const Padding(padding: EdgeInsets.symmetric(horizontal: 20), child: const Icon(Icons.compare_arrows)),
+                      const Padding(padding: EdgeInsets.symmetric(horizontal: 20), child: Icon(Icons.compare_arrows)),
                       Obx(
                         () => DropdownButton<CherriLogLevel>(
                           value: logLevelRange.value.$2,
@@ -89,8 +89,8 @@ class _LogSettingsPageState extends State<LogSettingsPage> {
                               .where((e) => e.name != CherriLogLevel.nether.name && e.name != CherriLogLevel.upperBond.name)
                               .map(
                                 (e) => DropdownMenuItem(
-                                  child: Text("SettingsPage_Log_Level_${e.name}".tr),
                                   value: e,
+                                  child: Text("SettingsPage_Log_Level_${e.name}".tr),
                                 ),
                               )
                               .toList(),

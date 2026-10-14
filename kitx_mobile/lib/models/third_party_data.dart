@@ -1,20 +1,27 @@
-﻿class ThirdPartyData // implements Built<ThirdPartyData, ThirdPartyDataBuilder>
+/// Information about a third party dependency, shown on the about page.
+class ThirdPartyData // implements Built<ThirdPartyData, ThirdPartyDataBuilder>
 {
-  String? ThirdPartyName;
+  /// Name of the third party package.
+  String? thirdPartyName;
 
-  String? ThirdPartyVersion;
+  /// Version of the third party package.
+  String? thirdPartyVersion;
 
-  String? ThirdPartyCopyright;
+  /// Copyright notice of the third party package.
+  String? thirdPartyCopyright;
 
-  String? ThirdPartyUrl;
+  /// URL of the third party package.
+  String? thirdPartyUrl;
 
-  String? ThirdPartyRepo;
+  /// Repository URL of the third party package.
+  String? thirdPartyRepo;
 
+  /// Constructor
   ThirdPartyData(
-    this.ThirdPartyName,
-    this.ThirdPartyVersion,
-    this.ThirdPartyCopyright,
-    this.ThirdPartyUrl,
-    this.ThirdPartyRepo,
+    this.thirdPartyName,
+    this.thirdPartyVersion,
+    this.thirdPartyCopyright,
+    this.thirdPartyUrl,
+    this.thirdPartyRepo,
   );
 }
