@@ -35,11 +35,11 @@ class GyroscopeDisplayStandState extends State<GyroscopeDisplayStand> {
   /// 当前朝向读数（法向量与正/背面判定结果）
   var facingReadout = ''.obs;
 
+  /// 是否绘制机身坐标轴
+  var showAxes = false.obs;
+
   /// Gyroscope sensor data listener
   StreamSubscription<GyroscopeEvent>? gyroscopeDataListener;
-
-  /// Painter
-  Painter painter = Painter();
 
   /// Random sensor data timer
   Timer? randomSensorDataTimer;
@@ -59,7 +59,7 @@ class GyroscopeDisplayStandState extends State<GyroscopeDisplayStand> {
 
   @override
   void initState() {
-    painter.initialize();
+    Painter.initializePoints();
 
     gyroscopeDataListener = gyroscopeEventStream(
       samplingPeriod: Duration(milliseconds: (samplingRate.value * 1000).toInt()),
@@ -122,11 +122,13 @@ class GyroscopeDisplayStandState extends State<GyroscopeDisplayStand> {
                       children: [
                         InkWell(
                           borderRadius: BorderRadius.all(Radius.elliptical(10, 10)),
-                          child: CustomPaint(
-                            isComplex: true,
-                            size: Size(canvasWidth - 60, canvasHeight),
-                            willChange: true,
-                            painter: painter,
+                          child: Obx(
+                            () => CustomPaint(
+                              isComplex: true,
+                              size: Size(canvasWidth - 60, canvasHeight),
+                              willChange: true,
+                              painter: Painter(showAxes: showAxes.value),
+                            ),
                           ),
                           onTap: () {
                             VibrationHandler.tryVibrate();
@@ -164,6 +166,17 @@ class GyroscopeDisplayStandState extends State<GyroscopeDisplayStand> {
             () => Text('🧭 \t$facingReadout', style: TextStyle(fontSize: 16)),
           ),
           const Text('↔ \tUnit: rad/s', style: TextStyle(fontSize: 16)),
+          Row(
+            children: [
+              const Text('🧩 \tBody Axes', style: TextStyle(fontSize: 16)),
+              Obx(
+                () => Switch(
+                  value: showAxes.value,
+                  onChanged: (value) => showAxes.value = value,
+                ),
+              ),
+            ],
+          ),
           const SizedBox(height: 20),
           Obx(() => listenerErrored.value ? const Text('No sensor data, you are seeing random data.') : const SizedBox())
         ],
@@ -174,8 +187,14 @@ class GyroscopeDisplayStandState extends State<GyroscopeDisplayStand> {
 
 /// The painter class implements the CustomPainter class
 class Painter extends CustomPainter {
-  /// The object's size
-  var objectWidth = 135.0, objectHeight = 240.0;
+  /// Constructor
+  Painter({this.showAxes = false});
+
+  /// 是否绘制机身坐标轴（X 红 / Y 绿 / Z 蓝）
+  final bool showAxes;
+
+  /// 机身尺寸（物体坐标系）
+  static const objectWidth = 135.0, objectHeight = 240.0;
 
   /// The camera's position
   var camera = vector_math.Vector3(0, 0, 800);
@@ -186,11 +205,14 @@ class Painter extends CustomPainter {
   /// 背面朝向摄像机时的描边颜色
   static const backColor = Colors.orange;
 
+  /// 坐标轴长度
+  static const axisLength = 100.0;
+
   /// Return absolute value
   double abs(double num) => num >= 0 ? num : -num;
 
   /// 初始化物体坐标系点集（机身轮廓四点 + 腰线两点）
-  void initialize() {
+  static void initializePoints() {
     DeviceRotationHost.setPoints([
       vector_math.Vector3(-objectWidth / 2, objectHeight / 2, 0),
       vector_math.Vector3(objectWidth / 2, objectHeight / 2, 0),
@@ -218,8 +240,55 @@ class Painter extends CustomPainter {
   /// Convert [vector_math.Vector3] to [Offset] for screen display
   Offset toScreen(vector_math.Vector3 p, Size size) => toCenter(toOffset(p), size.width, size.height);
 
+  /// 绘制机身坐标轴：X 红、Y 绿、Z 蓝，都从机身中心出发并跟随姿态一起旋转
+  void _drawAxes(Canvas canvas, Size size) {
+    var origin = getCrossPoint(DeviceRotationHost.transform(vector_math.Vector3(0, 0, 0)), camera, null, null);
+
+    if (origin == null) return;
+
+    var center = toScreen(origin, size);
+
+    void drawAxis(vector_math.Vector3 end, Color color) {
+      var projected = getCrossPoint(DeviceRotationHost.transform(end), camera, null, null);
+
+      if (projected == null) return;
+
+      var tip = toScreen(projected, size);
+
+      // 轴几乎垂直于屏幕时投影会退化成一个点，此时用带白圈的圆点表示它的朝向
+      if ((tip - center).distance < 2.0) {
+        canvas.drawCircle(tip, 4.0, Paint()..color = color);
+        canvas.drawCircle(
+          tip,
+          5.5,
+          Paint()
+            ..color = Colors.white
+            ..style = PaintingStyle.stroke
+            ..strokeWidth = 1.5,
+        );
+
+        return;
+      }
+
+      canvas.drawLine(
+        center,
+        tip,
+        Paint()
+          ..color = color
+          ..strokeWidth = 2.0,
+      );
+      canvas.drawCircle(tip, 3.0, Paint()..color = color);
+    }
+
+    drawAxis(vector_math.Vector3(axisLength, 0, 0), Colors.redAccent);
+    drawAxis(vector_math.Vector3(0, axisLength, 0), Colors.greenAccent);
+    drawAxis(vector_math.Vector3(0, 0, axisLength), Colors.lightBlueAccent);
+  }
+
   @override
   void paint(Canvas canvas, Size size) {
+    if (showAxes) _drawAxes(canvas, size);
+
     var points = projectPoints();
 
     // 由变换后的面法向量判定正/背面：n.z < 0 表示机身背面朝向摄像机。
