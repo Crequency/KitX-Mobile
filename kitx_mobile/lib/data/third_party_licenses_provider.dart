@@ -75,13 +75,6 @@ var thirdPartyDataList = [
     '',
   ),
   ThirdPartyData(
-    'flutter_chat_ui',
-    '^1.6.12',
-    'flyerhq',
-    'https://pub.dev/packages/flutter_chat_ui',
-    'https://github.com/flyerhq/flutter_chat_ui',
-  ),
-  ThirdPartyData(
     'get',
     '^4.6.6',
     '',
