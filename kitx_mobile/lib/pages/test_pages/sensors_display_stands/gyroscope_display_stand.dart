@@ -32,6 +32,9 @@ class GyroscopeDisplayStandState extends State<GyroscopeDisplayStand> {
   /// Sampling Rage
   var samplingRate = 0.05.obs;
 
+  /// 当前朝向读数（法向量与正/背面判定结果）
+  var facingReadout = ''.obs;
+
   /// Gyroscope sensor data listener
   StreamSubscription<GyroscopeEvent>? gyroscopeDataListener;
 
@@ -41,6 +44,19 @@ class GyroscopeDisplayStandState extends State<GyroscopeDisplayStand> {
   /// Random sensor data timer
   Timer? randomSensorDataTimer;
 
+  /// 推进姿态并刷新读数
+  void advance(double gyroX, double gyroY, double gyroZ) {
+    DeviceRotationHost.rotateWithGyroscope(gyroX, gyroY, gyroZ, samplingRate.value);
+
+    dirX.value = gyroX;
+    dirY.value = gyroY;
+    dirZ.value = gyroZ;
+
+    var n = DeviceRotationHost.normal;
+    facingReadout.value = 'n = (${n.x.toStringAsFixed(2)}, ${n.y.toStringAsFixed(2)}, ${n.z.toStringAsFixed(2)})'
+        ' → ${DeviceRotationHost.isBackFacing ? 'BACK' : 'FRONT'}';
+  }
+
   @override
   void initState() {
     painter.initialize();
@@ -49,11 +65,7 @@ class GyroscopeDisplayStandState extends State<GyroscopeDisplayStand> {
       samplingPeriod: Duration(milliseconds: (samplingRate.value * 1000).toInt()),
     ).listen(
       (event) {
-        DeviceRotationHost.rotateWithAcceleration(event.x, event.y, event.z, samplingRate.value);
-
-        dirX.value = event.x;
-        dirY.value = event.y;
-        dirZ.value = event.z;
+        advance(event.x, event.y, event.z);
       },
       onError: (error) {
         listenerErrored.value = true;
@@ -63,9 +75,7 @@ class GyroscopeDisplayStandState extends State<GyroscopeDisplayStand> {
         randomSensorDataTimer = Timer.periodic(Duration(milliseconds: 50), (timer) {
           var rad = 0.5 + random.nextDouble() / 10;
 
-          dirY.value = rad;
-
-          DeviceRotationHost.rotateWithAcceleration(dirX.value, dirY.value, dirZ.value, samplingRate.value);
+          advance(dirX.value, rad, dirZ.value);
         });
       },
       cancelOnError: true,
@@ -150,6 +160,9 @@ class GyroscopeDisplayStandState extends State<GyroscopeDisplayStand> {
           Obx(
             () => Text('⏱ \tSampling Rate: ${samplingRate.value} s', style: TextStyle(fontSize: 16)),
           ),
+          Obx(
+            () => Text('🧭 \t$facingReadout', style: TextStyle(fontSize: 16)),
+          ),
           const Text('↔ \tUnit: rad/s', style: TextStyle(fontSize: 16)),
           const SizedBox(height: 20),
           Obx(() => listenerErrored.value ? const Text('No sensor data, you are seeing random data.') : const SizedBox())
@@ -167,37 +180,33 @@ class Painter extends CustomPainter {
   /// The camera's position
   var camera = vector_math.Vector3(0, 0, 800);
 
+  /// 正面朝向摄像机时的描边颜色
+  static const frontColor = Colors.blue;
+
+  /// 背面朝向摄像机时的描边颜色
+  static const backColor = Colors.orange;
+
   /// Return absolute value
   double abs(double num) => num >= 0 ? num : -num;
 
-  /// Initialize
+  /// 初始化物体坐标系点集（机身轮廓四点 + 腰线两点）
   void initialize() {
-    DeviceRotationHost.xDir = vector_math.Quaternion(objectWidth / 2, 0, 0, 0);
-    DeviceRotationHost.yDir = vector_math.Quaternion(0, objectHeight / 2, 0, 0);
-    DeviceRotationHost.zDir = vector_math.Quaternion(0, 0, 1, 0);
-
     DeviceRotationHost.setPoints([
-      vector_math.Quaternion(-objectWidth / 2, objectHeight / 2, 0, 0),
-      vector_math.Quaternion(objectWidth / 2, objectHeight / 2, 0, 0),
-      vector_math.Quaternion(objectWidth / 2, -objectHeight / 2, 0, 0),
-      vector_math.Quaternion(-objectWidth / 2, -objectHeight / 2, 0, 0),
-      vector_math.Quaternion(-objectWidth / 2 + objectWidth / 4, -objectHeight / 2 + objectHeight / 24, 0, 0),
-      vector_math.Quaternion(objectWidth / 2 - objectWidth / 4, -objectHeight / 2 + objectHeight / 24, 0, 0),
+      vector_math.Vector3(-objectWidth / 2, objectHeight / 2, 0),
+      vector_math.Vector3(objectWidth / 2, objectHeight / 2, 0),
+      vector_math.Vector3(objectWidth / 2, -objectHeight / 2, 0),
+      vector_math.Vector3(-objectWidth / 2, -objectHeight / 2, 0),
+      vector_math.Vector3(-objectWidth / 2 + objectWidth / 4, -objectHeight / 2 + objectHeight / 24, 0),
+      vector_math.Vector3(objectWidth / 2 - objectWidth / 4, -objectHeight / 2 + objectHeight / 24, 0),
     ]);
   }
 
-  /// Get Points
-  List<vector_math.Vector3> getPoints() {
-    var rotatedPoints = DeviceRotationHost.points;
-
-    List<vector_math.Vector3> displayPoints = [];
-
-    for (int i = 0; i < rotatedPoints.length; ++i) {
-      displayPoints.add(getCrossPoint(rotatedPoints[i].toPoint(), camera, null, null) ?? vector_math.Vector3(0, 0, 0));
-    }
-
-    return displayPoints;
-  }
+  /// 把点集从物体坐标系变换到世界坐标系并做透视投影
+  ///
+  /// 落在摄像机背面（或与投影平面平行）的顶点返回 null，绘制时整条线段都会被丢弃。
+  List<vector_math.Vector3?> projectPoints() => DeviceRotationHost.points
+      .map((point) => getCrossPoint(DeviceRotationHost.transform(point), camera, null, null))
+      .toList();
 
   /// Convert [vector_math.Vector3] to [Offset]
   Offset toOffset(vector_math.Vector3 p) => Offset(p.x, p.y);
@@ -211,29 +220,28 @@ class Painter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    // var angles = getRotationAngles();
-    var points = getPoints();
-    // var isBack = abs(angles.y) > 90 || abs(angles.z) > 90;
-    // var paint = Paint()
-    //   ..color = isBack ? Colors.blue : Colors.red
-    //   ..strokeWidth = 1.0;
+    var points = projectPoints();
+
+    // 由变换后的面法向量判定正/背面：n.z < 0 表示机身背面朝向摄像机。
+    // 旧实现用 |pitch| > 90 || |roll| > 90 近似，两个角同时越过 ±90° 时会误判。
     var paint = Paint()
-      ..color = Colors.blue
+      ..color = DeviceRotationHost.isBackFacing ? backColor : frontColor
       ..strokeWidth = 1.0;
 
-    var a = points[0];
-    var b = points[1];
-    var c = points[2];
-    var d = points[3];
-    var e = points[4];
-    var f = points[5];
+    void connect(int from, int to) {
+      var a = points[from];
+      var b = points[to];
 
-    canvas.drawLine(toScreen(a, size), toScreen(b, size), paint);
-    canvas.drawLine(toScreen(b, size), toScreen(c, size), paint);
-    canvas.drawLine(toScreen(c, size), toScreen(d, size), paint);
-    canvas.drawLine(toScreen(d, size), toScreen(a, size), paint);
+      if (a == null || b == null) return;
 
-    canvas.drawLine(toScreen(e, size), toScreen(f, size), paint);
+      canvas.drawLine(toScreen(a, size), toScreen(b, size), paint);
+    }
+
+    connect(0, 1);
+    connect(1, 2);
+    connect(2, 3);
+    connect(3, 0);
+    connect(4, 5);
   }
 
   @override
